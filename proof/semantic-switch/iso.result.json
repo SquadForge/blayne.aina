@@ -1,0 +1,608 @@
+{
+ "schema": "GENERATOR_ISOMORPHISM_RESULT_V1",
+ "blocks": 20,
+ "isomorphic_blocks": 20,
+ "failed_blocks": 0,
+ "pass": true,
+ "meaning": "PASS means the emitted relational structure is identical for two inputs that are the same object under relabeling. FAIL names the blocks where emitted structure depends on native token identity. This is a property of the generator; no AI and no labels are involved.",
+ "results": [
+  {
+   "block_id": "KAL",
+   "records": 4,
+   "isomorphic": true,
+   "distinct_counts_A": {
+    "ref": 85,
+    "head": 12,
+    "family": 9,
+    "rendered": 0
+   },
+   "distinct_counts_B": {
+    "ref": 85,
+    "head": 12,
+    "family": 9,
+    "rendered": 0
+   },
+   "families_A": {
+    "First_Name:Taeraka": [
+     "Gicapeo",
+     "Gicapo"
+    ],
+    "Institution_Address:Pafaecleo": [
+     "Neruce",
+     "Nerucec"
+    ],
+    "Institution_Name:Keogialeo": [
+     "Wapicle",
+     "Wiapicle"
+    ]
+   },
+   "families_B": {
+    "First_Name:Netrapeo": [
+     "Rafflaeclo",
+     "Raflaeclo"
+    ],
+    "Institution_Address:Cliacove": [
+     "Lidreodre",
+     "Lireodre"
+    ],
+    "Institution_Name:Zeneodu": [
+     "Reonulu",
+     "Ronulu"
+    ]
+   }
+  },
+  {
+   "block_id": "SUB",
+   "records": 6,
+   "isomorphic": true,
+   "distinct_counts_A": {
+    "ref": 127,
+    "head": 14,
+    "family": 11,
+    "rendered": 0
+   },
+   "distinct_counts_B": {
+    "ref": 127,
+    "head": 14,
+    "family": 11,
+    "rendered": 0
+   },
+   "families_A": {
+    "First_Name:Daclaeli": [
+     "Hariacia",
+     "Hayiacia"
+    ],
+    "First_Name:Haejiafla": [
+     "Braehiho",
+     "Braehipo"
+    ],
+    "First_Name:Trafiasu": [
+     "Kaetrefeo",
+     "Kaetrxfeo"
+    ]
+   },
+   "families_B": {
+    "First_Name:Hiawoclo": [
+     "Gehudra",
+     "Gehudya"
+    ],
+    "First_Name:Jograeja": [
+     "Flcvipo",
+     "Fluvipo"
+    ],
+    "First_Name:Keloko": [
+     "Hisaepria",
+     "Hisaeprik"
+    ]
+   }
+  },
+  {
+   "block_id": "DEL",
+   "records": 4,
+   "isomorphic": true,
+   "distinct_counts_A": {
+    "ref": 89,
+    "head": 12,
+    "family": 10,
+    "rendered": 0
+   },
+   "distinct_counts_B": {
+    "ref": 89,
+    "head": 12,
+    "family": 10,
+    "rendered": 0
+   },
+   "families_A": {
+    "First_Name:Jecaka": [
+     "Stuprahe",
+     "Suprahe"
+    ],
+    "First_Name:Niaprihe": [
+     "Dulaba",
+     "Dulabra"
+    ]
+   },
+   "families_B": {
+    "First_Name:Clobivu": [
+     "Fapeopa",
+     "Flapeopa"
+    ],
+    "First_Name:Guzecu": [
+     "Saeodiale",
+     "Seodiale"
+    ]
+   }
+  },
+  {
+   "block_id": "EXT",
+   "records": 3,
+   "isomorphic": true,
+   "distinct_counts_A": {
+    "ref": 68,
+    "head": 12,
+    "family": 12,
+    "rendered": 0
+   },
+   "distinct_counts_B": {
+    "ref": 68,
+    "head": 12,
+    "family": 12,
+    "rendered": 0
+   },
+   "families_A": {},
+   "families_B": {}
+  },
+  {
+   "block_id": "EQ",
+   "records": 3,
+   "isomorphic": true,
+   "distinct_counts_A": {
+    "ref": 70,
+    "head": 12,
+    "family": 12,
+    "rendered": 0
+   },
+   "distinct_counts_B": {
+    "ref": 70,
+    "head": 12,
+    "family": 12,
+    "rendered": 0
+   },
+   "families_A": {},
+   "families_B": {}
+  },
+  {
+   "block_id": "MISS",
+   "records": 4,
+   "isomorphic": true,
+   "distinct_counts_A": {
+    "ref": 76,
+    "head": 9,
+    "family": 9,
+    "rendered": 0
+   },
+   "distinct_counts_B": {
+    "ref": 76,
+    "head": 9,
+    "family": 9,
+    "rendered": 0
+   },
+   "families_A": {},
+   "families_B": {}
+  },
+  {
+   "block_id": "TRN",
+   "records": 3,
+   "isomorphic": true,
+   "distinct_counts_A": {
+    "ref": 68,
+    "head": 12,
+    "family": 10,
+    "rendered": 0
+   },
+   "distinct_counts_B": {
+    "ref": 68,
+    "head": 12,
+    "family": 10,
+    "rendered": 0
+   },
+   "families_A": {
+    "First_Name:Jeolurae": [
+     "Raenaedru",
+     "Raenaedur"
+    ],
+    "Institution_Name:Feogeki": [
+     "Sewaene",
+     "Seweane"
+    ]
+   },
+   "families_B": {
+    "First_Name:Movaso": [
+     "Seoweotro",
+     "Seowetoro"
+    ],
+    "Institution_Name:Duprugro": [
+     "Jajoflai",
+     "Jajoflia"
+    ]
+   }
+  },
+  {
+   "block_id": "S03",
+   "records": 2,
+   "isomorphic": true,
+   "distinct_counts_A": {
+    "ref": 51,
+    "head": 10,
+    "family": 9,
+    "rendered": 0
+   },
+   "distinct_counts_B": {
+    "ref": 51,
+    "head": 10,
+    "family": 9,
+    "rendered": 0
+   },
+   "families_A": {
+    "First_Name:Ceowelae": [
+     "Brodabre",
+     "Brvdabre"
+    ]
+   },
+   "families_B": {
+    "First_Name:Biceonae": [
+     "Godrinae",
+     "Goxrinae"
+    ]
+   }
+  },
+  {
+   "block_id": "S04",
+   "records": 2,
+   "isomorphic": true,
+   "distinct_counts_A": {
+    "ref": 51,
+    "head": 10,
+    "family": 9,
+    "rendered": 0
+   },
+   "distinct_counts_B": {
+    "ref": 51,
+    "head": 10,
+    "family": 9,
+    "rendered": 0
+   },
+   "families_A": {
+    "First_Name:Naesutru": [
+     "Maepiadjia",
+     "Maepiadria"
+    ]
+   },
+   "families_B": {
+    "First_Name:Steofira": [
+     "Fedgte",
+     "Fedote"
+    ]
+   }
+  },
+  {
+   "block_id": "S05",
+   "records": 2,
+   "isomorphic": true,
+   "distinct_counts_A": {
+    "ref": 51,
+    "head": 10,
+    "family": 9,
+    "rendered": 0
+   },
+   "distinct_counts_B": {
+    "ref": 51,
+    "head": 10,
+    "family": 9,
+    "rendered": 0
+   },
+   "families_A": {
+    "First_Name:Havacla": [
+     "Geogeone",
+     "Gsogeone"
+    ]
+   },
+   "families_B": {
+    "First_Name:Tebrewu": [
+     "Piacatrae",
+     "Piacatram"
+    ]
+   }
+  },
+  {
+   "block_id": "S06",
+   "records": 2,
+   "isomorphic": true,
+   "distinct_counts_A": {
+    "ref": 51,
+    "head": 10,
+    "family": 9,
+    "rendered": 0
+   },
+   "distinct_counts_B": {
+    "ref": 51,
+    "head": 10,
+    "family": 9,
+    "rendered": 0
+   },
+   "families_A": {
+    "First_Name:Flaeliacu": [
+     "Waesaedra",
+     "Waesaejra"
+    ]
+   },
+   "families_B": {
+    "First_Name:Ziatraebi": [
+     "Fegewae",
+     "Fegewam"
+    ]
+   }
+  },
+  {
+   "block_id": "S07",
+   "records": 2,
+   "isomorphic": true,
+   "distinct_counts_A": {
+    "ref": 51,
+    "head": 10,
+    "family": 9,
+    "rendered": 0
+   },
+   "distinct_counts_B": {
+    "ref": 51,
+    "head": 10,
+    "family": 9,
+    "rendered": 0
+   },
+   "families_A": {
+    "First_Name:Drimeogreo": [
+     "Bialefa",
+     "Biolefa"
+    ]
+   },
+   "families_B": {
+    "First_Name:Zaepeopia": [
+     "Vuieodru",
+     "Vureodru"
+    ]
+   }
+  },
+  {
+   "block_id": "S08",
+   "records": 2,
+   "isomorphic": true,
+   "distinct_counts_A": {
+    "ref": 51,
+    "head": 10,
+    "family": 9,
+    "rendered": 0
+   },
+   "distinct_counts_B": {
+    "ref": 51,
+    "head": 10,
+    "family": 9,
+    "rendered": 0
+   },
+   "families_A": {
+    "First_Name:Greoveogeo": [
+     "Stiacaecia",
+     "Stiagaecia"
+    ]
+   },
+   "families_B": {
+    "First_Name:Clocupreo": [
+     "Nocbegra",
+     "Noclegra"
+    ]
+   }
+  },
+  {
+   "block_id": "S09",
+   "records": 2,
+   "isomorphic": true,
+   "distinct_counts_A": {
+    "ref": 51,
+    "head": 10,
+    "family": 9,
+    "rendered": 0
+   },
+   "distinct_counts_B": {
+    "ref": 51,
+    "head": 10,
+    "family": 9,
+    "rendered": 0
+   },
+   "families_A": {
+    "First_Name:Poflizi": [
+     "Paeiomia",
+     "Paemomia"
+    ]
+   },
+   "families_B": {
+    "First_Name:Taebuji": [
+     "Traegopra",
+     "Trsegopra"
+    ]
+   }
+  },
+  {
+   "block_id": "D04",
+   "records": 2,
+   "isomorphic": true,
+   "distinct_counts_A": {
+    "ref": 51,
+    "head": 10,
+    "family": 9,
+    "rendered": 0
+   },
+   "distinct_counts_B": {
+    "ref": 51,
+    "head": 10,
+    "family": 9,
+    "rendered": 0
+   },
+   "families_A": {
+    "First_Name:Neleoja": [
+     "Ciawako",
+     "Ciawao"
+    ]
+   },
+   "families_B": {
+    "First_Name:Presidria": [
+     "Drducimo",
+     "Drucimo"
+    ]
+   }
+  },
+  {
+   "block_id": "D05",
+   "records": 2,
+   "isomorphic": true,
+   "distinct_counts_A": {
+    "ref": 51,
+    "head": 10,
+    "family": 9,
+    "rendered": 0
+   },
+   "distinct_counts_B": {
+    "ref": 51,
+    "head": 10,
+    "family": 9,
+    "rendered": 0
+   },
+   "families_A": {
+    "First_Name:Siraebia": [
+     "Drileoro",
+     "Drleoro"
+    ]
+   },
+   "families_B": {
+    "First_Name:Truvina": [
+     "Leneobia",
+     "Levneobia"
+    ]
+   }
+  },
+  {
+   "block_id": "D06",
+   "records": 2,
+   "isomorphic": true,
+   "distinct_counts_A": {
+    "ref": 51,
+    "head": 10,
+    "family": 9,
+    "rendered": 0
+   },
+   "distinct_counts_B": {
+    "ref": 51,
+    "head": 10,
+    "family": 9,
+    "rendered": 0
+   },
+   "families_A": {
+    "First_Name:Feobriaga": [
+     "Jiabiai",
+     "Jiabiaji"
+    ]
+   },
+   "families_B": {
+    "First_Name:Laelaepra": [
+     "Veoruka",
+     "Veorukpa"
+    ]
+   }
+  },
+  {
+   "block_id": "D07",
+   "records": 2,
+   "isomorphic": true,
+   "distinct_counts_A": {
+    "ref": 51,
+    "head": 10,
+    "family": 9,
+    "rendered": 0
+   },
+   "distinct_counts_B": {
+    "ref": 51,
+    "head": 10,
+    "family": 9,
+    "rendered": 0
+   },
+   "families_A": {
+    "First_Name:Kuresta": [
+     "Neomev",
+     "Neomeva"
+    ]
+   },
+   "families_B": {
+    "First_Name:Fliafledo": [
+     "Fejobiaca",
+     "Feobiaca"
+    ]
+   }
+  },
+  {
+   "block_id": "D08",
+   "records": 2,
+   "isomorphic": true,
+   "distinct_counts_A": {
+    "ref": 51,
+    "head": 10,
+    "family": 9,
+    "rendered": 0
+   },
+   "distinct_counts_B": {
+    "ref": 51,
+    "head": 10,
+    "family": 9,
+    "rendered": 0
+   },
+   "families_A": {
+    "First_Name:Biclaze": [
+     "Detki",
+     "Detoki"
+    ]
+   },
+   "families_B": {
+    "First_Name:Jasaefo": [
+     "Cetreocle",
+     "Cetreocple"
+    ]
+   }
+  },
+  {
+   "block_id": "D09",
+   "records": 2,
+   "isomorphic": true,
+   "distinct_counts_A": {
+    "ref": 51,
+    "head": 10,
+    "family": 9,
+    "rendered": 0
+   },
+   "distinct_counts_B": {
+    "ref": 51,
+    "head": 10,
+    "family": 9,
+    "rendered": 0
+   },
+   "families_A": {
+    "First_Name:Waemifo": [
+     "Titroprae",
+     "Titrprae"
+    ]
+   },
+   "families_B": {
+    "First_Name:Beotiho": [
+     "Tabaehweo",
+     "Tabaeweo"
+    ]
+   }
+  }
+ ]
+}

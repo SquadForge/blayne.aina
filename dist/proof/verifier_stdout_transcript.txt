@@ -1,0 +1,12 @@
+$ python verify_refusal_proof.py
+Verifying AINA refusal and conformance bundle at .
+PASS: evidence_bad_selector_refused (bf15f8633e85350430adf1bbc47a47154965d3a7f28e4ebad25d6a39ecaa2f8c)
+PASS: native_write_without_lease_refused (2d27fbdf4e8ca207afbfa388ca9172fbcc6c70e534af2476b3b704f87debadcf)
+PASS: wrong_value (362088a107369e634cdc9c6c520fbca3e2393722860720d3aa2c2eb11b47d719)
+PASS: stale_generation_refused (reason-only; absent preimage)
+PASS: conformance 45/45; evidence 20/20; candidate 94d26802c3744182a6cb93ac4e47250c6140b6ff92e0902a7c415ab13e59f4b5
+PASS: 12 public-safe schema declarations
+PASS: 36 files match SHA256SUMS.txt
+PASS: no local paths or private key material detected
+
+All refusal, fixture, schema, conformance, integrity, and sanitization checks passed.

@@ -1,0 +1,63 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "Squad Release Package Qualification Result (squad-package-result-v3)",
+  "type": "object",
+  "description": "Release build and candidate-binary qualification report.",
+  "required": [
+    "schema",
+    "status",
+    "built_at",
+    "build"
+  ],
+  "properties": {
+    "schema": {
+      "type": "string",
+      "enum": [
+        "squad-package-result-v3"
+      ]
+    },
+    "status": {
+      "type": "string",
+      "enum": [
+        "passed",
+        "failed"
+      ]
+    },
+    "built_at": {
+      "type": "string",
+      "format": "date-time"
+    },
+    "target": {
+      "type": "string"
+    },
+    "build": {
+      "type": "object",
+      "required": [
+        "dist",
+        "skill",
+        "verified_source_sha256",
+        "conformance"
+      ],
+      "properties": {
+        "dist": {
+          "type": "string"
+        },
+        "skill": {
+          "type": "string"
+        },
+        "verified_source_sha256": {
+          "type": "string"
+        },
+        "conformance": {
+          "type": "object",
+          "required": [
+            "ok",
+            "total",
+            "failed",
+            "cases"
+          ]
+        }
+      }
+    }
+  }
+}

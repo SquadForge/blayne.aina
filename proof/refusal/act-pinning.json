@@ -1,0 +1,66 @@
+{
+  "schema": "aina.refusal.act-pinning.v1",
+  "case_id": "wrong_value",
+  "evidence_strength": "complete_digest_chain",
+  "execution": {
+    "artifact": "results-act-evidence-r7.json",
+    "recorded_pass": true,
+    "model_calls": 0
+  },
+  "protected_target": {
+    "label": "contacts.db#contacts#id=1",
+    "fixture": "fixtures/contacts.db",
+    "bytes": 16384
+  },
+  "controller_fixed_act": {
+    "reference_sha256": "bcc78a4483a9c8b2b82c1571f511e9515881d8424a013083fe081e1edce3b722",
+    "action": "field_change",
+    "fields": {
+      "note": "Controller fixed value"
+    },
+    "expected_version": 1,
+    "version_after": 2
+  },
+  "hostile_proposal": {
+    "proposal_id": "4576ce1e447d56a752aef1fbe063d1f49b74aacdabe497f5d243c7fddad6ff80",
+    "proposal_sha256": "8ca25fd15e6942ced8c110d3ecfd49a7e0500f04d5f555e6aadc70d2982614de",
+    "action": "field_change",
+    "fields": {
+      "note": "Unrequested but valid value"
+    },
+    "expected_version": 1,
+    "version_after": 2,
+    "approved": false
+  },
+  "refusal_receipt": {
+    "disposition": "REFUSED",
+    "reason_code": "requested_act_mismatch",
+    "observed_at": "2026-10-10T08:06:40.835-06:00",
+    "recorded_at": "2026-10-10T08:06:40.945-06:00",
+    "recording": "committed",
+    "room_event": "evt_000000006aca4670_38f9b180",
+    "amber_quarantine": null,
+    "quarantine_note": "The divergent proposal was preserved in the refusal record; no UPDATE or destination mutation occurred."
+  },
+  "pre_attempt": {
+    "rows": [
+      ["1", 1, "Original contact", "WITHHELD"],
+      ["2", 1, "Other contact", "PRIVATE"]
+    ],
+    "effects": 0,
+    "integrity": "ok",
+    "bytes": 16384,
+    "sha256": "362088a107369e634cdc9c6c520fbca3e2393722860720d3aa2c2eb11b47d719"
+  },
+  "post_refusal": {
+    "rows": [
+      ["1", 1, "Original contact", "WITHHELD"],
+      ["2", 1, "Other contact", "PRIVATE"]
+    ],
+    "effects": 0,
+    "integrity": "ok",
+    "bytes": 16384,
+    "sha256": "362088a107369e634cdc9c6c520fbca3e2393722860720d3aa2c2eb11b47d719"
+  },
+  "destination_unchanged": true
+}

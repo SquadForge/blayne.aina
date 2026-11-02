@@ -1,0 +1,46 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "Squad Break-Glass Containment Latch (squad.breakglass.latch/1)",
+  "type": "object",
+  "description": "Emergency stop latch published via atomic hard link.",
+  "required": [
+    "kind",
+    "id",
+    "scope",
+    "by",
+    "reason",
+    "engaged_utc"
+  ],
+  "properties": {
+    "kind": {
+      "type": "string",
+      "enum": [
+        "breakglass_latch"
+      ]
+    },
+    "id": {
+      "type": "string"
+    },
+    "scope": {
+      "type": "string",
+      "description": "Scope: 'machine', 'agent:<name>', or canonical 'project:<root>'."
+    },
+    "by": {
+      "type": "string"
+    },
+    "reason": {
+      "type": "string",
+      "minLength": 1
+    },
+    "engaged_utc": {
+      "type": "string",
+      "format": "date-time"
+    },
+    "active_processes_quiesced": {
+      "type": "boolean"
+    },
+    "unresolved_effects_count": {
+      "type": "integer"
+    }
+  }
+}

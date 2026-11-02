@@ -1,0 +1,32 @@
+{
+  "schema": "aina.refusal.stale-generation.v1",
+  "case_id": "stale_generation_refused",
+  "evidence_strength": "reason_only_absent_preimage",
+  "execution": {
+    "artifact": "conformance-output.json",
+    "candidate_binary": "squad.exe",
+    "candidate_sha256": "94d26802c3744182a6cb93ac4e47250c6140b6ff92e0902a7c415ab13e59f4b5",
+    "recorded_pass": true
+  },
+  "hostile_proposal": {
+    "tool": "squad_edit",
+    "operation_id": "conf-stale-generation",
+    "expected_generation": 8,
+    "observed_current_generation": 1,
+    "expected_sha256": "absent",
+    "content": "v1\n"
+  },
+  "refusal_receipt": {
+    "disposition": "REFUSED",
+    "reason_code": "stale_lease_generation",
+    "observed": "squad error: stale_lease_generation: expected 8, current 1"
+  },
+  "pre_attempt": {
+    "file_presence": "absent"
+  },
+  "post_refusal": {
+    "file_presence": "absent"
+  },
+  "destination_unchanged": true,
+  "digest_chain_note": "The target did not exist before or after the refusal. No file digest is claimed for an absent preimage; use unleased-write.json for an existing-file digest proof."
+}

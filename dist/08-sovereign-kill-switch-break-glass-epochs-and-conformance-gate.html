@@ -1,0 +1,1152 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>The Sovereign Kill Switch: Break-Glass Epochs and the Conformance Gate | Blayne Aina</title>
+  <meta name="description" content="Any admitted caller can stop the machine. Only the local interactive-console owner surface can recover it—and uncertainty survives recovery.">
+  <link rel="canonical" href="https://blayneaina.com/08-sovereign-kill-switch-break-glass-epochs-and-conformance-gate/">
+
+  <!-- OpenGraph / Social -->
+  <meta property="og:type" content="article">
+  <meta property="og:title" content="The Sovereign Kill Switch: Break-Glass Epochs and the Conformance Gate">
+  <meta property="og:description" content="Any admitted caller can stop the machine. Only the local interactive-console owner surface can recover it—and uncertainty survives recovery.">
+  <meta property="og:url" content="https://blayneaina.com/08-sovereign-kill-switch-break-glass-epochs-and-conformance-gate/">
+  <meta property="og:site_name" content="Blayne Aina — The Route to Trusting AI">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="The Sovereign Kill Switch: Break-Glass Epochs and the Conformance Gate">
+  <meta name="twitter:description" content="Any admitted caller can stop the machine. Only the local interactive-console owner surface can recover it—and uncertainty survives recovery.">
+
+  <link rel="stylesheet" href="/style.css?v=20261106-wide-layout">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@500;700&family=Instrument+Serif:ital@0;1&family=Inter:wght@400;500;600;700;800&family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,500;0,6..72,600;1,6..72,400&family=JetBrains+Mono:wght@400;500&family=Plus+Jakarta+Sans:wght@600;700;800&display=swap" rel="stylesheet">
+</head>
+<body>
+  <div class="reading-progress-bar" id="progressBar"></div>
+
+  <header class="site-header">
+    <div class="header-inner">
+      <a href="/" class="brand">
+        <span class="brand-name">BLAYNE AINA</span>
+        <span class="brand-divider">/</span>
+        <span class="brand-tagline">The Route to Trusting AI</span>
+      </a>
+      <div class="header-actions">
+        <a href="/refusal-proof/" class="header-link">Proof</a>
+        <a href="/proof/README.md" class="header-link">Schemas</a>
+        <a href="https://github.com/SquadForge/blayne.aina" class="header-link" rel="noopener noreferrer">GitHub</a>
+        <button type="button" class="header-link header-search" id="quickSearchBtn" aria-label="Search articles and proof artifacts">Search</button>
+        <a href="/09-bring-one-real-boundary-work-with-blayne/" class="header-cta">Work With Blayne (§09)</a>
+        <button id="themeToggle" class="theme-btn" aria-label="Toggle theme">
+          <span class="theme-icon light">☀️</span>
+          <span class="theme-icon dark">🌙</span>
+        </button>
+        <button id="mobileMenuBtn" class="mobile-menu-btn" aria-label="Open navigation menu" aria-controls="sidebar" aria-expanded="false">☰</button>
+      </div>
+    </div>
+  </header>
+
+  <div class="candidate-ribbon" role="region" aria-label="Candidate identity and evaluation paths">
+    <div class="candidate-identity"><strong>EVALUATE BLAYNE</strong><span>Choose your path</span></div>
+    <nav class="candidate-links" aria-label="Evaluation paths">
+      <a href="/#career-snapshot">Recruiter &amp; Hiring Lead</a>
+      <a href="/refusal-proof/">Systems Engineer</a>
+      <a href="/#formal-confinement">AI Safety Researcher</a>
+      <a href="mailto:me@blayneaina.com" class="candidate-email">me@blayneaina.com</a>
+    </nav>
+  </div>
+  <div class="layout-container ">
+    <aside class="site-sidebar" id="sidebar">
+      <div class="sidebar-header">
+        <span class="sidebar-label">Architecture Series</span>
+        <span class="sidebar-date">October 2026</span>
+      </div>
+      <nav class="series-nav">
+        <ul>
+          <li class="">
+            <a href="/">
+              <span class="nav-num">§00</span>
+              <span class="nav-title">Series Overview & Thesis</span>
+            </a>
+          </li>
+          
+      <li class="">
+        <a href="/01-an-ai-output-is-not-an-act/">
+          <span class="nav-num">§01</span>
+          <span class="nav-title">An AI Output Is Not an Act</span>
+        </a>
+      </li>
+    
+      <li class="">
+        <a href="/02-zero-trust-document-ingestion-and-server-cut-evidence/">
+          <span class="nav-num">§02</span>
+          <span class="nav-title">Zero-Trust Document Ingestion</span>
+        </a>
+      </li>
+    
+      <li class="">
+        <a href="/03-eisa-four-gate-verdict-machine-and-entity-resolution/">
+          <span class="nav-num">§03</span>
+          <span class="nav-title">Semantic Switch & EISA</span>
+        </a>
+      </li>
+    
+      <li class="">
+        <a href="/04-the-room-why-git-and-chat-are-not-coordination-planes/">
+          <span class="nav-num">§04</span>
+          <span class="nav-title">The Room Coordination Plane</span>
+        </a>
+      </li>
+    
+      <li class="">
+        <a href="/05-expiry-is-not-fencing-typed-leases-and-kernel-write-exclusion/">
+          <span class="nav-num">§05</span>
+          <span class="nav-title">Expiry Is Not Fencing</span>
+        </a>
+      </li>
+    
+      <li class="">
+        <a href="/06-rollback-is-not-erasure-dual-tier-vaults-and-ungated-quarantine/">
+          <span class="nav-num">§06</span>
+          <span class="nav-title">Rollback Is Not Erasure</span>
+        </a>
+      </li>
+    
+      <li class="">
+        <a href="/07-defeating-approval-laundering-act-pinning-and-successor-grants/">
+          <span class="nav-num">§07</span>
+          <span class="nav-title">Defeating Approval Laundering</span>
+        </a>
+      </li>
+    
+      <li class="active">
+        <a href="/08-sovereign-kill-switch-break-glass-epochs-and-conformance-gate/">
+          <span class="nav-num">§08</span>
+          <span class="nav-title">The Sovereign Kill Switch</span>
+        </a>
+      </li>
+    
+        </ul>
+        <div class="sidebar-section-divider">
+          <span class="sidebar-label">Deploy & Evaluate</span>
+        </div>
+        <ul>
+          
+      <li class=" nav-commercial">
+        <a href="/09-bring-one-real-boundary-work-with-blayne/">
+          <span class="nav-num">→</span>
+          <span class="nav-title">AI-Native Builder, Fleet Orchestrator & FDE</span>
+        </a>
+      </li>
+    
+          <li>
+            <a href="mailto:me@blayneaina.com?subject=[RESEARCH]%20Independent%20Technical%20Evaluation">
+              <span class="nav-num">↗</span>
+              <span class="nav-title">Independent Evaluation [RESEARCH]</span>
+            </a>
+          </li>
+        </ul>
+      </nav>
+      <div class="sidebar-footer">
+        <div class="author-card">
+          <div class="author-name">Blayne Aina</div>
+          <div class="author-bio">By Blayne Aina · Principal Systems Architect and creator of AINA · October 31, 2026 · AINA Governance Specification</div>
+          <div class="author-bio">FDE · 11+ Years Customer-Embedded Delivery · USMC Veteran</div>
+          <a href="mailto:me@blayneaina.com" class="author-email">me@blayneaina.com</a>
+          <div class="author-contact">Blayne Aina · Denver, CO · <a href="mailto:me@blayneaina.com">me@blayneaina.com</a></div>
+          <a href="https://github.com/SquadForge/blayne.aina" class="author-contact" rel="noopener noreferrer">GitHub Repo (SquadForge/blayne.aina)</a>
+        </div>
+      </div>
+    </aside>
+
+    <main class="content-area">
+      <article class="prose-wrapper ">
+<header class="article-header">
+          <h1 class="article-title">The Sovereign Kill Switch: Break-Glass Epochs and the Conformance Gate</h1>
+          <p class="article-subtitle">Any admitted caller can stop the machine. Only the local interactive-console owner surface can recover it—and uncertainty survives recovery.</p>
+          <div class="article-meta">
+            <span class="meta-item author">By Blayne Aina</span>
+            <span class="meta-dot">·</span>
+            <span class="meta-item role">Principal Systems Architect and creator of AINA</span>
+            <span class="meta-dot">·</span>
+            <span class="meta-item date">October 31, 2026</span>
+            <span class="meta-dot">·</span>
+            <span class="meta-item tag">AINA Governance Specification</span>
+          </div>
+        </header>
+
+        
+    <section class="executive-brief" aria-label="Executive reading guide">
+      <div class="brief-label">Executive reading guide · 60 seconds</div>
+      <dl class="brief-grid">
+        <div class="brief-item">
+          <dt>Problem</dt>
+          <dd>A kill switch the agent can clear is not a boundary, and a green build does not prove the release enforces refusals.</dd>
+        </div>
+        <div class="brief-item">
+          <dt>What it proves</dt>
+          <dd>Latch-first containment, scoped epochs, observed Job termination, in-doubt recovery, and the 45-case candidate gate close the loop.</dd>
+        </div>
+        <div class="brief-item">
+          <dt>Commercial relevance</dt>
+          <dd>Use the Break-Glass &amp; Conformance Qualification Challenge on one containment or release requirement.</dd>
+        </div>
+        <div class="brief-item">
+          <dt>Next step</dt>
+          <dd>Article 09 turns the completed machine into a bounded deployment engagement.</dd>
+        </div>
+      </dl>
+    </section>
+  
+        
+        
+        
+  <aside class="portability-note" aria-label="Windows NT first and Linux POSIX mapping">
+    <div class="brief-label">SUBSTRATE PORTABILITY</div>
+    <h2>Windows NT first, with an OS-agnostic evidence and decision core</h2>
+    <p>The v1 reference binary, <code>squad.exe</code>, targets Windows NT because enterprise endpoints expose strict, explicit kernel primitives: mandatory file-share exclusion (<code>FILE_SHARE_READ</code>), Less Privileged App Containers (LPAC), Job Objects, and suspended pre-execution handle/PEB inspection through <code>CreateProcessW(CREATE_SUSPENDED)</code> and <code>PssCaptureSnapshot</code>. The reference runtime was built local-first on a single Windows workstation to make those guarantees inspectable.</p>
+    <p>EISA, RFC 8785 JCS canonicalization, SHA-256 evidence digests, and SQLite optimistic concurrency control are OS-agnostic. Linux/POSIX mappings are architectural counterparts, not claims of drop-in binary compatibility or identical enforcement semantics:</p>
+    <ol>
+      <li><strong>LPAC + Job Objects (§02/§08):</strong> Linux user namespaces, seccomp-bpf, Landlock LSM, and cgroups v2 (<code>cgroup.kill</code>).</li>
+      <li><strong>Win32 file-share exclusion (§05):</strong> Linux Open File Description locks (<code>F_OFD_SETLK</code>), fanotify permission events, and strict container mount namespaces.</li>
+      <li><strong>Suspended creation + PSS inspection (§07):</strong> <code>clone3()</code>/<code>pidfd_open()</code> stopped-start inspection with <code>/proc/&lt;pid&gt;/fd</code> and <code>/proc/&lt;pid&gt;/maps</code> verification before <code>execve</code> or signal continuation.</li>
+    </ol>
+    <p>Every target still requires its own conformance evidence for handle lifetimes, rename behavior, process containment, pre-existing capabilities, and crash recovery.</p>
+  </aside>
+
+
+        <div class="article-body">
+          <p>A kill switch that the agent can also clear is not a containment boundary. It is a pause button with an identity problem.</p>
+<p>Many agent systems expose stop and resume through the same API, dashboard, or tool surface. That symmetry is convenient until the actor being stopped can call the resume endpoint, an automated retry clears the latch, or a recovery routine silently converts an uncertain write into a success. A high-consequence system needs the opposite shape: stopping must be easy and safe; recovery must require a separate owner surface and a new lineage of authority.</p>
+<p>Article 07 fixed the act and fenced its execution. Article 08 governs the moment when execution must end. AINA publishes a containment latch before attempting cleanup, revokes matching authority through scoped control epochs, terminates owned Windows Jobs with observed quiescence, and carries every in-doubt operation forward. Recovery cannot invent an all-clear. Before a newly compiled <code>squad.exe</code> can be promoted, its own binary must also pass the 45-case boundary battery.</p>
+<pre><code class="language-text">permission to stop (safety)                ≠ permission to recover (local console authority)
+clearing a break-glass latch               ≠ resolving carried-forward in-doubt operations
+compiled release binary                    ≠ 45-case publication-qualified binary
+author-controlled binary conformance gate  ≠ independent third-party certification
+</code></pre>
+<blockquote>
+<p><strong>Anyone admitted may stop the machine. Only the owner console may recover it. Stop wins every race. Uncertainty remains evidence.</strong></p>
+</blockquote>
+<h2>One Stop, Three Races, No Invented All-Clear</h2>
+<p>Suppose a safety monitor engages a <strong>machine stop</strong> after an autonomous worker begins behaving anomalously. Three races now matter, and none can be resolved by a dashboard toggle:</p>
+<ol>
+<li><strong>Containment races cleanup.</strong> The latch reaches durable storage before AINA attempts to terminate owned runs or cancel queued wakes. One worker termination remains unconfirmed; the latch still closes new effects. The receipt reports the incomplete cleanup instead of converting it into either success or a rolled-back stop.</li>
+<li><strong>Recovery races unresolved effects.</strong> A destination mutation and a brokered model request were in flight when the stop landed. The owner-console recovery plan carries both forward as unresolved. Clearing the latch does not decide whether the provider or destination observed them, and it does not replay them.</li>
+<li><strong>Recovery races a new stop.</strong> While the owner is applying the plan, another monitor engages. Recovery clears only the latch names fixed in its plan and then rescans. The new latch survives; the machine enters <code>FROZEN_SAFE</code>, not a false all-clear.</li>
+</ol>
+<p>A <strong>project-scoped stop</strong> follows the same latch and recovery discipline without revoking unrelated projects: only authority covered by the later project revision is fenced. In both cases, the visible result is not merely “stopped.” It is a precise combination of latch state, observed worker quiescence, control lineage, and unresolved-effect evidence.</p>
+<h2>1. Asymmetric Containment</h2>
+<p>The emergency interface deliberately gives stop and recovery different authority.</p>
+<h3>Exhibit 8.1 — Stop versus recovery authority</h3>
+<pre><code class="language-text">ENGAGE: admitted CLI, MCP, monitor, peer, or operator
+  reason + machine | agent:&lt;name&gt; | project:&lt;canonical-root&gt;
+  → create and persist latch
+  → selected effect gates refuse new work
+  → stop owned runs and cancel queued wakes, reporting unconfirmed cleanup
+  → advance the matching control-epoch lineage
+
+RECOVER: local owner CLI only
+  → no ambient MCP session
+  → explicit --by operator
+  → stdin and stderr attached to a terminal
+  → durable recovery intent and unresolved-operation census
+  → new epoch, then exactly the pre-planned latches cleared
+  → rescan: any racing stop leaves the machine contained
+</code></pre>
+<p>Any admitted caller may invoke <code>engage</code> because refusal to stop is the more dangerous default. A nonempty reason is mandatory. The scope is normalized to <code>machine</code>, a lowercase <code>agent:&lt;name&gt;</code>, or a canonical absolute <code>project:&lt;root&gt;</code> directory. A malformed project scope or unresolvable root is refused before a latch is created.</p>
+<p><code>drain</code> and <code>recover</code> take the opposite path. <code>owner_surface_required</code> enforces three independent predicates:</p>
+<ol>
+<li><strong>No MCP session.</strong> If <code>session::current()</code> exists, recovery is refused. A model-connected tool session cannot satisfy the owner surface.</li>
+<li><strong>Explicit operator identity.</strong> The caller must supply <code>--by operator</code>; a worker or agent name is insufficient.</li>
+<li><strong>Interactive terminal handles.</strong> <code>interactive_console()</code> requires both standard input and standard error to satisfy Rust&#39;s <code>IsTerminal</code> test. Redirected scripts, scheduled jobs, pipe-driven subprocesses, and background tool calls fail closed.</li>
+</ol>
+<p>The third check is a <strong>local interactive-console gate</strong>, not biometric human verification. It does not establish who is physically present, and a hostile same-user process could allocate a pseudo-console. AINA&#39;s stronger hostile-worker boundary is confinement: the worker&#39;s separate operating-system identity has no access-control entry on the owner control directory. Terminal detection prevents accidental or well-meaning automated recovery; confinement supplies the operating-system boundary against the confined worker.</p>
+<h2>2. Latch-First Containment</h2>
+<p>An emergency stop must not depend on a database, a live server, a lease sweep, a successful process kill, or a final audit write. Those steps can fail precisely when containment is needed.</p>
+<h3>Exhibit 8.2 — Publication before cleanup</h3>
+<pre><code class="language-text">machine scope:
+  create_new(final latch) → write complete JSON → sync_all → contained
+
+agent/project scope:
+  create_new(staging latch) → write complete JSON → sync_all
+  → hard_link(staging, final latch) → contained
+  → best-effort staging cleanup
+
+after either path reaches the active latch:
+  → run and Job stopping
+  → queued-wake cancellation
+  → control-epoch advancement
+  → WAL and Room integrity evidence
+
+secondary failure = warning + engaged latch, never rollback to &quot;not stopped&quot;
+</code></pre>
+<p>The distinction matters. A <strong>machine latch</strong> is created directly at its final path with <code>create_new</code>, written, and flushed with <code>sync_all</code>. A <strong>scoped latch</strong> is first written to <code>.breakglass-stage-{id}.json</code>, flushed, and then published with <code>hard_link</code> so another process cannot observe a partial scoped body and misinterpret it as a machine-wide stop.</p>
+<p>Once the active latch exists, the selected scope is contained. Everything after that point is lineage and evidence. <code>kill_all_live_runs</code> performs an ownership-bound run-ledger sweep; <code>cancel_scoped_jobs</code> cancels matching queued wakes; their receipts record whether every stop or cancellation was confirmed. Errors enter <code>warnings</code>. They do not remove the latch or return a false <code>engaged: false</code>.</p>
+<p>Latch reads also fail toward containment. The directory entry&#39;s existence is the stop signal; its JSON body is evidence. An unreadable, malformed, or manually created empty entry is interpreted as a <strong>machine-scope latch</strong>, not ignored. An unreadable latch directory, corrupt emergency state, or corrupt epoch record likewise closes the gate. A missing latch directory and missing state file mean no emergency has been declared.</p>
+<p>Agent-scoped matching does not trust an environment variable that a subprocess could unset or rewrite. It uses the bound session identity; if that identity is unprovable, every agent latch contains the subject rather than allowing it to slip beneath the fence. Project matching uses normalized path boundaries, and unknown scope kinds fail closed.</p>
+<h3>Exhibit 8.3 — Sanitized scoped latch record</h3>
+<pre><code class="language-json">{
+  &quot;kind&quot;: &quot;breakglass_latch&quot;,
+  &quot;id&quot;: &quot;latch_demo7f2a&quot;,
+  &quot;scope&quot;: &quot;agent:example-worker&quot;,
+  &quot;by&quot;: &quot;safety-monitor&quot;,
+  &quot;reason&quot;: &quot;demonstration: anomalous controlled action&quot;,
+  &quot;pid&quot;: 24018,
+  &quot;session&quot;: {
+    &quot;bound&quot;: &quot;example-worker&quot;,
+    &quot;tier&quot;: &quot;governed&quot;
+  },
+  &quot;ts&quot;: &quot;2026-10-31T20:10:00Z&quot;
+}
+</code></pre>
+<p>This record is illustrative; containment does not depend on parsing it successfully.</p>
+<h3>Owned Jobs must be observed stopped</h3>
+<p>New effects are refused synchronously at their enforcement points. Already-running managed workers need a second mechanism. Each squad process watches its owned Windows Job Objects on a one-second control loop. A latch, lost owner permit, changed Room lineage, revoked grant, poisoned registry, or panicked admission check produces a stop order; uncertainty never widens authority.</p>
+<p>The observer calls <code>TerminateJobObject</code>, then queries the Job&#39;s <strong>current active-process count</strong>. A successful termination call is not itself proof of quiescence. Only a fresh count of zero confirms the stop. A nonzero count or failed query remains pending and is retried. Room stop evidence is captured in two phases—first while termination is unconfirmed, then after observed zero—without allowing evidence I/O to delay the stop order.</p>
+<aside class="context-callout" aria-label="Linux and POSIX kernel counterparts">
+  <h2>Linux / POSIX Kernel Counterparts</h2>
+  <p><code>TerminateJobObject</code> + <code>LPAC</code> containment maps on Linux to <code>cgroups v2</code> (<code>cgroup.kill</code> atomic group termination), <code>user_namespaces</code>, <code>seccomp-bpf</code>, and <code>Landlock LSM</code>.</p>
+</aside><h3>“Latched” is not the same as “fully reconciled”</h3>
+<p>The status surface derives its phase from fresh observations rather than treating the last written state as the whole truth. For a contained machine, the distinction is:</p>
+<table>
+<thead>
+<tr>
+<th>Derived phase</th>
+<th>What the current evidence says</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><code>KILLING</code></td>
+<td>An affected owned Job is not yet observed quiescent, a Job census failed, or a live server does not implement the current break-glass observation protocol.</td>
+</tr>
+<tr>
+<td><code>RECONCILING</code></td>
+<td>Quiescence and protocol coverage are established, but an unresolved file, destination, or model operation remains—or its registry cannot be read.</td>
+</tr>
+<tr>
+<td><code>FROZEN_SAFE</code></td>
+<td>The machine remains contained, affected Jobs and server coverage are confirmed, and the three unresolved-operation censuses are readable and empty.</td>
+</tr>
+</tbody></table>
+<p>Live legacy servers appear explicitly in <code>uncovered_servers</code>; they cannot be silently counted as covered. <code>affected_worker_quiescence_confirmed</code> requires both affected-Job quiescence and the absence of uncovered servers. This is why AINA can say “new effects are fenced” without prematurely saying “every worker is gone and every effect is understood.”</p>
+<p>This is stronger than sending a request and hoping the worker cooperates. It is still scoped to owned Jobs and governed effects. AINA does not claim to terminate every unrelated process on the host or recall an effect already delivered to an external system.</p>
+<h2>3. Control Epochs Revoke Authority, Not Just Processes</h2>
+<p>A latch closes new-effect gates immediately. Control epochs handle a different problem: authority that was minted before the stop must not remain usable after the relevant boundary advances.</p>
+<p><code>epoch.json</code> stores a global issue sequence plus a revision map for <code>machine</code>, <code>agent:&lt;name&gt;</code>, and <code>project:&lt;root&gt;</code> scopes. Leases, sealed wake jobs, and successor-grant receiving tenancies carry the issue sequence under which they were created.</p>
+<p>The rule is not simply “lease epoch must equal the latest global number.” That would incorrectly revoke unrelated work after every scoped stop. Instead:</p>
+<blockquote>
+<p>An authority is revoked when a <strong>matching</strong> machine, agent, or project scope has a later revision than the authority&#39;s issue epoch.</p>
+</blockquote>
+<p>A future issue sequence is also rejected as an unknown lineage. A scoped stop therefore kills matching old authority without waiting for its TTL, while unrelated scopes retain their authority. Recovery advances the selected scope again so pre-recovery authority cannot revive.</p>
+<h3>Exhibit 8.4 — Scoped revocation map</h3>
+<table>
+<thead>
+<tr>
+<th>Artifact</th>
+<th>Carried lineage</th>
+<th>Recheck at the boundary</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>Resource lease</td>
+<td><code>Lease.control_epoch</code></td>
+<td><code>validate_tenancy</code> checks expiry, current generation, and matching scope revision</td>
+</tr>
+<tr>
+<td>Room wake job</td>
+<td>sealed <code>control_epoch</code></td>
+<td>Dispatch re-derives task/Room/project standing and refuses revoked lineage</td>
+</tr>
+<tr>
+<td>Result-grant receiving tenancy</td>
+<td><code>Recipient.control_epoch</code></td>
+<td>Current exact lease, generation, and scope epoch must still match</td>
+</tr>
+<tr>
+<td>Destination mutation</td>
+<td>current lease and <code>RequestedAct</code> authority</td>
+<td>Commit refuses stale tenancy or changed authority</td>
+</tr>
+</tbody></table>
+<h3>WAL before snapshot</h3>
+<p><code>advance_epoch</code> runs under the short control-record transaction and, during engage/recovery, the lease transition guard. It:</p>
+<ol>
+<li>Reads the current epoch and per-scope revisions.</li>
+<li>Computes <code>next = prior + 1</code>, refusing integer exhaustion.</li>
+<li>Appends an <code>epoch_advance</code> record to <code>breakglass.wal.jsonl</code> and flushes it.</li>
+<li>Atomically rewrites <code>epoch.json</code> with the new sequence and scope map.</li>
+<li>Reads the epoch back and refuses an unconfirmed result.</li>
+</ol>
+<p>The write-ahead log (WAL) is the durable intent sequence. On subsequent reads, a WAL high-water mark ahead of the snapshot means the snapshot cannot be trusted as current; gates fail closed rather than rolling authority back. A discontinuous or corrupt WAL is never skipped.</p>
+<p>Owner recovery may reconcile an interrupted snapshot from a valid WAL lineage. Before replacing the old image, it preserves the prior bytes under <code>recovery-evidence/epoch-&lt;sha256&gt;.bin</code> with create-new, flush, and readback verification. It also refuses reconstruction if any live lease claims an epoch newer than the recoverable journal. Ordinary gates never “repair” uncertainty into fresh authority.</p>
+<h3>Exhibit 8.5 — Sanitized epoch-advance record</h3>
+<pre><code class="language-json">{
+  &quot;kind&quot;: &quot;epoch_advance&quot;,
+  &quot;prior_epoch&quot;: 8,
+  &quot;new_epoch&quot;: 9,
+  &quot;scope&quot;: &quot;agent:example-worker&quot;,
+  &quot;scope_epochs&quot;: {
+    &quot;machine&quot;: 6,
+    &quot;agent:example-worker&quot;: 9,
+    &quot;project:/srv/unrelated&quot;: 8
+  },
+  &quot;cause&quot;: &quot;engage&quot;,
+  &quot;by&quot;: &quot;safety-monitor&quot;,
+  &quot;reason&quot;: &quot;demonstration: revoke this agent without stopping unrelated work&quot;,
+  &quot;pid&quot;: 24018,
+  &quot;ts&quot;: &quot;2026-10-31T20:10:01Z&quot;
+}
+</code></pre>
+<p>The global sequence is 9; only authority covered by the later <code>agent:example-worker</code> revision is revoked. The unrelated project is not collateral damage.</p>
+<h2>4. Managed Drain and In-Doubt Recovery</h2>
+<p>Immediate engage is not the only controlled-stop mode. <code>drain</code> supports a bounded window in which already <strong>durably prepared</strong> effects may finish. It requires the same owner console and an already-engaged machine latch, so new effects are refused before the drain begins. The deadline must be between 1 and 3,600 seconds. While the deadline is valid, the gate is <code>DRAINING</code>; after it expires, the state is contained as <code>FROZEN_SAFE</code>.</p>
+<p>Drain is therefore not a grace period for new work. It is a bounded completion window for effects whose preparation was already durable.</p>
+<h3>Recovery starts with a census, not amnesia</h3>
+<p>A crash can strand an operation between “dispatched” and “outcome observed.” Clearing a latch cannot establish which side of that boundary the destination reached.</p>
+<p><code>recover_plan</code> re-proves the owner surface, requires a reason, fixes the exact scope and latch names, and queries three independent operation registries:</p>
+<ul>
+<li><code>unresolved_file_operations()</code> for protected file writes without an established outcome;</li>
+<li><code>destinations::unresolved_operations()</code> for nonterminal destination mutations;</li>
+<li><code>model_egress::unresolved()</code> for brokered model requests whose provider-side outcome is unsettled.</li>
+</ul>
+<p>The results become <code>carried_forward_operations</code> in a durable WAL <code>recovery_intent</code>. A registry-read error is preserved as an error entry rather than silently omitted. These operations remain individually blocking and must be reconciled under fresh authority. Recovery neither retries them blindly nor marks them complete.</p>
+<h3>Exhibit 8.6 — Recovery intent preserves uncertainty</h3>
+<pre><code class="language-json">{
+  &quot;kind&quot;: &quot;recovery_intent&quot;,
+  &quot;by&quot;: &quot;operator&quot;,
+  &quot;reason&quot;: &quot;demonstration: containment investigated; resume without replaying uncertainty&quot;,
+  &quot;scope&quot;: &quot;machine&quot;,
+  &quot;latches&quot;: [
+    &quot;latch_demo7f2a.json&quot;
+  ],
+  &quot;carried_forward_operations&quot;: [
+    {
+      &quot;kind&quot;: &quot;destination_operation&quot;,
+      &quot;operation&quot;: {
+        &quot;operation_id&quot;: &quot;op_demo_sqlite_01&quot;,
+        &quot;status&quot;: &quot;in_doubt&quot;
+      }
+    },
+    {
+      &quot;kind&quot;: &quot;model_request&quot;,
+      &quot;operation&quot;: {
+        &quot;operation_id&quot;: &quot;req_demo_01&quot;,
+        &quot;route&quot;: &quot;owner-approved-analysis&quot;,
+        &quot;latest_outcome&quot;: null
+      }
+    }
+  ],
+  &quot;ts&quot;: &quot;2026-10-31T20:20:00Z&quot;
+}
+</code></pre>
+<p>The runtime invariant engine also has a separate <code>find_indoubt(now, ttl)</code> query for intentions older than a declared window. That age-based detector complements the operation census; it does not replace destination-specific reconciliation.</p>
+<h3>Stop beats recovery on a race</h3>
+<p><code>recover_apply</code> proves the console gate again. For machine recovery it writes <code>RECOVERY_PENDING</code>, then advances the selected epoch under the lease transition guard. Only after that new lineage exists does it move the <strong>pre-planned latch names</strong> into <code>breakglass.cleared/epoch-{new_epoch}/</code>.</p>
+<p>It then rereads the active latch directory. If another engage arrived during recovery, that latch was not in the original plan and survives. A remaining machine-covering latch produces <code>FROZEN_SAFE</code>; the receipt reports <code>recovered: false</code>. There is no false all-clear window.</p>
+<h3>Exhibit 8.7 — Racing stop leaves <code>FROZEN_SAFE</code></h3>
+<pre><code class="language-json">{
+  &quot;state&quot;: &quot;FROZEN_SAFE&quot;,
+  &quot;by&quot;: &quot;operator&quot;,
+  &quot;reason&quot;: &quot;an engage raced this recovery; the machine is still latched&quot;,
+  &quot;since&quot;: &quot;2026-10-31T20:20:02Z&quot;
+}
+</code></pre>
+<p>If the closing WAL receipt cannot be written after recovery has already occurred, the receipt carries a warning rather than pretending recovery failed and inviting a repeated transition. Evidence failure does not rewrite the physical outcome.</p>
+<h2>5. The Candidate-Binary Publication Gate</h2>
+<p>Containment architecture is only as credible as the binary that implements it. A green build proves compilation. It does not prove that the release artifact refuses stale generations, impersonation, cross-project reads, altered proposals, damaged recovery objects, or evidence tampering.</p>
+<p>Stage 2b of the package pipeline therefore runs the <strong>newly compiled candidate&#39;s own</strong> <code>conformance</code> verb. The old publishing driver does not lend it a previously compiled test battery: the harness and the boundary implementation ship in the same candidate image.</p>
+<h3>Exhibit 8.8 — Candidate qualification sequence</h3>
+<pre><code class="language-text">Cargo builds isolated candidate images
+  → candidate surface checks bind harness SHA-256 and target SHA-256
+  → candidate and Room companion report the same current source digest
+  → spawn candidate conformance with CREATE_NO_WINDOW
+       stdin null; stdout/stderr piped and drained
+       owned ConformanceChild with cancellation on drop
+       30-minute outer timeout; 90-second MCP-session deadline
+       build-lease heartbeat during the run
+  → require successful exit, valid JSON report, and ok == true
+  → re-check current source and publisher/candidate compiled identity
+  → copy, verify installed surfaces, update checksums, compare post-copy hashes
+  → write package result and release the build lease
+
+any failure before promotion: no installed image changed by the candidate
+publication never automatically replays deferred Room wakes
+</code></pre>
+<p>The outer loop polls every 100 ms. The owned-child wrapper requests cancellation on timeout, heartbeat loss, or another early return. On Windows, cancellation targets the exact child PID and its descendants, not a process name; the direct child handle remains alive during cleanup. Pipe readers are drained so inherited pipe handles cannot turn a bounded test into an unbounded join. <code>CREATE_NO_WINDOW</code> suppresses a new console window; the conformance child is <strong>not</strong> represented as a dedicated Job Object.</p>
+<p>The two clocks have different scopes. The <strong>30-minute outer timeout</strong> bounds the candidate run. The <strong>90-second deadline</strong> belongs to an interactive MCP session used inside the battery and can be extended for multi-step work; it is not a separate 90-second ceiling imposed on each of the 45 cases.</p>
+<p>The default battery contains <strong>25 governance/execution cases and 20 evidence cases</strong>. Each case drives the binary through isolated throwaway state. For the governance battery, refusal is usually the pass condition: an agent willing to follow instructions is not evidence that the boundary enforces refusal. The evidence battery includes positive fidelity proofs as well as negative tamper and access cases.</p>
+<h3>The complete 45-case inventory</h3>
+<table>
+<thead>
+<tr>
+<th align="right">#</th>
+<th>Emitted case ID</th>
+<th>What must hold</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="right">1</td>
+<td><code>impersonation_refused</code></td>
+<td>A bound session cannot act as another owner.</td>
+</tr>
+<tr>
+<td align="right">2</td>
+<td><code>altered_proposal_conflict</code></td>
+<td>Reusing an operation ID with a different payload is refused.</td>
+</tr>
+<tr>
+<td align="right">3</td>
+<td><code>stale_generation_refused</code></td>
+<td>An edit fencing an old ownership generation is rejected.</td>
+</tr>
+<tr>
+<td align="right">4</td>
+<td><code>concurrent_edit_conflict</code></td>
+<td>A scope actively held by another agent cannot be acquired.</td>
+</tr>
+<tr>
+<td align="right">5</td>
+<td><code>interrupted_call_blocks_target</code></td>
+<td>An unresolved prepared operation holds its target for reconciliation.</td>
+</tr>
+<tr>
+<td align="right">6</td>
+<td><code>damaged_recovery_refused</code></td>
+<td>Mismatched or damaged recovery bytes never reach the target; an intact image restores and reads back.</td>
+</tr>
+<tr>
+<td align="right">7</td>
+<td><code>acceptance_failed_keeps_task_open</code></td>
+<td>Completion is refused when the acceptance check fails against the actual artifact.</td>
+</tr>
+<tr>
+<td align="right">8</td>
+<td><code>reader_roster_denied</code></td>
+<td>A recipient outside the owner&#39;s graph-reader roster receives no delivery and reads nothing.</td>
+</tr>
+<tr>
+<td align="right">9</td>
+<td><code>cross_project_read_refused</code></td>
+<td>One project reads its own file but cannot read another open project&#39;s file or receive its content.</td>
+</tr>
+<tr>
+<td align="right">10</td>
+<td><code>destination_call_outside_task_scope_refused</code></td>
+<td>A direct record change outside the claimed row task is refused and the row remains unchanged.</td>
+</tr>
+<tr>
+<td align="right">11</td>
+<td><code>junction_and_spelling_redirect_refused</code></td>
+<td>Junction redirection outside the project and parent-traversal spellings are refused without changing the outside file.</td>
+</tr>
+<tr>
+<td align="right">12</td>
+<td><code>native_write_without_lease_refused</code></td>
+<td>A native write without an active lease never reaches the file.</td>
+</tr>
+<tr>
+<td align="right">13</td>
+<td><code>doc_source_drift_refused</code></td>
+<td>Registered documents serve only exact content; drift refuses reads and task bindings.</td>
+</tr>
+<tr>
+<td align="right">14</td>
+<td><code>cooldown_deferred_work_retained</code></td>
+<td>Typed damper deferral retains the exact sealed second-send job; retries cannot poison retained work.</td>
+</tr>
+<tr>
+<td align="right">15</td>
+<td><code>tier_ceiling_refused</code></td>
+<td>A <code>safe_read</code> session cannot invoke a mutating tool.</td>
+</tr>
+<tr>
+<td align="right">16</td>
+<td><code>post_cancellation_refused</code></td>
+<td>After the stop is pulled, no new controlled action executes.</td>
+</tr>
+<tr>
+<td align="right">17</td>
+<td><code>stopped_authority_cannot_revive</code></td>
+<td>A project stop spares other projects, refuses its project, and keeps pre-stop leases dead after clearance while fresh tenancy can write.</td>
+</tr>
+<tr>
+<td align="right">18</td>
+<td><code>room_control_operator_required</code></td>
+<td>An ordinary Room participant cannot perform a Room control act.</td>
+</tr>
+<tr>
+<td align="right">19</td>
+<td><code>room_recreate_roster_refused</code></td>
+<td>Room recreation cannot silently replace the roster; deliberate replacement needs operator standing and the roster survives both paths.</td>
+</tr>
+<tr>
+<td align="right">20</td>
+<td><code>exec_start_takeover_refused</code></td>
+<td>Another agent cannot restart—and thereby take over—a paused execution.</td>
+</tr>
+<tr>
+<td align="right">21</td>
+<td><code>planning_wake_target_bound</code></td>
+<td>No named target means no wake; naming another lane is refused as a wake request rather than treated as impersonation.</td>
+</tr>
+<tr>
+<td align="right">22</td>
+<td><code>profile_credential_owner_surface</code></td>
+<td>Credential storage and fleet diagnostics require operator standing, profile views bind to the caller, and a worker can still query its own requirements.</td>
+</tr>
+<tr>
+<td align="right">23</td>
+<td><code>session_lane_bound</code></td>
+<td>Driving another agent&#39;s IDE lane is refused while naming one&#39;s own lane remains permitted.</td>
+</tr>
+<tr>
+<td align="right">24</td>
+<td><code>prompt_redaction_holds</code></td>
+<td>A planned Room wake prompt redacts every universal credential shape without dropping the prompt or leaking a secret body.</td>
+</tr>
+<tr>
+<td align="right">25</td>
+<td><code>tool_result_redaction_holds</code></td>
+<td>Credential-shaped Room content is redacted across receipts, feeds, and echoed errors while the feed remains valid JSON and available.</td>
+</tr>
+<tr>
+<td align="right">26</td>
+<td><code>evidence_jcs_rfc8785_vectors</code></td>
+<td>Canonical serializations match the RFC 8785 object and number vectors.</td>
+</tr>
+<tr>
+<td align="right">27</td>
+<td><code>evidence_corpus_through_mcp</code></td>
+<td>Every corpus document produces its expected extraction, omissions, stories, nodes, values, formulas, visibility, or typed failure through the parser worker.</td>
+</tr>
+<tr>
+<td align="right">28</td>
+<td><code>evidence_governing_pdf_six_pages</code></td>
+<td>The governing PDF yields six nonempty pages, complete-for-profile extraction, expected text, and complete bounded delivery.</td>
+</tr>
+<tr>
+<td align="right">29</td>
+<td><code>evidence_repeated_text_resolves_each_node</code></td>
+<td>Repeated text is ambiguous until occurrence is named; each resulting handle resolves to its own node.</td>
+</tr>
+<tr>
+<td align="right">30</td>
+<td><code>evidence_drift_refused</code></td>
+<td>Altered source bytes refuse both reading and handle resolution as <code>drifted</code>.</td>
+</tr>
+<tr>
+<td align="right">31</td>
+<td><code>evidence_tampered_view_refused</code></td>
+<td>A tampered committed view is refused with <code>view_digest_mismatch</code>.</td>
+</tr>
+<tr>
+<td align="right">32</td>
+<td><code>evidence_old_view_survives_extraction_change</code></td>
+<td>A new extraction identity creates a new view while the old handle still resolves its original view.</td>
+</tr>
+<tr>
+<td align="right">33</td>
+<td><code>evidence_bad_selector_refused</code></td>
+<td>Bad selectors, paths, raw hashes, unknown handles, and reserved extensions receive typed refusals.</td>
+</tr>
+<tr>
+<td align="right">34</td>
+<td><code>evidence_unauthorized_dereference_refused</code></td>
+<td>A caller outside the Room owner roster cannot dereference evidence.</td>
+</tr>
+<tr>
+<td align="right">35</td>
+<td><code>evidence_truncation_in_delivery_status</code></td>
+<td>Bounded delivery explicitly reports chunked or truncated status with counts.</td>
+</tr>
+<tr>
+<td align="right">36</td>
+<td><code>evidence_excerpt_stays_distinct</code></td>
+<td>An agent-supplied excerpt remains <code>agent_supplied</code> and cannot assume the requirement role.</td>
+</tr>
+<tr>
+<td align="right">37</td>
+<td><code>evidence_echo_lineage_preserved</code></td>
+<td>Echo citations remain echoes grounded in their first-hand origin rather than becoming independent evidence.</td>
+</tr>
+<tr>
+<td align="right">38</td>
+<td><code>evidence_distinct_origins_through_three_hops</code></td>
+<td>Three records through echoes count as one origin; a second first-hand reader makes two.</td>
+</tr>
+<tr>
+<td align="right">39</td>
+<td><code>evidence_false_predicate_fails_receipt</code></td>
+<td>A false typed predicate fails evaluation while the finding remains recorded as failed matter.</td>
+</tr>
+<tr>
+<td align="right">40</td>
+<td><code>evidence_absence_requires_complete_inventory</code></td>
+<td>Absence is refused until every unknown-coverage marker is acknowledged.</td>
+</tr>
+<tr>
+<td align="right">41</td>
+<td><code>evidence_correspondence_keeps_old_handle</code></td>
+<td>Adopting correspondence issues a new handle without retargeting the old handle&#39;s view.</td>
+</tr>
+<tr>
+<td align="right">42</td>
+<td><code>evidence_reassessment_flags</code></td>
+<td>Source and requirement revisions flag dependents until reassessment is answered.</td>
+</tr>
+<tr>
+<td align="right">43</td>
+<td><code>evidence_staged_visibility_reveal</code></td>
+<td>A <code>collaborative_pass</code> finding remains withheld until reveal, and the reveal states its limit.</td>
+</tr>
+<tr>
+<td align="right">44</td>
+<td><code>evidence_origin_gate</code></td>
+<td>Task completion is refused until a requirement rests on the required number of distinct origins.</td>
+</tr>
+<tr>
+<td align="right">45</td>
+<td><code>evidence_capture_provenance_chain</code></td>
+<td>A capture records every redirect hop, status, location, and security headers, with each hop egress-authorized.</td>
+</tr>
+</tbody></table>
+<p>The corpus case expands into 37 synthetic document fixtures; the JCS case expands into the RFC&#39;s individual vectors. They still count as one case each in the 45-case publication battery.</p>
+<h2>6. What the Gate Proves—and What It Cannot</h2>
+<p>The release gate closes an important bootstrapping hole. The candidate carries its own inventory and enforcement code, the surface receipt binds the expected harness and target image hashes, and the source digest is checked before and after a potentially long run. Losing the package build lease stops the path to promotion. Post-copy checks then compare the installed artifacts and their checksums rather than assuming a copy succeeded faithfully.</p>
+<p>The report is simple: each case records its ID, expectation, observation, and Boolean pass; <code>ok</code> is true only when no case failed. A nonzero candidate exit, malformed report, failed case, timeout, or heartbeat failure refuses publication.</p>
+<h3>Exhibit 8.9 — Publication summary shape</h3>
+<pre><code class="language-json">{
+  &quot;ok&quot;: true,
+  &quot;total&quot;: 45,
+  &quot;failed&quot;: 0,
+  &quot;note&quot;: &quot;boundary battery against the shipped binary in isolated throwaway state; refusals are the pass condition&quot;
+}
+</code></pre>
+<p>That shape is not a claim of universal assurance. The 45 cases are an <strong>author-controlled, end-to-end release-qualification gate against the candidate binary</strong>. They are not independent third-party certification, a formal proof of the whole system, exhaustive topology coverage, or evidence that no defect exists outside the exercised vectors.</p>
+<p>The same honesty applies to containment. A latch and epoch cannot un-send a webhook, reverse a committed third-party database transaction, or erase data already disclosed. Local control files also cannot survive a hostile administrator deleting the underlying volume. AINA governs declared boundaries and preserves uncertainty; it does not claim physical irreversibility or universal host control.</p>
+<table>
+<thead>
+<tr>
+<th>Primitive or test mechanism</th>
+<th>What it establishes</th>
+<th>What AINA adds—and refuses to infer</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>Rust <code>IsTerminal</code> / console handles</td>
+<td>Whether standard handles belong to a terminal</td>
+<td>Combines terminal detection with no MCP session, explicit operator identity, and OS confinement; terminal presence alone is not human identity.</td>
+</tr>
+<tr>
+<td><code>CreateHardLinkW</code> / <code>std::fs::hard_link</code></td>
+<td>Atomic publication of a directory entry</td>
+<td>Uses it for complete scoped latches after flush; machine latches use direct final-path creation. Filesystem publication does not prove worker quiescence.</td>
+</tr>
+<tr>
+<td><code>TerminateJobObject</code> plus Job accounting</td>
+<td>A termination request and separately queried Job state</td>
+<td>Requires a fresh active-process count of zero, retains two-phase stop evidence, and exposes uncovered servers instead of assuming full coverage.</td>
+</tr>
+<tr>
+<td>Candidate-controlled conformance report</td>
+<td>The candidate&#39;s observed results for its embedded inventory</td>
+<td>Binds image/source identities, bounds the child, requires every case to pass, and still labels the result author-controlled release qualification.</td>
+</tr>
+</tbody></table>
+<p><strong>Evidence availability and performance boundary:</strong> latch, WAL, epoch, Job-census, stop-outbox, recovery, candidate-surface, and package records are <code>CONTROLLED</code> for qualified, method-scoped technical review, with adverse findings permitted. They are not unrestricted public downloads or independent validation. The one-second observer is a polling cadence, not a universal worst-case stop-latency guarantee; the 30-minute and 90-second conformance clocks are test bounds, not production recovery-time or recovery-point objectives. Actual containment and publication latency must be measured for the host, worker count, filesystem, destination mix, and release topology.</p>
+<h2>The Break-Glass &amp; Conformance Qualification Challenge</h2>
+<p>The <strong>Break-Glass &amp; Conformance Qualification Challenge</strong> uses one AI workflow that needs emergency containment or release qualification. It demonstrates a scoped stop with stale-authority refusal, explicit handling of unconfirmed cleanup, an unresolved-operation recovery plan, a stop-versus-recovery race, and a candidate-gate coverage review.</p>
+<p>The challenge excludes independent certification, universal external-effect reversal, universal host control, and an unmeasured production recovery objective. Deployment and paid pilots are separately scoped; independent evaluation remains outside the commercial ladder through <a href="https://blayneaina.com/09-bring-one-real-boundary-work-with-blayne/">Article 09</a>.</p>
+<h2>The Fourteen Containment and Assurance Claims</h2>
+<table>
+<thead>
+<tr>
+<th>ID</th>
+<th>Claim</th>
+<th>Evidence and ceiling</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><code>08-C01</code></td>
+<td>Any admitted caller can engage a validated stop with a mandatory reason</td>
+<td>Implemented and author-verified for machine, agent, and canonical project scopes</td>
+</tr>
+<tr>
+<td><code>08-C02</code></td>
+<td>The active latch is persisted before secondary cleanup; scoped latches use staging and hard-link publication</td>
+<td>Implemented and author-verified; machine latches use direct final-path creation</td>
+</tr>
+<tr>
+<td><code>08-C03</code></td>
+<td>Cleanup, epoch, WAL, or signal failures after latching do not roll back containment</td>
+<td>Implemented and author-verified through warnings and engaged receipts</td>
+</tr>
+<tr>
+<td><code>08-C04</code></td>
+<td>Drain and recovery require no MCP session, explicit operator identity, and interactive stdin/stderr</td>
+<td>Implemented and author-verified as a local console surface</td>
+</tr>
+<tr>
+<td><code>08-C05</code></td>
+<td>Console detection is not biometric proof or a complete defense against a hostile same-user process</td>
+<td>Explicit ceiling; worker confinement supplies the OS identity boundary</td>
+</tr>
+<tr>
+<td><code>08-C06</code></td>
+<td>Epoch intent is WAL-durable before atomic snapshot replacement and readback</td>
+<td>Implemented and author-verified; interrupted lineage fails closed and has console-gated reconciliation</td>
+</tr>
+<tr>
+<td><code>08-C07</code></td>
+<td>Later matching scope revisions revoke old authority without waiting for TTL</td>
+<td>Implemented and author-verified for leases, wakes, and receiving tenancies; unrelated scopes survive</td>
+</tr>
+<tr>
+<td><code>08-C08</code></td>
+<td>Managed Job termination requires a fresh active-process count of zero</td>
+<td>Implemented and author-verified; termination-call success alone is not quiescence evidence</td>
+</tr>
+<tr>
+<td><code>08-C09</code></td>
+<td>Recovery carries unresolved file, destination, and model operations forward</td>
+<td>Implemented and author-verified; no carried operation is marked complete by latch clearance</td>
+</tr>
+<tr>
+<td><code>08-C10</code></td>
+<td>Drain admits only durably prepared effects for a bounded interval after a machine stop</td>
+<td>Implemented and author-verified for 1–3,600-second deadlines; new effects remain refused</td>
+</tr>
+<tr>
+<td><code>08-C11</code></td>
+<td>A stop racing machine recovery survives and produces <code>FROZEN_SAFE</code></td>
+<td>Implemented and author-verified through exact planned-name clearance and post-clearance rescan</td>
+</tr>
+<tr>
+<td><code>08-C12</code></td>
+<td>Candidate conformance runs as an owned, bounded child under a live package build lease</td>
+<td>Implemented and author-verified with timeout, heartbeat, output draining, and cancellation</td>
+</tr>
+<tr>
+<td><code>08-C13</code></td>
+<td>The default candidate battery contains 25 governance and 20 evidence cases</td>
+<td>Implemented and author-verified against the binary in isolated state with source/image identity checks</td>
+</tr>
+<tr>
+<td><code>08-C14</code></td>
+<td>Passing the battery is release qualification, not independent certification or exhaustive proof</td>
+<td>Explicit assurance ceiling, preserved in publication evidence</td>
+</tr>
+</tbody></table>
+<h2>The Article 08 Claim Card</h2>
+<pre><code class="language-text">Mechanism:
+  AINA Sovereign Containment and Candidate-Binary Assurance
+  (latch-first break-glass, scoped control epochs, owned-Job observation,
+   in-doubt recovery, interactive owner recovery, 45-case publication gate)
+
+Failure it governs:
+  Agents or scripts clearing their own emergency stop;
+  stale authority surviving after a matching stop;
+  successful termination calls mistaken for observed quiescence;
+  uncertain operations erased or blindly replayed during recovery;
+  stop/recovery races and unqualified release-binary promotion.
+
+Positive path:
+  engage and persist latch
+  → refuse new effects and observe owned-worker termination
+  → append epoch intent and publish the scoped lineage
+  → census and carry forward unresolved operations
+  → owner-console recovery with a new epoch and post-clearance rescan
+  → candidate source/image binding + 45 passing cases
+  → verified publication and post-copy hashes.
+
+Refusal / hold path:
+  owner_control_required, break_glass_contained, stale_control_epoch,
+  control_epoch_unconfirmed, control_wal_corrupt,
+  unresolved file/destination/model operation,
+  FROZEN_SAFE after a racing engage,
+  candidate timeout, lease-heartbeat loss, failed case, or ok != true.
+
+Evidence status:
+  Implemented and Author-Verified on the declared Windows reference path.
+  Official platform documentation establishes primitive behavior, not independent
+  validation of AINA. The 45 cases are author-controlled release qualification.
+
+Verifier and artifacts:
+  active and cleared latch records; run/wake cancellation receipts;
+  breakglass WAL, epoch snapshot, and recovery-evidence image;
+  fresh Job active-process counts and two-phase Room stop reports;
+  derived status phase, affected-worker quiescence, and uncovered_servers;
+  recovery_intent with carried_forward_operations and FROZEN_SAFE state;
+  candidate surface hashes, source digest, 45-case report, and package result.
+
+Scope and claim ceiling:
+  Console presence is not biometric identity.
+  Scoped revocation preserves unrelated scopes; machine revocation covers all.
+  A stop cannot recall external effects or survive destruction of the host volume.
+  Conformance proves the exercised candidate vectors, not all possible behavior,
+  independent certification, or formal verification of the complete system.
+
+Next stage in the machine:
+  Article 08 completes containment and release assurance. Article 09 applies the
+  full evidence-to-effect machine to one real customer-controlled boundary with
+  an explicit acceptance contract.
+
+Commercial doorway:
+  Break-Glass &amp; Conformance Qualification Challenge — bring one AI workflow that
+  needs emergency containment or release qualification; receive a scoped-stop and
+  stale-authority demonstration, unresolved-operation recovery plan, race test,
+  and candidate-gate coverage review (Article 09 · me@blayneaina.com).
+</code></pre>
+<h2>A Stop Is a Transition, Not a Button</h2>
+<p>Trustworthy emergency control is not a red icon that calls <code>kill()</code>.</p>
+<p>It is a sequence with asymmetric authority: the latch appears before fallible cleanup; new effects close immediately; old scoped authority is refused; owned Jobs are observed quiescent; uncertain operations remain blocked; recovery requires a different physical control surface and mints a new lineage. If stop and recovery race, stop wins.</p>
+<p>The release path follows the same philosophy. The candidate must demonstrate its refusals as itself, under a bounded and identity-checked publication process. Compilation is necessary. It is not sufficient.</p>
+<blockquote>
+<p><strong>The machine may resume only through the owner surface, under fresh authority, with every unresolved effect still visible.</strong></p>
+</blockquote>
+<p>Article 09 turns this completed architecture into a deployment engagement: one real boundary, one written acceptance contract, and evidence that the customer can independently inspect.</p>
+<aside class="context-callout" aria-label="Technical and security due diligence">
+  <h2>Technical &amp; Security Due Diligence</h2>
+  <p><a href="/09-bring-one-real-boundary-work-with-blayne/#exhibit-9-6">Reviewing for Technical Due Diligence? Read the 14-Point Execution Security &amp; Operational Reality FAQ (Exhibit 9.6) →</a> Each answer links to the corresponding article and public proof artifact, including the latency and trusted-computing-base boundaries.</p>
+</aside><h2>Frequently Asked Questions</h2>
+<h3>Why can any admitted caller engage the stop?</h3>
+<p>Stopping is the safe direction. Requiring elevated recovery authority before containment would create a dangerous delay. Engage still requires admission, a nonempty reason, and a valid machine, agent, or project scope.</p>
+<h3>Can an agent clear its own emergency stop through MCP or a script?</h3>
+<p>No. Recovery refuses an active MCP session, requires <code>--by operator</code>, and requires interactive terminal handles for stdin and stderr. This is a local console boundary, not a claim of biometric identity; confined workers additionally lack OS permission to the control directory.</p>
+<h3>Does advancing <code>control_epoch</code> revoke every lease on the host?</h3>
+<p>Only when the advancing scope covers the authority. Machine recovery covers all scopes; an agent or project revision revokes matching older authority while unrelated scopes retain theirs. A future or unproven lineage fails closed.</p>
+<h3>Does recovery resolve operations whose outcomes are unknown?</h3>
+<p>No. Recovery records unresolved file, destination, and model operations in <code>carried_forward_operations</code>. Each remains unresolved and blocking until separately reconciled under fresh authority.</p>
+<h3>What happens if another stop arrives during recovery?</h3>
+<p>Recovery clears only the latch names fixed in its plan, then rescans. A new machine-covering latch survives, the state becomes <code>FROZEN_SAFE</code>, and the receipt does not report a successful all-clear.</p>
+<h3>Do the 45 passing cases certify the system independently?</h3>
+<p>No. They are author-controlled release qualification against the candidate binary in isolated fixtures. They prove the exercised positive and negative vectors, not independent certification, formal verification, exhaustive coverage, or reversal of external effects.</p>
+<h2>Continue the Series</h2>
+<ul>
+<li><strong>Series index:</strong> <a href="https://blayneaina.com/">From Proposal to Consequence: The AINA Transition-Governance Series</a></li>
+<li><strong>Previous:</strong> <a href="https://blayneaina.com/07-defeating-approval-laundering-act-pinning-and-successor-grants/">Article 07 — Defeating Approval Laundering: Act Pinning and Successor Grants</a></li>
+<li><strong>Next:</strong> <a href="https://blayneaina.com/09-bring-one-real-boundary-work-with-blayne/">Article 09 — Bring One Real Boundary</a></li>
+<li><strong>Deployment and independent review:</strong> <a href="https://blayneaina.com/09-bring-one-real-boundary-work-with-blayne/">Bring one real boundary or propose a method-scoped evaluation</a></li>
+</ul>
+<hr>
+<h2>Primary Platform References</h2>
+<ul>
+<li><a href="https://learn.microsoft.com/en-us/windows/console/getconsolemode">Microsoft <code>GetConsoleMode</code> — console input and screen-buffer mode inspection</a></li>
+<li><a href="https://doc.rust-lang.org/std/io/trait.IsTerminal.html">Rust <code>std::io::IsTerminal</code> — terminal/TTY detection and platform behavior</a></li>
+<li><a href="https://learn.microsoft.com/en-us/windows/win32/api/winbase/nf-winbase-createhardlinkw">Microsoft <code>CreateHardLinkW</code> — NTFS hard-link creation</a></li>
+<li><a href="https://learn.microsoft.com/en-us/windows/win32/procthread/job-objects">Microsoft Job Objects — grouped process management and <code>TerminateJobObject</code></a></li>
+<li><a href="https://www.rfc-editor.org/rfc/rfc8785.html">IETF RFC 8785 — JSON Canonicalization Scheme vectors used by the evidence battery</a></li>
+</ul>
+<hr>
+<h2>Publication Metadata</h2>
+<p><strong>Title tag:</strong> The Sovereign Kill Switch: Break-Glass Epochs and the Conformance Gate<br><strong>Meta description:</strong> Asymmetric emergency containment, scoped control-epoch revocation, in-doubt recovery, managed Job termination, and the 45-case candidate-binary publication gate.<br><strong>Series navigation:</strong> <a href="https://blayneaina.com/">Series index</a> · Article 08 of <em>From Proposal to Consequence: The AINA Transition-Governance Series</em>.<br><strong>Previous installment:</strong> <a href="https://blayneaina.com/07-defeating-approval-laundering-act-pinning-and-successor-grants/">Article 07 — Defeating Approval Laundering: Act Pinning and Successor Grants</a>.<br><strong>Next installment:</strong> <a href="https://blayneaina.com/09-bring-one-real-boundary-work-with-blayne/">Article 09 — Bring One Real Boundary</a>.</p>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "TechArticle",
+      "@id": "https://blayneaina.com/08-sovereign-kill-switch-break-glass-epochs-and-conformance-gate/#article",
+      "mainEntityOfPage": {
+        "@type": "WebPage",
+        "@id": "https://blayneaina.com/08-sovereign-kill-switch-break-glass-epochs-and-conformance-gate/"
+      },
+      "headline": "The Sovereign Kill Switch: Break-Glass Epochs and the Conformance Gate",
+      "alternativeHeadline": "Asymmetric Emergency Containment, Scoped Control Epochs, In-Doubt Recovery, and the 45-Case Candidate-Binary Gate",
+      "description": "Asymmetric emergency containment, scoped control-epoch revocation, in-doubt recovery, managed Job termination, and the 45-case candidate-binary publication gate.",
+      "proficiencyLevel": "Expert",
+      "inLanguage": "en-US",
+      "isAccessibleForFree": true,
+      "datePublished": "2026-10-31T15:00:00-06:00",
+      "dateModified": "2026-11-01T12:00:00-06:00",
+      "position": 8,
+      "keywords": [
+        "AI emergency stop architecture",
+        "AI incident response",
+        "asymmetric break-glass recovery",
+        "scoped control epoch revocation",
+        "stale authority revocation",
+        "in-doubt operation recovery",
+        "stop recovery race",
+        "candidate binary conformance",
+        "release qualification gate"
+      ],
+      "author": {
+        "@type": "Person",
+        "@id": "https://blayneaina.com/#blayne-aina",
+        "name": "Blayne Aina",
+        "url": "https://blayneaina.com",
+        "email": "mailto:me@blayneaina.com",
+        "jobTitle": "Principal Systems Architect and creator of the AINA Protocol"
+      },
+      "publisher": {
+        "@type": "Person",
+        "@id": "https://blayneaina.com/#blayne-aina",
+        "name": "Blayne Aina",
+        "url": "https://blayneaina.com"
+      },
+      "isPartOf": {
+        "@type": "CreativeWorkSeries",
+        "@id": "https://blayneaina.com/#series",
+        "name": "From Proposal to Consequence: The AINA Transition-Governance Series",
+        "url": "https://blayneaina.com"
+      },
+      "about": [
+        { "@type": "Thing", "name": "Asymmetric Emergency Containment" },
+        { "@type": "Thing", "name": "Control Epoch Revocation" },
+        { "@type": "Thing", "name": "In-Doubt Operation Recovery" },
+        { "@type": "Thing", "name": "Windows Job Object Termination" },
+        { "@type": "Thing", "name": "Candidate-Binary Conformance" }
+      ],
+      "citation": [
+        "https://learn.microsoft.com/en-us/windows/console/getconsolemode",
+        "https://doc.rust-lang.org/std/io/trait.IsTerminal.html",
+        "https://learn.microsoft.com/en-us/windows/win32/api/winbase/nf-winbase-createhardlinkw",
+        "https://learn.microsoft.com/en-us/windows/win32/procthread/job-objects",
+        "https://www.rfc-editor.org/rfc/rfc8785.html"
+      ]
+    },
+    {
+      "@type": "BreadcrumbList",
+      "@id": "https://blayneaina.com/08-sovereign-kill-switch-break-glass-epochs-and-conformance-gate/#breadcrumb",
+      "itemListElement": [
+        {
+          "@type": "ListItem",
+          "position": 1,
+          "name": "Architecture",
+          "item": "https://blayneaina.com/"
+        },
+        {
+          "@type": "ListItem",
+          "position": 2,
+          "name": "The Sovereign Kill Switch: Break-Glass Epochs and the Conformance Gate",
+          "item": "https://blayneaina.com/08-sovereign-kill-switch-break-glass-epochs-and-conformance-gate/"
+        }
+      ]
+    }
+  ]
+}
+</script><script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "@id": "https://blayneaina.com/08-sovereign-kill-switch-break-glass-epochs-and-conformance-gate/#faq",
+  "mainEntity": [
+    {
+      "@type": "Question",
+      "name": "Why can any admitted caller engage the stop?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Stopping is the safe direction. Requiring elevated recovery authority before containment would create a dangerous delay. Engage still requires admission, a nonempty reason, and a valid machine, agent, or project scope."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Can an agent clear its own emergency stop through MCP or a script?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "No. Recovery refuses an active MCP session, requires `--by operator`, and requires interactive terminal handles for stdin and stderr. This is a local console boundary, not a claim of biometric identity; confined workers additionally lack OS permission to the control directory."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Does advancing `control_epoch` revoke every lease on the host?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Only when the advancing scope covers the authority. Machine recovery covers all scopes; an agent or project revision revokes matching older authority while unrelated scopes retain theirs. A future or unproven lineage fails closed."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Does recovery resolve operations whose outcomes are unknown?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "No. Recovery records unresolved file, destination, and model operations in `carried_forward_operations`. Each remains unresolved and blocking until separately reconciled under fresh authority."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "What happens if another stop arrives during recovery?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Recovery clears only the latch names fixed in its plan, then rescans. A new machine-covering latch survives, the state becomes `FROZEN_SAFE`, and the receipt does not report a successful all-clear."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Do the 45 passing cases certify the system independently?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "No. They are author-controlled release qualification against the candidate binary in isolated fixtures. They prove the exercised positive and negative vectors, not independent certification, formal verification, exhaustive coverage, or reversal of external effects."
+      }
+    }
+  ]
+}
+</script>
+        </div>
+
+        
+
+        
+    <nav class="article-pagination" aria-label="Article navigation">
+      
+        <a href="/07-defeating-approval-laundering-act-pinning-and-successor-grants/" class="pagination-link prev">
+          <span class="pagination-sub">← Previous</span>
+          <span class="pagination-title">§07: Defeating Approval Laundering</span>
+        </a>
+      
+      
+        <a href="/09-bring-one-real-boundary-work-with-blayne/" class="pagination-link next">
+          <span class="pagination-sub">Deploy & Evaluate →</span>
+          <span class="pagination-title">AI-Native Builder, Fleet Orchestrator & FDE</span>
+        </a>
+      
+    </nav>
+  
+
+        <footer class="article-footer-cta">
+          <h3>Work With Blayne (§09): Bring One Real Boundary</h3>
+          <p>Do not bring a vision deck. Bring one consequential enterprise transition—workflow standing, hostile document adjudication, or protected entity resolution. We establish a written acceptance boundary, run the existing implementation, and make the positive, refusal, and unresolved evidence inspectable.</p>
+          <div class="cta-actions">
+            <a href="/09-bring-one-real-boundary-work-with-blayne/" class="btn-primary">Work With Blayne (§09)</a>
+            <a href="mailto:me@blayneaina.com?subject=[CHALLENGE]%20Enterprise%20Boundary" class="btn-secondary">me@blayneaina.com</a>
+          </div>
+        </footer>
+      </article>
+    </main>
+  </div>
+
+  <footer class="site-footer">
+    <div class="footer-inner">
+      <div class="footer-left">
+        <strong>blayneaina.com</strong> — Architectural invariants, verifiable execution, and production governance for autonomous systems.
+      </div>
+      <div class="footer-right">
+        <span>© 2026 Blayne Aina. All rights reserved.</span>
+      </div>
+    </div>
+  </footer>
+
+
+
+  <dialog class="quick-search" id="quickSearchDialog" aria-labelledby="quick-search-title">
+    <div class="quick-search-head">
+      <label id="quick-search-title" for="quickSearchInput">Search architecture and evidence</label>
+      <button type="button" id="quickSearchClose" aria-label="Close search">Close</button>
+    </div>
+    <input id="quickSearchInput" type="search" placeholder="Try EISA, PCNA, SQLite, leases, Semantic Switch…" autocomplete="off">
+    <div class="quick-search-results" id="quickSearchResults">
+      <a href="/refusal-proof/" data-search-item><strong>Refusal &amp; Unchanged-Destination Proof</strong><span>PCNA · EISA · verifier · SQLite · 45 cases</span></a>
+      <a href="/proof/conformance/conformance_45_manifest.json" data-search-item><strong>45-case conformance manifest</strong><span>release qualification · candidate results</span></a>
+      <a href="/proof/README.md" data-search-item><strong>Schemas and verifier guide</strong><span>offline verification · artifact index</span></a>
+      <a href="/semantic-switch-proof/" data-search-item><strong>Semantic Switch proof</strong><span>AKO · Lampson confinement · relation isomorphism</span></a>
+      <a href="/#formal-confinement" data-search-item><strong>Formal confinement and A2E</strong><span>bounded TCB · finiteness · three provisionals</span></a>
+      <a href="/#career-snapshot" data-search-item><strong>Enterprise delivery snapshot</strong><span>2015–2026 · CRM · migrations · production cutovers</span></a>
+      <a href="/01-an-ai-output-is-not-an-act/" data-search-item><strong>§01 · An AI Output Is Not an Act</strong><span>Ambient Authority &amp; Machine Standing</span></a><a href="/02-zero-trust-document-ingestion-and-server-cut-evidence/" data-search-item><strong>§02 · Zero-Trust Document Ingestion</strong><span>Parser Jails &amp; Server-Cut Evidence</span></a><a href="/03-eisa-four-gate-verdict-machine-and-entity-resolution/" data-search-item><strong>§03 · Semantic Switch &amp; EISA</strong><span>Protected Computation &amp; 4-Gate Verdicts</span></a><a href="/04-the-room-why-git-and-chat-are-not-coordination-planes/" data-search-item><strong>§04 · The Room Coordination Plane</strong><span>Transaction Graphs vs. Git &amp; Chat</span></a><a href="/05-expiry-is-not-fencing-typed-leases-and-kernel-write-exclusion/" data-search-item><strong>§05 · Expiry Is Not Fencing</strong><span>Typed Leases &amp; Kernel Write Exclusion</span></a><a href="/06-rollback-is-not-erasure-dual-tier-vaults-and-ungated-quarantine/" data-search-item><strong>§06 · Rollback Is Not Erasure</strong><span>Dual-Tier Vaults &amp; Forensic Quarantine</span></a><a href="/07-defeating-approval-laundering-act-pinning-and-successor-grants/" data-search-item><strong>§07 · Defeating Approval Laundering</strong><span>Act Pinning &amp; Successor Continuity</span></a><a href="/08-sovereign-kill-switch-break-glass-epochs-and-conformance-gate/" data-search-item><strong>§08 · The Sovereign Kill Switch</strong><span>Break-Glass Epochs &amp; Conformance Release Gate</span></a><a href="/09-bring-one-real-boundary-work-with-blayne/" data-search-item><strong>§09 · AI-Native Builder, Fleet Orchestrator &amp; FDE</strong><span>Live Enterprise Problem Solving &amp; Verification</span></a>
+    </div>
+  </dialog>
+
+  <script src="/script.js?v=20261105-final-qc"></script>
+</body>
+</html>

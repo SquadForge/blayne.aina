@@ -1,0 +1,24 @@
+{
+  "schema": "aina.binary-attestation.v1",
+  "candidate": {
+    "label": "squad.exe",
+    "bytes": 56239616,
+    "sha256": "94d26802c3744182a6cb93ac4e47250c6140b6ff92e0902a7c415ab13e59f4b5",
+    "published": false
+  },
+  "execution": {
+    "started_at": "2026-11-01T15:36:20.004453+00:00",
+    "finished_at": "2026-11-01T15:38:18.758029+00:00",
+    "duration_seconds": 118.753576,
+    "exit_code": 0,
+    "artifact": "conformance-output.json",
+    "artifact_sha256": "b0a52861f15c2a8705d474b6d67ff6d5ab9deb7a0920489243dc9c049fd1ed16",
+    "source_capture_sha256": "36a74aa36066c3b5d6eadef90b4ff51ad06344b14e2345c26a24531369645499"
+  },
+  "conformance": {
+    "ok": true,
+    "total": 45,
+    "failed": 0
+  },
+  "source_availability": "The candidate binary and proprietary engine source are not published. Digests attest identity; they are not independent certification."
+}

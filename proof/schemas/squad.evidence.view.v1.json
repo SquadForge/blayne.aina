@@ -1,0 +1,71 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "Squad Canonical View Manifest (squad.evidence.view/1)",
+  "type": "object",
+  "description": "RFC 8785 canonical view manifest binding source bytes, reader parser profile, and extracted nodes.",
+  "required": [
+    "view_digest",
+    "room",
+    "source_revision",
+    "source_sha256",
+    "parser",
+    "config",
+    "stories"
+  ],
+  "properties": {
+    "view_digest": {
+      "type": "string",
+      "pattern": "^[0-9a-f]{64}$"
+    },
+    "room": {
+      "type": "string"
+    },
+    "source_revision": {
+      "type": "string"
+    },
+    "source_sha256": {
+      "type": "string",
+      "pattern": "^[0-9a-f]{64}$"
+    },
+    "parser": {
+      "type": "object",
+      "required": [
+        "name",
+        "profile",
+        "digest"
+      ],
+      "properties": {
+        "name": {
+          "type": "string"
+        },
+        "profile": {
+          "type": "string"
+        },
+        "digest": {
+          "type": "string"
+        }
+      }
+    },
+    "config": {
+      "type": "object",
+      "required": [
+        "limits_sha256"
+      ],
+      "properties": {
+        "limits_sha256": {
+          "type": "string",
+          "pattern": "^[0-9a-f]{64}$"
+        }
+      }
+    },
+    "stories": {
+      "type": "array"
+    },
+    "elements": {
+      "type": "array"
+    },
+    "omissions": {
+      "type": "array"
+    }
+  }
+}

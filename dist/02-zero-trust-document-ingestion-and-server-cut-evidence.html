@@ -1,0 +1,1380 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Zero-Trust Document Ingestion and Server-Cut Evidence | Blayne Aina</title>
+  <meta name="description" content="Hostile bytes need a parser jail. Enterprise judgments need a server-computed evidence chain. Neither a RAG chunk nor a model-written citation can supply one.">
+  <link rel="canonical" href="https://blayneaina.com/02-zero-trust-document-ingestion-and-server-cut-evidence/">
+
+  <!-- OpenGraph / Social -->
+  <meta property="og:type" content="article">
+  <meta property="og:title" content="Zero-Trust Document Ingestion and Server-Cut Evidence">
+  <meta property="og:description" content="Hostile bytes need a parser jail. Enterprise judgments need a server-computed evidence chain. Neither a RAG chunk nor a model-written citation can supply one.">
+  <meta property="og:url" content="https://blayneaina.com/02-zero-trust-document-ingestion-and-server-cut-evidence/">
+  <meta property="og:site_name" content="Blayne Aina — The Route to Trusting AI">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="Zero-Trust Document Ingestion and Server-Cut Evidence">
+  <meta name="twitter:description" content="Hostile bytes need a parser jail. Enterprise judgments need a server-computed evidence chain. Neither a RAG chunk nor a model-written citation can supply one.">
+
+  <link rel="stylesheet" href="/style.css?v=20261106-wide-layout">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@500;700&family=Instrument+Serif:ital@0;1&family=Inter:wght@400;500;600;700;800&family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,500;0,6..72,600;1,6..72,400&family=JetBrains+Mono:wght@400;500&family=Plus+Jakarta+Sans:wght@600;700;800&display=swap" rel="stylesheet">
+</head>
+<body>
+  <div class="reading-progress-bar" id="progressBar"></div>
+
+  <header class="site-header">
+    <div class="header-inner">
+      <a href="/" class="brand">
+        <span class="brand-name">BLAYNE AINA</span>
+        <span class="brand-divider">/</span>
+        <span class="brand-tagline">The Route to Trusting AI</span>
+      </a>
+      <div class="header-actions">
+        <a href="/refusal-proof/" class="header-link">Proof</a>
+        <a href="/proof/README.md" class="header-link">Schemas</a>
+        <a href="https://github.com/SquadForge/blayne.aina" class="header-link" rel="noopener noreferrer">GitHub</a>
+        <button type="button" class="header-link header-search" id="quickSearchBtn" aria-label="Search articles and proof artifacts">Search</button>
+        <a href="/09-bring-one-real-boundary-work-with-blayne/" class="header-cta">Work With Blayne (§09)</a>
+        <button id="themeToggle" class="theme-btn" aria-label="Toggle theme">
+          <span class="theme-icon light">☀️</span>
+          <span class="theme-icon dark">🌙</span>
+        </button>
+        <button id="mobileMenuBtn" class="mobile-menu-btn" aria-label="Open navigation menu" aria-controls="sidebar" aria-expanded="false">☰</button>
+      </div>
+    </div>
+  </header>
+
+  <div class="candidate-ribbon" role="region" aria-label="Candidate identity and evaluation paths">
+    <div class="candidate-identity"><strong>EVALUATE BLAYNE</strong><span>Choose your path</span></div>
+    <nav class="candidate-links" aria-label="Evaluation paths">
+      <a href="/#career-snapshot">Recruiter &amp; Hiring Lead</a>
+      <a href="/refusal-proof/">Systems Engineer</a>
+      <a href="/#formal-confinement">AI Safety Researcher</a>
+      <a href="mailto:me@blayneaina.com" class="candidate-email">me@blayneaina.com</a>
+    </nav>
+  </div>
+  <div class="layout-container ">
+    <aside class="site-sidebar" id="sidebar">
+      <div class="sidebar-header">
+        <span class="sidebar-label">Architecture Series</span>
+        <span class="sidebar-date">October 2026</span>
+      </div>
+      <nav class="series-nav">
+        <ul>
+          <li class="">
+            <a href="/">
+              <span class="nav-num">§00</span>
+              <span class="nav-title">Series Overview & Thesis</span>
+            </a>
+          </li>
+          
+      <li class="">
+        <a href="/01-an-ai-output-is-not-an-act/">
+          <span class="nav-num">§01</span>
+          <span class="nav-title">An AI Output Is Not an Act</span>
+        </a>
+      </li>
+    
+      <li class="active">
+        <a href="/02-zero-trust-document-ingestion-and-server-cut-evidence/">
+          <span class="nav-num">§02</span>
+          <span class="nav-title">Zero-Trust Document Ingestion</span>
+        </a>
+      </li>
+    
+      <li class="">
+        <a href="/03-eisa-four-gate-verdict-machine-and-entity-resolution/">
+          <span class="nav-num">§03</span>
+          <span class="nav-title">Semantic Switch & EISA</span>
+        </a>
+      </li>
+    
+      <li class="">
+        <a href="/04-the-room-why-git-and-chat-are-not-coordination-planes/">
+          <span class="nav-num">§04</span>
+          <span class="nav-title">The Room Coordination Plane</span>
+        </a>
+      </li>
+    
+      <li class="">
+        <a href="/05-expiry-is-not-fencing-typed-leases-and-kernel-write-exclusion/">
+          <span class="nav-num">§05</span>
+          <span class="nav-title">Expiry Is Not Fencing</span>
+        </a>
+      </li>
+    
+      <li class="">
+        <a href="/06-rollback-is-not-erasure-dual-tier-vaults-and-ungated-quarantine/">
+          <span class="nav-num">§06</span>
+          <span class="nav-title">Rollback Is Not Erasure</span>
+        </a>
+      </li>
+    
+      <li class="">
+        <a href="/07-defeating-approval-laundering-act-pinning-and-successor-grants/">
+          <span class="nav-num">§07</span>
+          <span class="nav-title">Defeating Approval Laundering</span>
+        </a>
+      </li>
+    
+      <li class="">
+        <a href="/08-sovereign-kill-switch-break-glass-epochs-and-conformance-gate/">
+          <span class="nav-num">§08</span>
+          <span class="nav-title">The Sovereign Kill Switch</span>
+        </a>
+      </li>
+    
+        </ul>
+        <div class="sidebar-section-divider">
+          <span class="sidebar-label">Deploy & Evaluate</span>
+        </div>
+        <ul>
+          
+      <li class=" nav-commercial">
+        <a href="/09-bring-one-real-boundary-work-with-blayne/">
+          <span class="nav-num">→</span>
+          <span class="nav-title">AI-Native Builder, Fleet Orchestrator & FDE</span>
+        </a>
+      </li>
+    
+          <li>
+            <a href="mailto:me@blayneaina.com?subject=[RESEARCH]%20Independent%20Technical%20Evaluation">
+              <span class="nav-num">↗</span>
+              <span class="nav-title">Independent Evaluation [RESEARCH]</span>
+            </a>
+          </li>
+        </ul>
+      </nav>
+      <div class="sidebar-footer">
+        <div class="author-card">
+          <div class="author-name">Blayne Aina</div>
+          <div class="author-bio">By Blayne Aina · Principal Systems Architect and creator of AINA · October 31, 2026 · AINA Governance Specification</div>
+          <div class="author-bio">FDE · 11+ Years Customer-Embedded Delivery · USMC Veteran</div>
+          <a href="mailto:me@blayneaina.com" class="author-email">me@blayneaina.com</a>
+          <div class="author-contact">Blayne Aina · Denver, CO · <a href="mailto:me@blayneaina.com">me@blayneaina.com</a></div>
+          <a href="https://github.com/SquadForge/blayne.aina" class="author-contact" rel="noopener noreferrer">GitHub Repo (SquadForge/blayne.aina)</a>
+        </div>
+      </div>
+    </aside>
+
+    <main class="content-area">
+      <article class="prose-wrapper ">
+<header class="article-header">
+          <h1 class="article-title">Zero-Trust Document Ingestion and Server-Cut Evidence</h1>
+          <p class="article-subtitle">Hostile bytes need a parser jail. Enterprise judgments need a server-computed evidence chain. Neither a RAG chunk nor a model-written citation can supply one.</p>
+          <div class="article-meta">
+            <span class="meta-item author">By Blayne Aina</span>
+            <span class="meta-dot">·</span>
+            <span class="meta-item role">Principal Systems Architect and creator of AINA</span>
+            <span class="meta-dot">·</span>
+            <span class="meta-item date">October 31, 2026</span>
+            <span class="meta-dot">·</span>
+            <span class="meta-item tag">AINA Governance Specification</span>
+          </div>
+        </header>
+
+        
+    <section class="executive-brief" aria-label="Executive reading guide">
+      <div class="brief-label">Executive reading guide · 60 seconds</div>
+      <dl class="brief-grid">
+        <div class="brief-item">
+          <dt>Problem</dt>
+          <dd>Hostile documents can attack the parser, while models can fabricate citations and make unknown coverage disappear.</dd>
+        </div>
+        <div class="brief-item">
+          <dt>What it proves</dt>
+          <dd>LPAC parser confinement, immutable views, explicit omissions, and server-cut srv_ and ev_ receipts establish served evidence.</dd>
+        </div>
+        <div class="brief-item">
+          <dt>Commercial relevance</dt>
+          <dd>Use the Zero-Trust Evidence &amp; Citation Audit Challenge on one bounded document question.</dd>
+        </div>
+        <div class="brief-item">
+          <dt>Next step</dt>
+          <dd>Article 03 protects native data before external entity-resolution computation.</dd>
+        </div>
+      </dl>
+    </section>
+  
+        
+        
+        
+
+        <div class="article-body">
+          <p>An AI document reader has two ways to lose.</p>
+<p>The file can attack the host. A malformed PDF stream, a cyclic object graph, a decompression bomb, or a pathological workbook can turn an innocent <code>read_document</code> call into a resource-exhaustion event inside the most privileged process in the system.</p>
+<p>The model can attack the evidence. It can quote a sentence that was never served, cite a page that does not contain the claim, treat an un-OCRed scan as empty, confuse an agent-supplied excerpt with a captured original, or transform three repetitions of one observation into apparent consensus.</p>
+<p>A trustworthy pipeline must confine the parser <strong>and</strong> make the citation coordinates server-computed facts.</p>
+<p>This is the epistemic boundary of the AINA transition-governance machine. Article 01 established that an AI output is a proposal, not an act. This installment builds the world in which that proposal can be judged: exact source bytes, confined extraction, explicit omissions, immutable views, served-content receipts, server-cut citations, bounded findings, and origin-preserving lineage.</p>
+<blockquote>
+<p><strong>Before EISA can recognize an act, the system must establish what may be known, cited, and compared—and what remains unknown.</strong></p>
+</blockquote>
+<h2>The Evidence World Is a Governed Artifact</h2>
+<p>A conventional retrieval pipeline often looks like this:</p>
+<pre><code class="language-text">path → loader → text chunks → embeddings → model context → answer with citations
+</code></pre>
+<p>That pipeline can be useful for search. It does not establish an execution-grade evidence world. A chunk does not prove which source revision produced it. A flattened string does not reveal what the parser dropped. A model-written page number does not prove that the model received the quoted passage. A second agent repeating the first agent&#39;s summary does not create a second observation.</p>
+<p>Consider a renewal agent that answers, “Annual increases are capped at 3.0%, and there is no change-of-control clause.” The first conclusion needs an exact served passage. The second needs proof that every place that could contain the clause was actually examined—including the scanned page that produced no text. Those are different evidence burdens, and a fluent answer satisfies neither by default.</p>
+<p>AINA replaces the chain with a governed sequence:</p>
+<pre><code class="language-text">SOURCE BYTES
+  registered identity · single-open bounded capture · SHA-256
+                         │
+                         ▼
+CONFINED PARSER
+  content-decided format · LPAC · Job Object · budgets · typed refusals
+                         │
+                         ▼
+CANONICAL EVIDENCE VIEW
+  ViewManifest · parser/limits identity · extraction status · omission nodes
+                         │
+                         ▼
+SERVED CONTENT — srv_ receipt
+  recipient/session · exact view and intervals · complete/chunked/truncated delivery
+                         │
+                         ▼
+SERVER-CUT EVIDENCE — ev_ handle
+  receipt verified · quote found and disambiguated · server-computed selector
+                         │
+                         ▼
+BOUNDED FINDINGS
+  typed predicates · acknowledged absence gaps · reassessment · origin lineage
+</code></pre>
+<p>The <code>srv_</code> receipt proves what the Room served. The <code>ev_</code> handle proves what the server issued from that serving. Neither proves that the underlying source is true or that the model&#39;s interpretation is correct.</p>
+<p>Every arrow changes the evidentiary state. None is allowed to borrow the assurance of a later stage.</p>
+<table>
+<thead>
+<tr>
+<th>Local fact</th>
+<th>What it cannot prove by itself</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>The path ends in <code>.pdf</code>, or the response declares a PDF media type.</td>
+<td>The bytes are a PDF, or the correct parser was selected.</td>
+</tr>
+<tr>
+<td>The parser returned text without crashing.</td>
+<td>Every text-bearing part was recovered, or every warning was benign.</td>
+</tr>
+<tr>
+<td>The extraction is complete for its declared profile.</td>
+<td>The source is complete, true, visually understood, or free of excluded content.</td>
+</tr>
+<tr>
+<td>The model supplied a quote and page number.</td>
+<td>The exact quote occurred in content served to that caller.</td>
+</tr>
+<tr>
+<td>The citation resolves cryptographically.</td>
+<td>The underlying document is authentic, current, or worldly true.</td>
+</tr>
+<tr>
+<td>Several agents cite the same conclusion.</td>
+<td>Their claims rest on distinct first-hand observations or independent sources.</td>
+</tr>
+</tbody></table>
+<p>The constitutional rule is simple: <strong>unknown coverage must remain visible as unknown coverage</strong>. It cannot disappear into a clean answer.</p>
+<h2>1. Registration: Bind Identity to the Bytes Actually Read</h2>
+<p>The evidence chain begins before parsing. <code>doc_source</code> registration resolves the caller through the Room&#39;s actor rules, requires an owner-opened project, canonicalizes the target through the same file-identity machinery used by governed writes, and refuses controller-state and recovery-storage roots. The protected-root test runs at registration <strong>and again at read time</strong>. A historical registry entry cannot turn control storage into a shared document, and a document registration does not outlive its project admission.</p>
+<h3>Single-open capture</h3>
+<p>On Windows, <code>source::capture_optional</code> opens the file once with <code>share_mode(1)</code>, equivalent to <code>FILE_SHARE_READ</code>. While that handle remains open, other processes cannot open the same file for write or delete sharing. The reader takes at most <strong>64 MiB plus one byte</strong>, refuses anything above the 64 MiB ceiling, and computes SHA-256 over the buffer actually read.</p>
+<p>This ordering matters:</p>
+<pre><code class="language-text">open once with FILE_SHARE_READ
+→ read a bounded buffer
+→ hash that buffer
+→ verify that buffer against the registered digest
+→ hand those same bytes to the confined parser
+</code></pre>
+<p>The size limit is enforced by the read itself, not by a preceding <code>stat</code>. The digest is not computed over one open and then attached to bytes read through another. Downstream extraction receives a <code>Captured</code> buffer, not a path it can reopen.</p>
+<p>That eliminates the intra-read time-of-check/time-of-use window. It does not magically freeze the file forever. For a task whose governing source must remain stable across execution, <code>TaskSourcePin</code> opens the canonical file again with <code>FILE_SHARE_READ</code>, verifies the opened handle&#39;s kernel identity and exact bytes, requires the governing reading proof, and holds the handle for the task&#39;s execution window.</p>
+<p>Two reading policies also remain distinct:</p>
+<ul>
+<li>The extraction profile recorded in the parser identity is <strong><code>text/v1</code></strong>.</li>
+<li>The task&#39;s governing-source reading policy is <strong><code>complete_text_v1</code></strong>, backed by the required source-reading coverage proof.</li>
+</ul>
+<p>They are related, but they are not interchangeable labels.</p>
+<h3>Amber retention is a separate observation</h3>
+<p>Registration archives the source into the content-addressed Amber recovery tier and refuses to complete if that archive fails. This retention is deliberately described with a precision boundary: <code>source::capture</code> performs the single-open read-and-hash capture; <code>vault::archive_only</code> performs a <strong>separate filesystem observation</strong> during registration.</p>
+<p>The archive is not claimed to share the capture&#39;s file descriptor. Hiding that distinction would make the architecture sound stronger by making its evidence less honest.</p>
+<h3>Drift is not a new version of the old citation</h3>
+<p>Every ordinary resolve rechecks the registered source. If the live bytes no longer match the registered digest, the committed view is not silently served as though it were current. The refusal is <code>drifted</code>; capture and verification paths use <code>doc_source_drifted</code> where that stable operator code applies.</p>
+<p>A reader must explicitly register the new revision. A separately authorized historical-inspection path may serve the old view, but its delivery record marks <code>historical: true</code>. History is labeled history.</p>
+<p>This produces three useful non-equivalences:</p>
+<pre><code class="language-text">same path                    ≠ same source revision
+same source revision         ≠ same parser or extraction configuration
+old citation still resolving ≠ old citation is currently authoritative
+</code></pre>
+<h2>2. Content Decides the Format—Inside the Jail</h2>
+<p>Format identification is itself parsing. A ZIP central directory must be inspected before the system can know whether a package is a DOCX, an XLSX, or an ordinary archive. That means identification cannot safely occur in the controller while only the resulting parser is confined.</p>
+<p>AINA performs identification and extraction in the restricted worker. Byte signatures and container structure take priority; extensions break defined ties. The current <code>Kind</code> enum has <strong>22 variants</strong>, but that is not a claim of universal file support: <code>Unknown</code> is deliberately unsupported, <code>Image(format)</code> is a parameterized family, and <code>EncryptedOffice</code> has a typed refusal rather than a text reader.</p>
+<table>
+<thead>
+<tr>
+<th><code>Kind</code> variant</th>
+<th>Content or structural identity</th>
+<th>Extraction or typed outcome</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><code>Pdf</code></td>
+<td><code>%PDF-</code> signature</td>
+<td>Structural PDF extraction, layout, annotations, and admitted local OCR paths</td>
+</tr>
+<tr>
+<td><code>Json</code></td>
+<td><code>.json</code> or <code>.jsonld</code> tie-break after higher-priority signatures</td>
+<td>UTF-8 JSON document with bounded RFC 6901 source locators</td>
+</tr>
+<tr>
+<td><code>Doc</code></td>
+<td>OLE2 plus <code>WordDocument</code> and a valid binary Word probe</td>
+<td>Binary Word FIB and piece-table reconstruction</td>
+</tr>
+<tr>
+<td><code>Docx</code></td>
+<td>ZIP package with Word document structure or an allowed OOXML extension tie-break</td>
+<td>Body, tables, headers, footers, notes, comments, and revision accounting</td>
+</tr>
+<tr>
+<td><code>Ppt</code></td>
+<td>OLE2 plus <code>PowerPoint Document</code> and a valid binary PowerPoint probe</td>
+<td>Binary presentation record-tree text</td>
+</tr>
+<tr>
+<td><code>Pptx</code></td>
+<td>ZIP package with PowerPoint presentation structure or an allowed extension tie-break</td>
+<td>Slides, notes, comments, and relationships</td>
+</tr>
+<tr>
+<td><code>Rtf</code></td>
+<td><code>{\rtf</code> signature or <code>.rtf</code></td>
+<td>Bounded RTF control-word and encoding state machine</td>
+</tr>
+<tr>
+<td><code>Xlsx</code></td>
+<td>ZIP package with <code>xl/workbook.xml</code> or an allowed extension tie-break</td>
+<td>Workbook, cell, cached-value, formula, and comment extraction</td>
+</tr>
+<tr>
+<td><code>Xlsb</code></td>
+<td>ZIP package with <code>xl/workbook.bin</code></td>
+<td>Binary workbook extraction</td>
+</tr>
+<tr>
+<td><code>Xls</code></td>
+<td>OLE2 <code>Workbook</code>/<code>Book</code> probe, or <code>.xls</code>/<code>.xla</code>/<code>.xlt</code> fallback</td>
+<td>BIFF workbook extraction</td>
+</tr>
+<tr>
+<td><code>Ods</code></td>
+<td>ODF <code>mimetype</code> for a spreadsheet</td>
+<td>OpenDocument spreadsheet extraction</td>
+</tr>
+<tr>
+<td><code>Odt</code></td>
+<td>ODF <code>mimetype</code> for text</td>
+<td>OpenDocument text extraction</td>
+</tr>
+<tr>
+<td><code>Odp</code></td>
+<td>ODF <code>mimetype</code> for a presentation</td>
+<td>OpenDocument presentation extraction</td>
+</tr>
+<tr>
+<td><code>Eml</code></td>
+<td><code>.eml</code> or bounded RFC 5322-style header recognition</td>
+<td>MIME tree, headers, body, and recursive child sources</td>
+</tr>
+<tr>
+<td><code>Msg</code></td>
+<td>OLE2 property streams plus root-property probe</td>
+<td>MAPI properties, body, and attachments</td>
+</tr>
+<tr>
+<td><code>Zip</code></td>
+<td>ZIP signature without a more specific package identity</td>
+<td>Bounded archive inventory and child extraction</td>
+</tr>
+<tr>
+<td><code>Html</code></td>
+<td>Decodable HTML, an HTML extension tie-break, or declared legacy HTML bytes</td>
+<td>DOM-derived reading text plus preserved markup story</td>
+</tr>
+<tr>
+<td><code>Text</code></td>
+<td>Successful strict text decoding without HTML identity</td>
+<td>Normalized text stories and line elements</td>
+</tr>
+<tr>
+<td><code>EncryptedOffice</code></td>
+<td>OLE2 <code>EncryptedPackage</code></td>
+<td><code>encrypted</code> / <code>doc_source_extraction_failed</code>, never fake empty text</td>
+</tr>
+<tr>
+<td><code>Ole2</code></td>
+<td>Other OLE2 compound storage</td>
+<td>Embedded-object extraction or a named refusal</td>
+</tr>
+<tr>
+<td><code>Image(format)</code></td>
+<td>Valid image signature and header</td>
+<td>Header inventory and admitted OCR behavior under the selected profile</td>
+</tr>
+<tr>
+<td><code>Unknown</code></td>
+<td>No supported identity</td>
+<td><code>unsupported_format</code>, never an empty successful document</td>
+</tr>
+</tbody></table>
+<p>This is allowlisted recognition, not extension trust and not a promise to parse every file on earth.</p>
+<h3>Fourteen budgets govern expansion</h3>
+<p>The outer operating-system jail is the backstop. Inside it, a 14-field <code>Limits</code> object admits expensive work before expansion and charges actual output. Callers may ratchet limits downward; zero and values above the ceiling are rejected. The exact limits are serialized with RFC 8785 JCS and hashed into <code>limits_sha256</code>, so changing a budget changes extraction identity.</p>
+<table>
+<thead>
+<tr>
+<th>Limit</th>
+<th align="right">Default ceiling</th>
+<th>Failure it bounds</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><code>max_child_bytes</code></td>
+<td align="right">32 MiB</td>
+<td>Oversized attachment, archive member, or embedded child</td>
+</tr>
+<tr>
+<td><code>max_item_decompressed</code></td>
+<td align="right">64 MiB</td>
+<td>Single-stream or single-member expansion</td>
+</tr>
+<tr>
+<td><code>max_total_decompressed</code></td>
+<td align="right">256 MiB</td>
+<td>Cumulative decompression across the document and children</td>
+</tr>
+<tr>
+<td><code>max_parts</code></td>
+<td align="right">20,000</td>
+<td>Container-entry, mail-part, and page floods</td>
+</tr>
+<tr>
+<td><code>max_nesting</code></td>
+<td align="right">3</td>
+<td>Recursive child-source descent</td>
+</tr>
+<tr>
+<td><code>max_xml_depth</code></td>
+<td align="right">256</td>
+<td>Deep or amplifying XML structure</td>
+</tr>
+<tr>
+<td><code>max_pdf_objects</code></td>
+<td align="right">500,000</td>
+<td>PDF object-graph amplification</td>
+</tr>
+<tr>
+<td><code>max_form_depth</code></td>
+<td align="right">8</td>
+<td>Recursive PDF Form XObjects</td>
+</tr>
+<tr>
+<td><code>max_cells</code></td>
+<td align="right">2,000,000</td>
+<td>Spreadsheet cell explosion</td>
+</tr>
+<tr>
+<td><code>max_elements</code></td>
+<td align="right">250,000</td>
+<td>Addressable-element flood; later text may still be extracted without receiving nodes</td>
+</tr>
+<tr>
+<td><code>max_output_chars</code></td>
+<td align="right">32 MiB</td>
+<td>Extracted character-volume exhaustion</td>
+</tr>
+<tr>
+<td><code>max_wall_ms</code></td>
+<td align="right">60,000 ms</td>
+<td>Parser CPU/time overrun, with a 15-second outer kill allowance</td>
+</tr>
+<tr>
+<td><code>max_image_pixels</code></td>
+<td align="right">16,000,000</td>
+<td>Single-image pixel expansion, admitted before decode</td>
+</tr>
+<tr>
+<td><code>max_total_pixels</code></td>
+<td align="right">64,000,000</td>
+<td>Aggregate pixel expansion across pages and children</td>
+</tr>
+</tbody></table>
+<p>Budget refusal is evidence. It becomes a typed <code>budget_exceeded</code> condition rather than a partial answer with the exhaustion removed from the story.</p>
+<h2>3. The Parser Jail: Prove Confinement Before Resume</h2>
+<p>A sandbox named in a configuration file is not a sandbox observed in a child token. AINA&#39;s document worker is built around pre-resume verification.</p>
+<h3>Private staging</h3>
+<p>Each parse receives an ephemeral scratch tree with three distinct grants:</p>
+<ul>
+<li><code>bin/</code>: a private read-execute copy of <code>squad-doc-extract.exe</code>, so the jail need not read the installation directory.</li>
+<li><code>input/</code>: read-only <code>source.bin</code> and a bounded <code>doc_source.worker/1</code> request containing the expected input digest and extraction limits.</li>
+<li><code>work/</code>: the only writable grant, including a jail-local temporary directory and a <code>result.json</code> opened with <code>create_new(true)</code>.</li>
+</ul>
+<p>The child recomputes the input digest before parsing. The supervisor bounds the result at 256 MiB, checks the response schema and input digest, and validates the returned extraction structure. Child output remains untrusted data even though the child was confined.</p>
+<h3>Six-step launch contract</h3>
+<ol>
+<li><strong>Exclusive AppContainer identity.</strong> A fresh per-parse profile is created. An already-existing profile is a <code>confinement_identity_reused</code> failure, not an invitation to share a jail.</li>
+<li><strong>LPAC policy.</strong> <code>PROCESS_CREATION_ALL_APPLICATION_PACKAGES_OPT_OUT</code> removes the implicit <code>ALL APPLICATION PACKAGES</code> access that would otherwise widen filesystem and registry reads.</li>
+<li><strong>Minimal capabilities.</strong> The document-media profile grants exactly <code>lpacCom</code>. Network, registry-read, and credential capabilities are not granted.</li>
+<li><strong>Suspended creation and token inspection.</strong> The process starts suspended. Before <code>ResumeThread</code>, the supervisor verifies that the token is AppContainer, carries the fresh package SID, has the non-zero <code>WIN://NOALLAPPPKG</code> attribute, and contains exactly the expected capability set. A mismatch kills the child before its initial thread executes.</li>
+<li><strong>Job Object backstop.</strong> While suspended, the child enters a kill-on-close Job Object with <code>ActiveProcessLimit = 1</code>, a 2 GiB job-memory ceiling, and a 25% hard CPU-rate cap. EcoQoS reduces scheduling priority; internal runtime thread pools are capped at two. The job is registered with break-glass observation so sovereign revocation covers in-flight parsers.</li>
+<li><strong>Audited teardown.</strong> The supervisor records <code>scratch_removed</code> and <code>profile_deleted</code> in the worker receipt. Cleanup failure is disclosed rather than rewritten into success.</li>
+</ol>
+<pre><code class="language-text">verified Captured bytes
+→ read-only input grant + expected digest
+→ CREATE_SUSPENDED
+→ AppContainer SID + LPAC attribute + exact capabilities verified
+→ Job Object process/memory/CPU limits assigned
+→ ResumeThread exactly once
+→ content identification + budgeted extraction + warning capture
+→ digest-bound result.json
+→ supervisor schema and structural validation
+→ worker Receipt + scratch/profile teardown disclosure
+</code></pre>
+<p>Parser panics become <code>parser_fault</code>. A panic isolated to one embedded child fails that child while preserving the parent and sibling reads; a top-level panic invalidates the extraction. On non-Windows, the untrusted-document path refuses with <code>parser_worker_unavailable</code> rather than pretending that an ordinary subprocess is equivalent to LPAC plus a Job Object.</p>
+<p>This is the Windows reference embodiment&#39;s claim ceiling: bounded process, capability, network, memory, CPU, and filesystem exposure on the governed parser path—not proof that every parser is bug-free or that a privileged host administrator cannot attack the machine.</p>
+<h2>4. Extraction Is Not Complete If the Gaps Disappear</h2>
+<p>A parser that returns a string has answered only one question: what text did this adapter emit? It has not established whether the document contained more text, whether a library recovered by discarding structure, or whether the caller later received everything extracted.</p>
+<p>AINA keeps five status dimensions separate.</p>
+<table>
+<thead>
+<tr>
+<th>Dimension</th>
+<th>Values</th>
+<th>Question answered</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><code>Integrity</code></td>
+<td><code>verified</code>, <code>failed</code></td>
+<td>Did the captured bytes match the registered identity and integrity checks?</td>
+</tr>
+<tr>
+<td><code>Inventory</code></td>
+<td><code>complete_for_profile</code>, <code>partial</code>, <code>unknown</code></td>
+<td>Could the adapter enumerate the document&#39;s parts and establish a denominator?</td>
+</tr>
+<tr>
+<td><code>Extraction</code></td>
+<td><code>complete_for_profile</code>, <code>partial</code>, <code>unsupported</code>, <code>failed</code></td>
+<td>Was every in-profile, text-bearing part recovered without lossy omission?</td>
+</tr>
+<tr>
+<td><code>Admission</code></td>
+<td><code>allowed</code>, <code>blocked</code></td>
+<td>Is this source currently readable by this actor under project and Room policy?</td>
+</tr>
+<tr>
+<td><code>Delivery</code></td>
+<td><code>complete</code>, <code>truncated</code>, <code>chunked</code></td>
+<td>Did this response serve everything requested, or only a bounded window?</td>
+</tr>
+</tbody></table>
+<p>The immutable document report carries integrity, inventory, and extraction. Admission and delivery are facts about a particular serving. A fully extracted document shown through a 60-character window remains fully extracted <strong>and</strong> incompletely delivered. Those facts must not collapse into one green status.</p>
+<h3>The 35-reason omission ledger</h3>
+<p>The current <code>Reason</code> alphabet has 35 variants: <strong>12 non-lossy profile exclusions and 23 lossy reasons</strong>. <code>nesting_limit</code> belongs to the non-lossy set in the current implementation; it is not counted twice.</p>
+<table>
+<thead>
+<tr>
+<th>Classification</th>
+<th>Exact variants</th>
+<th>Consequence</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><strong>Profile-excluded, non-lossy (12)</strong></td>
+<td><code>binary_part</code>, <code>structure_only</code>, <code>embedded_font_program</code>, <code>image_content</code>, <code>media_content</code>, <code>deleted_revision</code>, <code>external_relationship</code>, <code>macro_content</code>, <code>derived_alternative</code>, <code>nesting_limit</code>, <code>structure_unavailable</code>, <code>markup_not_rendered</code></td>
+<td>Recorded for transparency without, by itself, forcing partial extraction or blocking absence evaluation</td>
+</tr>
+<tr>
+<td><strong>Lossy (23)</strong></td>
+<td><code>ocr_not_enabled</code>, <code>ocr_unavailable</code>, <code>unsupported_format</code>, <code>unsupported_part</code>, <code>unsupported_compression</code>, <code>unmapped_glyphs</code>, <code>font_encoding_unavailable</code>, <code>undecodable_text</code>, <code>stream_decode_failed</code>, <code>content_stream_invalid</code>, <code>object_missing</code>, <code>malformed</code>, <code>sheet_read_failed</code>, <code>formula_unavailable</code>, <code>encrypted</code>, <code>encrypted_entry</code>, <code>duplicate_entry_name</code>, <code>duplicate_member_name</code>, <code>multi_disk_archive</code>, <code>budget_exceeded</code>, <code>library_warning</code>, <code>parser_fault</code></td>
+<td>Forces partial/failed/unsupported handling and creates unknown coverage that an absence claim must acknowledge when in scope</td>
+</tr>
+</tbody></table>
+<p>Non-lossy does not mean irrelevant. It means the omission is expected under the declared extraction profile. A deleted revision excluded by <code>text/v1</code> may still matter enormously to a human reviewer; the profile must therefore be visible beside the claim.</p>
+<h3>Parser warnings become evidence</h3>
+<p>The confined child installs a <code>log::Log</code> interceptor at warning level. It preserves up to 1,000 observations, truncates each message at 2,000 characters, and counts overflow. Every warning becomes an observation. Except for one explicitly content-neutral PDF trailer normalization, every warning also becomes a lossy <code>library_warning</code> omission at document scope.</p>
+<p>A library&#39;s lenient recovery can therefore never silently upgrade itself to <code>complete_for_profile</code>.</p>
+<p>The omission collector has its own memory defense: at most 2,000 distinct omission tuples are retained, and additional occurrences are counted into a terminal budget-overflow record. Identical adapter omissions aggregate by location, reason, scope, and story. The coverage ledger cannot be allowed to become the denial-of-service vector it exists to report.</p>
+<h3>Gaps are addressable nodes</h3>
+<p>When the view is committed, omissions become <code>omission/1</code>, <code>omission/2</code>, and so on. A whole-document failure is <code>failure</code>; inventory status is <code>inventory</code>; each nested source is <code>child:&lt;locator&gt;</code>. These nodes carry no extracted text, but they can be outlined, cited, reviewed, and included in absence analysis.</p>
+<p>That is the difference between “the model said nothing was there” and “the system can identify exactly where its knowledge stops.”</p>
+<h3>Exhibit 1 — A synthetic <code>ViewManifest</code> with an addressable omission</h3>
+<p>The following is structurally faithful to <code>squad.evidence.view/1</code>, with synthetic identities and hashes. The view digest is computed over the manifest&#39;s JCS bytes; it is not a mutable field inside the manifest.</p>
+<pre><code class="language-json">{
+  &quot;schema&quot;: &quot;squad.evidence.view/1&quot;,
+  &quot;report_schema&quot;: &quot;doc_source.report/2&quot;,
+  &quot;source&quot;: {
+    &quot;revision&quot;: &quot;doc_20261030_142011_a1b2c3d4&quot;,
+    &quot;sha256&quot;: &quot;58b2e91f4c03d8a7126590ef4312ab98c7654321fedcba09876543210fedcba9&quot;,
+    &quot;bytes&quot;: 12345,
+    &quot;name&quot;: &quot;renewal.pdf&quot;,
+    &quot;canonical_path&quot;: &quot;project:/evidence/renewal.pdf&quot;,
+    &quot;registered_at&quot;: &quot;2026-10-31T14:20:11Z&quot;
+  },
+  &quot;origin&quot;: &quot;room_captured&quot;,
+  &quot;parser&quot;: {
+    &quot;name&quot;: &quot;squad-doc-source&quot;,
+    &quot;profile&quot;: &quot;text/v1&quot;,
+    &quot;digest&quot;: &quot;4b9c210e8f1a77d4c0592a1e38f47c1190ab2d3e4f5061728394a5b6c7d8e9f0&quot;,
+    &quot;features&quot;: &quot;synthetic-parser-feature-profile&quot;
+  },
+  &quot;config&quot;: {
+    &quot;limits&quot;: {
+      &quot;max_child_bytes&quot;: 33554432,
+      &quot;max_item_decompressed&quot;: 67108864,
+      &quot;max_total_decompressed&quot;: 268435456,
+      &quot;max_parts&quot;: 20000,
+      &quot;max_nesting&quot;: 3,
+      &quot;max_xml_depth&quot;: 256,
+      &quot;max_pdf_objects&quot;: 500000,
+      &quot;max_form_depth&quot;: 8,
+      &quot;max_cells&quot;: 2000000,
+      &quot;max_elements&quot;: 250000,
+      &quot;max_output_chars&quot;: 33554432,
+      &quot;max_wall_ms&quot;: 60000,
+      &quot;max_image_pixels&quot;: 16000000,
+      &quot;max_total_pixels&quot;: 64000000
+    },
+    &quot;limits_sha256&quot;: &quot;84e01b92c7d34f56a1230987654321fedcba9876543210abcdef0123456789ab&quot;
+  },
+  &quot;format&quot;: &quot;pdf&quot;,
+  &quot;status&quot;: {
+    &quot;integrity&quot;: &quot;verified&quot;,
+    &quot;inventory&quot;: &quot;complete_for_profile&quot;,
+    &quot;extraction&quot;: &quot;partial&quot;
+  },
+  &quot;inventory_total&quot;: 2,
+  &quot;inventory&quot;: [],
+  &quot;stories&quot;: [
+    {
+      &quot;id&quot;: &quot;page:1&quot;,
+      &quot;kind&quot;: &quot;page&quot;,
+      &quot;locator&quot;: { &quot;kind&quot;: &quot;page&quot;, &quot;page&quot;: 1 },
+      &quot;primary&quot;: true,
+      &quot;method&quot;: &quot;pdf_text_operators&quot;,
+      &quot;text&quot;: &quot;Section 4.2 Renewal Cap: Annual uplift shall not exceed 3.0%.&quot;
+    }
+  ],
+  &quot;elements&quot;: [
+    {
+      &quot;id&quot;: &quot;page:1!BT:0&quot;,
+      &quot;story&quot;: &quot;page:1&quot;,
+      &quot;kind&quot;: &quot;text_object&quot;,
+      &quot;span&quot;: { &quot;start&quot;: 0, &quot;end&quot;: 61 },
+      &quot;locator&quot;: { &quot;kind&quot;: &quot;page_element&quot;, &quot;page&quot;: 1, &quot;element&quot;: &quot;BT&quot;, &quot;ordinal&quot;: 0 }
+    }
+  ],
+  &quot;omissions&quot;: [
+    {
+      &quot;id&quot;: &quot;omission/1&quot;,
+      &quot;omission&quot;: {
+        &quot;location&quot;: &quot;page:2/image:1&quot;,
+        &quot;stage&quot;: &quot;extract&quot;,
+        &quot;reason&quot;: &quot;ocr_not_enabled&quot;,
+        &quot;scope&quot;: &quot;page&quot;,
+        &quot;detail&quot;: &quot;page 2 contains a raster scan and local OCR is disabled&quot;,
+        &quot;count&quot;: 1
+      }
+    }
+  ],
+  &quot;children&quot;: [],
+  &quot;observations&quot;: []
+}
+</code></pre>
+<p>The extracted cap is citable. So is the fact that page 2 was not OCRed. Neither fact may impersonate the other.</p>
+<h2>5. Immutable Views: Identity Includes the Reader</h2>
+<p>Two systems can read identical bytes and produce different evidence because their parsers, profiles, feature sets, or limits differ. AINA therefore binds a view to all of them:</p>
+<pre><code class="language-text">source revision + source SHA-256
++ parser name + parser source/build digest + text/v1 profile + feature profile
++ exact 14-field limits + limits_sha256
++ report schema + view schema
++ stories + elements + omissions + children + observations
+= canonical ViewManifest
+</code></pre>
+<p>RFC 8785 JSON Canonicalization Scheme (JCS) gives the manifest one deterministic serialization. Object keys are sorted as UTF-16 code-unit sequences, insignificant whitespace disappears, non-finite numbers are refused, integers beyond exact IEEE-754 range are not rounded, and nesting is capped at 128. String content is escaped but <strong>not Unicode-normalized or whitespace-rewritten</strong>.</p>
+<p>The SHA-256 of those canonical bytes is the 64-hex view digest.</p>
+<h3>Commit children first, then seal the parent</h3>
+<p>Attachments, archive members, and embedded workbooks are sources in their own right. Their revisions compose the parent revision, an encoded member locator, and the child SHA-256. Their views commit first; the parent&#39;s <code>child:&lt;locator&gt;</code> nodes then name the resulting child digests or failures. Child text is never promoted into the parent as though it had been read in the parent&#39;s own story.</p>
+<p>The commit runs inside the Room&#39;s cross-process <code>with_transition</code> serialization. A <code>begin</code> provenance node records the attempted view, the canonical artifact is stored by digest, and a <code>complete</code> node plus index closes the commit. Repeating the same manifest in the same Room resolves to the existing view rather than rewriting it.</p>
+<p>Loading is equally strict. The resolver checks the artifact&#39;s recorded digest, hashes the served bytes, re-canonicalizes the parsed value, and compares canonical form. One altered byte or non-canonical repair yields <code>view_digest_mismatch</code>.</p>
+<p>A new parser or configuration creates a new view. It does not retarget old citations. Historical identity survives; current authority must be re-established.</p>
+<h2>6. Server-Cut Evidence: <code>srv_</code> Before <code>ev_</code></h2>
+<p>A server-cut citation is not a model emitting a prettier reference format. It is a two-event protocol.</p>
+<h3>Event 1: the Room serves content and issues <code>srv_</code></h3>
+<p>The <code>squad.evidence.receipt/1</code> record binds:</p>
+<ul>
+<li>the Room, source revision, and view digest;</li>
+<li>the recipient and recipient session;</li>
+<li>the serving tool;</li>
+<li>each node and optional character interval served;</li>
+<li>delivery counts and <code>complete</code>, <code>truncated</code>, or <code>chunked</code> status;</li>
+<li>admission, optional via-handle or wake identity, time, and nonce.</li>
+</ul>
+<p>The receipt identifier is <code>srv_</code> plus the first 32 hexadecimal digits of the receipt&#39;s canonical SHA-256.</p>
+<p><code>read</code>, <code>resolve</code>, and <code>wake_delivery</code> are content-serving tools. <code>outline</code> is different: it serves structure and coverage metadata. An outline receipt can ground a textless <code>omission/N</code>, <code>failure</code>, <code>inventory</code>, or <code>child:&lt;locator&gt;</code> node. It cannot ground a quotation from a text block the caller was never served.</p>
+<h3>Event 2: the Room computes the citation and issues <code>ev_</code></h3>
+<p>The caller submits a receipt plus an exact quote, or a node it was served. For a quote, the caller may supply a node hint or a one-based occurrence when text repeats. The caller does <strong>not</strong> supply authoritative character offsets.</p>
+<p>The server then:</p>
+<ol>
+<li>verifies that the receipt belongs to the caller;</li>
+<li>loads and reverifies the canonical view;</li>
+<li>rechecks source admission and drift;</li>
+<li>searches only the content covered by that receipt;</li>
+<li>refuses zero matches with <code>quote_not_found</code> and unresolved repetition with <code>quote_ambiguous</code>;</li>
+<li>computes Unicode-scalar coordinates;</li>
+<li>selects the innermost covering element with <code>View::narrowest</code>, falling back to the story;</li>
+<li>checks that the selected range was actually served;</li>
+<li>issues a content-addressed <code>ev_</code> handle whose issuance record includes the canonical <code>EvidenceRef</code>, basis, Room, issuee, and first-hand lineage.</li>
+</ol>
+<pre><code class="language-text">agent:  receipt + exact quote (+ optional occurrence)
+server: served? → current? → unique? → narrowest node? → selector in bounds?
+agent:  receives ev_ handle; receives no authority to invent its coordinates
+</code></pre>
+<h3>Exhibit 2 — A valid synthetic citation issuance</h3>
+<pre><code class="language-json">{
+  &quot;handle&quot;: &quot;ev_6c8f1029384756ab12cd34ef56789012&quot;,
+  &quot;issuance&quot;: {
+    &quot;schema&quot;: &quot;squad.evidence.handle/1&quot;,
+    &quot;envelope&quot;: {
+      &quot;version&quot;: 1,
+      &quot;source_revision&quot;: &quot;doc_20261030_142011_a1b2c3d4&quot;,
+      &quot;view_digest&quot;: &quot;a1b2c3d4e5f60718293a4b5c6d7e8f901a2b3c4d5e6f708192a3b4c5d6e7f809&quot;,
+      &quot;node_id&quot;: &quot;page:1!BT:0&quot;,
+      &quot;selector&quot;: {
+        &quot;kind&quot;: &quot;bounded_subrange&quot;,
+        &quot;unit&quot;: &quot;unicode_scalar&quot;,
+        &quot;start&quot;: 25,
+        &quot;end&quot;: 61
+      },
+      &quot;source_native_locator&quot;: {
+        &quot;kind&quot;: &quot;page_element&quot;,
+        &quot;page&quot;: 1,
+        &quot;element&quot;: &quot;BT&quot;,
+        &quot;ordinal&quot;: 0
+      },
+      &quot;role&quot;: &quot;supporting&quot;,
+      &quot;visibility&quot;: &quot;all&quot;,
+      &quot;origin&quot;: &quot;room_captured&quot;
+    },
+    &quot;envelope_digest&quot;: &quot;e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855&quot;,
+    &quot;room&quot;: &quot;architecture-demo&quot;,
+    &quot;issued_to&quot;: &quot;analyst-alpha&quot;,
+    &quot;issued_at&quot;: &quot;2026-10-31T14:20:15Z&quot;,
+    &quot;basis&quot;: {
+      &quot;kind&quot;: &quot;receipt&quot;,
+      &quot;receipt&quot;: &quot;srv_91d2e3f4a5b6c7d80123456789abcdef&quot;
+    },
+    &quot;lineage&quot;: {
+      &quot;first_hand&quot;: true,
+      &quot;origin&quot;: &quot;analyst-alpha&quot;
+    },
+    &quot;nonce&quot;: &quot;synthetic-nonce-001&quot;
+  }
+}
+</code></pre>
+<p>The handle proves which exact passage was issued to which actor on which view and receipt basis. It does not prove that the contract is authentic, that 3.0% is commercially reasonable, or that page 2 agrees.</p>
+<h3>Refusal is part of the citation grammar</h3>
+<p>Paths and URLs are refused with <code>not_a_path</code>. Raw hashes, hand-built offsets, and similar manufactured references are refused with <code>agent_manufactured_ref</code>. Unknown well-formed handles yield <code>ev_unknown</code>. Foreign-receipt use is <code>access_denied</code>; content outside the receipt is <code>not_served</code> or <code>quote_not_found</code>. Reserved locator kinds and offset units fail by name rather than being loosely accepted.</p>
+<h3>Exhibit 3 — <code>quote_ambiguous</code></h3>
+<p>The actual refusal is an error string; it is shown here as a JSON string with synthetic occurrence data abbreviated for publication.</p>
+<pre><code class="language-json">&quot;quote_ambiguous: the quotation occurs 3 times in the served content; name one with occurrence: [{\&quot;occurrence\&quot;:1,\&quot;node\&quot;:\&quot;page:1!BT:0\&quot;},{\&quot;occurrence\&quot;:2,\&quot;node\&quot;:\&quot;page:3!BT:1\&quot;},{\&quot;occurrence\&quot;:3,\&quot;node\&quot;:\&quot;page:7!BT:2\&quot;}]&quot;
+</code></pre>
+<p>The server does not choose the most convenient occurrence. The caller must disambiguate.</p>
+<h3>Exhibit 4 — <code>drifted</code></h3>
+<pre><code class="language-json">&quot;drifted: project:/evidence/renewal.pdf no longer holds the registered bytes (registered 58b2e91f4c03d8a7126590ef4312ab98c7654321fedcba09876543210fedcba9, current c0ffee99887766554433221100ffeeddccbbaa99887766554433221100ffeedd); the committed view is not served in its place — re-register, or request authorized historical inspection&quot;
+</code></pre>
+<p>The old view remains intact. Its current evidentiary role does not.</p>
+<h2>7. Network Capture: Authorize Every Hop, Not Just the First URL</h2>
+<p>Documents also arrive through retrieval. A fetch tool that authorizes only the initial URL can be redirected into a loopback service, private network, or cloud metadata endpoint. The safe rule is not “validate the first destination”; it is <strong>authorize the destination before every request</strong>.</p>
+<p>AINA&#39;s capture client disables automatic redirects with <code>redirect::Policy::none()</code>. It follows redirects manually, up to ten, and calls <code>authorize_url</code> on each current URL before sending. Every hop records its URL, status, optional content type and <code>Location</code>, and declared security headers.</p>
+<p>The final body is capped at 8 MiB. A body cut by that ceiling becomes a <code>snippet</code> with <code>truncated: true</code>, not a complete response. The exact bytes are stored as a Room artifact, hashed, and parsed through the same confined worker. Every fetch is a new <code>cap_</code> capture; re-fetching a URL never overwrites the earlier observation.</p>
+<h3>Captured, supplied, and governing are different roles</h3>
+<table>
+<thead>
+<tr>
+<th>Origin and root</th>
+<th>What the Room observed</th>
+<th>May anchor a governing requirement?</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><code>room_captured</code> + <code>doc_…</code></td>
+<td>Registered bytes captured from admitted project territory</td>
+<td>Yes, after first-hand serving and the other requirement checks</td>
+</tr>
+<tr>
+<td><code>room_captured</code> + <code>cap_…</code></td>
+<td>A response body fetched through the Room&#39;s egress-gated path</td>
+<td>No; research capture is not a registered governing document</td>
+</tr>
+<tr>
+<td><code>agent_supplied</code> + <code>cap_…</code></td>
+<td>Text an agent pasted with a claimed, unverified origin</td>
+<td>No; citing it cites the supplier, not the claimed source</td>
+</tr>
+</tbody></table>
+<p>An agent-supplied excerpt is not inherently false. It is explicitly labeled evidence of what the agent supplied. It cannot be laundered into a Room observation merely because its bytes match a real document.</p>
+<p>The same boundary applies to web research: egress authorization and immutable capture establish provenance, not truth and not permission for retrieved instructions to govern the system.</p>
+<h2>8. Findings: Claims the Server Can Re-Evaluate</h2>
+<p>A citation establishes a passage. A finding states something checkable about it.</p>
+<p>The evaluator supports five typed assertions:</p>
+<ul>
+<li><strong><code>equals</code></strong> — exact text or typed-value equality.</li>
+<li><strong><code>in_range</code></strong> — a typed numeric value against minimum/maximum bounds, with an optional unit check when the view knows the unit.</li>
+<li><strong><code>matches_regex_bounded</code></strong> — a pattern capped at 512 characters, compiled with 1 MiB size limits and nesting depth 32.</li>
+<li><strong><code>exists</code></strong> — the selected text or structural node exists.</li>
+<li><strong><code>formula_equals</code></strong> — exact comparison against a spreadsheet formula node, including the formula associated with a cached-value cell.</li>
+</ul>
+<p>The interpreter remains separate from the machine-checked assertion. A model may offer a bounded interpretation, but the server re-evaluates the predicate against the committed view.</p>
+<p>A false predicate is not deleted to make the ledger look clean. The <code>fnd_</code> finding and failed <code>evl_</code> evaluation are persisted, and only then does the call return <code>predicate_false</code>. Failed claims remain failed matter.</p>
+<h3>Absence is a coverage claim before it is a search claim</h3>
+<p>“No change-of-control clause exists in this contract” is much stronger than “the phrase did not occur in the chunks I saw.” It requires an inventory of what was examined and an explicit account of what remains unknown.</p>
+<p>For an absence claim, the server derives required unknown-coverage markers:</p>
+<ul>
+<li><code>failure</code> for failed or unsupported extraction;</li>
+<li><code>inventory</code> when enumeration is partial or unknown;</li>
+<li>every in-scope lossy <code>omission/N</code>;</li>
+<li>every <code>child:&lt;locator&gt;</code> for whole-document scope, because child text is not merged into the parent&#39;s searched stories.</li>
+</ul>
+<p>The caller supplies <code>acknowledged_gaps</code> as the relevant <strong>node IDs</strong>. These are not authoritative character offsets and are not a second set of fabricated evidence references. The server checks that every required marker is acknowledged and that every acknowledged marker exists in the view. Outline receipts can be used to cite and inspect those textless markers.</p>
+<p>Only then does the evaluator search for the phrase or bounded pattern. A successful negative result means, precisely:</p>
+<blockquote>
+<p>The phrase is absent from the content this view examined; acknowledged gaps remain unknown, not absent.</p>
+</blockquote>
+<h3>Exhibit 5 — <code>absence_unsupported</code></h3>
+<pre><code class="language-json">&quot;absence_unsupported: the claimed scope has unknown coverage; an absence claim must acknowledge each marker at its narrowest known location: omission/1&quot;
+</code></pre>
+<p>The server refuses to let a missing OCR pass become proof that page 2 contains nothing.</p>
+<h2>9. Revision, Reassessment, and Correspondence Without Retargeting</h2>
+<p>Evidence is allowed to change. History is not allowed to move underneath its citations.</p>
+<p>When a new view is committed for a source, dependent findings, evaluations, and requirements receive deterministic <code>rsa_</code> reassessment flags. Requirement amendments form <code>reqrev_</code> revision chains; task evidence manifests (<code>man_</code>) pin the admitted source and optional view context. A task or handoff cannot silently complete over evidence now marked for reassessment.</p>
+<p>Cross-version correspondence is a separate, explicit operation:</p>
+<ol>
+<li><code>correspond</code> proposes candidate locations in a later view.</li>
+<li>The candidate search has four stages, with a separate same-kind rule for textless structural nodes: <code>same_node_same_text</code>, <code>same_node_same_kind</code>, <code>exact_text</code>, <code>normalized_text</code>, then the weak <code>same_node_changed_text</code> fallback.</li>
+<li>The reviewer must actually be served the candidate in the later view.</li>
+<li><code>adopt-correspondence</code> records <code>coa_</code>, creates a <strong>new</strong> <code>ev_</code> handle, and adds a <code>corresponds_to</code> relation.</li>
+<li>The old handle remains bound to its old view. A requirement-role handle adopted through correspondence becomes supporting evidence in the new view rather than silently carrying governing authority forward.</li>
+</ol>
+<pre><code class="language-text">old view + old ev_ handle ───────────────→ remains historically pinned
+       │                                         │
+       ├─ new view committed ─→ rsa_ reassessment flags on dependents
+       │                                         │
+       └─ cor_ proposal → candidate served in new view
+                                      ↓
+                         coa_ adoption + new ev_ handle
+                                      ↓
+                         corresponds_to relation; no retargeting
+</code></pre>
+<p>This is the difference between provenance and path mutation. The system can say how two observations correspond without pretending they are the same observation.</p>
+<h2>10. Echo Collapse: Count First-Hand Origins, Not Repetitions</h2>
+<p>Multi-agent systems are particularly good at making repetition look like corroboration. Agent A reads a passage. Agent B cites A&#39;s finding. Agent C cites B&#39;s summary. The graph now contains three records and still contains only one first-hand observer.</p>
+<p><code>lineage::origins</code> walks citations for the target view and node. A first-hand citer contributes its actor identity as an origin. An echo contributes the origin it rests on. The output records <code>first_hand_citers</code>, <code>echo_citations</code>, and the collapsed <code>distinct_origins</code> set.</p>
+<h3>Exhibit 6 — Three citation records, one first-hand origin</h3>
+<pre><code class="language-json">{
+  &quot;room&quot;: &quot;architecture-demo&quot;,
+  &quot;view_digest&quot;: &quot;a1b2c3d4e5f60718293a4b5c6d7e8f901a2b3c4d5e6f708192a3b4c5d6e7f809&quot;,
+  &quot;node&quot;: &quot;page:1!BT:0&quot;,
+  &quot;citations&quot;: 3,
+  &quot;records_by_kind&quot;: { &quot;finding&quot;: 3 },
+  &quot;first_hand_citers&quot;: [&quot;analyst-alpha&quot;],
+  &quot;echo_citations&quot;: [
+    {
+      &quot;citer&quot;: &quot;reviewer-beta&quot;,
+      &quot;rests_on&quot;: &quot;analyst-alpha&quot;,
+      &quot;record&quot;: &quot;fnd_11111111111111111111111111111111&quot;
+    },
+    {
+      &quot;citer&quot;: &quot;reviewer-gamma&quot;,
+      &quot;rests_on&quot;: &quot;analyst-alpha&quot;,
+      &quot;record&quot;: &quot;fnd_22222222222222222222222222222222&quot;
+    }
+  ],
+  &quot;distinct_origins&quot;: [&quot;analyst-alpha&quot;],
+  &quot;distinct_origin_count&quot;: 1
+}
+</code></pre>
+<p>If beta later receives the passage directly and cites it first-hand, the count becomes two. That is a precise operational metric for an owner-declared evidence-origin requirement.</p>
+<p>It is not proof of statistical, organizational, or causal independence. Two first-hand readers can share a flawed parser, training data, administrative control, or source document. <strong>Distinct first-hand observation is not the same thing as independent validation.</strong> Article 01&#39;s three independence claims still apply.</p>
+<h2>11. The 2026 Evidence Landscape: What External Work Establishes</h2>
+<p>The 2026 literature and vulnerability record reinforce the need for explicit evidence boundaries. They do not validate AINA, and their measurements should not be stretched beyond their actual scope.</p>
+<table>
+<thead>
+<tr>
+<th>2026 primary source</th>
+<th>What it actually reports</th>
+<th>Architectural consequence—and ceiling</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>Zhao, Pandey, and Misra, <a href="https://arxiv.org/abs/2610.30026"><em>What the Author Wrote, What the Agent Reads</em></a>, October 2026 preprint</td>
+<td>Across 76 real policy documents, formatting-blind ingestion reduced requirement-recovery micro-F1 from 0.690 to 0.150 for Docling and 0.075 for plain text; six answering models replicated the loss. Highlight and color drove the largest measured effects.</td>
+<td>Ingestion can make agents confidently wrong by removing authorial cues. This supports explicit structural and omission accounting; it does not by itself prove that every omitted cue changes every decision.</td>
+</tr>
+<tr>
+<td>Wang et al., <a href="https://arxiv.org/abs/2606.04990"><em>From Agent Traces to Trust</em></a>, June 2026 survey, revised October 2026</td>
+<td>Organizes evidence tracing and execution provenance into typed graphs and reports limited integration, incomplete-chain benchmarks, and little tamper-evident or attested trace reporting in the surveyed catalog.</td>
+<td>Typed provenance must connect evidence and execution rather than treating a final answer as its own audit. A survey supplies a framework, not an AINA benchmark.</td>
+</tr>
+<tr>
+<td>Khajavi et al., <a href="https://arxiv.org/abs/2605.27700"><em>CiteCheck</em></a>, May 2026 preprint, revised October 2026</td>
+<td>Evaluates corrupted and fabricated bibliographic references on a 982-citation physics benchmark, reporting 88.7 macro-F1 for its hybrid detector.</td>
+<td>Plausible citation metadata requires verification. Bibliographic identity is a different problem from quotation-span grounding; CiteCheck is not evidence that server-cut spans work.</td>
+</tr>
+<tr>
+<td>Meng et al., <a href="https://arxiv.org/abs/2609.34444"><em>Social Circuits behind Multi-agent Echo Chambers</em></a>, September 2026 preprint</td>
+<td>Studies how messages reinforce shared errors and traces their effects through receiver activations; proposes circuit-guided message selection.</td>
+<td>More agents can amplify rather than correct an early error. The work does not prove that every topology converges or that actor-origin counting solves model independence.</td>
+</tr>
+<tr>
+<td>Setiawan, <a href="https://arxiv.org/abs/2608.22228"><em>Prompt-Based Abstention Fails Under Misleading Context</em></a>, August 2026 preprint</td>
+<td>On three small frozen models (3.8B–8B), explicit abstention prompting still answered 41.6% of misleading questions; 63% of those answers echoed the planted wrong entity.</td>
+<td>Prompted caution is not a deterministic coverage gate. The result is scoped to the tested models and conditions, not a universal frontier-model failure rate.</td>
+</tr>
+<tr>
+<td>Pai, <a href="https://arxiv.org/abs/2606.17467"><em>PARSE</em></a>, June 2026 preprint, revised September 2026</td>
+<td>On 122 professional-domain tasks using real retrieved documents, PARSE reported 15.6% attack success versus a 25.4% baseline, with utility and significance limitations disclosed.</td>
+<td>Retrieval sanitization and provenance-aware processing belong before judgment. PARSE is a sanitization result, not proof that cryptographic provenance tags neutralize prompt injection.</td>
+</tr>
+<tr>
+<td><a href="https://nvd.nist.gov/vuln/detail/CVE-2026-27026"><code>CVE-2026-27026</code></a>, February 2026</td>
+<td>Malformed <code>/FlateDecode</code> streams could cause long runtimes in <code>pypdf</code> before 6.7.1 through byte-by-byte decompression.</td>
+<td>Per-item and aggregate budgets, wall clocks, and an outer Job Object are necessary backstops. The advisory does not need to be exaggerated into a different memory-corruption claim.</td>
+</tr>
+<tr>
+<td><a href="https://nvd.nist.gov/vuln/detail/CVE-2026-104120"><code>CVE-2026-104120</code></a>, October 2026</td>
+<td><code>mcp-server-fetch</code> and <code>mcp-server-everything</code> through 2026.6.4 were affected by SSRF in <code>fetch_url</code> URL/path handling.</td>
+<td>URL fetches require an egress boundary. AINA additionally authorizes every redirect hop on its capture path; the CVE description alone is not used to prove a particular redirect implementation.</td>
+</tr>
+<tr>
+<td><a href="https://nvd.nist.gov/vuln/detail/CVE-2026-51994"><code>CVE-2026-51994</code></a>, September 2026</td>
+<td><code>mcp-remote</code> 0.1.32–0.1.38 was vulnerable to SSRF through the <code>resource_metadata</code> URL extracted from <code>WWW-Authenticate</code>.</td>
+<td>Remote metadata is untrusted destination input. The capture-path proof does not automatically cover unrelated OAuth clients; every network route needs its own inventory and gate.</td>
+</tr>
+<tr>
+<td>IETF <a href="https://www.rfc-editor.org/rfc/rfc9943.html"><code>RFC 9943</code></a>, June 2026, SCITT Architecture</td>
+<td>Defines registration of signed statements and transparency receipts in an append-only Transparency Service.</td>
+<td>Tamper-evident inclusion complements canonical evidence views. Inclusion proves log behavior, not that the registered statement is substantively true.</td>
+</tr>
+</tbody></table>
+<p>The composition matters. Sandboxing addresses parser blast radius. Canonical views address artifact identity. Server-cut citations address served-span provenance. Bounded absence addresses unknown coverage. Origin collapse addresses repetition. None can substitute for the others.</p>
+<h2>12. The Twenty-Case Evidence Conformance Gate</h2>
+<p>The epistemic subsystem has its own 20-case evidence battery inside the 45-case candidate-binary publication gate. These are author-controlled engineering checks, not external certification.</p>
+<table>
+<thead>
+<tr>
+<th>Case</th>
+<th>Predicate exercised</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><code>evidence_jcs_rfc8785_vectors</code></td>
+<td>Canonical serializations match the RFC&#39;s vectors</td>
+</tr>
+<tr>
+<td><code>evidence_corpus_through_mcp</code></td>
+<td>Corpus documents read through the confined worker with expected nodes and outcomes</td>
+</tr>
+<tr>
+<td><code>evidence_governing_pdf_six_pages</code></td>
+<td>The governing PDF yields its six text pages through <code>squad_doc_source read</code></td>
+</tr>
+<tr>
+<td><code>evidence_repeated_text_resolves_each_node</code></td>
+<td>Repeated text is ambiguous until occurrence selection, then each handle resolves to its own node</td>
+</tr>
+<tr>
+<td><code>evidence_drift_refused</code></td>
+<td>Altered source bytes refuse reading and resolution</td>
+</tr>
+<tr>
+<td><code>evidence_tampered_view_refused</code></td>
+<td>Altered committed views fail with <code>view_digest_mismatch</code></td>
+</tr>
+<tr>
+<td><code>evidence_old_view_survives_extraction_change</code></td>
+<td>New extraction identity creates a new view while the old handle remains on the old view</td>
+</tr>
+<tr>
+<td><code>evidence_bad_selector_refused</code></td>
+<td>Bad selectors, paths, raw hashes, unknown handles, and reserved extensions fail by name</td>
+</tr>
+<tr>
+<td><code>evidence_unauthorized_dereference_refused</code></td>
+<td>A caller outside the Room&#39;s owner roster cannot dereference</td>
+</tr>
+<tr>
+<td><code>evidence_truncation_in_delivery_status</code></td>
+<td>Bounded delivery reports chunked/truncated counts</td>
+</tr>
+<tr>
+<td><code>evidence_excerpt_stays_distinct</code></td>
+<td>Agent-supplied material retains its origin and cannot take requirement role</td>
+</tr>
+<tr>
+<td><code>evidence_echo_lineage_preserved</code></td>
+<td>Echo citations remain echoes resting on a first-hand origin</td>
+</tr>
+<tr>
+<td><code>evidence_distinct_origins_through_three_hops</code></td>
+<td>Three echo-linked records collapse to one origin; a second first-hand reader makes two</td>
+</tr>
+<tr>
+<td><code>evidence_false_predicate_fails_receipt</code></td>
+<td>False predicates fail evaluation and remain as failed matter</td>
+</tr>
+<tr>
+<td><code>evidence_absence_requires_complete_inventory</code></td>
+<td>Absence is refused until every unknown-coverage marker is acknowledged</td>
+</tr>
+<tr>
+<td><code>evidence_correspondence_keeps_old_handle</code></td>
+<td>Correspondence adoption issues a new handle without retargeting the old one</td>
+</tr>
+<tr>
+<td><code>evidence_reassessment_flags</code></td>
+<td>Source and requirement revisions flag dependents until answered</td>
+</tr>
+<tr>
+<td><code>evidence_staged_visibility_reveal</code></td>
+<td>Collaborative-pass findings remain withheld until reveal, with delivery limits disclosed</td>
+</tr>
+<tr>
+<td><code>evidence_origin_gate</code></td>
+<td>Completion refuses until a requirement has the declared distinct first-hand origins</td>
+</tr>
+<tr>
+<td><code>evidence_capture_provenance_chain</code></td>
+<td>Every redirect hop is egress-authorized and records status, location, and security headers</td>
+</tr>
+</tbody></table>
+<p>The gate demonstrates named path behavior on the candidate binary. It does not prove universal format coverage, universal parser memory safety, complete network-route coverage, source truth, or independent assurance. Nor does it establish a throughput or latency profile for an enterprise corpus; resource cost must be measured against the actual document mix, limits, worker count, and delivery windows.</p>
+<p><strong>Evidence availability:</strong> the implementation and conformance artifacts are <code>CONTROLLED</code> for qualified, method-scoped technical review, with adverse findings permitted. They are not represented as unrestricted public downloads or independent validation. The review route is <code>[RESEARCH]</code> through <a href="https://blayneaina.com/09-bring-one-real-boundary-work-with-blayne/">Article 09</a>.</p>
+<h2>Bring One Document Boundary</h2>
+<p>The <strong>Zero-Trust Evidence &amp; Citation Audit Challenge</strong> is the direct application of this layer. Bring one document-heavy AI workflow and one bounded evidence question. I will map its source-to-view-to-citation predicates, inspect the omission surface, and demonstrate fabricated-citation refusal against the existing implementation.</p>
+<p>The challenge excludes universal format coverage, source-truth guarantees, absence without acknowledged gaps, production write authority, and independent validation. Deployment and paid pilots are separately scoped; independent evaluation remains outside the commercial ladder through <a href="https://blayneaina.com/09-bring-one-real-boundary-work-with-blayne/">Article 09</a>.</p>
+<h2>The Article 02 Claim Card</h2>
+<pre><code class="language-text">Mechanism:
+  AINA Epistemic Trust Layer
+  (doc_source, confined extraction, evidence views, receipts, handles,
+   findings, requirements, reassessment, correspondence, and lineage)
+
+Failure it governs:
+  Hostile document parsing inside the controller; stat/read/hash substitution;
+  silent extraction loss; fabricated or unserved citations; stale evidence;
+  unbounded absence claims; and multi-agent repetition masquerading as corroboration.
+
+Positive path:
+  Registered doc_ source
+  → single-open FILE_SHARE_READ capture and SHA-256
+  → LPAC + Job Object confined identification and budgeted extraction
+  → RFC 8785 ViewManifest and 64-hex view digest
+  → bounded served-content srv_ receipt
+  → server-computed EvidenceRef and ev_ handle
+  → typed finding / bounded absence / requirement revision
+  → EISA sealed case (Article 03).
+
+Refusal / unknown-coverage path:
+  doc_source_drifted or drifted
+  parser_worker_unavailable, budget_exceeded, parser_fault
+  not_a_path, agent_manufactured_ref, ev_unknown
+  access_denied, not_served, quote_not_found, quote_ambiguous
+  view_digest_mismatch, role_ineligible, absence_unsupported.
+
+Evidence status:
+  Implemented and Author-Verified on the declared Windows reference embodiment.
+  Twenty evidence cases form part of the 45-case candidate-binary publication gate.
+  Not Independently Validated. External 2026 papers and advisories do not endorse AINA.
+
+Verifier and artifacts:
+  Captured source digest; worker Receipt; doc_source.report/2;
+  squad.evidence.view/1 and view digest;
+  squad.evidence.receipt/1 (srv_);
+  squad.evidence.handle/1 (ev_);
+  fnd_, evl_, reqrev_, man_, rsa_, cor_, coa_ records;
+  evidence_conformance.rs:301-322.
+
+Scope and claim ceiling:
+  Confinement covers the governed Windows parser path, not every possible host process.
+  The Kind alphabet is bounded and includes typed unsupported/encrypted outcomes.
+  Complete-for-profile is not universal extraction or human comprehension.
+  A server-cut citation proves served-span provenance, not source truth.
+  Absence is bounded to examined content with acknowledged gaps.
+  Distinct first-hand actor origins are not statistical or organizational independence.
+  Egress authorization is proven on the capture path, not every network client.
+
+Next stage in the machine:
+  Article 02 seals the evidence world.
+  Article 03 compiles candidate judgments into EISA&#39;s closed act grammar
+  and adjudicates support, contradiction, partition, and layout relations.
+
+Commercial doorway:
+  Zero-Trust Evidence &amp; Citation Audit Challenge — bring one document-heavy
+  AI workflow; receive a source-to-view-to-citation predicate map, an omission
+  surface review, and a live demonstration of fabricated-citation refusal
+  (Article 09 · me@blayneaina.com).
+</code></pre>
+<h2>Before EISA Judges the Act</h2>
+<p>Return to the renewal contract.</p>
+<p>The conventional pipeline returned a clean answer: “Annual increases are capped at 3.0%, and there is no change-of-control clause.” Its citation looked plausible. Its confidence was high. Its evidence world was never established.</p>
+<p>The governed pipeline can tell a different story.</p>
+<p>The source revision was captured and hashed from one read. The parser ran with one capability, no network, bounded resources, and a token verified before resume. Page 1 produced a text-object node containing the 3.0% sentence. Page 2 produced an <code>ocr_not_enabled</code> omission, not silence. The analyst received a bounded content window and an <code>srv_</code> receipt. The Room found the exact sentence, computed its Unicode-scalar range, selected the innermost text object, and issued <code>ev_…</code>.</p>
+<p>The 3.0% assertion can now be checked. The change-of-control absence claim cannot pass until <code>omission/1</code> and every other unknown-coverage marker in scope are acknowledged. If another agent repeats the finding without reading the passage, lineage preserves the repetition as an echo. If the file changes, ordinary resolution refuses drift. If a new view is adopted, correspondence creates a new handle rather than moving the old one.</p>
+<p>Only now is there a stable object for constitutional judgment.</p>
+<blockquote>
+<p><strong>Models may interpret evidence. They may not manufacture the evidence world, erase its gaps, or award themselves first-hand observation.</strong></p>
+</blockquote>
+<p>Article 03 begins at that boundary: candidate judgments become EISA acts, support and contradiction become deterministic relations, and entity-resolution panels decide what may acquire standing.</p>
+<h2>Frequently Asked Questions</h2>
+<h3>What is a server-cut citation?</h3>
+<p>A server-cut citation is an <code>ev_</code> handle issued by the Room from a caller-bound <code>srv_</code> served-content receipt. The caller supplies an exact quote or served node; the server verifies coverage, computes Unicode-scalar coordinates, selects the narrowest structural node, and binds the result to a canonical view.</p>
+<h3>Does LPAC confinement make document parsing safe?</h3>
+<p>It makes the governed parser path substantially safer by restricting capabilities, network access, writable locations, process count, memory, and CPU, with token checks before resume. It does not prove that parser code is bug-free or that every host and administrative route is contained.</p>
+<h3>Does <code>complete_for_profile</code> mean the whole document was read?</h3>
+<p>No. It means extraction completed without lossy omissions under the declared <code>text/v1</code> profile. Profile exclusions remain disclosed, delivery can still be truncated, and the result does not imply visual understanding or humanlike comprehension.</p>
+<h3>Can a server-cut citation prove that a source is true?</h3>
+<p>No. It proves that a particular passage was served and bound to an exact source revision, parser configuration, view, node, and recipient. Authenticity, worldly truth, policy quality, and the interpretation of that passage remain separate claims.</p>
+<h3>How does bounded absence work?</h3>
+<p>The server identifies unknown-coverage markers such as lossy omissions, incomplete inventory, failure, and child sources. The caller must acknowledge every required marker by node ID before the phrase or pattern search can support the bounded negative result. Acknowledged gaps remain unknown, not absent.</p>
+<h3>Do three agents citing one passage provide three independent origins?</h3>
+<p>Not if two are echoes. Lineage counts first-hand actor observations and collapses derived citations to their origins. Even two first-hand actors are not automatically statistically, organizationally, or causally independent.</p>
+<h2>Continue the Series</h2>
+<ul>
+<li><strong>Series index:</strong> <a href="https://blayneaina.com/">From Proposal to Consequence: The AINA Transition-Governance Series</a></li>
+<li><strong>Previous:</strong> <a href="https://blayneaina.com/01-an-ai-output-is-not-an-act/">Article 01 — An AI Output Is Not an Act</a></li>
+<li><strong>Next:</strong> <a href="https://blayneaina.com/03-eisa-four-gate-verdict-machine-and-entity-resolution/">Article 03 — Semantic Switch and EISA: Protected Computation and Entity Resolution</a></li>
+<li><strong>Deployment and independent review:</strong> <a href="https://blayneaina.com/09-bring-one-real-boundary-work-with-blayne/">Article 09 — Bring One Real Boundary</a></li>
+</ul>
+<hr>
+<h2>Primary 2026 Sources</h2>
+<ul>
+<li><a href="https://arxiv.org/abs/2610.30026">Zhao, Pandey, and Misra — <em>What the Author Wrote, What the Agent Reads: Silent Cue Loss in Enterprise Document Ingestion</em>, <code>arXiv:2610.30026</code></a></li>
+<li><a href="https://arxiv.org/abs/2606.04990">Wang et al. — <em>From Agent Traces to Trust: A Survey of Evidence Tracing and Execution Provenance in LLM Agents</em>, <code>arXiv:2606.04990</code></a></li>
+<li><a href="https://arxiv.org/abs/2609.34444">Meng et al. — <em>Social Circuits behind Multi-agent Echo Chambers</em>, <code>arXiv:2609.34444</code></a></li>
+<li><a href="https://arxiv.org/abs/2608.22228">Setiawan — <em>Prompt-Based Abstention Fails Under Misleading Context</em>, <code>arXiv:2608.22228</code></a></li>
+<li><a href="https://arxiv.org/abs/2605.27700">Khajavi et al. — <em>CiteCheck</em>, <code>arXiv:2605.27700</code></a></li>
+<li><a href="https://arxiv.org/abs/2606.17467">Pai — <em>PARSE: Provenance-Aware Retrieval Sanitization for Professional Domain LLM Agents</em>, <code>arXiv:2606.17467</code></a></li>
+<li><a href="https://nvd.nist.gov/vuln/detail/CVE-2026-27026">NVD — <code>CVE-2026-27026</code>, <code>pypdf</code> long-runtime denial of service</a></li>
+<li><a href="https://nvd.nist.gov/vuln/detail/CVE-2026-104120">NVD — <code>CVE-2026-104120</code>, MCP fetch-server SSRF</a></li>
+<li><a href="https://nvd.nist.gov/vuln/detail/CVE-2026-51994">NVD — <code>CVE-2026-51994</code>, <code>mcp-remote</code> resource-metadata SSRF</a></li>
+<li><a href="https://www.rfc-editor.org/rfc/rfc9943.html">IETF <code>RFC 9943</code> — SCITT Architecture, June 2026</a></li>
+</ul>
+<hr>
+<h2>Publication Metadata</h2>
+<p><strong>Title tag:</strong> Zero-Trust Document Ingestion &amp; Server-Cut Evidence (<code>srv_</code> → <code>ev_</code>)<br><strong>Meta description:</strong> Why RAG chunks, file paths, and agent-written citations are not evidence: inside AINA&#39;s LPAC-confined parser, omission ledger, canonical views, and server-cut <code>srv_</code> and <code>ev_</code> handles.<br><strong>Series navigation:</strong> <a href="https://blayneaina.com/">Series index</a> · Article 02 of <em>From Proposal to Consequence: The AINA Transition-Governance Series</em>.<br><strong>Previous installment:</strong> <a href="https://blayneaina.com/01-an-ai-output-is-not-an-act/">Article 01 — An AI Output Is Not an Act</a>.<br><strong>Next installment:</strong> <a href="https://blayneaina.com/03-eisa-four-gate-verdict-machine-and-entity-resolution/">Article 03 — Semantic Switch and EISA: Protected Computation and Entity Resolution</a>.</p>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "TechArticle",
+      "@id": "https://blayneaina.com/02-zero-trust-document-ingestion-and-server-cut-evidence/#article",
+      "mainEntityOfPage": {
+        "@type": "WebPage",
+        "@id": "https://blayneaina.com/02-zero-trust-document-ingestion-and-server-cut-evidence/"
+      },
+      "headline": "Zero-Trust Document Ingestion and Server-Cut Evidence",
+      "alternativeHeadline": "From LPAC-Confined Parsing to Canonical Views, Server-Cut Citations, and Bounded Absence",
+      "description": "Why RAG chunks, file paths, and agent-written citations are not evidence: inside AINA's LPAC-confined parser, omission ledger, canonical views, and server-cut srv_ and ev_ handles.",
+      "proficiencyLevel": "Expert",
+      "inLanguage": "en-US",
+      "isAccessibleForFree": true,
+      "datePublished": "2026-10-31T09:00:00-06:00",
+      "dateModified": "2026-10-31T17:30:00-06:00",
+      "position": 2,
+      "author": {
+        "@type": "Person",
+        "@id": "https://blayneaina.com/#blayne-aina",
+        "name": "Blayne Aina",
+        "url": "https://blayneaina.com",
+        "email": "mailto:me@blayneaina.com",
+        "jobTitle": "Principal Systems Architect and creator of the AINA Protocol"
+      },
+      "publisher": {
+        "@type": "Person",
+        "@id": "https://blayneaina.com/#blayne-aina",
+        "name": "Blayne Aina",
+        "url": "https://blayneaina.com"
+      },
+      "isPartOf": {
+        "@type": "CreativeWorkSeries",
+        "@id": "https://blayneaina.com/#series",
+        "name": "From Proposal to Consequence: The AINA Transition-Governance Series",
+        "url": "https://blayneaina.com"
+      },
+      "about": [
+        { "@type": "Thing", "name": "Zero-Trust Document Ingestion" },
+        { "@type": "Thing", "name": "Windows Less Privileged AppContainer" },
+        { "@type": "Thing", "name": "Server-Cut Evidence and Citation Provenance" },
+        { "@type": "Thing", "name": "RFC 8785 JSON Canonicalization Scheme" },
+        { "@type": "Thing", "name": "Bounded Absence and Multi-Agent Evidence Lineage" }
+      ],
+      "citation": [
+        "https://arxiv.org/abs/2610.30026",
+        "https://arxiv.org/abs/2606.04990",
+        "https://arxiv.org/abs/2609.34444",
+        "https://arxiv.org/abs/2608.22228",
+        "https://arxiv.org/abs/2605.27700",
+        "https://arxiv.org/abs/2606.17467",
+        "https://nvd.nist.gov/vuln/detail/CVE-2026-27026",
+        "https://nvd.nist.gov/vuln/detail/CVE-2026-104120",
+        "https://nvd.nist.gov/vuln/detail/CVE-2026-51994",
+        "https://www.rfc-editor.org/rfc/rfc9943.html"
+      ]
+    },
+    {
+      "@type": "BreadcrumbList",
+      "@id": "https://blayneaina.com/02-zero-trust-document-ingestion-and-server-cut-evidence/#breadcrumb",
+      "itemListElement": [
+        {
+          "@type": "ListItem",
+          "position": 1,
+          "name": "Architecture",
+          "item": "https://blayneaina.com/"
+        },
+        {
+          "@type": "ListItem",
+          "position": 2,
+          "name": "Zero-Trust Document Ingestion and Server-Cut Evidence",
+          "item": "https://blayneaina.com/02-zero-trust-document-ingestion-and-server-cut-evidence/"
+        }
+      ]
+    }
+  ]
+}
+</script><script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "@id": "https://blayneaina.com/02-zero-trust-document-ingestion-and-server-cut-evidence/#faq",
+  "mainEntity": [
+    {
+      "@type": "Question",
+      "name": "What is a server-cut citation?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "A server-cut citation is an `ev_` handle issued by the Room from a caller-bound `srv_` served-content receipt. The caller supplies an exact quote or served node; the server verifies coverage, computes Unicode-scalar coordinates, selects the narrowest structural node, and binds the result to a canonical view."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Does LPAC confinement make document parsing safe?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "It makes the governed parser path substantially safer by restricting capabilities, network access, writable locations, process count, memory, and CPU, with token checks before resume. It does not prove that parser code is bug-free or that every host and administrative route is contained."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Does `complete_for_profile` mean the whole document was read?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "No. It means extraction completed without lossy omissions under the declared `text/v1` profile. Profile exclusions remain disclosed, delivery can still be truncated, and the result does not imply visual understanding or humanlike comprehension."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Can a server-cut citation prove that a source is true?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "No. It proves that a particular passage was served and bound to an exact source revision, parser configuration, view, node, and recipient. Authenticity, worldly truth, policy quality, and the interpretation of that passage remain separate claims."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "How does bounded absence work?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "The server identifies unknown-coverage markers such as lossy omissions, incomplete inventory, failure, and child sources. The caller must acknowledge every required marker by node ID before the phrase or pattern search can support the bounded negative result. Acknowledged gaps remain unknown, not absent."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Do three agents citing one passage provide three independent origins?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Not if two are echoes. Lineage counts first-hand actor observations and collapses derived citations to their origins. Even two first-hand actors are not automatically statistically, organizationally, or causally independent."
+      }
+    }
+  ]
+}
+</script>
+        </div>
+
+        
+
+        
+    <nav class="article-pagination" aria-label="Article navigation">
+      
+        <a href="/01-an-ai-output-is-not-an-act/" class="pagination-link prev">
+          <span class="pagination-sub">← Previous</span>
+          <span class="pagination-title">§01: An AI Output Is Not an Act</span>
+        </a>
+      
+      
+        <a href="/03-eisa-four-gate-verdict-machine-and-entity-resolution/" class="pagination-link next">
+          <span class="pagination-sub">Next Article →</span>
+          <span class="pagination-title">§03: Semantic Switch & EISA</span>
+        </a>
+      
+    </nav>
+  
+
+        <footer class="article-footer-cta">
+          <h3>Work With Blayne (§09): Bring One Real Boundary</h3>
+          <p>Do not bring a vision deck. Bring one consequential enterprise transition—workflow standing, hostile document adjudication, or protected entity resolution. We establish a written acceptance boundary, run the existing implementation, and make the positive, refusal, and unresolved evidence inspectable.</p>
+          <div class="cta-actions">
+            <a href="/09-bring-one-real-boundary-work-with-blayne/" class="btn-primary">Work With Blayne (§09)</a>
+            <a href="mailto:me@blayneaina.com?subject=[CHALLENGE]%20Enterprise%20Boundary" class="btn-secondary">me@blayneaina.com</a>
+          </div>
+        </footer>
+      </article>
+    </main>
+  </div>
+
+  <footer class="site-footer">
+    <div class="footer-inner">
+      <div class="footer-left">
+        <strong>blayneaina.com</strong> — Architectural invariants, verifiable execution, and production governance for autonomous systems.
+      </div>
+      <div class="footer-right">
+        <span>© 2026 Blayne Aina. All rights reserved.</span>
+      </div>
+    </div>
+  </footer>
+
+
+
+  <dialog class="quick-search" id="quickSearchDialog" aria-labelledby="quick-search-title">
+    <div class="quick-search-head">
+      <label id="quick-search-title" for="quickSearchInput">Search architecture and evidence</label>
+      <button type="button" id="quickSearchClose" aria-label="Close search">Close</button>
+    </div>
+    <input id="quickSearchInput" type="search" placeholder="Try EISA, PCNA, SQLite, leases, Semantic Switch…" autocomplete="off">
+    <div class="quick-search-results" id="quickSearchResults">
+      <a href="/refusal-proof/" data-search-item><strong>Refusal &amp; Unchanged-Destination Proof</strong><span>PCNA · EISA · verifier · SQLite · 45 cases</span></a>
+      <a href="/proof/conformance/conformance_45_manifest.json" data-search-item><strong>45-case conformance manifest</strong><span>release qualification · candidate results</span></a>
+      <a href="/proof/README.md" data-search-item><strong>Schemas and verifier guide</strong><span>offline verification · artifact index</span></a>
+      <a href="/semantic-switch-proof/" data-search-item><strong>Semantic Switch proof</strong><span>AKO · Lampson confinement · relation isomorphism</span></a>
+      <a href="/#formal-confinement" data-search-item><strong>Formal confinement and A2E</strong><span>bounded TCB · finiteness · three provisionals</span></a>
+      <a href="/#career-snapshot" data-search-item><strong>Enterprise delivery snapshot</strong><span>2015–2026 · CRM · migrations · production cutovers</span></a>
+      <a href="/01-an-ai-output-is-not-an-act/" data-search-item><strong>§01 · An AI Output Is Not an Act</strong><span>Ambient Authority &amp; Machine Standing</span></a><a href="/02-zero-trust-document-ingestion-and-server-cut-evidence/" data-search-item><strong>§02 · Zero-Trust Document Ingestion</strong><span>Parser Jails &amp; Server-Cut Evidence</span></a><a href="/03-eisa-four-gate-verdict-machine-and-entity-resolution/" data-search-item><strong>§03 · Semantic Switch &amp; EISA</strong><span>Protected Computation &amp; 4-Gate Verdicts</span></a><a href="/04-the-room-why-git-and-chat-are-not-coordination-planes/" data-search-item><strong>§04 · The Room Coordination Plane</strong><span>Transaction Graphs vs. Git &amp; Chat</span></a><a href="/05-expiry-is-not-fencing-typed-leases-and-kernel-write-exclusion/" data-search-item><strong>§05 · Expiry Is Not Fencing</strong><span>Typed Leases &amp; Kernel Write Exclusion</span></a><a href="/06-rollback-is-not-erasure-dual-tier-vaults-and-ungated-quarantine/" data-search-item><strong>§06 · Rollback Is Not Erasure</strong><span>Dual-Tier Vaults &amp; Forensic Quarantine</span></a><a href="/07-defeating-approval-laundering-act-pinning-and-successor-grants/" data-search-item><strong>§07 · Defeating Approval Laundering</strong><span>Act Pinning &amp; Successor Continuity</span></a><a href="/08-sovereign-kill-switch-break-glass-epochs-and-conformance-gate/" data-search-item><strong>§08 · The Sovereign Kill Switch</strong><span>Break-Glass Epochs &amp; Conformance Release Gate</span></a><a href="/09-bring-one-real-boundary-work-with-blayne/" data-search-item><strong>§09 · AI-Native Builder, Fleet Orchestrator &amp; FDE</strong><span>Live Enterprise Problem Solving &amp; Verification</span></a>
+    </div>
+  </dialog>
+
+  <script src="/script.js?v=20261105-final-qc"></script>
+</body>
+</html>

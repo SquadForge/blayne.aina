@@ -1,0 +1,1206 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>The Room: Why Git and Chat Are Not Coordination Planes | Blayne Aina</title>
+  <meta name="description" content="Source history records what changed. Chat records what was said. The Room decides who may read, act, receive, stop, and close work now—and makes every transition prove it.">
+  <link rel="canonical" href="https://blayneaina.com/04-the-room-why-git-and-chat-are-not-coordination-planes/">
+
+  <!-- OpenGraph / Social -->
+  <meta property="og:type" content="article">
+  <meta property="og:title" content="The Room: Why Git and Chat Are Not Coordination Planes">
+  <meta property="og:description" content="Source history records what changed. Chat records what was said. The Room decides who may read, act, receive, stop, and close work now—and makes every transition prove it.">
+  <meta property="og:url" content="https://blayneaina.com/04-the-room-why-git-and-chat-are-not-coordination-planes/">
+  <meta property="og:site_name" content="Blayne Aina — The Route to Trusting AI">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="The Room: Why Git and Chat Are Not Coordination Planes">
+  <meta name="twitter:description" content="Source history records what changed. Chat records what was said. The Room decides who may read, act, receive, stop, and close work now—and makes every transition prove it.">
+
+  <link rel="stylesheet" href="/style.css?v=20261106-wide-layout">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@500;700&family=Instrument+Serif:ital@0;1&family=Inter:wght@400;500;600;700;800&family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,500;0,6..72,600;1,6..72,400&family=JetBrains+Mono:wght@400;500&family=Plus+Jakarta+Sans:wght@600;700;800&display=swap" rel="stylesheet">
+</head>
+<body>
+  <div class="reading-progress-bar" id="progressBar"></div>
+
+  <header class="site-header">
+    <div class="header-inner">
+      <a href="/" class="brand">
+        <span class="brand-name">BLAYNE AINA</span>
+        <span class="brand-divider">/</span>
+        <span class="brand-tagline">The Route to Trusting AI</span>
+      </a>
+      <div class="header-actions">
+        <a href="/refusal-proof/" class="header-link">Proof</a>
+        <a href="/proof/README.md" class="header-link">Schemas</a>
+        <a href="https://github.com/SquadForge/blayne.aina" class="header-link" rel="noopener noreferrer">GitHub</a>
+        <button type="button" class="header-link header-search" id="quickSearchBtn" aria-label="Search articles and proof artifacts">Search</button>
+        <a href="/09-bring-one-real-boundary-work-with-blayne/" class="header-cta">Work With Blayne (§09)</a>
+        <button id="themeToggle" class="theme-btn" aria-label="Toggle theme">
+          <span class="theme-icon light">☀️</span>
+          <span class="theme-icon dark">🌙</span>
+        </button>
+        <button id="mobileMenuBtn" class="mobile-menu-btn" aria-label="Open navigation menu" aria-controls="sidebar" aria-expanded="false">☰</button>
+      </div>
+    </div>
+  </header>
+
+  <div class="candidate-ribbon" role="region" aria-label="Candidate identity and evaluation paths">
+    <div class="candidate-identity"><strong>EVALUATE BLAYNE</strong><span>Choose your path</span></div>
+    <nav class="candidate-links" aria-label="Evaluation paths">
+      <a href="/#career-snapshot">Recruiter &amp; Hiring Lead</a>
+      <a href="/refusal-proof/">Systems Engineer</a>
+      <a href="/#formal-confinement">AI Safety Researcher</a>
+      <a href="mailto:me@blayneaina.com" class="candidate-email">me@blayneaina.com</a>
+    </nav>
+  </div>
+  <div class="layout-container ">
+    <aside class="site-sidebar" id="sidebar">
+      <div class="sidebar-header">
+        <span class="sidebar-label">Architecture Series</span>
+        <span class="sidebar-date">October 2026</span>
+      </div>
+      <nav class="series-nav">
+        <ul>
+          <li class="">
+            <a href="/">
+              <span class="nav-num">§00</span>
+              <span class="nav-title">Series Overview & Thesis</span>
+            </a>
+          </li>
+          
+      <li class="">
+        <a href="/01-an-ai-output-is-not-an-act/">
+          <span class="nav-num">§01</span>
+          <span class="nav-title">An AI Output Is Not an Act</span>
+        </a>
+      </li>
+    
+      <li class="">
+        <a href="/02-zero-trust-document-ingestion-and-server-cut-evidence/">
+          <span class="nav-num">§02</span>
+          <span class="nav-title">Zero-Trust Document Ingestion</span>
+        </a>
+      </li>
+    
+      <li class="">
+        <a href="/03-eisa-four-gate-verdict-machine-and-entity-resolution/">
+          <span class="nav-num">§03</span>
+          <span class="nav-title">Semantic Switch & EISA</span>
+        </a>
+      </li>
+    
+      <li class="active">
+        <a href="/04-the-room-why-git-and-chat-are-not-coordination-planes/">
+          <span class="nav-num">§04</span>
+          <span class="nav-title">The Room Coordination Plane</span>
+        </a>
+      </li>
+    
+      <li class="">
+        <a href="/05-expiry-is-not-fencing-typed-leases-and-kernel-write-exclusion/">
+          <span class="nav-num">§05</span>
+          <span class="nav-title">Expiry Is Not Fencing</span>
+        </a>
+      </li>
+    
+      <li class="">
+        <a href="/06-rollback-is-not-erasure-dual-tier-vaults-and-ungated-quarantine/">
+          <span class="nav-num">§06</span>
+          <span class="nav-title">Rollback Is Not Erasure</span>
+        </a>
+      </li>
+    
+      <li class="">
+        <a href="/07-defeating-approval-laundering-act-pinning-and-successor-grants/">
+          <span class="nav-num">§07</span>
+          <span class="nav-title">Defeating Approval Laundering</span>
+        </a>
+      </li>
+    
+      <li class="">
+        <a href="/08-sovereign-kill-switch-break-glass-epochs-and-conformance-gate/">
+          <span class="nav-num">§08</span>
+          <span class="nav-title">The Sovereign Kill Switch</span>
+        </a>
+      </li>
+    
+        </ul>
+        <div class="sidebar-section-divider">
+          <span class="sidebar-label">Deploy & Evaluate</span>
+        </div>
+        <ul>
+          
+      <li class=" nav-commercial">
+        <a href="/09-bring-one-real-boundary-work-with-blayne/">
+          <span class="nav-num">→</span>
+          <span class="nav-title">AI-Native Builder, Fleet Orchestrator & FDE</span>
+        </a>
+      </li>
+    
+          <li>
+            <a href="mailto:me@blayneaina.com?subject=[RESEARCH]%20Independent%20Technical%20Evaluation">
+              <span class="nav-num">↗</span>
+              <span class="nav-title">Independent Evaluation [RESEARCH]</span>
+            </a>
+          </li>
+        </ul>
+      </nav>
+      <div class="sidebar-footer">
+        <div class="author-card">
+          <div class="author-name">Blayne Aina</div>
+          <div class="author-bio">By Blayne Aina · Principal Systems Architect and creator of AINA · October 31, 2026 · AINA Governance Specification</div>
+          <div class="author-bio">FDE · 11+ Years Customer-Embedded Delivery · USMC Veteran</div>
+          <a href="mailto:me@blayneaina.com" class="author-email">me@blayneaina.com</a>
+          <div class="author-contact">Blayne Aina · Denver, CO · <a href="mailto:me@blayneaina.com">me@blayneaina.com</a></div>
+          <a href="https://github.com/SquadForge/blayne.aina" class="author-contact" rel="noopener noreferrer">GitHub Repo (SquadForge/blayne.aina)</a>
+        </div>
+      </div>
+    </aside>
+
+    <main class="content-area">
+      <article class="prose-wrapper ">
+<header class="article-header">
+          <h1 class="article-title">The Room: Why Git and Chat Are Not Coordination Planes</h1>
+          <p class="article-subtitle">Source history records what changed. Chat records what was said. The Room decides who may read, act, receive, stop, and close work now—and makes every transition prove it.</p>
+          <div class="article-meta">
+            <span class="meta-item author">By Blayne Aina</span>
+            <span class="meta-dot">·</span>
+            <span class="meta-item role">Principal Systems Architect and creator of AINA</span>
+            <span class="meta-dot">·</span>
+            <span class="meta-item date">October 31, 2026</span>
+            <span class="meta-dot">·</span>
+            <span class="meta-item tag">AINA Governance Specification</span>
+          </div>
+        </header>
+
+        
+    <section class="executive-brief" aria-label="Executive reading guide">
+      <div class="brief-label">Executive reading guide · 60 seconds</div>
+      <dl class="brief-grid">
+        <div class="brief-item">
+          <dt>Problem</dt>
+          <dd>Git history and chat transcripts cannot establish who may act, receive, stop, or complete work now.</dd>
+        </div>
+        <div class="brief-item">
+          <dt>What it proves</dt>
+          <dd>The Room revalidates territory, causal observation, sealed wakes, native replies, cancellation, and privileged acceptance.</dd>
+        </div>
+        <div class="brief-item">
+          <dt>Commercial relevance</dt>
+          <dd>Use the Multi-Agent Coordination &amp; Acceptance Audit Challenge on one assignment with an uncertain outcome.</dd>
+        </div>
+        <div class="brief-item">
+          <dt>Next step</dt>
+          <dd>Article 05 enforces current ownership at the mutation window.</dd>
+        </div>
+      </dl>
+    </section>
+  
+        
+        
+        
+
+        <div class="article-body">
+          <p>A commit proves what source history recorded. A chat message proves what someone said.</p>
+<p>Neither proves who may mutate a live resource now, whether the intended native session received the assignment, whether the worker saw every causal parent before acting, whether a queued instruction still has authority, or whether the resulting work passed acceptance.</p>
+<p>That is the coordination problem. It does not disappear because agents have worktrees, checkpoints, tool schemas, and an execution log.</p>
+<p>Article 03 produced recognized constitutional acts and committed them as <code>eisa_&lt;32hex&gt;</code>. Article 04 is the machine that gives those acts a live authority domain: <strong>The Room</strong>.</p>
+<blockquote>
+<p><strong>The Room is not a chat channel. It is a coordination plane that binds territory, identity, observation, delivery, execution, cancellation, and completion into one revalidated authority chain.</strong></p>
+</blockquote>
+<aside class="context-callout" aria-label="Production dogfooding with nine concurrent AI IDEs">
+  <h2>Production Dogfooding Note: 9 Concurrent AI IDEs in The Room</h2>
+  <p>In daily operation, The Room coordinates 9 concurrent AI IDE worker lanes running on a single Windows workstation against one shared repository. Rather than relying on Git branches or chat logs—which only record collisions after they happen—each of the 9 IDE lanes must acquire a live territory lease and causal wake token from The Room before mutating any file or SQLite row.</p>
+  <ol>
+    <li><strong>Human architect owns invariants and slice boundaries:</strong> No single model holds the entire multi-module architecture in context. Blayne holds the global state-machine contract and decomposes work into bounded, single-responsibility slices—for example, an RFC 8785 JCS serializer, a Win32 <code>FILE_SHARE_READ</code> wrapper, or an adversarial conformance-vector generator.</li>
+    <li><strong>Vendor-agnostic model assignment:</strong> Different IDE lanes use different models and assistants suited to each slice: high-reasoning models for state-machine logic and edge-case auditing, and fast local/flash models for codebase tracing, log extraction, and fixture generation.</li>
+    <li><strong>Plausible-but-wrong output is rejected through conformance:</strong> No lane is accepted because its code compiles or its explanation sounds coherent. Every slice must pass strict schema validation (<code>StrictVisitor</code>), pre/post SHA-256 fixture checks, and the 45-case conformance gate before entering the Primary Vault.</li>
+  </ol>
+</aside><h2>The Whole Machine, Not a Wake Queue</h2>
+<p>The Room includes eleven cooperating mechanism families grouped into six architectural domains. Nine receive numbered subsystem sections below; worker staging and controller-side brokerage are developed within native execution and cancellation rather than numbered separately. Treating the Room as a messaging API leaves most of its assurance on the table.</p>
+<pre><code class="language-text">[1. TERRITORY &amp; PRINCIPAL PINNING]
+  state-tree identity + 192-bit combined Win32 project object IDs
+  CSPRNG enrollment + thread-local SessionGuard + native conversation binding
+  EffectiveTier clamp + multiplexer verb probing + stdio/pre-model egress isolation
+          │
+          ▼
+[2. PER-ROOM GRAPH SHARDS &amp; VISIBILITY]
+  immutable scope binding + content-addressed artifacts
+  monotonic parent-withholding closure + multi-Room composition
+  reparse-safe snapshot recovery
+          │
+          ▼
+[3. ROOM SYNC ENGINE &amp; PRE-ACTION WORK GATE]
+  per-Room SQLite WAL sync index + handle-pinned journal reconciliation
+  conversation/view checkpoints + recursive causal-parent verification
+  atomic turn commit + Fold Rule + post-read revalidation
+          │
+          ▼
+[4. CONTRIBUTION GRAMMAR &amp; SEALED WAKE PERMITS]
+  note / reply / say / send / handoff / done with different authority effects
+  18-field room-wake-job-v3 + dispatch and split-lock revalidation
+  per-recipient evidence delivery + complete governing-source coverage
+          │
+          ▼
+[5. NATIVE SESSIONS, CONFINED WORKERS &amp; ACTIVE CANCELLATION]
+  Session Factory v1 + five delivery/reply proof states
+  row/column staging + controller-side MCP broker
+  held in-flight operations + 1 Hz Job observer + two-phase stop outbox
+          │
+          ▼
+[6. TASK LINEAGE, PRIVILEGED ACCEPTANCE &amp; RUNTIME INVARIANTS]
+  16-level delegation ancestry + 14-key completion revalidation
+  7 engine-evaluated acceptance kinds
+  exactly_once + well_formed + exclusive + causal + resolution
+</code></pre>
+<p>The result is a continuous authority path:</p>
+<pre><code class="language-text">EISA-recognized act
+→ live actor, credential, native conversation, project, and Room scope
+→ confirmed observation of the live causal frontier
+→ task-bound contribution and sealed wake permit
+→ dispatch-time and worker-claim authority revalidation
+→ confined execution and native reply proof
+→ destination and artifact acceptance
+→ terminal evidence or explicit in-doubt state
+</code></pre>
+<h2>One Assignment Through the Machine</h2>
+<p>Consider a coordinator assigning renewal-evidence review to <code>reviewer-beta</code>. The path is not “write a prompt and hope the right agent answers”:</p>
+<ol>
+<li><strong>Territory and principal.</strong> The coordinator&#39;s credential, native conversation, project object, and Room scope are re-derived. The recipient&#39;s registration is current.</li>
+<li><strong>Recognized work.</strong> An EISA submission supplies the constitutional act and its evidence handles. The task binds that work to an exact project and acceptance contract.</li>
+<li><strong>Observed readiness.</strong> Before the coordinator can send, the Work Gate proves the conversation checkpoint covers the live frontier and every required causal parent is confirmed.</li>
+<li><strong>Sealed assignment.</strong> <code>send</code> writes the message and obligations, then seals an 18-field wake permit with the recipient, task, evidence, registration, Room authority, control epoch, and original deadline.</li>
+<li><strong>Dispatch revalidation.</strong> The Room rechecks the permit, roster, registration, task ancestry, governing source, project, admission, epoch, and remaining time. Evidence is admitted specifically for <code>reviewer-beta</code> and delivered with a fresh <code>wake_delivery</code> receipt.</li>
+<li><strong>Split-lock worker claim.</strong> The worker first validates context outside the transition lock, then rereads the job inside it and requires the unchanged binding digest before claiming.</li>
+<li><strong>Native delivery.</strong> The bound native session receives the prompt. Dispatch, body delivery, body visibility, wrong-body refusal, and reply remain separate facts.</li>
+<li><strong>Reply and production.</strong> The worker returns a correlated reply and produces the required artifact. Process exit alone would leave the obligation unresolved.</li>
+<li><strong>Privileged acceptance.</strong> The engine measures the artifact digest, distinct evidence origins, destination effect, and original worker receipt against the declared acceptance checks.</li>
+<li><strong>Terminal closure.</strong> Completion revalidates all 14 task-authority keys, releases the scope through the structured path, and records <code>task_done</code>.</li>
+</ol>
+<p>If registration changes before dispatch, the old wake stops with <code>wake_recipient_registration_changed</code>. If cancellation arrives after launch, new effects stop, the owned Job is terminated, and only <code>ActiveProcesses == 0</code> confirms quiescence. Any destination operation whose outcome is uncertain remains <code>held_until_reconciled</code>; it is not relabeled “cancelled and safe.”</p>
+<h2>1. Git and Chat Are Necessary—and Insufficient</h2>
+<p>Git is an excellent source-history plane. Chat is an excellent human and model communication surface. The Room does not replace either. It prevents their artifacts from impersonating live authority.</p>
+<table>
+<thead>
+<tr>
+<th>Existing primitive</th>
+<th>Native value</th>
+<th>Additional question the Room answers</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>Tool-call schema</td>
+<td>The proposal has a valid shape</td>
+<td>Is this exact act recognized, currently standing, and inside the caller&#39;s verb and tier authority?</td>
+</tr>
+<tr>
+<td>Graph/workflow checkpoint</td>
+<td>A prior plan can resume</td>
+<td>Is that plan valid for the current target, conversation, task lineage, registration, generation, and control epoch?</td>
+</tr>
+<tr>
+<td>Git worktree</td>
+<td>Source histories and working directories are separated</td>
+<td>Who owns the live resource and may produce this effect now?</td>
+</tr>
+<tr>
+<td>Model reviewer or vote</td>
+<td>More cognition and critique</td>
+<td>Which deterministic predicate admits or refuses the act?</td>
+</tr>
+<tr>
+<td>Execution log</td>
+<td>A tool reported an outcome</td>
+<td>Did the destination and receipt chain verify it, and did the responsible native session return it?</td>
+</tr>
+<tr>
+<td>Idempotency key</td>
+<td>A retry can be deduplicated</td>
+<td>Was the effect committed, and was the original obligation actually answered?</td>
+</tr>
+</tbody></table>
+<p>Clean merges do not prove semantic non-interference. Two agents can edit different lines and violate a shared invariant. They can modify separate files whose combination is unsafe, call the same external API twice, or make locally valid decisions against the same stale pre-state.</p>
+<p>Mature coordination systems—consensus services, compare-and-swap stores, MVCC databases, lease and fencing protocols, durable workflow engines—absolutely can answer these questions. The claim is not that AINA invented coordination. The claim is that <strong>source history and conversation are the wrong artifacts to carry its full burden</strong>. A conventional stack that enforces the same canonical transition through the same current predicates earns the same functional credit.</p>
+<h2>2. Subsystem 1: Territory and Principal Identity</h2>
+<p>Authority starts by proving which state tree and which physical project object the act concerns.</p>
+<h3>Split-brain state-tree refusal</h3>
+<p>Before the engine opens its state tree, <code>validate_state_dir</code> requires the state-directory identity marker. The marker carries an <code>id</code> and <code>canonical_path</code>; the machine bootstrap supplies the canonical instance and root. A missing marker, an unreadable bootstrap, a different instance ID, a noncanonical path, or a mismatched <code>SQUAD_ROOT</code> fails closed.</p>
+<p>This prevents two <code>.squad</code> trees from independently accumulating tasks, leases, credentials, and Room history while believing they are one machine. It is not a path prettification step. It is a split-brain admission gate.</p>
+<h3>Project grants pin path and kernel object identity</h3>
+<p>An owner-opened <code>ProjectGrant</code> binds:</p>
+<ul>
+<li>a unique project ID and bounded name;</li>
+<li>the requested and canonical root paths;</li>
+<li><code>root_object_id</code>, a 192-bit combined identity: a 64-bit volume serial number plus the 128-bit NTFS/ReFS file ID;</li>
+<li>opening actor and time;</li>
+<li>an optional governing-source grant and its reading policy.</li>
+</ul>
+<p>The directory is opened with backup semantics and queried through <code>GetFileInformationByHandleEx(FileIdInfo)</code>. Every live authorization rechecks both canonical path and object identity. A junction, symlink, replacement, or redirected root produces <code>project_root_redirected</code>.</p>
+<p>Project opening refuses non-directories, filesystem roots, broad owner containers, control and recovery storage, worker roots, and overlapping project territories. Roster membership does not widen this boundary.</p>
+<p><code>ReadAuthority</code> applies the same provenance discipline to shared briefcases, contexts, artifacts, braindumps, and proposals: project-scoped records go to admitted project readers, coordination records to the appropriate Room roster, and legacy unscoped records only to their original author.</p>
+<h3>CSPRNG enrollment without persistent plaintext secrets</h3>
+<p>Agent enrollment generates a 32-byte secret with Windows <code>BCryptGenRandom</code>. The controller stores only <code>secret_sha256</code>, issuance, revocation, and target metadata. Host configuration receives the actual token for connection authentication; enrollment receipts do not return it. Multi-agent enrollment restores exact preimages if any step fails.</p>
+<p>Every call revalidates the current credential digest, so rotation and revocation affect live connections without a restart.</p>
+<h3>Thread-local sessions and native conversation identity</h3>
+<p><code>SessionGuard</code> binds one authenticated session to one synchronous dispatch. Its <code>PhantomData&lt;Rc&lt;()&gt;&gt;</code> prevents the authority guard from moving across threads, and <code>Drop</code> removes the active frame during normal return or unwind.</p>
+<p><code>IS_HTTP_WORKER</code> closes the privilege-fallback path: an HTTP worker thread without an active request session never inherits the process launch principal.</p>
+<p>For supported Codex hosts, <code>bind_tool_request_context</code> reads <code>params._meta.threadId</code> outside model-authored arguments, requires a non-nil canonical UUID, and binds <code>codex:&lt;UUID&gt;</code> as the native conversation. The authenticated host is the metadata trust boundary. This is not cryptographic attestation against every process that might possess its credential, and Article 04 does not claim otherwise.</p>
+<p>Self-identifying argument fields must match the bound principal. Mismatches produce <code>actor_mismatch</code> and an integrity signal rather than letting a model nominate a more privileged author.</p>
+<h3>Tier clamping includes the route, not just the tool name</h3>
+<p>The effective tier is the minimum of:</p>
+<pre><code class="language-text">session-declared tier
+owner per-agent max_tier
+fleet-wide control ceiling
+</code></pre>
+<p>Owner policy and the fleet ceiling are re-read on every invocation. The multiplexer guard then derives verb routes from the MCP schema build table using <code>VERB_PROBE</code>. A denial of <code>room_note</code> therefore also blocks <code>squad_room</code> with <code>{&quot;action&quot;:&quot;note&quot;}</code>. Blocking the friendly tool name while leaving the generic route open is not policy enforcement.</p>
+<h3>Stdio and pre-model egress are separate boundaries</h3>
+<p>The MCP transport duplicates its original input/output as private handles and clears inheritance flags. Process standard input is detached, and standard output is redirected to diagnostics so a child cannot corrupt the JSON-RPC wire or retain the parent&#39;s pipe accidentally.</p>
+<p>Before a result or error reaches model context, every string passes <code>redact_checked</code>. If the redaction policy cannot be established, the response becomes <code>tool_result_withheld</code>. The tool may already have run; the uninspected result still does not escape.</p>
+<h2>3. Subsystem 2: The Room Graph Is a Visibility and Recovery Boundary</h2>
+<p>Each Room owns a physically isolated graph shard derived from the workspace instance and Room name:</p>
+<pre><code class="language-text">room_graphs/&lt;graph_id&gt;/
+  manifest.json
+  binding.json
+  nodes.jsonl
+  artifacts.jsonl
+  errors.jsonl
+  blobs/&lt;sha256&gt;.&lt;json|txt&gt;
+  sync_index.db
+</code></pre>
+<p><code>binding.json</code> permanently fixes <code>Scope::Coordination</code> or <code>Scope::Project { id }</code>. Historical artifacts cannot be rebound to another project or scope class; <code>graph_project_rebind_refused</code> requires a new Room identity. Policy mutation uses <code>expected_sha256</code> optimistic concurrency, atomic preimage retention, and <code>prepared</code>/<code>applied</code> journal stages.</p>
+<p>Payloads over 8 KiB spill into content-addressed blobs. MCP call text over 24 KiB compacts to a blob with a 4 KiB preview. Sensitive credential arguments are omitted from audit projections rather than preserved for convenience. Legacy imports require quiescence: a live pre-shard writer triggers <code>room_graph_legacy_writer_detected</code> instead of racing the new graph. Hash-chained artifacts make alteration detectable; they do not prove non-deletion or independent validation.</p>
+<h3>Withholding closes over descendants</h3>
+<p><code>ProjectVisibility</code> first filters by project and evidence visibility, including collaborative-pass staging. It then computes a monotonic parent-withholding closure: if any parent is withheld, every child evaluation, citation, or derived record is withheld too. Legacy unscoped MCP calls degrade to <code>project_metadata_only</code>, removing arguments, responses, read/write sets, and artifact references.</p>
+<p>A hidden parent cannot leak through a visible child.</p>
+<h3>Composition is intersection, not union, of authority</h3>
+<p><code>squad.room_composition.v1</code> composes a bounded set of Rooms under an owner grant. Every constituent must remain admitted. The effective reader scope is the intersection of the composition grant, each Room grant, current membership, and active project. A failed constituent yields <code>incomplete_source_set</code>, not a partial composition that silently drops its restrictions.</p>
+<p>Pagination binds <code>request_sha256</code> to the composition, reader, filter, limit, and source snapshots. If a source changes between pages, <code>graph_page_snapshot_changed</code> prevents a mixed-generation export. Composition confers no execution authority.</p>
+<h3>Recovery refuses reparse shortcuts and preserves causal order</h3>
+<p>Snapshot recovery uses <code>squad.room_snapshot.v1</code>. Copying refuses symlinks and NTFS reparse points. A verified staged tree is fingerprinted, the previous live tree is preserved, and promotion occurs only after current-state and staged-state checks. Interrupted recovery remains pending and blocks ordinary graph access until the exact operation resumes.</p>
+<h2>4. Subsystem 3: The Room Sync Engine and the Pre-Action Work Gate</h2>
+<p>A coordination plane cannot rely on an agent remembering what it has read. It must measure the observation.</p>
+<h3>A durable per-Room sync index</h3>
+<p>Each Room has <code>sync_index.db</code> under <code>squad.room_sync_index.v1</code>. Every connection enforces and verifies:</p>
+<ul>
+<li><code>journal_mode = WAL</code>;</li>
+<li><code>synchronous = FULL</code> (<code>2</code>);</li>
+<li><code>foreign_keys = ON</code>;</li>
+<li><code>busy_timeout = 5000 ms</code>.</li>
+</ul>
+<p>Nine relational tables hold the rebuildable event projection, context head, graph links, receipts, checkpoints, snapshots, causal edges, confirmed events, and local event embeddings. The event index is rebuildable from the authoritative journals; receipts and checkpoints survive index repair.</p>
+<h3>Handle-pinned reconciliation</h3>
+<p>Reconciliation opens <code>EVENTS.jsonl</code>, verifies its Win32 file identity, and retains a trailing anchor of up to 4,096 bytes with its SHA-256. Journal replacement or incompatible rotation is <code>room_sync_journal_rotated</code>, not an invisible reset.</p>
+<p>The reader advances in 1 MiB batches with an 8 MiB per-record ceiling, verifies the <code>prev_hash → hash</code> chain and monotonic Hybrid Logical Clock, and computes local embeddings outside the SQLite write transaction. Expensive semantic work never holds the database lock.</p>
+<h3>Checkpoints bind actor, conversation, credentials, Room, and view</h3>
+<p>A delivery checkpoint is not just <code>agent_x read_offset = N</code>. It binds a <code>conversation_key</code> derived from workspace instance, bound actor, registration digest, native conversation UUID, and Room, plus a <code>view_gen</code> derived from evidence-read admission, reset state, project, participants, and readers.</p>
+<p>Changing IDE thread, rotating registration, resetting the Room, or changing the visible project invalidates the checkpoint and requires fresh synchronization.</p>
+<p>Pages are limited to 24 KiB including the MCP envelope. Oversized events split into 1,024-byte UTF-8-safe <code>item_chunk</code> fragments. Only the final <code>item_complete</code> fragment advances the journal offset, so an interrupted read re-serves the item rather than pretending it was consumed.</p>
+<p>Redaction runs again at confirmation. If policy changed the delivered representation, confirmation fails with <code>room_sync_delivery_policy_changed</code>. A receipt tip that is not an ancestor of the current journal fails with <code>room_sync_receipt_forked</code>.</p>
+<h3>The Work Gate requires frontier and causal readiness</h3>
+<p>Nine participant verbs—<code>note</code>, <code>say</code>, <code>reply</code>, <code>send</code>, <code>done</code>, <code>blocked</code>, <code>decline</code>, <code>handoff</code>, and <code>circle</code>—must pass the pre-action Work Gate.</p>
+<p>Two conditions must hold:</p>
+<ol>
+<li>The conversation checkpoint is ready and <code>confirmed_offset</code> covers the live coordination frontier.</li>
+<li><code>verify_causal_parents_confirmed</code> proves that the explicit parents and every ancestor returned by a recursive SQLite CTE over <code>causal_edges</code> are confirmed for that conversation and view. A matching confirmed event or a confirmed receipt covering the parent&#39;s offset can establish coverage; the bound identity&#39;s own events are handled explicitly.</li>
+</ol>
+<p>Failure returns <code>room_sync_required</code> with the next authorized page. The agent must read and confirm the missing context before acting.</p>
+<p>At commit, the writer lock revalidates the frontier and conversation, assigns HLC and hash lineage, and appends the staged events atomically. A foreign arrival triggers <code>room_sync_concurrent_arrival</code> rather than letting a stale turn slip through.</p>
+<p>The <strong>Fold Rule (D1)</strong> advances the author&#39;s confirmed offset only when no foreign coordination event exists between the old checkpoint and the newly written event. The author folds its own work, never someone else&#39;s unread work.</p>
+<p>Named system writers have separate authority and cannot emit participant message kinds. Finally, <code>RoomEventView::revalidate()</code> rechecks actor, project visibility, Room authority, and task-source digest after a read, catching authority changes that occurred while the view was being assembled.</p>
+<h2>5. Subsystem 4: Contribution Verbs Have Different Authority Effects</h2>
+<p>The Room is not freeform chat with locks added later. Its verbs deliberately separate status, answer, assignment, transfer, and completion.</p>
+<table>
+<thead>
+<tr>
+<th>Verb</th>
+<th>Wake and task rule</th>
+<th>Constitutional effect</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><code>note</code></td>
+<td>Never wakes; visible <code>@mentions</code> refused</td>
+<td>Status or identity telemetry without mentions, obligations, or dispatch</td>
+</tr>
+<tr>
+<td><code>reply</code></td>
+<td>Never wakes; explicit <code>reply_to</code> required</td>
+<td>Resolves an addressed mention or obligation after validating that it belongs to the caller</td>
+</tr>
+<tr>
+<td><code>say</code></td>
+<td>Coordination-only wake behavior; rejects <code>--task</code>; project wake delivery requires <code>send</code></td>
+<td>Conversational turn with strict targeting and ambiguity handling</td>
+</tr>
+<tr>
+<td><code>send</code></td>
+<td>Task required in project Rooms; creates sealed wake jobs</td>
+<td>Two-phase message/obligation commit and authorized worker delivery</td>
+</tr>
+<tr>
+<td><code>handoff</code></td>
+<td>Bounded invitation; project no-wake inbox or coordination delivery</td>
+<td>Transfers task ownership without transferring a lease</td>
+</tr>
+<tr>
+<td><code>done</code></td>
+<td>Task required</td>
+<td>Runs privileged acceptance and resolves only proven addressed items or verified successors</td>
+</tr>
+</tbody></table>
+<p>An untargeted <code>say</code> reply cannot resolve a mixed set of pending obligations. If open items trace to more than one source event, the Room refuses with <code>say_reply_target_ambiguous</code> before writing anything.</p>
+<p><code>send</code> prevalidates the task and every evidence handle before its first event. A citation belonging to another Room produces <code>cross_room_evidence_refused</code>. Flush 1 commits the <code>room_message</code>; Flush 2 commits the mention and obligation records. A cooldown-deferred wake is still a sealed permit, and the 2,000 ms damper clock starts at dispatch completion rather than at initial gate passage.</p>
+<p><code>handoff</code> records <code>lease_transferred: false</code> and <code>fresh_claim_required: true</code>. Ownership can move; the old kernel and lease authority cannot be inherited as a side effect. <code>done</code> can resolve items from a superseded task only when <code>verified_successor</code> proves a non-weaker replacement: same owner, source, project, requirements, and non-empty acceptance, with no wider scope.</p>
+<h2>6. Subsystem 5: A Wake Is a Sealed Authority Transition</h2>
+<p>A queued prompt is not execution authority. It is a proposal to deliver work later, under conditions that may have changed.</p>
+<h3>The 18-field <code>room-wake-job-v3</code> binding</h3>
+<p><code>binding_sha256</code> covers these exact queue fields:</p>
+<pre><code class="language-text">schema, room, agent, from, source_event, path, prompt,
+task (explicit null when untasked), evidence_refs (when present),
+mention_ids, obligation_ids, pulse_message, deadline_ms,
+created_at, not_after, control_epoch, room_authority,
+registration_sha256
+</code></pre>
+<p>The explicit <code>task: null</code> matters: adding or stripping a task binding changes the digest. <code>not_after</code> is computed from the original creation time and deadline—60 seconds for untasked delivery and 20 minutes for task-bound work—so queue wait consumes the same budget as execution. Registration and Room authority are sealed for comparison, not treated as evergreen.</p>
+<p>Prompt and pulse text pass the egress redactor before the job is stored. The queue path itself must resolve to the canonical regular, non-reparse object.</p>
+<p><code>binding_sha256</code> is an <strong>integrity comparison, not a digital signature or standalone authentication mechanism</strong>. Authenticity comes from the controller-governed queue object and write protocol plus the live revalidation below. A party that rewrites both the job and its digest still does not inherit the sealed recipient, registration, Room authority, task, project, or control epoch; those must independently match now. This is not a claim to contain a privileged host administrator outside the governed boundary.</p>
+<h3>Five live dispatch checks</h3>
+<p><code>authority::validate</code> re-derives five independent authority centers before launch:</p>
+<ol>
+<li><strong>Sealed integrity and replay eligibility.</strong> Schema, binding digest, canonical queue object, and <code>retry_allowed</code> must hold. Tampering records <code>wake_job_binding_changed</code> as an integrity signal.</li>
+<li><strong>Current Room and recipient authority.</strong> The Room must be open and uncancelled; recipient and sender rosters, owner grant, reset/session state, graph-reader admission, and registration digest must match the sealed values. Replacement authority produces <code>wake_room_authority_changed</code> or <code>wake_recipient_registration_changed</code>.</li>
+<li><strong>Active task and governing-source authority.</strong> The task must be open or claimed, have valid ancestry, remain owned by the sealed sender or an eligible operator/delegator, and pass <code>pin_task_source</code>. Project Rooms require a task from the exact project; project tasks cannot hide in coordination Rooms.</li>
+<li><strong>Current admission and control epoch.</strong> Project closure, control admission, break-glass subject, and sealed <code>control_epoch</code> must still permit a new effect.</li>
+<li><strong>Original deadline and running-process binding.</strong> <code>not_after</code> must still have budget. Once claimed, <code>RequestPermit</code> binds the canonical path, digest, <code>running</code> status, and worker PID; later effects revalidate that exact claim.</li>
+</ol>
+<h3>Single flight, capacity, and split-lock claim</h3>
+<p>Dispatch enforces one active worker per recipient with <code>recipient_busy</code> and defers excess model-route load through <code>worker_route_capacity</code>, preserving the obligation instead of dropping it. The launcher uses the verified installed engine, strips caller credentials and tier overrides, and isolates standard handles.</p>
+<p>The worker claim uses a split-lock protocol:</p>
+<pre><code class="language-text">validated_context outside with_transition
+→ file, ancestry, task, and source checks without starving sender lease locks
+→ enter with_transition
+→ re-read job and require unchanged binding_sha256
+→ require remaining deadline
+→ mark running with worker_pid and attempts + 1
+</code></pre>
+<p>A change between those phases becomes <code>wake_job_changed_during_validation</code>, not a replay.</p>
+<h3>Evidence is delivered to the recipient, not inherited from the sender</h3>
+<p><code>attach_evidence</code> rechecks every <code>ev_</code> handle for the specific recipient at wake time. Admitted passages ride inline in the wake prompt, while served and withheld dispositions are recorded. Each delivery receives a fresh <code>squad.evidence.receipt/1</code> with <code>tool: &quot;wake_delivery&quot;</code> and an <code>srv_&lt;32hex&gt;</code> identifier.</p>
+<p>For governing-source tasks, <code>require_source_reading_between</code> proves that the native actor/session&#39;s receipts cover the continuous <code>[0, length)</code> interval across every primary story and detached element of one complete current parser view, inside the <code>[not_before, not_after]</code> connection/checkpoint window. Registration, summaries, or a few impressive chunks do not satisfy <code>complete_text_v1</code>.</p>
+<h3>Exhibit 1 — A sealed wake binding excerpt</h3>
+<p>Synthetic values show the current binding shape. The digest covers all 18 fields, not only this display excerpt.</p>
+<pre><code class="language-json">{
+  &quot;schema&quot;: &quot;room-wake-job-v3&quot;,
+  &quot;room&quot;: &quot;architecture-demo&quot;,
+  &quot;agent&quot;: &quot;reviewer-beta&quot;,
+  &quot;from&quot;: &quot;coordinator-alpha&quot;,
+  &quot;source_event&quot;: &quot;evt_0123456789abcdef_a1b2c3d4&quot;,
+  &quot;path&quot;: &quot;room_wake_jobs/architecture-demo/reviewer-beta/evt_0123456789abcdef_a1b2c3d4.json&quot;,
+  &quot;prompt&quot;: &quot;Review the sealed renewal evidence and answer the assigned obligation.&quot;,
+  &quot;task&quot;: &quot;TSK-2026-ROOM-004&quot;,
+  &quot;evidence_refs&quot;: [&quot;ev_8f31c09a4b2e11d08a7c65e41902b3a1&quot;],
+  &quot;mention_ids&quot;: [&quot;mention_synthetic_01&quot;],
+  &quot;obligation_ids&quot;: [&quot;obligation_synthetic_01&quot;],
+  &quot;pulse_message&quot;: &quot;Review the sealed renewal evidence.&quot;,
+  &quot;deadline_ms&quot;: 1200000,
+  &quot;created_at&quot;: &quot;2026-10-31T16:00:00Z&quot;,
+  &quot;not_after&quot;: &quot;2026-10-31T16:20:00Z&quot;,
+  &quot;control_epoch&quot;: 7,
+  &quot;room_authority&quot;: {
+    &quot;owner_grant&quot;: &quot;synthetic-owner-grant&quot;,
+    &quot;revision&quot;: 12,
+    &quot;reset_at&quot;: null,
+    &quot;session&quot;: &quot;room-session-synthetic&quot;
+  },
+  &quot;registration_sha256&quot;: &quot;4a9c8e12f03b7d651928374655647382910abcdef1234567890abcdef1234567&quot;,
+  &quot;binding_sha256&quot;: &quot;e01928374655647382910abcdef1234567890abcdef1234567890abcdef12345&quot;
+}
+</code></pre>
+<h3>Exhibit 2 — Registration changed after sealing</h3>
+<pre><code class="language-json">&quot;wake_recipient_registration_changed&quot;
+</code></pre>
+<p>The old prompt may still be intact. Its recipient authority is not.</p>
+<h3>Exhibit 3 — Deadline consumed before dispatch</h3>
+<pre><code class="language-json">&quot;wake_job_expired: queue time counts against the original deadline&quot;
+</code></pre>
+<p>A prompt that became stale in the queue cannot acquire fresh execution time merely because a worker became available.</p>
+<h2>7. Subsystem 6: Native Session Delivery and Reply Are Different Proofs</h2>
+<p>A tool transport can deliver a request to a process. It cannot prove that the intended native conversation received it or that the resulting obligation was answered.</p>
+<h3>Session Factory v1</h3>
+<p><code>session_factory_v1</code> gives each native session a global ID of the form <code>sf_&lt;ide&gt;_&lt;native&gt;</code>, with lane, native session ID, working directory, transport, model profile, proof cursor, parent, lease, tags, and per-adapter operation coverage. The current contract covers 15 IDE/CLI adapter families and eleven operations: <code>list</code>, <code>create</code>, <code>bind</code>, <code>resume</code>, <code>focus</code>, <code>send</code>, <code>prove</code>, <code>summarize</code>, <code>fork</code>, <code>archive</code>, and <code>restore</code>.</p>
+<p>For stateful IDE wakes, <code>spawn_policy: &quot;never&quot;</code> requires delivery into the bound native session rather than launching an untracked sibling. Adapter capability remains explicit; a shared session schema does not invent identical native features everywhere. Each adapter&#39;s <code>operation_coverage</code> determines which lifecycle operations and proof states it can actually supply. <code>dispatched</code> may be available where body-visible or correlated-reply evidence is not; an unsupported proof is reported as unsupported, never inferred from transport success.</p>
+<h3>The five delivery/reply proof states</h3>
+<table>
+<thead>
+<tr>
+<th>State</th>
+<th>What is proven</th>
+<th>Obligation status</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><code>dispatched</code></td>
+<td>A delivery attempt exists, not body delivery</td>
+<td><code>delivery_unproven</code>; unresolved</td>
+</tr>
+<tr>
+<td><code>delivered_to_body</code> / <code>ide_delivered</code></td>
+<td>The prompt reached the native session body</td>
+<td><code>pending_reply</code>; unresolved</td>
+</tr>
+<tr>
+<td><code>body_visible_pending_reply</code></td>
+<td>The target thread UI or store shows the prompt</td>
+<td><code>pending_reply</code>; unresolved</td>
+</tr>
+<tr>
+<td><code>wrong_body_rejected</code></td>
+<td>A nonmatching open thread was refused</td>
+<td>Unresolved; no cross-thread credit</td>
+</tr>
+<tr>
+<td><code>replied</code></td>
+<td>A correlated native reply exists</td>
+<td>Resolved mentions and obligations</td>
+</tr>
+</tbody></table>
+<p>These are not fungible green statuses. Body delivery does not prove a reply. A reply does not prove destination acceptance. A wrong-body result never counts as delivery.</p>
+<p>For ACP/CLI execution, <code>exited_ok</code> without a correlated Room reply produces <code>proof_kind: &quot;process_exit_only&quot;</code> and leaves the job in <code>pending_reply</code>. Exit code zero is not an answered obligation.</p>
+<p><code>WakeObligationFold</code> promotes obligations that remain unproven beyond the declared age threshold to <code>dead_obligation</code>, and cycle detection walks up to 20 links to surface circular waits. Unfinished work remains visible instead of disappearing behind a process status.</p>
+<h2>8. Subsystem 7: Active Cancellation and Worker Authority</h2>
+<p>Room control is authenticated and physically enforced. It does not rely on a worker noticing a cancellation message eventually.</p>
+<h3>Authenticated control and held in-flight operations</h3>
+<p>Lifecycle actions require <code>control_actor</code> standing through an authenticated operator or local owner console. A caller-supplied <code>by = operator</code> string does not create control authority.</p>
+<p><code>run_cancel</code> stops the Room compiler, dead-letters queued/deferred/unclaimed jobs with <code>retry_allowed: false</code>, leaves addressed obligations unresolved, and advances Room authority so running wake lineage no longer matches.</p>
+<p>It then inventories unresolved file operations, destination operations, and brokered model requests tied to the Room or project as <code>held_until_reconciled: true</code>. Work a destination may already have accepted is not rewritten into “cancelled and safe.” It remains held for governed reconciliation.</p>
+<h3>The 1 Hz owned-Job observer and durable stop outbox</h3>
+<p>Every confined worker belongs to a named Win32 Job Object. The <code>squad-owned-job-control</code> observer runs at 1 Hz, watches admission, break-glass, Room authority revision, cancellation, and worker authority, and calls <code>TerminateJobObject(handle, 1)</code> when authority trips.</p>
+<p>A successful terminate call is not proof of quiescence. The observer queries <code>JobObjectBasicAccountingInformation</code> and confirms termination only when <code>ActiveProcesses == 0</code>.</p>
+<p>The <code>squad.room-owned-stop.v1</code> outbox preserves that sequence before any ledger or graph commit:</p>
+<pre><code class="language-text">phase-1.json
+  termination_confirmed: false
+  pending: bounded reason
+
+phase-2.json
+  termination_confirmed: true
+  pending: null
+  predecessor: exact phase-1 event_id + envelope_sha256
+</code></pre>
+<p>Replay commits those captured envelopes in causal order and writes separate <code>phase-1.committed.json</code> and <code>phase-2.committed.json</code> markers. A crash cannot manufacture a Phase 2 commit without its Phase 1 predecessor, and a stop request cannot impersonate a zero-process observation.</p>
+<h3>Worker staging minimizes data before confinement</h3>
+<p>Staging admits 1–256 exact source selections with SHA-256 verification and a 64 MiB aggregate ceiling. JSON, JSONL, and SQLite sources can be projected to explicit rows and columns. SQLite projection copies the pinned bytes to a temporary file first; the live database is never opened by the projection builder. The projected copy requires the row key and integer version, records withheld rows and fields, and prepares changes only as governed proposals.</p>
+<p>When changes are requested, the controller prepares the <code>RequestedAct</code>. The worker does not choose its own mutation.</p>
+<p>The bridge binary is staged by content digest as <code>squad-worker-bridge.exe</code> and read back through a pinned handle. Reparse points and hardlinked files are refused. Empty-work-root ACL normalization emits a receipt bound to the pinned root. <code>internetClient</code> is refused as nonconforming; model access travels only through owner-approved brokered routes.</p>
+<h3>The controller-side MCP broker revalidates the worker and the call</h3>
+<p>For LPAC workers, an <code>AF_UNIX</code> endpoint with a per-launch ACL admits the package. The controller verifies the held worker&#39;s Job membership with <code>IsProcessInJob</code>, its token and capabilities with <code>verify_worker_token</code>, and a 32-byte launch nonce. It does not pretend that an unavailable AF_UNIX peer-PID ioctl supplied a kernel identity for the bridge peer.</p>
+<p>For brokered-host Named Pipes, first-instance creation and <code>PIPE_REJECT_REMOTE_CLIENTS</code> prevent squatting and remote clients. The broker additionally uses <code>QueryFullProcessImageNameW</code> to require the exact staged bridge image.</p>
+<p>Every request and response is bounded and rechecked. Revocation before response transport produces a typed refusal; revocation after part of the response escaped records <code>severed_mid_response</code> rather than appending a second contradictory frame. The check and following write are not falsely described as one atomic primitive.</p>
+<h2>9. Subsystem 8: Task Lineage and Privileged Acceptance</h2>
+<p>A Room reply says the worker answered. Acceptance asks whether the actual artifacts satisfy the task.</p>
+<h3>Delegation cannot outlive or widen its ancestry</h3>
+<p>Task scopes exclude controller state, recovery storage, shipped binaries, skill mirrors, and authoritative Room ledgers. <code>validate_ancestry</code> walks at most 16 parent links and rejects cycles.</p>
+<p>Every ancestor must remain open or claimed, preserve owner and recipient eligibility, match authority epoch and any revision, retain the same governing source, and keep the child&#39;s scope within the parent. <code>coordination_only</code> cannot widen into mutation. A parent whose authority changes invalidates the descendant chain.</p>
+<h3>Seven acceptance kinds, evaluated by the engine</h3>
+<p><code>done_task</code> evaluates the task&#39;s declared checks rather than trusting completion prose.</p>
+<table>
+<thead>
+<tr>
+<th>Kind</th>
+<th>What the privileged evaluator actually measures</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><code>sha256</code></td>
+<td>Reads the in-scope file and compares its live SHA-256 with the expected digest</td>
+</tr>
+<tr>
+<td><code>file_exists</code></td>
+<td>Uses <code>Path::try_exists()</code>; an OS or permission error is <code>unconfirmed</code>, not success</td>
+</tr>
+<tr>
+<td><code>file_absent</code></td>
+<td>Uses the same observation law: an error fails closed instead of becoming absence</td>
+</tr>
+<tr>
+<td><code>command</code></td>
+<td>Executes an absolute, owner-allowlisted binary with no shell or PATH lookup, optional exact argument tail, bounded timeout, and expected exit code—outside <code>with_transition</code></td>
+</tr>
+<tr>
+<td><code>evidence_origins</code></td>
+<td>Requires 1–16 distinct, lineage-collapsed first-hand origins behind the named requirement, plus any owner-wide minimum</td>
+</tr>
+<tr>
+<td><code>destination</code></td>
+<td>Checks folded ledger status and a fresh read-only <code>effect_present</code> observation for one operation or every task operation</td>
+</tr>
+<tr>
+<td><code>worker_receipt</code></td>
+<td>Validates Basic, StrictReturn, or SuccessorReturn evidence from immutable submissions, not a worker-authored receipt path</td>
+</tr>
+</tbody></table>
+<p>The three receipt profiles are intentionally different:</p>
+<ul>
+<li><strong>Basic</strong> requires at least <code>min</code> task submissions with one terminal outcome and no pending, recording-pending, or worker-unread results.</li>
+<li><strong>StrictReturn</strong> requires one applied submission with the exact worker, target, expected fields, and version delta <code>+1</code>, then proves that the original worker received the result and returned a correlated Room reply. <code>proposal_id</code> is optional; <code>outcome</code> and <code>min</code> are forbidden.</li>
+<li><strong>SuccessorReturn</strong> requires all eight pins: <code>proposals: &quot;successor&quot;</code>, worker, proposal ID and digest, whole-record digest, whole-outcome digest, and outcome. It proves fresh acknowledgment of a historical result while explicitly keeping <code>satisfies_original_return: false</code> and <code>resolves_original_obligation: false</code>.</li>
+</ul>
+<p>A successor acknowledgment never fabricates the original session&#39;s return.</p>
+<h3>Completion revalidates authority and live evidence</h3>
+<p>Long-running command checks run before the short transition. Inside <code>with_transition</code>, completion then:</p>
+<ol>
+<li>re-reads the task and requires it to remain claimed;</li>
+<li>compares all 14 authority keys: <code>owner</code>, <code>scope</code>, <code>active_scope_pin</code>, <code>file_scope_pin</code>, <code>project_id</code>, <code>project_root_pin</code>, <code>authority_epoch</code>, <code>authority_revision</code>, <code>source</code>, <code>delegation</code>, <code>lock</code>, <code>acceptance</code>, <code>requirements</code>, and <code>evidence_manifest</code>;</li>
+<li>rechecks dependencies, ancestry, project scope, and settled worker contributions;</li>
+<li>re-evaluates every non-command check against current files, evidence, and destinations;</li>
+<li>refuses completion on changed acceptance or <code>content_mismatch</code> quarantine;</li>
+<li>releases the scope lock through the structured release path and appends <code>task_done</code>.</li>
+</ol>
+<p>Requirement- or source-bound tasks cannot close with an empty acceptance array unless a trusted operator records an explicit override and reason. Acceptance is configured evidence, not a ceremonial green check.</p>
+<h3>Exhibit 4 — Successful artifact acceptance</h3>
+<p>This synthetic result combines file, evidence, destination, and receipt measurements. Every predicate is independently true; none borrows the others&#39; assurance.</p>
+<pre><code class="language-json">{
+  &quot;task&quot;: &quot;TSK-2026-ROOM-004&quot;,
+  &quot;acceptance_pass&quot;: true,
+  &quot;acceptance_results&quot;: [
+    {
+      &quot;kind&quot;: &quot;sha256&quot;,
+      &quot;pass&quot;: true,
+      &quot;detail&quot;: {
+        &quot;path&quot;: &quot;project:/artifacts/renewal-result.json&quot;,
+        &quot;expected&quot;: &quot;4a9c8e12f03b7d651928374655647382910abcdef1234567890abcdef1234567&quot;,
+        &quot;actual&quot;: &quot;4a9c8e12f03b7d651928374655647382910abcdef1234567890abcdef1234567&quot;
+      }
+    },
+    {
+      &quot;kind&quot;: &quot;evidence_origins&quot;,
+      &quot;pass&quot;: true,
+      &quot;detail&quot;: { &quot;req&quot;: &quot;R1&quot;, &quot;min&quot;: 2, &quot;distinct_origins&quot;: 2, &quot;basis&quot;: &quot;task_acceptance&quot; }
+    },
+    {
+      &quot;kind&quot;: &quot;destination&quot;,
+      &quot;pass&quot;: true,
+      &quot;detail&quot;: { &quot;operation_id&quot;: &quot;op_synthetic_004&quot;, &quot;status&quot;: &quot;resolved&quot;, &quot;effect_present&quot;: true }
+    },
+    {
+      &quot;kind&quot;: &quot;worker_receipt&quot;,
+      &quot;pass&quot;: true,
+      &quot;detail&quot;: { &quot;profile&quot;: &quot;strict&quot;, &quot;proposals&quot;: &quot;task&quot;, &quot;worker&quot;: &quot;reviewer-beta&quot;, &quot;proof&quot;: &quot;original-session-return-verified&quot; }
+    }
+  ]
+}
+</code></pre>
+<h3>Exhibit 5 — <code>file_absent</code> cannot turn an observation error into absence</h3>
+<pre><code class="language-json">{
+  &quot;kind&quot;: &quot;file_absent&quot;,
+  &quot;pass&quot;: false,
+  &quot;detail&quot;: {
+    &quot;path&quot;: &quot;project:/protected/unreadable-result.json&quot;,
+    &quot;error&quot;: &quot;Access is denied.&quot;,
+    &quot;error_kind&quot;: &quot;PermissionDenied&quot;,
+    &quot;observation&quot;: &quot;unconfirmed&quot;
+  }
+}
+</code></pre>
+<p><code>!path.exists()</code> would be the wrong proof here. <code>try_exists()</code> preserves the difference between absent and unknowable.</p>
+<h2>10. Subsystem 9: Five Runtime Invariants Constrain Event Law</h2>
+<p>Pre-action gates decide whether an act may proceed. The runtime invariant engine continuously checks the event stream for structural violations and records dedicated <code>invariant_violation</code> nodes through the journal and Room graph.</p>
+<table>
+<thead>
+<tr>
+<th>Invariant</th>
+<th>State carrier and rule</th>
+<th>Severity and boundary</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><code>exactly_once</code></td>
+<td>A bounded 10,000-entry FIFO <code>IdempotencyRegistry</code> rejects a repeated confirmed idempotency key</td>
+<td><code>Reject</code>; deduplicates registered events, not every external effect</td>
+</tr>
+<tr>
+<td><code>well_formed</code></td>
+<td>A lifecycle tracker per <code>(agent_id, parent_id)</code> enforces valid <code>Begin → Effect → Resolve</code> transitions</td>
+<td><code>Reject</code>; an effect or resolution cannot invent its own lifecycle</td>
+</tr>
+<tr>
+<td><code>exclusive</code></td>
+<td>A lease set over <code>TypedScope(namespace, resource_id)</code> rejects conflicting live holders</td>
+<td><code>Reject</code>; file scopes conflict hierarchically, non-file scopes by exact identity</td>
+</tr>
+<tr>
+<td><code>causal</code></td>
+<td>A resolved-ID set checks whether each <code>parent_id</code> is already resolved</td>
+<td><code>Flag</code>; unresolved causal matter is surfaced, not silently accepted as complete</td>
+</tr>
+<tr>
+<td><code>resolution</code></td>
+<td>An unresolved-intention map detects begins that exceed the caller&#39;s TTL before resolution</td>
+<td><code>IndoubtEffect</code>; the effect remains uncertain rather than being declared success or failure</td>
+</tr>
+</tbody></table>
+<p>Reject violations are recorded without committing the triggering envelope. Flag violations are buffered in the same checked append path. The graph therefore preserves both rejected operations and suspicious causal conditions without laundering them into valid effects.</p>
+<p>The 10,000-entry FIFO also defines a <strong>bounded replay-detection window</strong>. An evicted key no longer receives the registry&#39;s duplicate protection; eviction does not create a fresh execution grant or a permanent replay-proof history. Deployment acceptance must state the registry&#39;s retention and reconstruction horizon rather than treating it as unlimited.</p>
+<p><strong>Exactly-once event resolution is not exactly-once external effect.</strong> A destination can accept an effect while its ordinary receipt fails, an external service can perform a non-idempotent side effect, and a process can crash between mutation and observation. Articles 06–08 carry that burden through recovery records, readback, held completion, and break-glass reconciliation.</p>
+<h3>Exhibit 6 — An in-doubt TTL record</h3>
+<pre><code class="language-json">{
+  &quot;event_id&quot;: &quot;evt_0123456789abcdef_deadbeef&quot;,
+  &quot;agent_id&quot;: &quot;reviewer-beta&quot;,
+  &quot;began_at&quot;: &quot;&quot;,
+  &quot;elapsed_secs&quot;: 317
+}
+</code></pre>
+<p>This is not a failure receipt and not a success receipt. It is a bounded indication that an intention remained unresolved beyond the declared TTL and requires reconciliation.</p>
+<h2>11. The 2026 Coordination Evidence Landscape</h2>
+<p>The 2026 literature and protocol specifications reinforce the same architectural distinction: state management, native session identity, revalidation, and measured completion are separate control surfaces. Each source has a bounded claim.</p>
+<table>
+<thead>
+<tr>
+<th>2026 primary source</th>
+<th>What it actually establishes</th>
+<th>How the Room composes with it</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>Liu et al., <a href="https://arxiv.org/abs/2605.20563"><em>Multi-agent Collaboration with State Management (STORM)</em></a>, May 2026 preprint</td>
+<td>Worktree isolation defers conflicts to post-hoc merge; STORM mediates shared-workspace state at write time and outperforms the baseline by 18.7 points on Commit0-Lite and 1.4 on PaperBench, with comparable or better cost efficiency.</td>
+<td>Strong evidence for live state mediation. Git remains the source-history plane; the Room handles current observation, admission, and ownership.</td>
+</tr>
+<tr>
+<td>Sarkar, <a href="https://arxiv.org/abs/2606.19616"><em>Before the Pull Request: Mining Multi-Agent Coordination</em></a>, June 2026 preprint</td>
+<td>A shared coordination substrate reduced redundant work from 78% to 0% while useful throughput more than tripled, converged without silently dropped writes, and exposed lock starvation, rediscovery, and race-to-close hidden from PR history.</td>
+<td>Coordination artifacts must preserve claims and collisions before the PR. The Room additionally gates their authority and acceptance rather than merely mining them afterward.</td>
+</tr>
+<tr>
+<td>Nechepurenko and Shuvalov, <a href="https://arxiv.org/abs/2605.03310"><em>Coordination as an Architectural Layer for LLM-Based Multi-Agent Systems</em></a>, May 2026 preprint</td>
+<td>An information-controlled prediction-market study reports distinguishable coordination signatures and a cost-quality Pareto frontier. The authors call it a methodology-validating first instantiation, not a general cross-model claim; pairwise tests do not survive correction.</td>
+<td>Coordination belongs in architecture, not only prompts. The Room does not borrow a universal failure-rate claim from this bounded study.</td>
+</tr>
+<tr>
+<td><a href="https://modelcontextprotocol.io/specification/2026-07-28">Model Context Protocol <code>2026-07-28</code></a></td>
+<td>Defines stateless, self-contained requests and per-request capability negotiation, with optional tasks and context features.</td>
+<td>Stateless transport does not supply native conversational standing. The Room binds actor, registration, native conversation, and current view explicitly.</td>
+</tr>
+<tr>
+<td><a href="https://agentclientprotocol.com">Agent Client Protocol documentation</a>, 2026</td>
+<td>Standardizes editor–agent communication and native session lifecycle across local JSON-RPC/stdio and remote transports.</td>
+<td>Native sessions are the delivery boundary. The Room&#39;s Session Factory and proof ladder distinguish dispatch, body visibility, wrong body, reply, and process exit.</td>
+</tr>
+<tr>
+<td>Wang, Wang, and Wu, <a href="https://arxiv.org/abs/2609.08589"><em>The Unreliable Progress Bar</em></a>, September 2026 preprint</td>
+<td>Reporting reliability varies by task stage: most tested models lose accuracy mid-task and recover at completion, while newer models become conservative at the finish line. The authors advise against controlling flow from state reports alone.</td>
+<td><code>done</code> requires privileged artifact and destination acceptance, not a model&#39;s progress bar.</td>
+</tr>
+<tr>
+<td>Lyu et al., <a href="https://arxiv.org/abs/2609.08015"><em>From Version Conflicts to Decision Conflicts</em></a>, September 2026 preprint</td>
+<td>ATR rechecks only decision-affecting conditions, matched every specified outcome across 210,000 controlled executions, evaluated 0.6 versus 6.0 conditions per change, and reports a large latency reduction. The authors limit this to controlled feasibility.</td>
+<td>The Room rechecks current authority at turn entry, dispatch, worker claim, completion, and destination—not merely whether bytes changed.</td>
+</tr>
+<tr>
+<td>Khan, <a href="https://arxiv.org/abs/2605.17076"><em>S-Bus: Automatic Read-Set Reconstruction for Multi-Agent LLM State Coordination</em></a>, May 2026 preprint, revised v2</td>
+<td>Observable-Read Isolation reconstructs read sets from observed GET traffic, with formal checks and zero Type-I corruptions across 884,110 commit attempts. It also documents topology-dependent limits and agent over-reporting.</td>
+<td>The Room measures confirmed read coverage and causal ancestry rather than assuming an agent observed the state it cites.</td>
+</tr>
+<tr>
+<td><a href="https://www.sqlite.org/wal.html">SQLite WAL documentation</a> and <a href="https://learn.microsoft.com/en-us/windows/win32/api/">Microsoft Win32 documentation</a>, current 2026 references</td>
+<td>WAL durability modes govern when transactions reach stable storage; <code>GetFileInformationByHandleEx</code>, Job Object termination, and accounting provide kernel object identity and process-count observations.</td>
+<td>These are implementation primitives, not complete coordination semantics. The Room composes them into object pinning, journal reconciliation, and durable stop proof.</td>
+</tr>
+</tbody></table>
+<p>A final concession matters: a conventional deployment can implement the same invariants with different names. The Room&#39;s claim is not exclusive ownership of coordination theory. Its claim is a concrete, inspectable composition of the required predicates in one continuous machine.</p>
+<p><strong>Evidence availability and performance boundary:</strong> the implementation and acceptance artifacts are <code>CONTROLLED</code> for qualified, method-scoped technical review, with adverse findings permitted. They are not unrestricted public downloads or independent validation. The architecture does not claim a universal latency or throughput envelope: recursive causal queries, journal folds, live revalidation, recipient evidence checks, native-session proof, and stop confirmation must be measured against the actual Room topology, adapters, and workload.</p>
+<h2>Bring One Assignment With an Uncertain Outcome</h2>
+<p>The <strong>Multi-Agent Coordination &amp; Acceptance Audit Challenge</strong> evaluates one assignment whose delivery, ownership, or completion is currently hard to prove. The demonstration maps causal readiness, replays sealed-wake acceptance and refusal, and measures the resulting artifact and destination rather than trusting completion prose.</p>
+<p>The challenge excludes universal adapter or native-session attestation, production write authority, and exactly-once external effects. Deployment and paid pilots are separately scoped; independent evaluation remains outside the commercial ladder through <a href="https://blayneaina.com/09-bring-one-real-boundary-work-with-blayne/">Article 09</a>.</p>
+<h2>The Twelve Coordination Claims</h2>
+<table>
+<thead>
+<tr>
+<th>ID</th>
+<th>Bounded claim</th>
+<th>Evidence and ceiling</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><code>04-C01</code></td>
+<td>Split-brain state trees are refused, and project grants revalidate canonical path plus 192-bit combined kernel object identity</td>
+<td>Implemented and author-verified on local NTFS/ReFS territory; not a remote-share or host-admin guarantee</td>
+</tr>
+<tr>
+<td><code>04-C02</code></td>
+<td>Enrollment, thread-local sessions, native conversation binding, tier clamping, and multiplexer verb probing bind every connector call to a principal and route</td>
+<td>Implemented and author-verified on declared MCP/CLI paths and host contracts</td>
+</tr>
+<tr>
+<td><code>04-C03</code></td>
+<td>Room shards carry immutable scope bindings and parent-withholding closure</td>
+<td>Implemented and author-verified for graph queries, compositions, and exports; hash artifacts do not prove non-deletion</td>
+</tr>
+<tr>
+<td><code>04-C04</code></td>
+<td>The sync index reconciles handle-pinned journals across hash/HLC chains and binds checkpoints to conversation and view</td>
+<td>Implemented and author-verified for rotation, fork, and delivery-policy refusal paths</td>
+</tr>
+<tr>
+<td><code>04-C05</code></td>
+<td>The Work Gate requires live frontier and recursive causal-parent confirmation before all nine participant verbs</td>
+<td>Implemented and author-verified; blind writes receive a sync page, not authority</td>
+</tr>
+<tr>
+<td><code>04-C06</code></td>
+<td>Contribution verbs separate status, response, assignment, ownership transfer, and completion</td>
+<td>Implemented and author-verified for ambiguity, cross-Room evidence, successor, and no-wake paths</td>
+</tr>
+<tr>
+<td><code>04-C07</code></td>
+<td>Every wake is an 18-field permit revalidated at dispatch and worker claim</td>
+<td>Implemented and author-verified for binding, roster, registration, task, epoch, path, PID, and original-deadline changes</td>
+</tr>
+<tr>
+<td><code>04-C08</code></td>
+<td>Wake-time evidence is recipient-specific and governing-source coverage is continuous over <code>[0, length)</code></td>
+<td>Implemented and author-verified through <code>wake_delivery</code> receipts and bounded time windows</td>
+</tr>
+<tr>
+<td><code>04-C09</code></td>
+<td>Native delivery and reply are distinct proof states; process exit alone never resolves an obligation</td>
+<td>Implemented and author-verified for declared adapters; not a universal UI or remote-session attestation</td>
+</tr>
+<tr>
+<td><code>04-C10</code></td>
+<td>Cancellation holds in-flight work and confirms owned-Job termination only at zero active processes</td>
+<td>Implemented and author-verified through the two-phase durable stop outbox; accepted destination effects remain for reconciliation</td>
+</tr>
+<tr>
+<td><code>04-C11</code></td>
+<td>Delegation and completion use 16-level ancestry, 7 acceptance kinds, and 14-key final authority revalidation</td>
+<td>Implemented and author-verified; acceptance is bounded by configured predicates and protected observation paths</td>
+</tr>
+<tr>
+<td><code>04-C12</code></td>
+<td>Five runtime invariants constrain event law and emit dedicated violation evidence</td>
+<td>Implemented and author-verified; exactly-once event handling does not prove exactly-once external effect</td>
+</tr>
+</tbody></table>
+<h2>The Article 04 Claim Card</h2>
+<pre><code class="language-text">Mechanism:
+  The AINA Room Coordination Plane
+  (state identity, project grants, connection/session authority, tool policy,
+   graph shards, visibility, sync, contribution verbs, wake permits,
+   Session Factory, worker confinement, cancellation, acceptance, invariants)
+
+Failure it governs:
+  Source history and chat impersonating live authority;
+  split-brain state and redirected territories;
+  stale context, causal-parent blindness, and ambiguous obligations;
+  stale queued wakes and wrong-session delivery;
+  process exits and agent prose impersonating completion;
+  unobserved cancellation and unverified task closure.
+
+Positive path:
+  EISA-recognized act
+  → current principal, native conversation, project, Room scope
+  → confirmed causal frontier
+  → task-bound contribution and 18-field sealed wake
+  → dispatch and split-lock worker-claim revalidation
+  → confined execution and native reply proof
+  → 7-kind artifact/destination acceptance
+  → terminal evidence or explicit in-doubt reconciliation.
+
+Refusal / hold path:
+  project_root_redirected, actor_mismatch, graph_project_rebind_refused
+  room_sync_required, room_sync_receipt_forked
+  say_reply_target_ambiguous, cross_room_evidence_refused
+  wake_room_authority_changed, wake_recipient_registration_changed
+  wake_job_changed_during_validation, wake_job_expired
+  wrong_body_rejected, process_exit_only
+  held_until_reconciled, task_acceptance_changed_before_completion
+  file_absent observation unconfirmed, IndoubtEffect.
+
+Evidence status:
+  Implemented and Author-Verified across the declared Windows reference
+  embodiment and native adapter contracts.
+  External 2026 research is primary-source context, not endorsement.
+  Not Independently Validated and not a universal external exactly-once claim.
+
+Verifier and artifacts:
+  state_dir_id.json, ProjectGrant.root_object_id,
+  secret_sha256, SessionGuard, EffectiveTier and VERB_PROBE,
+  binding.json, content-addressed blobs, sync_index.db,
+  conversation_key/view_gen checkpoints, causal CTE results,
+  room-wake-job-v3/binding_sha256/RequestPermit,
+  srv_ wake_delivery receipts, sf_ native sessions,
+  room-stop-reports phase-1/phase-2 and committed markers,
+  acceptance_results, task_done, invariant_violation nodes.
+
+Scope and claim ceiling:
+  Kernel object identity and process containment are Windows reference mechanisms.
+  Native host metadata is trusted only within each adapter&#39;s declared contract.
+  Composition is read authority, never execution authority.
+  Delivery is not reply; reply is not acceptance; acceptance is configured evidence.
+  Exactly-once event resolution is not exactly-once external effect.
+  No privileged host-admin bypass or universal adapter claim is made.
+
+Next stage in the machine:
+  Article 04 establishes live coordination and verified assignment.
+  Article 05 enforces typed leases, monotonic generations, and kernel write
+  exclusion at the actual mutation window. Expiry alone is not fencing.
+
+Commercial doorway:
+  Multi-Agent Coordination &amp; Acceptance Audit Challenge — bring one
+  assignment with uncertain delivery, ownership, or completion; receive
+  a causal-readiness map, sealed-wake validation replay, and artifact-based
+  acceptance demonstration (Article 09 · me@blayneaina.com).
+</code></pre>
+<h2>The Room Is Where Authority Becomes Current</h2>
+<p>A recognized act can be mathematically sound and still be operationally stale. The evidence may be valid, the partition correct, the destination plausible—and the worker may be reading an old frontier, holding a replaced registration, answering a superseded task, or exiting before it ever replied.</p>
+<p>The Room closes that gap by making every stage re-establish its own predicates.</p>
+<p>Territory is re-queried. Credentials are re-read. Conversation checkpoints are recomputed. Causal parents are walked. Wake permits are revalidated at launch and claim. Evidence is served to the recipient. Native replies are correlated. Cancellation is observed at the kernel. Acceptance is measured against live artifacts. Invariant violations remain visible.</p>
+<p>That is why the Room is a coordination plane rather than a transcript.</p>
+<blockquote>
+<p><strong>Git tells you what history recorded. Chat tells you what was said. The Room tells you what may happen now—and what still has not been proven.</strong></p>
+</blockquote>
+<p>Article 05 narrows the final coordination question into the mutation window itself: who holds the typed lease and current generation, and how does the operating system prevent a stale writer from crossing the write syscall?</p>
+<h2>Frequently Asked Questions</h2>
+<h3>Why aren&#39;t Git worktrees enough for multi-agent coordination?</h3>
+<p>Worktrees separate source histories and defer conflict resolution to a later merge. They do not establish current resource ownership, causal observation, wake validity, native delivery, or artifact acceptance. Git remains valuable for source history; those additional properties need a live coordination plane.</p>
+<h3>Why isn&#39;t a workflow checkpoint enough?</h3>
+<p>A checkpoint can resume a plan. It does not prove that the plan remains valid for the current actor, native conversation, registration, project, task ancestry, authority revision, or control epoch. The Room revalidates those conditions instead of treating resumability as standing.</p>
+<h3>What makes a Room wake different from a prompt queue?</h3>
+<p>A wake is an 18-field permit bound to the recipient, task, evidence, Room authority, registration, control epoch, and original deadline. It is revalidated at dispatch and again inside the worker&#39;s split-lock claim. A queued prompt by itself carries none of that proof.</p>
+<h3>Is delivery to an IDE session proof of completion?</h3>
+<p>No. Dispatch, body delivery, body visibility, wrong-body refusal, and reply are separate states. Process exit without a correlated reply is <code>process_exit_only</code> and leaves the obligation unresolved. Completion additionally requires privileged acceptance over actual artifacts and destination state.</p>
+<h3>Why does <code>file_absent</code> use <code>try_exists()</code>?</h3>
+<p>Because an unreadable or inaccessible path is not proven absent. <code>try_exists()</code> returns an observation error, and the acceptance check fails closed with <code>observation: &quot;unconfirmed&quot;</code> rather than converting missing permission into a passing absence claim.</p>
+<h3>Do the five invariants prove exactly-once external effects?</h3>
+<p>No. They constrain idempotency, lifecycle, exclusivity, causality, and resolution in the event system. A destination can still mutate before a receipt fails or crash occurs. That uncertainty must be observed and reconciled through the destination and recovery paths.</p>
+<h2>Continue the Series</h2>
+<ul>
+<li><strong>Series index:</strong> <a href="https://blayneaina.com/">From Proposal to Consequence: The AINA Transition-Governance Series</a></li>
+<li><strong>Previous:</strong> <a href="https://blayneaina.com/03-eisa-four-gate-verdict-machine-and-entity-resolution/">Article 03 — Semantic Switch and EISA: Protected Computation and Entity Resolution</a></li>
+<li><strong>Next:</strong> <a href="https://blayneaina.com/05-expiry-is-not-fencing-typed-leases-and-kernel-write-exclusion/">Article 05 — Expiry Is Not Fencing: Typed Leases and Kernel Write Exclusion</a></li>
+<li><strong>Deployment and independent review:</strong> <a href="https://blayneaina.com/09-bring-one-real-boundary-work-with-blayne/">Article 09 — Bring One Real Boundary</a></li>
+</ul>
+<hr>
+<h2>Primary 2026 Sources</h2>
+<ul>
+<li><a href="https://arxiv.org/abs/2605.20563">Liu et al. — <em>Multi-agent Collaboration with State Management (STORM)</em>, <code>arXiv:2605.20563</code></a></li>
+<li><a href="https://arxiv.org/abs/2606.19616">Sarkar — <em>Before the Pull Request: Mining Multi-Agent Coordination</em>, <code>arXiv:2606.19616</code></a></li>
+<li><a href="https://arxiv.org/abs/2605.03310">Nechepurenko and Shuvalov — <em>Coordination as an Architectural Layer for LLM-Based Multi-Agent Systems</em>, <code>arXiv:2605.03310</code></a></li>
+<li><a href="https://modelcontextprotocol.io/specification/2026-07-28">Model Context Protocol Specification <code>2026-07-28</code></a></li>
+<li><a href="https://agentclientprotocol.com">Agent Client Protocol Documentation</a></li>
+<li><a href="https://arxiv.org/abs/2609.08589">Wang, Wang, and Wu — <em>The Unreliable Progress Bar</em>, <code>arXiv:2609.08589</code></a></li>
+<li><a href="https://arxiv.org/abs/2609.08015">Lyu et al. — <em>From Version Conflicts to Decision Conflicts: Selective Revalidation for Long-Running AI Agents</em>, <code>arXiv:2609.08015</code></a></li>
+<li><a href="https://arxiv.org/abs/2605.17076">Khan — <em>S-Bus: Automatic Read-Set Reconstruction for Multi-Agent LLM State Coordination</em>, <code>arXiv:2605.17076</code></a></li>
+<li><a href="https://www.sqlite.org/wal.html">SQLite Write-Ahead Logging Documentation</a></li>
+<li><a href="https://learn.microsoft.com/en-us/windows/win32/api/">Microsoft Win32 API Documentation</a></li>
+</ul>
+<hr>
+<h2>Publication Metadata</h2>
+<p><strong>Title tag:</strong> The Room: Why Git and Chat Are Not Coordination Planes<br><strong>Meta description:</strong> Why Git worktrees and chat transcripts cannot govern live agents: inside The Room&#39;s territory pins, causal sync gate, sealed wake permits, native-session proof, cancellation, and privileged acceptance.<br><strong>Series navigation:</strong> <a href="https://blayneaina.com/">Series index</a> · Article 04 of <em>From Proposal to Consequence: The AINA Transition-Governance Series</em>.<br><strong>Previous installment:</strong> <a href="https://blayneaina.com/03-eisa-four-gate-verdict-machine-and-entity-resolution/">Article 03 — Semantic Switch and EISA: Protected Computation and Entity Resolution</a>.<br><strong>Next installment:</strong> <a href="https://blayneaina.com/05-expiry-is-not-fencing-typed-leases-and-kernel-write-exclusion/">Article 05 — Expiry Is Not Fencing: Typed Leases and Kernel Write Exclusion</a>.</p>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "TechArticle",
+      "@id": "https://blayneaina.com/04-the-room-why-git-and-chat-are-not-coordination-planes/#article",
+      "mainEntityOfPage": {
+        "@type": "WebPage",
+        "@id": "https://blayneaina.com/04-the-room-why-git-and-chat-are-not-coordination-planes/"
+      },
+      "headline": "The Room: Why Git and Chat Are Not Coordination Planes",
+      "alternativeHeadline": "How Causal Sync Gates, Sealed Wake Permits, Native-Session Proof, and Privileged Acceptance Govern Multi-Agent Authority",
+      "description": "Why Git worktrees and chat transcripts cannot govern live agents: inside The Room's territory pins, causal sync gate, sealed wake permits, native-session proof, cancellation, and privileged acceptance.",
+      "proficiencyLevel": "Expert",
+      "inLanguage": "en-US",
+      "isAccessibleForFree": true,
+      "datePublished": "2026-10-31T11:00:00-06:00",
+      "dateModified": "2026-10-31T11:50:00-06:00",
+      "position": 4,
+      "author": {
+        "@type": "Person",
+        "@id": "https://blayneaina.com/#blayne-aina",
+        "name": "Blayne Aina",
+        "url": "https://blayneaina.com",
+        "email": "mailto:me@blayneaina.com",
+        "jobTitle": "Principal Systems Architect and creator of the AINA Protocol"
+      },
+      "publisher": {
+        "@type": "Person",
+        "@id": "https://blayneaina.com/#blayne-aina",
+        "name": "Blayne Aina",
+        "url": "https://blayneaina.com"
+      },
+      "isPartOf": {
+        "@type": "CreativeWorkSeries",
+        "@id": "https://blayneaina.com/#series",
+        "name": "From Proposal to Consequence: The AINA Transition-Governance Series",
+        "url": "https://blayneaina.com"
+      },
+      "about": [
+        { "@type": "Thing", "name": "Multi-Agent Coordination Planes" },
+        { "@type": "Thing", "name": "Causal Consistency and Pre-Action Work Gates" },
+        { "@type": "Thing", "name": "Cryptographically Sealed Wake Permits" },
+        { "@type": "Thing", "name": "Native IDE Session Routing" },
+        { "@type": "Thing", "name": "Privileged Task Acceptance Verification" },
+        { "@type": "Thing", "name": "Runtime State-Machine Invariants" }
+      ],
+      "citation": [
+        "https://arxiv.org/abs/2605.20563",
+        "https://arxiv.org/abs/2606.19616",
+        "https://arxiv.org/abs/2605.03310",
+        "https://modelcontextprotocol.io/specification/2026-07-28",
+        "https://agentclientprotocol.com",
+        "https://arxiv.org/abs/2609.08589",
+        "https://arxiv.org/abs/2609.08015",
+        "https://arxiv.org/abs/2605.17076",
+        "https://www.sqlite.org/wal.html",
+        "https://learn.microsoft.com/en-us/windows/win32/api/"
+      ]
+    },
+    {
+      "@type": "BreadcrumbList",
+      "@id": "https://blayneaina.com/04-the-room-why-git-and-chat-are-not-coordination-planes/#breadcrumb",
+      "itemListElement": [
+        {
+          "@type": "ListItem",
+          "position": 1,
+          "name": "Architecture",
+          "item": "https://blayneaina.com/"
+        },
+        {
+          "@type": "ListItem",
+          "position": 2,
+          "name": "The Room: Why Git and Chat Are Not Coordination Planes",
+          "item": "https://blayneaina.com/04-the-room-why-git-and-chat-are-not-coordination-planes/"
+        }
+      ]
+    }
+  ]
+}
+</script><script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "@id": "https://blayneaina.com/04-the-room-why-git-and-chat-are-not-coordination-planes/#faq",
+  "mainEntity": [
+    {
+      "@type": "Question",
+      "name": "Why aren't Git worktrees enough for multi-agent coordination?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Worktrees separate source histories and defer conflict resolution to a later merge. They do not establish current resource ownership, causal observation, wake validity, native delivery, or artifact acceptance. Git remains valuable for source history; those additional properties need a live coordination plane."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Why isn't a workflow checkpoint enough?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "A checkpoint can resume a plan. It does not prove that the plan remains valid for the current actor, native conversation, registration, project, task ancestry, authority revision, or control epoch. The Room revalidates those conditions instead of treating resumability as standing."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "What makes a Room wake different from a prompt queue?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "A wake is an 18-field permit bound to the recipient, task, evidence, Room authority, registration, control epoch, and original deadline. It is revalidated at dispatch and again inside the worker's split-lock claim. A queued prompt by itself carries none of that proof."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Is delivery to an IDE session proof of completion?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "No. Dispatch, body delivery, body visibility, wrong-body refusal, and reply are separate states. Process exit without a correlated reply is `process_exit_only` and leaves the obligation unresolved. Completion additionally requires privileged acceptance over actual artifacts and destination state."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Why does `file_absent` use `try_exists()`?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Because an unreadable or inaccessible path is not proven absent. `try_exists()` returns an observation error, and the acceptance check fails closed with `observation: \"unconfirmed\"` rather than converting missing permission into a passing absence claim."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Do the five invariants prove exactly-once external effects?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "No. They constrain idempotency, lifecycle, exclusivity, causality, and resolution in the event system. A destination can still mutate before a receipt fails or crash occurs. That uncertainty must be observed and reconciled through the destination and recovery paths."
+      }
+    }
+  ]
+}
+</script>
+        </div>
+
+        
+
+        
+    <nav class="article-pagination" aria-label="Article navigation">
+      
+        <a href="/03-eisa-four-gate-verdict-machine-and-entity-resolution/" class="pagination-link prev">
+          <span class="pagination-sub">← Previous</span>
+          <span class="pagination-title">§03: Semantic Switch & EISA</span>
+        </a>
+      
+      
+        <a href="/05-expiry-is-not-fencing-typed-leases-and-kernel-write-exclusion/" class="pagination-link next">
+          <span class="pagination-sub">Next Article →</span>
+          <span class="pagination-title">§05: Expiry Is Not Fencing</span>
+        </a>
+      
+    </nav>
+  
+
+        <footer class="article-footer-cta">
+          <h3>Work With Blayne (§09): Bring One Real Boundary</h3>
+          <p>Do not bring a vision deck. Bring one consequential enterprise transition—workflow standing, hostile document adjudication, or protected entity resolution. We establish a written acceptance boundary, run the existing implementation, and make the positive, refusal, and unresolved evidence inspectable.</p>
+          <div class="cta-actions">
+            <a href="/09-bring-one-real-boundary-work-with-blayne/" class="btn-primary">Work With Blayne (§09)</a>
+            <a href="mailto:me@blayneaina.com?subject=[CHALLENGE]%20Enterprise%20Boundary" class="btn-secondary">me@blayneaina.com</a>
+          </div>
+        </footer>
+      </article>
+    </main>
+  </div>
+
+  <footer class="site-footer">
+    <div class="footer-inner">
+      <div class="footer-left">
+        <strong>blayneaina.com</strong> — Architectural invariants, verifiable execution, and production governance for autonomous systems.
+      </div>
+      <div class="footer-right">
+        <span>© 2026 Blayne Aina. All rights reserved.</span>
+      </div>
+    </div>
+  </footer>
+
+
+
+  <dialog class="quick-search" id="quickSearchDialog" aria-labelledby="quick-search-title">
+    <div class="quick-search-head">
+      <label id="quick-search-title" for="quickSearchInput">Search architecture and evidence</label>
+      <button type="button" id="quickSearchClose" aria-label="Close search">Close</button>
+    </div>
+    <input id="quickSearchInput" type="search" placeholder="Try EISA, PCNA, SQLite, leases, Semantic Switch…" autocomplete="off">
+    <div class="quick-search-results" id="quickSearchResults">
+      <a href="/refusal-proof/" data-search-item><strong>Refusal &amp; Unchanged-Destination Proof</strong><span>PCNA · EISA · verifier · SQLite · 45 cases</span></a>
+      <a href="/proof/conformance/conformance_45_manifest.json" data-search-item><strong>45-case conformance manifest</strong><span>release qualification · candidate results</span></a>
+      <a href="/proof/README.md" data-search-item><strong>Schemas and verifier guide</strong><span>offline verification · artifact index</span></a>
+      <a href="/semantic-switch-proof/" data-search-item><strong>Semantic Switch proof</strong><span>AKO · Lampson confinement · relation isomorphism</span></a>
+      <a href="/#formal-confinement" data-search-item><strong>Formal confinement and A2E</strong><span>bounded TCB · finiteness · three provisionals</span></a>
+      <a href="/#career-snapshot" data-search-item><strong>Enterprise delivery snapshot</strong><span>2015–2026 · CRM · migrations · production cutovers</span></a>
+      <a href="/01-an-ai-output-is-not-an-act/" data-search-item><strong>§01 · An AI Output Is Not an Act</strong><span>Ambient Authority &amp; Machine Standing</span></a><a href="/02-zero-trust-document-ingestion-and-server-cut-evidence/" data-search-item><strong>§02 · Zero-Trust Document Ingestion</strong><span>Parser Jails &amp; Server-Cut Evidence</span></a><a href="/03-eisa-four-gate-verdict-machine-and-entity-resolution/" data-search-item><strong>§03 · Semantic Switch &amp; EISA</strong><span>Protected Computation &amp; 4-Gate Verdicts</span></a><a href="/04-the-room-why-git-and-chat-are-not-coordination-planes/" data-search-item><strong>§04 · The Room Coordination Plane</strong><span>Transaction Graphs vs. Git &amp; Chat</span></a><a href="/05-expiry-is-not-fencing-typed-leases-and-kernel-write-exclusion/" data-search-item><strong>§05 · Expiry Is Not Fencing</strong><span>Typed Leases &amp; Kernel Write Exclusion</span></a><a href="/06-rollback-is-not-erasure-dual-tier-vaults-and-ungated-quarantine/" data-search-item><strong>§06 · Rollback Is Not Erasure</strong><span>Dual-Tier Vaults &amp; Forensic Quarantine</span></a><a href="/07-defeating-approval-laundering-act-pinning-and-successor-grants/" data-search-item><strong>§07 · Defeating Approval Laundering</strong><span>Act Pinning &amp; Successor Continuity</span></a><a href="/08-sovereign-kill-switch-break-glass-epochs-and-conformance-gate/" data-search-item><strong>§08 · The Sovereign Kill Switch</strong><span>Break-Glass Epochs &amp; Conformance Release Gate</span></a><a href="/09-bring-one-real-boundary-work-with-blayne/" data-search-item><strong>§09 · AI-Native Builder, Fleet Orchestrator &amp; FDE</strong><span>Live Enterprise Problem Solving &amp; Verification</span></a>
+    </div>
+  </dialog>
+
+  <script src="/script.js?v=20261105-final-qc"></script>
+</body>
+</html>

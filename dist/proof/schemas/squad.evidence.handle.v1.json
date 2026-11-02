@@ -1,0 +1,105 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "Squad Evidence Handle Declaration (squad.evidence.handle/1)",
+  "type": "object",
+  "description": "Public-safe declaration of Room-issued server-cut citation handle and envelope.",
+  "required": [
+    "handle",
+    "envelope",
+    "issuance"
+  ],
+  "properties": {
+    "handle": {
+      "type": "string",
+      "pattern": "^ev_[0-9a-f]{32}$",
+      "description": "Deterministic content-addressed identifier derived from canonical envelope hash."
+    },
+    "envelope": {
+      "type": "object",
+      "required": [
+        "version",
+        "source_revision",
+        "view_digest",
+        "node_id",
+        "selector"
+      ],
+      "properties": {
+        "version": {
+          "type": "integer",
+          "enum": [
+            1
+          ]
+        },
+        "source_revision": {
+          "type": "string",
+          "pattern": "^doc_"
+        },
+        "view_digest": {
+          "type": "string",
+          "pattern": "^[0-9a-f]{64}$"
+        },
+        "node_id": {
+          "type": "string"
+        },
+        "selector": {
+          "type": "object",
+          "required": [
+            "kind"
+          ],
+          "properties": {
+            "kind": {
+              "type": "string",
+              "enum": [
+                "whole_node",
+                "bounded_subrange",
+                "table_cell"
+              ]
+            },
+            "unit": {
+              "type": "string",
+              "enum": [
+                "unicode_scalar",
+                "utf8_byte_offset"
+              ]
+            },
+            "start": {
+              "type": "integer",
+              "minimum": 0
+            },
+            "end": {
+              "type": "integer",
+              "minimum": 0
+            }
+          }
+        },
+        "source_native_locator": {
+          "type": "object"
+        }
+      }
+    },
+    "issuance": {
+      "type": "object",
+      "required": [
+        "room",
+        "recipient",
+        "issued_utc",
+        "first_hand_origin"
+      ],
+      "properties": {
+        "room": {
+          "type": "string"
+        },
+        "recipient": {
+          "type": "string"
+        },
+        "issued_utc": {
+          "type": "string",
+          "format": "date-time"
+        },
+        "first_hand_origin": {
+          "type": "boolean"
+        }
+      }
+    }
+  }
+}

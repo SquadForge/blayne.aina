@@ -1,0 +1,48 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "Squad Conformance Battery Manifest (squad.conformance.manifest/1)",
+  "type": "object",
+  "description": "Candidate-binary 45-case and 20-case qualification battery schema.",
+  "required": [
+    "schema",
+    "total_cases",
+    "cases",
+    "assurance_ceiling"
+  ],
+  "properties": {
+    "schema": {
+      "type": "string"
+    },
+    "title": {
+      "type": "string"
+    },
+    "target_binary": {
+      "type": "string"
+    },
+    "verified_source_sha256": {
+      "type": "string"
+    },
+    "total_cases": {
+      "type": "integer"
+    },
+    "cases": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": [
+          "case_id",
+          "category",
+          "input_vector_summary",
+          "protected_boundary",
+          "expected_disposition",
+          "expected_reason_code",
+          "source_test_identifier",
+          "recorded_execution_status"
+        ]
+      }
+    },
+    "assurance_ceiling": {
+      "type": "string"
+    }
+  }
+}

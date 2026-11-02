@@ -1,0 +1,38 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "EvidenceRef Envelope (version 1)",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["version", "source_revision", "view_digest", "node_id", "selector", "source_native_locator", "role", "visibility", "origin"],
+  "properties": {
+    "version": { "const": 1 },
+    "source_revision": { "type": "string" },
+    "view_digest": { "type": "string", "pattern": "^[0-9a-f]{64}$" },
+    "node_id": { "type": "string" },
+    "selector": {
+      "oneOf": [
+        {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["kind"],
+          "properties": { "kind": { "const": "whole_node" } }
+        },
+        {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["kind", "unit", "start", "end"],
+          "properties": {
+            "kind": { "const": "bounded_subrange" },
+            "unit": { "const": "unicode_scalar" },
+            "start": { "type": "integer", "minimum": 0 },
+            "end": { "type": "integer", "minimum": 1 }
+          }
+        }
+      ]
+    },
+    "source_native_locator": { "type": "object" },
+    "role": { "type": "string", "enum": ["requirement", "supporting", "interpretation"] },
+    "visibility": { "type": "string", "enum": ["all", "collaborative_pass"] },
+    "origin": { "type": "string", "enum": ["room_captured", "agent_supplied"] }
+  }
+}

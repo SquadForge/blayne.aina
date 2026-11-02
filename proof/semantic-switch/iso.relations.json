@@ -1,0 +1,543 @@
+{
+ "schema": "RELATION_PRESERVATION_AUDIT_V1",
+ "native_relations_found": 24,
+ "eligible_relations": 23,
+ "excluded_non_alphabetic_or_short": 1,
+ "by_relation": {
+  "del1": {
+   "total": 11,
+   "represented": 11,
+   "relation_preserved": 11,
+   "dropped_min_lengths": [],
+   "fiction_relations": {
+    "del1": 11
+   }
+  },
+  "sub1": {
+   "total": 10,
+   "represented": 10,
+   "relation_preserved": 10,
+   "dropped_min_lengths": [],
+   "fiction_relations": {
+    "sub1": 10
+   }
+  },
+  "transpose": {
+   "total": 2,
+   "represented": 2,
+   "relation_preserved": 2,
+   "dropped_min_lengths": [],
+   "fiction_relations": {
+    "transpose": 2
+   }
+  }
+ },
+ "detail": [
+  {
+   "block_id": "KAL",
+   "namespace": "person",
+   "native": [
+    "john",
+    "jon"
+   ],
+   "relation": "del1",
+   "lengths": [
+    4,
+    3
+   ],
+   "min_length": 3,
+   "fiction": [
+    "Gicapeo Taeraka",
+    "Gicapo Taeraka"
+   ],
+   "eligible": true,
+   "represented": true,
+   "fiction_relation": "del1"
+  },
+  {
+   "block_id": "KAL",
+   "namespace": "Institution_Address",
+   "native": [
+    "maple",
+    "mapple"
+   ],
+   "relation": "del1",
+   "lengths": [
+    5,
+    6
+   ],
+   "min_length": 5,
+   "fiction": [
+    "Neruce Pafaecleo",
+    "Nerucec Pafaecleo"
+   ],
+   "eligible": true,
+   "represented": true,
+   "fiction_relation": "del1"
+  },
+  {
+   "block_id": "KAL",
+   "namespace": "Institution_Name",
+   "native": [
+    "smiith",
+    "smith"
+   ],
+   "relation": "del1",
+   "lengths": [
+    6,
+    5
+   ],
+   "min_length": 5,
+   "fiction": [
+    "Wiapicle Keogialeo",
+    "Wapicle Keogialeo"
+   ],
+   "eligible": true,
+   "represented": true,
+   "fiction_relation": "del1"
+  },
+  {
+   "block_id": "SUB",
+   "namespace": "person",
+   "native": [
+    "ana",
+    "anu"
+   ],
+   "relation": "sub1",
+   "lengths": [
+    3,
+    3
+   ],
+   "min_length": 3,
+   "fiction": [
+    "Kaetrefeo Trafiasu",
+    "Kaetrxfeo Trafiasu"
+   ],
+   "eligible": true,
+   "represented": true,
+   "fiction_relation": "sub1"
+  },
+  {
+   "block_id": "SUB",
+   "namespace": "person",
+   "native": [
+    "harendil",
+    "harundil"
+   ],
+   "relation": "sub1",
+   "lengths": [
+    8,
+    8
+   ],
+   "min_length": 8,
+   "fiction": [
+    "Braehipo Haejiafla",
+    "Braehiho Haejiafla"
+   ],
+   "eligible": true,
+   "represented": true,
+   "fiction_relation": "sub1"
+  },
+  {
+   "block_id": "SUB",
+   "namespace": "person",
+   "native": [
+    "marel",
+    "marul"
+   ],
+   "relation": "sub1",
+   "lengths": [
+    5,
+    5
+   ],
+   "min_length": 5,
+   "fiction": [
+    "Hariacia Daclaeli",
+    "Hayiacia Daclaeli"
+   ],
+   "eligible": true,
+   "represented": true,
+   "fiction_relation": "sub1"
+  },
+  {
+   "block_id": "DEL",
+   "namespace": "person",
+   "native": [
+    "kiro",
+    "kro"
+   ],
+   "relation": "del1",
+   "lengths": [
+    4,
+    3
+   ],
+   "min_length": 3,
+   "fiction": [
+    "Stuprahe Jecaka",
+    "Suprahe Jecaka"
+   ],
+   "eligible": true,
+   "represented": true,
+   "fiction_relation": "del1"
+  },
+  {
+   "block_id": "DEL",
+   "namespace": "person",
+   "native": [
+    "verandal",
+    "verandl"
+   ],
+   "relation": "del1",
+   "lengths": [
+    8,
+    7
+   ],
+   "min_length": 7,
+   "fiction": [
+    "Dulabra Niaprihe",
+    "Dulaba Niaprihe"
+   ],
+   "eligible": true,
+   "represented": true,
+   "fiction_relation": "del1"
+  },
+  {
+   "block_id": "EQ",
+   "namespace": "Institution_Address",
+   "native": [
+    "640",
+    "641"
+   ],
+   "relation": "sub1",
+   "lengths": [
+    3,
+    3
+   ],
+   "min_length": 3,
+   "fiction": [
+    "Tialunia Flutiabreo",
+    "Statraeflia Cuflema"
+   ],
+   "eligible": false,
+   "represented": false,
+   "fiction_relation": "unrelated"
+  },
+  {
+   "block_id": "TRN",
+   "namespace": "person",
+   "native": [
+    "nesotri",
+    "nestori"
+   ],
+   "relation": "transpose",
+   "lengths": [
+    7,
+    7
+   ],
+   "min_length": 7,
+   "fiction": [
+    "Raenaedru Jeolurae",
+    "Raenaedur Jeolurae"
+   ],
+   "eligible": true,
+   "represented": true,
+   "fiction_relation": "transpose"
+  },
+  {
+   "block_id": "TRN",
+   "namespace": "Institution_Name",
+   "native": [
+    "brack",
+    "brakc"
+   ],
+   "relation": "transpose",
+   "lengths": [
+    5,
+    5
+   ],
+   "min_length": 5,
+   "fiction": [
+    "Sewaene Feogeki",
+    "Seweane Feogeki"
+   ],
+   "eligible": true,
+   "represented": true,
+   "fiction_relation": "transpose"
+  },
+  {
+   "block_id": "S03",
+   "namespace": "person",
+   "native": [
+    "bac",
+    "buc"
+   ],
+   "relation": "sub1",
+   "lengths": [
+    3,
+    3
+   ],
+   "min_length": 3,
+   "fiction": [
+    "Brodabre Ceowelae",
+    "Brvdabre Ceowelae"
+   ],
+   "eligible": true,
+   "represented": true,
+   "fiction_relation": "sub1"
+  },
+  {
+   "block_id": "S04",
+   "namespace": "person",
+   "native": [
+    "baco",
+    "buco"
+   ],
+   "relation": "sub1",
+   "lengths": [
+    4,
+    4
+   ],
+   "min_length": 4,
+   "fiction": [
+    "Maepiadria Naesutru",
+    "Maepiadjia Naesutru"
+   ],
+   "eligible": true,
+   "represented": true,
+   "fiction_relation": "sub1"
+  },
+  {
+   "block_id": "S05",
+   "namespace": "person",
+   "native": [
+    "bacol",
+    "bucol"
+   ],
+   "relation": "sub1",
+   "lengths": [
+    5,
+    5
+   ],
+   "min_length": 5,
+   "fiction": [
+    "Geogeone Havacla",
+    "Gsogeone Havacla"
+   ],
+   "eligible": true,
+   "represented": true,
+   "fiction_relation": "sub1"
+  },
+  {
+   "block_id": "S06",
+   "namespace": "person",
+   "native": [
+    "bacole",
+    "bucole"
+   ],
+   "relation": "sub1",
+   "lengths": [
+    6,
+    6
+   ],
+   "min_length": 6,
+   "fiction": [
+    "Waesaedra Flaeliacu",
+    "Waesaejra Flaeliacu"
+   ],
+   "eligible": true,
+   "represented": true,
+   "fiction_relation": "sub1"
+  },
+  {
+   "block_id": "S07",
+   "namespace": "person",
+   "native": [
+    "bacolem",
+    "bucolem"
+   ],
+   "relation": "sub1",
+   "lengths": [
+    7,
+    7
+   ],
+   "min_length": 7,
+   "fiction": [
+    "Bialefa Drimeogreo",
+    "Biolefa Drimeogreo"
+   ],
+   "eligible": true,
+   "represented": true,
+   "fiction_relation": "sub1"
+  },
+  {
+   "block_id": "S08",
+   "namespace": "person",
+   "native": [
+    "bacolemi",
+    "bucolemi"
+   ],
+   "relation": "sub1",
+   "lengths": [
+    8,
+    8
+   ],
+   "min_length": 8,
+   "fiction": [
+    "Stiagaecia Greoveogeo",
+    "Stiacaecia Greoveogeo"
+   ],
+   "eligible": true,
+   "represented": true,
+   "fiction_relation": "sub1"
+  },
+  {
+   "block_id": "S09",
+   "namespace": "person",
+   "native": [
+    "bacolemid",
+    "bucolemid"
+   ],
+   "relation": "sub1",
+   "lengths": [
+    9,
+    9
+   ],
+   "min_length": 9,
+   "fiction": [
+    "Paemomia Poflizi",
+    "Paeiomia Poflizi"
+   ],
+   "eligible": true,
+   "represented": true,
+   "fiction_relation": "sub1"
+  },
+  {
+   "block_id": "D04",
+   "namespace": "person",
+   "native": [
+    "baco",
+    "bco"
+   ],
+   "relation": "del1",
+   "lengths": [
+    4,
+    3
+   ],
+   "min_length": 3,
+   "fiction": [
+    "Ciawako Neleoja",
+    "Ciawao Neleoja"
+   ],
+   "eligible": true,
+   "represented": true,
+   "fiction_relation": "del1"
+  },
+  {
+   "block_id": "D05",
+   "namespace": "person",
+   "native": [
+    "bacol",
+    "bcol"
+   ],
+   "relation": "del1",
+   "lengths": [
+    5,
+    4
+   ],
+   "min_length": 4,
+   "fiction": [
+    "Drileoro Siraebia",
+    "Drleoro Siraebia"
+   ],
+   "eligible": true,
+   "represented": true,
+   "fiction_relation": "del1"
+  },
+  {
+   "block_id": "D06",
+   "namespace": "person",
+   "native": [
+    "bacole",
+    "bcole"
+   ],
+   "relation": "del1",
+   "lengths": [
+    6,
+    5
+   ],
+   "min_length": 5,
+   "fiction": [
+    "Jiabiaji Feobriaga",
+    "Jiabiai Feobriaga"
+   ],
+   "eligible": true,
+   "represented": true,
+   "fiction_relation": "del1"
+  },
+  {
+   "block_id": "D07",
+   "namespace": "person",
+   "native": [
+    "bacolem",
+    "bcolem"
+   ],
+   "relation": "del1",
+   "lengths": [
+    7,
+    6
+   ],
+   "min_length": 6,
+   "fiction": [
+    "Neomeva Kuresta",
+    "Neomev Kuresta"
+   ],
+   "eligible": true,
+   "represented": true,
+   "fiction_relation": "del1"
+  },
+  {
+   "block_id": "D08",
+   "namespace": "person",
+   "native": [
+    "bacolemi",
+    "bcolemi"
+   ],
+   "relation": "del1",
+   "lengths": [
+    8,
+    7
+   ],
+   "min_length": 7,
+   "fiction": [
+    "Detoki Biclaze",
+    "Detki Biclaze"
+   ],
+   "eligible": true,
+   "represented": true,
+   "fiction_relation": "del1"
+  },
+  {
+   "block_id": "D09",
+   "namespace": "person",
+   "native": [
+    "bacolemid",
+    "bcolemid"
+   ],
+   "relation": "del1",
+   "lengths": [
+    9,
+    8
+   ],
+   "min_length": 8,
+   "fiction": [
+    "Titroprae Waemifo",
+    "Titrprae Waemifo"
+   ],
+   "eligible": true,
+   "represented": true,
+   "fiction_relation": "del1"
+  }
+ ],
+ "relation_preserved_total": 23,
+ "meaning": "represented=true means a reader of the fiction alone can see the two native tokens are related, because the components are identical or share a family. dropped means the relation is invisible in the fiction. Length is a property of a token, not of the relation between two of them. relation_preserved counts the pairs where a reader of the fiction alone would name the SAME relation the native tokens actually have."
+}

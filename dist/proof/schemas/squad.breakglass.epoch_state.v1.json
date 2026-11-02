@@ -1,0 +1,15 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "Break-Glass EpochState Declaration",
+  "type": "object",
+  "required": ["sequence", "scopes"],
+  "properties": {
+    "sequence": { "type": "integer", "minimum": 0 },
+    "scopes": {
+      "type": "object",
+      "additionalProperties": { "type": "integer", "minimum": 0 },
+      "description": "Scope to monotonic revocation revision. Scope forms are machine, agent:<name>, and project:<root>."
+    }
+  },
+  "description": "Public declaration of the two EpochState fields. Snapshot lineage, validation, and recovery behavior are specified separately."
+}

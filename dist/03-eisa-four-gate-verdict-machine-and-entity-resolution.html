@@ -1,0 +1,1621 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>EISA Four-Gate Verdict Machine &amp; Strict AST Parser | Blayne Aina</title>
+  <meta name="description" content="The production EISA core determines which bounded acts earn constitutional standing; Semantic Switch is an experimental alpha module for structure-preserving entity-resolution research.">
+  <link rel="canonical" href="https://blayneaina.com/03-eisa-four-gate-verdict-machine-and-entity-resolution/">
+
+  <!-- OpenGraph / Social -->
+  <meta property="og:type" content="article">
+  <meta property="og:title" content="EISA Four-Gate Verdict Machine &amp; Strict AST Parser">
+  <meta property="og:description" content="The production EISA core determines which bounded acts earn constitutional standing; Semantic Switch is an experimental alpha module for structure-preserving entity-resolution research.">
+  <meta property="og:url" content="https://blayneaina.com/03-eisa-four-gate-verdict-machine-and-entity-resolution/">
+  <meta property="og:site_name" content="Blayne Aina — The Route to Trusting AI">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="EISA Four-Gate Verdict Machine &amp; Strict AST Parser">
+  <meta name="twitter:description" content="The production EISA core determines which bounded acts earn constitutional standing; Semantic Switch is an experimental alpha module for structure-preserving entity-resolution research.">
+
+  <link rel="stylesheet" href="/style.css?v=20261106-wide-layout">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@500;700&family=Instrument+Serif:ital@0;1&family=Inter:wght@400;500;600;700;800&family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,500;0,6..72,600;1,6..72,400&family=JetBrains+Mono:wght@400;500&family=Plus+Jakarta+Sans:wght@600;700;800&display=swap" rel="stylesheet">
+</head>
+<body>
+  <div class="reading-progress-bar" id="progressBar"></div>
+
+  <header class="site-header">
+    <div class="header-inner">
+      <a href="/" class="brand">
+        <span class="brand-name">BLAYNE AINA</span>
+        <span class="brand-divider">/</span>
+        <span class="brand-tagline">The Route to Trusting AI</span>
+      </a>
+      <div class="header-actions">
+        <a href="/refusal-proof/" class="header-link">Proof</a>
+        <a href="/proof/README.md" class="header-link">Schemas</a>
+        <a href="https://github.com/SquadForge/blayne.aina" class="header-link" rel="noopener noreferrer">GitHub</a>
+        <button type="button" class="header-link header-search" id="quickSearchBtn" aria-label="Search articles and proof artifacts">Search</button>
+        <a href="/09-bring-one-real-boundary-work-with-blayne/" class="header-cta">Work With Blayne (§09)</a>
+        <button id="themeToggle" class="theme-btn" aria-label="Toggle theme">
+          <span class="theme-icon light">☀️</span>
+          <span class="theme-icon dark">🌙</span>
+        </button>
+        <button id="mobileMenuBtn" class="mobile-menu-btn" aria-label="Open navigation menu" aria-controls="sidebar" aria-expanded="false">☰</button>
+      </div>
+    </div>
+  </header>
+
+  <div class="candidate-ribbon" role="region" aria-label="Candidate identity and evaluation paths">
+    <div class="candidate-identity"><strong>EVALUATE BLAYNE</strong><span>Choose your path</span></div>
+    <nav class="candidate-links" aria-label="Evaluation paths">
+      <a href="/#career-snapshot">Recruiter &amp; Hiring Lead</a>
+      <a href="/refusal-proof/">Systems Engineer</a>
+      <a href="/#formal-confinement">AI Safety Researcher</a>
+      <a href="mailto:me@blayneaina.com" class="candidate-email">me@blayneaina.com</a>
+    </nav>
+  </div>
+  <div class="layout-container ">
+    <aside class="site-sidebar" id="sidebar">
+      <div class="sidebar-header">
+        <span class="sidebar-label">Architecture Series</span>
+        <span class="sidebar-date">October 2026</span>
+      </div>
+      <nav class="series-nav">
+        <ul>
+          <li class="">
+            <a href="/">
+              <span class="nav-num">§00</span>
+              <span class="nav-title">Series Overview & Thesis</span>
+            </a>
+          </li>
+          
+      <li class="">
+        <a href="/01-an-ai-output-is-not-an-act/">
+          <span class="nav-num">§01</span>
+          <span class="nav-title">An AI Output Is Not an Act</span>
+        </a>
+      </li>
+    
+      <li class="">
+        <a href="/02-zero-trust-document-ingestion-and-server-cut-evidence/">
+          <span class="nav-num">§02</span>
+          <span class="nav-title">Zero-Trust Document Ingestion</span>
+        </a>
+      </li>
+    
+      <li class="active">
+        <a href="/03-eisa-four-gate-verdict-machine-and-entity-resolution/">
+          <span class="nav-num">§03</span>
+          <span class="nav-title">Semantic Switch & EISA</span>
+        </a>
+      </li>
+    
+      <li class="">
+        <a href="/04-the-room-why-git-and-chat-are-not-coordination-planes/">
+          <span class="nav-num">§04</span>
+          <span class="nav-title">The Room Coordination Plane</span>
+        </a>
+      </li>
+    
+      <li class="">
+        <a href="/05-expiry-is-not-fencing-typed-leases-and-kernel-write-exclusion/">
+          <span class="nav-num">§05</span>
+          <span class="nav-title">Expiry Is Not Fencing</span>
+        </a>
+      </li>
+    
+      <li class="">
+        <a href="/06-rollback-is-not-erasure-dual-tier-vaults-and-ungated-quarantine/">
+          <span class="nav-num">§06</span>
+          <span class="nav-title">Rollback Is Not Erasure</span>
+        </a>
+      </li>
+    
+      <li class="">
+        <a href="/07-defeating-approval-laundering-act-pinning-and-successor-grants/">
+          <span class="nav-num">§07</span>
+          <span class="nav-title">Defeating Approval Laundering</span>
+        </a>
+      </li>
+    
+      <li class="">
+        <a href="/08-sovereign-kill-switch-break-glass-epochs-and-conformance-gate/">
+          <span class="nav-num">§08</span>
+          <span class="nav-title">The Sovereign Kill Switch</span>
+        </a>
+      </li>
+    
+        </ul>
+        <div class="sidebar-section-divider">
+          <span class="sidebar-label">Deploy & Evaluate</span>
+        </div>
+        <ul>
+          
+      <li class=" nav-commercial">
+        <a href="/09-bring-one-real-boundary-work-with-blayne/">
+          <span class="nav-num">→</span>
+          <span class="nav-title">AI-Native Builder, Fleet Orchestrator & FDE</span>
+        </a>
+      </li>
+    
+          <li>
+            <a href="mailto:me@blayneaina.com?subject=[RESEARCH]%20Independent%20Technical%20Evaluation">
+              <span class="nav-num">↗</span>
+              <span class="nav-title">Independent Evaluation [RESEARCH]</span>
+            </a>
+          </li>
+        </ul>
+      </nav>
+      <div class="sidebar-footer">
+        <div class="author-card">
+          <div class="author-name">Blayne Aina</div>
+          <div class="author-bio">By Blayne Aina · Principal Systems Architect and creator of AINA · October 31, 2026 · AINA Governance Specification</div>
+          <div class="author-bio">FDE · 11+ Years Customer-Embedded Delivery · USMC Veteran</div>
+          <a href="mailto:me@blayneaina.com" class="author-email">me@blayneaina.com</a>
+          <div class="author-contact">Blayne Aina · Denver, CO · <a href="mailto:me@blayneaina.com">me@blayneaina.com</a></div>
+          <a href="https://github.com/SquadForge/blayne.aina" class="author-contact" rel="noopener noreferrer">GitHub Repo (SquadForge/blayne.aina)</a>
+        </div>
+      </div>
+    </aside>
+
+    <main class="content-area">
+      <article class="prose-wrapper ">
+<header class="article-header">
+          <h1 class="article-title">EISA Four-Gate Verdict Machine &amp; Strict AST Parser</h1>
+          <p class="article-subtitle">The production EISA core determines which bounded acts earn constitutional standing; Semantic Switch is an experimental alpha module for structure-preserving entity-resolution research.</p>
+          <div class="article-meta">
+            <span class="meta-item author">By Blayne Aina</span>
+            <span class="meta-dot">·</span>
+            <span class="meta-item role">Principal Systems Architect and creator of AINA</span>
+            <span class="meta-dot">·</span>
+            <span class="meta-item date">October 31, 2026</span>
+            <span class="meta-dot">·</span>
+            <span class="meta-item tag">AINA Governance Specification</span>
+          </div>
+        </header>
+
+        
+    <section class="executive-brief" aria-label="Executive reading guide">
+      <div class="brief-label">Executive reading guide · 60 seconds</div>
+      <dl class="brief-grid">
+        <div class="brief-item">
+          <dt>Problem</dt>
+          <dd>Entity resolution needs rich comparison structure, but raw contacts, companies, and products should not be sent to external AI providers.</dd>
+        </div>
+        <div class="brief-item">
+          <dt>What it proves</dt>
+          <dd>The production EISA Four-Gate machine validates bounded acts over sealed evidence; Semantic Switch is an experimental alpha structure-preservation research module.</dd>
+        </div>
+        <div class="brief-item">
+          <dt>Commercial relevance</dt>
+          <dd>Use the deterministic EISA core for judgment boundaries and evaluate Semantic Switch only against its declared synthetic-test scope.</dd>
+        </div>
+        <div class="brief-item">
+          <dt>Next step</dt>
+          <dd>Review the alpha scope and refusal proof, then Article 04 supplies live coordination authority.</dd>
+        </div>
+      </dl>
+    </section>
+  
+        
+        
+        
+
+        <div class="article-body">
+          <aside class="context-callout alpha-module" aria-label="Semantic Switch maturity and scope disclosure">
+  <div class="brief-label">PRODUCTION CORE + EXPERIMENTAL RESEARCH MODULE</div>
+  <h2>EISA is the production core; Semantic Switch is experimental alpha</h2>
+  <p><strong>EXPERIMENTAL RESEARCH MODULE (ALPHA) · STAGE-ZERO SYNTHETIC INVARIANCE TESTBED</strong></p>
+  <p><strong>Maturity &amp; Scope Note:</strong> Unlike the core deterministic execution, lease-fencing, and server-cut provenance layers (§01, §02, §04–§08), the Semantic Switch is an early-stage experimental research module. The 20/20 block-invariance and 23/23 relation-preservation fixtures in this pack validate deterministic structural isomorphism on synthetic test vectors only; they do not claim production entity-resolution recall across arbitrary noisy text or universal cryptographic anonymity against auxiliary-data reconstruction attacks.</p>
+</aside><p>Entity resolution has a data-boundary problem before it has a model problem.</p>
+<p>Contacts, companies, products, and other native records can contain identifiers that should never be sent raw to an external AI provider. But destructive redaction destroys the relationships that useful comparison requires: exact equality, normalized equality, phone variance, token containment, and the difference between a substitution, insertion, deletion, and transposition.</p>
+<p><strong>Semantic Switch resolves that transport problem first.</strong> Native rows, keys, and the private crosswalk remain under client control. External computation receives structure-preserving fictional records instead of the declared raw values. Qdrant Edge and qBlock can then nominate candidate partitions without exposing the native rows. Fracture adjudicates identity, Forge selects canonical values with provenance, local restoration maps authorized references back to exact native values, and Shield defends the resolved baseline.</p>
+<p>Protected computation alone still does not make a decision correct.</p>
+<p>Three agents can read the same contaminated context, repeat the same unsupported merger, and produce three confident explanations. A judge model can make the fourth vote. Nothing about that process establishes which records were compared, which values survived inspection, which contradiction was omitted, or whether the proposed partition covers the candidate universe exactly once.</p>
+<p>A trustworthy system does not count votes. It compiles each proposal into a bounded act and recomputes the declared predicates over sealed evidence.</p>
+<p>Article 02 built the evidence world: exact source revisions, confined parser views, served-content receipts, and server-cut <code>ev_</code> handles. Article 03 connects it to <strong>Semantic Switch</strong> and the <strong>Evidence Instruction Set Architecture (EISA)</strong>: protected computation first, deterministic constitutional judgment second.</p>
+<blockquote>
+<p><strong>Native data stays local. Semantic Switch powers protected qBlock candidates. EISA determines whether the resulting judgments are well-formed, evidence-contained, type-correct, and substantively consistent. The Room commits the result without executing it.</strong></p>
+</blockquote>
+<p>That last distinction matters. An operative EISA act is not a CRM merge, a file write, or a network effect. It is a recognized constitutional artifact entering the coordination and execution boundaries that Articles 04–08 govern.</p>
+<h2>One Constitution, Two Proof Lanes</h2>
+<p>EISA applies the same rule to two very different proposal classes:</p>
+<pre><code class="language-text">                         sealed evidence world
+                                  │
+                    strict acts over one sealed case
+                                  │
+                    Four-Gate deterministic verdict
+                       ┌──────────┴──────────┐
+                       │                     │
+              Proof Lane A            Proof Lane B
+         PDF vector relations       Protected entity resolution
+         CONNECTS only              Semantic Switch → qBlock →
+         geometry + direction       Fracture → Forge → Shield
+         frames + branch labels     identity + canonical state
+                       └──────────┬──────────┘
+                                  │
+                  squad.eisa.submission/1 → eisa_&lt;32hex&gt;
+                                  │
+                   Room authority and fenced execution
+</code></pre>
+<p>The recognition spine is <code>ev_</code> evidence → <code>eisacase_</code> sealed case → bounded <code>EISA_ACT_V1</code> acts → Four-Gate recognition → recognized artifact → immutable <code>eisa_</code> Room submission. The two lanes demonstrate that spine in different evidence domains.</p>
+<p>Lane A proves a narrow spatial relation from parser-committed geometry rather than asking a vision model to infer an arrow. Lane B turns native customer records into a protected comparison substrate, adjudicates identity relations, compiles canonical state, and defends the sealed baseline against later drift.</p>
+<p><strong>Naming precision:</strong> <code>Forge</code> names two related but distinct responsibilities. In Proof Lane A, <code>eisa.forge.document_layout/1</code> is the wire profile for spatial <code>AssertLayoutRelation</code> acts. In Proof Lane B, <strong>EISA Forge</strong> is Stage 3 of the entity-resolution pipeline, compiling canonical state after Fracture admits an identity partition. The layout profile and the canonical-state compiler are not the same mechanism or proof surface.</p>
+<p>The common rule is more important than either application: <strong>a proposal may not choose its own evidence world, suppress inconvenient matter, or narrate itself into authority.</strong></p>
+<h2>1. Strict Representation Before Judgment</h2>
+<p>A grammar cannot govern a transition if two parsers can assign different meanings to the same bytes.</p>
+<h3>Gate 1 begins with <code>strict::parse</code></h3>
+<p>EISA does not deserialize submissions through an ordinary last-key-wins JSON map. <code>strict::parse</code> drives a recursive <code>StrictVisitor</code> before schema evaluation:</p>
+<ul>
+<li><code>visit_map</code> checks whether each incoming key already exists and rejects duplicates.</li>
+<li><code>visit_f64</code> refuses non-finite numbers.</li>
+<li><code>de.end()</code> rejects trailing non-whitespace matter after the root value.</li>
+</ul>
+<p>A submission is capped at <strong>1 MiB</strong> before parsing and must be a non-empty array of at most <strong>256 acts</strong>. One submission belongs to one act family: Fracture contact acts or Forge layout acts, never a mixture.</p>
+<p>This prevents a gateway from seeing one opcode while a downstream evaluator executes another. The August 2026 Ruby JSON vulnerability <a href="https://nvd.nist.gov/vuln/detail/CVE-2026-71847"><code>CVE-2026-71847</code></a> is a related warning about parser edge cases: incomplete objects containing duplicate keys could trigger a heap-use-after-free in the affected native parser. EISA&#39;s separate point is semantic—duplicate-key matter is ambiguous and therefore inadmissible, not repaired.</p>
+<h3>The exact ten-key act envelope</h3>
+<p>Every act contains all ten, and only ten, top-level fields in <code>ACT_KEYS</code>:</p>
+<table>
+<thead>
+<tr>
+<th>Field</th>
+<th>Current wire law</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><code>version</code></td>
+<td>Exactly <code>EISA_ACT_V1</code></td>
+</tr>
+<tr>
+<td><code>stage</code></td>
+<td>A declared stage whose family admits the opcode: <code>Fracture</code> or <code>Forge</code></td>
+</tr>
+<tr>
+<td><code>actor</code></td>
+<td>Must match the authenticated caller, case-insensitively</td>
+</tr>
+<tr>
+<td><code>opcode</code></td>
+<td>One of the seven closed opcodes</td>
+</tr>
+<tr>
+<td><code>operands</code></td>
+<td>An object with exactly the opcode&#39;s declared keys</td>
+</tr>
+<tr>
+<td><code>evidenceRefs</code></td>
+<td>At most 16 strings naming Room-issued <code>ev_</code> handles; layout relations require exactly the connector/from/to handles</td>
+</tr>
+<tr>
+<td><code>confidence</code></td>
+<td>An empty object, or <code>{ &quot;bps&quot;: integer }</code> with <code>0 &lt;= bps &lt;= 10000</code>; audit only</td>
+</tr>
+<tr>
+<td><code>boundedReason</code></td>
+<td>A string of at most 1,024 characters, with control characters other than newline refused; audit only</td>
+</tr>
+<tr>
+<td><code>sourceEvent</code></td>
+<td>Empty, or <code>evt_&lt;16 hex&gt;_&lt;8 hex&gt;</code></td>
+</tr>
+<tr>
+<td><code>artifactHash</code></td>
+<td>The sealed case&#39;s bare 64-lowercase-hex JCS digest; no <code>sha256:</code> prefix</td>
+</tr>
+</tbody></table>
+<p><code>confidence</code> and <code>boundedReason</code> are not consulted by any gate and do not enter <code>consensusIdentity</code>. A model can explain itself for operators. It cannot make its explanation causal by declaring it confident.</p>
+<p>Act IDs are local dependency names: a letter followed by up to 63 ASCII letters, digits, underscores, or hyphens. Duplicate IDs fault every act carrying the ambiguous name.</p>
+<h3>Record-relative RFC 6901 pointers</h3>
+<p>A Fracture <code>BindEvidenceTag</code> coordinate has exactly three fields:</p>
+<pre><code class="language-json">{
+  &quot;artifact&quot;: &quot;records&quot;,
+  &quot;recordId&quot;: &quot;rec_101&quot;,
+  &quot;pointer&quot;: &quot;/contact/workEmail&quot;
+}
+</code></pre>
+<p>The participant names the record and pointer. The recognizer reads the value. Coordinates never name a filesystem path, URL, case-array index, or foreign artifact.</p>
+<p><code>pointer::parse</code> enforces:</p>
+<ul>
+<li>a leading <code>/</code>;</li>
+<li>at most 256 bytes and eight tokens;</li>
+<li>no whole-record empty pointer;</li>
+<li>no control characters;</li>
+<li>only RFC 6901 <code>~0</code> and <code>~1</code> escapes.</li>
+</ul>
+<p><code>pointer::resolve</code> then walks the sealed record. Object members must exist. Array indices use canonical decimal syntax—<code>0</code> or a nonzero digit sequence without leading zeroes—and must be in bounds. Traversal into a scalar fails. Missing fields, malformed indices, and out-of-bounds access become typed faults rather than guessed values.</p>
+<p>Comparator inputs are <strong>non-null, non-empty strings of at most 1,024 characters</strong>. Numbers, booleans, arrays, objects, nulls, and whitespace-only strings do not become comparator text through coercion.</p>
+<h3>The profile bounds</h3>
+<table>
+<thead>
+<tr>
+<th>Constant</th>
+<th align="right">Value</th>
+<th>Boundary</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><code>VERSION</code></td>
+<td align="right"><code>EISA_ACT_V1</code></td>
+<td>Wire version</td>
+</tr>
+<tr>
+<td><code>PROFILE</code></td>
+<td align="right"><code>eisa.fracture.contact/1</code></td>
+<td>Contact act family</td>
+</tr>
+<tr>
+<td><code>LAYOUT_PROFILE</code></td>
+<td align="right"><code>eisa.forge.document_layout/1</code></td>
+<td>Layout act family</td>
+</tr>
+<tr>
+<td><code>RECORDS_ARTIFACT</code></td>
+<td align="right"><code>records</code></td>
+<td>Only coordinate substrate</td>
+</tr>
+<tr>
+<td><code>MAX_SUBMISSION_BYTES</code></td>
+<td align="right">1,048,576</td>
+<td>Submission bytes</td>
+</tr>
+<tr>
+<td><code>MAX_ACTS</code></td>
+<td align="right">256</td>
+<td>Acts per submission</td>
+</tr>
+<tr>
+<td><code>MAX_REASON_CHARS</code></td>
+<td align="right">1,024</td>
+<td><code>boundedReason</code> characters</td>
+</tr>
+<tr>
+<td><code>MAX_ID_CHARS</code></td>
+<td align="right">64</td>
+<td>Act and record ID ceiling</td>
+</tr>
+<tr>
+<td><code>MAX_POINTER_BYTES</code></td>
+<td align="right">256</td>
+<td>Pointer bytes</td>
+</tr>
+<tr>
+<td><code>MAX_POINTER_DEPTH</code></td>
+<td align="right">8</td>
+<td>Pointer tokens</td>
+</tr>
+<tr>
+<td><code>MAX_VALUE_CHARS</code></td>
+<td align="right">1,024</td>
+<td>Compared string characters</td>
+</tr>
+<tr>
+<td><code>MAX_REFS</code></td>
+<td align="right">16</td>
+<td>Evidence handles per act</td>
+</tr>
+<tr>
+<td><code>MAX_LIST</code></td>
+<td align="right">1,000</td>
+<td>Members, support, counter, and groups</td>
+</tr>
+<tr>
+<td><code>MAX_CHAIN</code></td>
+<td align="right">4</td>
+<td>Duplicate links per transitive chain</td>
+</tr>
+<tr>
+<td><code>MAX_CASE_BYTES</code></td>
+<td align="right">4,194,304</td>
+<td>Sealed case-file bytes</td>
+</tr>
+<tr>
+<td><code>MAX_CASE_RECORDS</code></td>
+<td align="right">1,000</td>
+<td>Records per case</td>
+</tr>
+<tr>
+<td><code>MIN_PHONE_DIGITS</code></td>
+<td align="right">7</td>
+<td>Minimum digits on each phone side</td>
+</tr>
+</tbody></table>
+<h2>2. The Closed Grammar: Seven Opcodes, Four Layers</h2>
+<p>The opcode set is closed. New semantics cannot be introduced by sending a persuasive string.</p>
+<table>
+<thead>
+<tr>
+<th align="right">Layer</th>
+<th>Opcode</th>
+<th>Stage</th>
+<th>Exact operand keys</th>
+<th>Constitutional role</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="right">0</td>
+<td><code>BindEvidenceTag</code></td>
+<td>Fracture</td>
+<td><code>id</code>, <code>tag</code>, <code>coordinates</code></td>
+<td>Compare values at two distinct sealed-record coordinates using one positive or counter tag</td>
+</tr>
+<tr>
+<td align="right">0</td>
+<td><code>RequestHumanReview</code></td>
+<td>Fracture</td>
+<td><code>id</code>, <code>reason</code>, <code>members</code></td>
+<td>Emit lawful non-operative review matter over at least one sealed record</td>
+</tr>
+<tr>
+<td align="right">0</td>
+<td><code>RejectUnlawfulAct</code></td>
+<td>Fracture</td>
+<td><code>id</code>, <code>rejected</code>, <code>fault</code></td>
+<td>Preserve anti-knowledge rejecting a 64-hex matter identity or act digest under a registered fault</td>
+</tr>
+<tr>
+<td align="right">0</td>
+<td><code>AssertLayoutRelation</code></td>
+<td>Forge</td>
+<td><code>id</code>, <code>relation</code>, <code>connector</code>, <code>from</code>, <code>to</code></td>
+<td>Prove <code>CONNECTS</code> over three sealed whole-node layout citations</td>
+</tr>
+<tr>
+<td align="right">1</td>
+<td><code>AssertDuplicatePair</code></td>
+<td>Fracture</td>
+<td><code>id</code>, <code>pair</code>, <code>support</code>, <code>counter</code></td>
+<td>Link two records using admitted positive bindings and every admitted counter binding on that pair</td>
+</tr>
+<tr>
+<td align="right">2</td>
+<td><code>AssertTransitiveClosure</code></td>
+<td>Fracture</td>
+<td><code>id</code>, <code>pair</code>, <code>chain</code></td>
+<td>Compose two to four admitted duplicate links into a simple path</td>
+</tr>
+<tr>
+<td align="right">3</td>
+<td><code>ProposePartition</code></td>
+<td>Fracture</td>
+<td><code>id</code>, <code>groups</code>, <code>support</code></td>
+<td>Cover every sealed record exactly once with connected, non-contradicted groups</td>
+</tr>
+</tbody></table>
+<p>Dependencies point downward. Layer 0 observations feed Layer 1 pairs; Layer 1 pairs feed Layer 2 closure; Layers 1 and 2 support the Layer 3 partition. A missing, faulted, wrongly typed, cyclic, or pair-mismatched dependency cannot become support by being named confidently.</p>
+<p><code>RequestHumanReview</code> accepts only <code>INSUFFICIENT_EVIDENCE</code>, <code>CONFLICTING_EVIDENCE</code>, <code>SOURCE_DEFECT</code>, or <code>OUT_OF_PROFILE</code>. It records a review obligation; it does not assert that a human has acted. <code>RejectUnlawfulAct</code> validates the rejected identity&#39;s digest shape and fault class; it does not need to prove that the rejected target exists.</p>
+<p>A submission cannot contain both an admitted terminal partition and an admitted review request. That is <code>submission_mixed_decision</code>, not a hedge with extra authority.</p>
+<h2>3. The Evidence Alphabet: 17 Tags and 12 Comparators</h2>
+<p>EISA&#39;s tags are not natural-language hints. Each positive or counter tag binds to one deterministic comparator. The two inferential tags are reserved for transitive composition and are refused in <code>BindEvidenceTag</code>.</p>
+<table>
+<thead>
+<tr>
+<th align="right">#</th>
+<th>Evidence tag</th>
+<th>Class</th>
+<th>Comparator and exact predicate</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="right">1</td>
+<td><code>PHONE_STRONG</code></td>
+<td>Positive</td>
+<td><code>DigitsEqual</code>: both digit strings have at least seven digits and are identical</td>
+</tr>
+<tr>
+<td align="right">2</td>
+<td><code>PHONE_ONE_DIGIT_VARIANCE</code></td>
+<td>Positive</td>
+<td><code>DigitsOneSubstitution</code>: equal-length digit strings, Hamming distance exactly one</td>
+</tr>
+<tr>
+<td align="right">3</td>
+<td><code>PHONE_MULTI_DIGIT_VARIANCE</code></td>
+<td>Positive</td>
+<td><code>DigitsMultiSubstitution</code>: equal-length digit strings, Hamming distance two or three</td>
+</tr>
+<tr>
+<td align="right">4</td>
+<td><code>PHONE_COUNTRY_CODE_VARIATION</code></td>
+<td>Positive</td>
+<td><code>DigitsSuffix</code>: the shorter digit string is a proper suffix of the longer</td>
+</tr>
+<tr>
+<td align="right">5</td>
+<td><code>INTERNATIONAL_PHONE_VARIATION</code></td>
+<td>Positive</td>
+<td><code>DigitsSuffix</code>: the same suffix law under a distinct declared evidence tag</td>
+</tr>
+<tr>
+<td align="right">6</td>
+<td><code>EMAIL_LOCAL_MATCH</code></td>
+<td>Positive</td>
+<td><code>EmailLocalEqual</code>: valid trimmed/lowercased email shapes have equal local parts</td>
+</tr>
+<tr>
+<td align="right">7</td>
+<td><code>DOMAIN_ROOT_MATCH</code></td>
+<td>Positive</td>
+<td><code>EmailDomainRootEqual</code>: the first domain label before the first dot is identical</td>
+</tr>
+<tr>
+<td align="right">8</td>
+<td><code>DOMAIN_COUNTRY_TLD_VARIATION</code></td>
+<td>Positive</td>
+<td><code>EmailTldVariation</code>: first domain labels match and full domains differ</td>
+</tr>
+<tr>
+<td align="right">9</td>
+<td><code>DOMAIN_ROOT_MISMATCH</code></td>
+<td>Counter</td>
+<td><code>EmailDomainRootDiffers</code>: first domain labels differ</td>
+</tr>
+<tr>
+<td align="right">10</td>
+<td><code>NAME_STRONG</code></td>
+<td>Positive</td>
+<td><code>TextEqual</code>: lowercase whitespace-collapsed non-empty strings match</td>
+</tr>
+<tr>
+<td align="right">11</td>
+<td><code>NAME_SIMILARITY</code></td>
+<td>Positive</td>
+<td><code>TokenOverlap</code>: nonblank values share at least one lowercase alphanumeric token of two or more characters</td>
+</tr>
+<tr>
+<td align="right">12</td>
+<td><code>COMPANY_ROOT_MATCH</code></td>
+<td>Positive</td>
+<td><code>FirstTokenEqual</code>: first qualifying tokens match</td>
+</tr>
+<tr>
+<td align="right">13</td>
+<td><code>COMPANY_REGIONAL_VARIATION</code></td>
+<td>Positive</td>
+<td><code>FirstTokenVariation</code>: first tokens match and normalized full strings differ</td>
+</tr>
+<tr>
+<td align="right">14</td>
+<td><code>REGIONAL_SUBSIDIARY_PATTERN</code></td>
+<td>Positive</td>
+<td><code>FirstTokenVariation</code>: the same first-token variation law under a distinct declared tag</td>
+</tr>
+<tr>
+<td align="right">15</td>
+<td><code>REGIONAL_VARIATION</code></td>
+<td>Positive</td>
+<td><code>FirstTokenVariation</code>: the same first-token variation law under a distinct declared tag</td>
+</tr>
+<tr>
+<td align="right">16</td>
+<td><code>TRANSITIVE_CLOSURE_APPLIED</code></td>
+<td>Inferential</td>
+<td>No field comparator; express with <code>AssertTransitiveClosure</code></td>
+</tr>
+<tr>
+<td align="right">17</td>
+<td><code>TRANSITIVE_CHAIN_DEPTH_1</code></td>
+<td>Inferential</td>
+<td>No field comparator; express with <code>AssertTransitiveClosure</code></td>
+</tr>
+</tbody></table>
+<p>The domain rule is intentionally simpler than a public-suffix analyzer: <code>domain_root</code> is the first DNS label. It does not strip <code>mail</code>, <code>www</code>, or country-code second-level domains. That limitation must remain visible; comparator semantics are declared policy, not universal identity truth.</p>
+<p>A comparator can answer only its exact predicate. <code>TokenOverlap</code> does not prove two people are identical. <code>FirstTokenVariation</code> does not prove two companies share a parent. <code>DigitsSuffix</code> does not establish ownership of a phone number. EISA determines whether the declared relation holds between the sealed strings—not whether the relation is sufficient evidence for a worldly identity decision.</p>
+<h3>The 47 registered fault classes</h3>
+<p>Faults are residue, never standing. The current <code>FAULTS</code> registry contains exactly these 47 codes:</p>
+<pre><code class="language-text">Representation and bounds (16):
+  act_not_object, unknown_field, missing_field, field_type,
+  unknown_version, unknown_stage, stage_not_admitted, unknown_opcode,
+  unknown_symbol, tag_class_mismatch, bound_exceeded, act_id_invalid,
+  act_id_repeated, actor_mismatch, case_mismatch, evidence_ref_refused
+
+Coordinates and observations (11):
+  pointer_foreign_artifact, pointer_malformed, record_unknown,
+  member_repeated, field_absent, value_null, value_empty,
+  value_not_string, value_shape_mismatch, observation_contradicted,
+  pair_mismatch
+
+Dependencies and composition (8):
+  dependency_missing, dependency_kind, dependency_faulted, dependency_cycle,
+  support_missing, counterevidence_suppressed, chain_broken,
+  chain_depth_exceeded
+
+Partitions and terminal decisions (7):
+  partition_member_unknown, partition_member_repeated,
+  partition_member_missing, partition_unsupported_group,
+  partition_contradicts_support, partition_repeated,
+  submission_mixed_decision
+
+Layout (5):
+  layout_fact_absent, layout_scope_mismatch, layout_kind_mismatch,
+  layout_citation_mismatch, relation_indeterminate
+</code></pre>
+<p>Malformed submissions can also produce whole-submission inadmissibility codes such as <code>submission_too_large</code>, <code>submission_unparseable</code>, <code>submission_not_array</code>, <code>submission_size</code>, and <code>submission_mixed_stage</code>. Those envelope outcomes are distinct from the 47 registered per-act fault classes that <code>RejectUnlawfulAct</code> may cite.</p>
+<h2>4. Sealed Cases: Two Substrates, One Artifact Identity</h2>
+<p>An act may point only into a sealed case. EISA creates <code>eisacase_&lt;32hex&gt;</code> by hashing the Room name, a NUL separator, and the case&#39;s RFC 8785 JCS record digest. The <code>artifactHash</code> carried by every act is that record digest; the Room-qualified case ID is the graph address.</p>
+<p>Identical records sealed in two Rooms therefore have the same <code>artifactHash</code> but different case nodes. Neither Room can resolve the other&#39;s case through composition.</p>
+<h3>File cases</h3>
+<p><code>seal_file</code> reads a JSON case through a task-scoped <code>ReadAuthority</code> under the Room&#39;s transition serialization, revalidates that authority, checks Room-project containment, enforces 4 MiB and 1,000-record ceilings, and applies the same strict parser. A case is either an array of record objects or <code>{ &quot;records&quot;: [...] }</code>. Every record has a unique valid <code>id</code>.</p>
+<p>The graph record binds the canonical records, digest, source-path identity and source-byte SHA-256, actor, session, task, Room, and time. Loading recomputes the record digest before recognition.</p>
+<h3>Passage cases</h3>
+<p><code>seal_passages</code> bridges Article 02 directly into EISA. Each input is a Room-issued <code>ev_</code> handle. The sealer:</p>
+<ol>
+<li>prepares and validates the citation for the caller and task;</li>
+<li>refuses handles from another Room or unrevealed collaborative-pass findings;</li>
+<li>loads and reverifies the canonical view and live source;</li>
+<li>cuts the exact Unicode-scalar passage using the handle&#39;s selector;</li>
+<li>refuses textless gaps, empty selections, and passages over 1,024 characters;</li>
+<li>attaches committed <code>layout</code> facts when a whole-node citation names a PDF layout element;</li>
+<li>seals records containing the exact text and source provenance;</li>
+<li>commits citation edges so later source reassessment reaches the case.</li>
+</ol>
+<p>A passage record&#39;s <code>/text</code> is the selected passage. Its <code>/source/...</code> fields bind Room, view digest, node ID, unit, start, end, source revision, source SHA-256, and parser digest. Every later <code>case::load</code> rechecks the JCS digest, source views, live source bytes, and sealed layout equality. A drifted source cannot be used for a new judgment.</p>
+<p>The two substrates share constitutional identity but not assurance. A task-scoped file case establishes JCS integrity over an admitted file. A passage case additionally binds each value to server-cut document evidence and layout provenance. Neither proves that the underlying records are worldly true.</p>
+<h2>5. The Four-Gate Verdict Machine</h2>
+<table>
+<thead>
+<tr>
+<th>Gate</th>
+<th>What the recognizer establishes</th>
+<th>What it refuses to let the proposal do</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><strong>1. Syntax and stage isolation</strong></td>
+<td>Strict JSON, exact keys, closed symbols, authenticated actor, unique IDs, bounded sizes, one act family, matching <code>artifactHash</code></td>
+<td>Smuggle duplicate fields, foreign opcodes, mixed stages, self-declared actors, or unbounded matter</td>
+</tr>
+<tr>
+<td><strong>2. Spatial containment</strong></td>
+<td>Every coordinate resolves inside the named sealed case; every layout citation names the same committed view, revision, parser, and page</td>
+<td>Point at foreign records, manufactured geometry, another Room&#39;s evidence, or unstored fields</td>
+</tr>
+<tr>
+<td><strong>3. Type and canonical identity</strong></td>
+<td>Values are non-empty bounded strings, dependencies have the right opcode/layer, and admitted acts receive JCS consensus identities</td>
+<td>Coerce shapes, cite faulted dependencies, or let prose and local naming change the proof identity</td>
+</tr>
+<tr>
+<td><strong>4. Substance and coverage</strong></td>
+<td>Comparators hold, counterevidence stays visible, chains are simple paths, and partitions are exact, connected, and non-contradicted</td>
+<td>Suppress contradiction, break a chain, omit members, split proven duplicates, or assert an unsupported cluster</td>
+</tr>
+</tbody></table>
+<p>Each act ends in one consequence class:</p>
+<ul>
+<li><strong><code>operative</code></strong> — a recognized act with a consensus identity.</li>
+<li><strong><code>lawful_non_operative</code></strong> — a valid review request, which creates no operative identity claim.</li>
+<li><strong><code>anti_knowledge</code></strong> — a valid rejection of other matter.</li>
+<li><strong><code>typed_fault</code></strong> — preserved residue with a fault code and no standing.</li>
+</ul>
+<p>A malformed whole submission is <code>inadmissible</code>. A recognized submission reports <code>decision: partition</code>, <code>review</code>, <code>relation</code>, or <code>none</code>; it does not acquire a blanket database-execution verdict.</p>
+<h3>Counterevidence is submission-complete</h3>
+<p>For <code>AssertDuplicatePair</code>, <strong>at least one admitted positive <code>BindEvidenceTag</code> on the same pair is required</strong>. Every listed support dependency must be such a binding. Every listed counter dependency must be an admitted counter binding on that pair. An empty counter list is valid only when the submission contains no admitted counter binding for that pair.</p>
+<p>Then EISA scans all admitted acts in the submission. If any counter binding on that pair is absent from <code>operands.counter</code>, the pair faults with <code>counterevidence_suppressed</code>. This is the minimum support and complete-counter rule—not a domain-specific claim that one similarity signal is sufficient proof of real-world identity.</p>
+<p>The proposer cannot bind <code>DOMAIN_ROOT_MISMATCH</code> in one act and then omit it when asserting identity in another. The check is deliberately scoped to the <strong>current submission&#39;s admitted acts</strong>; it is not a claim to have searched every historical record or external source in the world.</p>
+<h3>Transitive closure is a path proof, not a slogan</h3>
+<p><code>AssertTransitiveClosure</code> cites two to four admitted <code>AssertDuplicatePair</code> links. Pairs are canonically ordered, but the walker can traverse each edge in either direction. It starts from either requested endpoint, requires every link to continue from the current record, tracks visited IDs to reject cycles, and must end at the other endpoint.</p>
+<p>This establishes that the cited simple path exists. It does not prove that transitivity is a safe business rule for every relationship.</p>
+<h3>Partition verification is global across the admitted submission</h3>
+<p><code>ProposePartition</code> enforces four separate mathematical properties:</p>
+<ol>
+<li><strong>Exact disjoint cover.</strong> Every group member exists in the case, appears in at most one group, and every sealed record appears somewhere. Empty groups are meaningless.</li>
+<li><strong>Cited support stays inside groups.</strong> Every support reference must be an admitted duplicate pair or transitive closure.</li>
+<li><strong>No admitted relation crosses a boundary.</strong> EISA scans all admitted Layer 1/2 acts, including those omitted from <code>support</code>. If any links records in different groups, the result is <code>partition_contradicts_support</code>.</li>
+<li><strong>Every multi-record group is connected.</strong> A Disjoint-Set Union-Find structure unions cited support edges within each group. If members do not share one root, the result is <code>partition_unsupported_group</code>.</li>
+</ol>
+<p>A proposal cannot prove A=B and B=C, then place C outside the cluster because it dislikes the consequence. Nor can it place A, B, and C together without a cited path connecting them.</p>
+<h3>Consensus identity removes narrative, not responsibility</h3>
+<p>For an admitted act, <code>consensusIdentity</code> is the SHA-256 of an RFC 8785 basis containing the version, stage, opcode, case <code>artifactHash</code>, and canonical operands. Dependency IDs are replaced by the sorted consensus identities of the acts they name. Layout acts additionally bind their profile and committed geometric identity.</p>
+<p>Excluded from that identity are <code>actor</code>, <code>boundedReason</code>, <code>confidence</code>, <code>sourceEvent</code>, <code>evidenceRefs</code>, and local act IDs.</p>
+<p>Two proposers using different names, confidence scores, and explanations therefore receive the same consensus identity only when they prove the same structural transition over the same sealed case. Their raw acts remain separately attributable through <code>act_sha256</code>, Room actor, session, and submission identity. Canonical consensus does not create independent evidence.</p>
+<h2>Exhibit A — A Valid Contact Submission</h2>
+<p>The following synthetic submission binds two email relationships, asserts a pair, and proposes a complete partition over three sealed records. <code>artifactHash</code> is the case&#39;s bare digest. Values are resolved from the sealed case, not trusted from the prose.</p>
+<pre><code class="language-json">[
+  {
+    &quot;version&quot;: &quot;EISA_ACT_V1&quot;,
+    &quot;stage&quot;: &quot;Fracture&quot;,
+    &quot;actor&quot;: &quot;agent_er_worker_01&quot;,
+    &quot;opcode&quot;: &quot;BindEvidenceTag&quot;,
+    &quot;operands&quot;: {
+      &quot;id&quot;: &quot;act_bind_email_01&quot;,
+      &quot;tag&quot;: &quot;EMAIL_LOCAL_MATCH&quot;,
+      &quot;coordinates&quot;: [
+        { &quot;artifact&quot;: &quot;records&quot;, &quot;recordId&quot;: &quot;rec_101&quot;, &quot;pointer&quot;: &quot;/email&quot; },
+        { &quot;artifact&quot;: &quot;records&quot;, &quot;recordId&quot;: &quot;rec_102&quot;, &quot;pointer&quot;: &quot;/contact/workEmail&quot; }
+      ]
+    },
+    &quot;evidenceRefs&quot;: [&quot;ev_8f31c09a4b2e11d08a7c65e41902b3a1&quot;],
+    &quot;confidence&quot;: { &quot;bps&quot;: 9400 },
+    &quot;boundedReason&quot;: &quot;Both sealed values share the local part m.chen across regional domains.&quot;,
+    &quot;sourceEvent&quot;: &quot;evt_0123456789abcdef_a1b2c3d4&quot;,
+    &quot;artifactHash&quot;: &quot;4a9c8e12f03b7d651928374655647382910abcdef1234567890abcdef1234567&quot;
+  },
+  {
+    &quot;version&quot;: &quot;EISA_ACT_V1&quot;,
+    &quot;stage&quot;: &quot;Fracture&quot;,
+    &quot;actor&quot;: &quot;agent_er_worker_01&quot;,
+    &quot;opcode&quot;: &quot;BindEvidenceTag&quot;,
+    &quot;operands&quot;: {
+      &quot;id&quot;: &quot;act_bind_tld_02&quot;,
+      &quot;tag&quot;: &quot;DOMAIN_COUNTRY_TLD_VARIATION&quot;,
+      &quot;coordinates&quot;: [
+        { &quot;artifact&quot;: &quot;records&quot;, &quot;recordId&quot;: &quot;rec_101&quot;, &quot;pointer&quot;: &quot;/email&quot; },
+        { &quot;artifact&quot;: &quot;records&quot;, &quot;recordId&quot;: &quot;rec_102&quot;, &quot;pointer&quot;: &quot;/contact/workEmail&quot; }
+      ]
+    },
+    &quot;evidenceRefs&quot;: [&quot;ev_8f31c09a4b2e11d08a7c65e41902b3a1&quot;],
+    &quot;confidence&quot;: { &quot;bps&quot;: 9400 },
+    &quot;boundedReason&quot;: &quot;The first domain labels match and the full regional domains differ.&quot;,
+    &quot;sourceEvent&quot;: &quot;evt_0123456789abcdef_a1b2c3d4&quot;,
+    &quot;artifactHash&quot;: &quot;4a9c8e12f03b7d651928374655647382910abcdef1234567890abcdef1234567&quot;
+  },
+  {
+    &quot;version&quot;: &quot;EISA_ACT_V1&quot;,
+    &quot;stage&quot;: &quot;Fracture&quot;,
+    &quot;actor&quot;: &quot;agent_er_worker_01&quot;,
+    &quot;opcode&quot;: &quot;AssertDuplicatePair&quot;,
+    &quot;operands&quot;: {
+      &quot;id&quot;: &quot;act_dup_101_102&quot;,
+      &quot;pair&quot;: [&quot;rec_101&quot;, &quot;rec_102&quot;],
+      &quot;support&quot;: [&quot;act_bind_email_01&quot;, &quot;act_bind_tld_02&quot;],
+      &quot;counter&quot;: []
+    },
+    &quot;evidenceRefs&quot;: [&quot;ev_8f31c09a4b2e11d08a7c65e41902b3a1&quot;],
+    &quot;confidence&quot;: { &quot;bps&quot;: 9100 },
+    &quot;boundedReason&quot;: &quot;Two admitted positive bindings support this pair; no counter binding exists in this submission.&quot;,
+    &quot;sourceEvent&quot;: &quot;evt_0123456789abcdef_a1b2c3d4&quot;,
+    &quot;artifactHash&quot;: &quot;4a9c8e12f03b7d651928374655647382910abcdef1234567890abcdef1234567&quot;
+  },
+  {
+    &quot;version&quot;: &quot;EISA_ACT_V1&quot;,
+    &quot;stage&quot;: &quot;Fracture&quot;,
+    &quot;actor&quot;: &quot;agent_er_worker_01&quot;,
+    &quot;opcode&quot;: &quot;ProposePartition&quot;,
+    &quot;operands&quot;: {
+      &quot;id&quot;: &quot;act_part_final&quot;,
+      &quot;groups&quot;: [[&quot;rec_101&quot;, &quot;rec_102&quot;], [&quot;rec_103&quot;]],
+      &quot;support&quot;: [&quot;act_dup_101_102&quot;]
+    },
+    &quot;evidenceRefs&quot;: [&quot;ev_8f31c09a4b2e11d08a7c65e41902b3a1&quot;],
+    &quot;confidence&quot;: { &quot;bps&quot;: 9100 },
+    &quot;boundedReason&quot;: &quot;A complete disjoint cover with one connected pair and one singleton.&quot;,
+    &quot;sourceEvent&quot;: &quot;evt_0123456789abcdef_a1b2c3d4&quot;,
+    &quot;artifactHash&quot;: &quot;4a9c8e12f03b7d651928374655647382910abcdef1234567890abcdef1234567&quot;
+  }
+]
+</code></pre>
+<p>The recognizer, not the narrative, decides whether the sealed values satisfy <code>EmailLocalEqual</code> and <code>EmailTldVariation</code>, whether the dependencies match, and whether the partition laws hold.</p>
+<h2>Exhibit B — <code>counterevidence_suppressed</code></h2>
+<p>Suppose the same submission also admitted <code>act_bind_counter_03</code>, binding <code>DOMAIN_ROOT_MISMATCH</code> on the pair, but <code>act_dup_101_102</code> omitted it from <code>counter</code>. Its recognized-act report entry is:</p>
+<pre><code class="language-json">{
+  &quot;index&quot;: 2,
+  &quot;id&quot;: &quot;act_dup_101_102&quot;,
+  &quot;opcode&quot;: &quot;AssertDuplicatePair&quot;,
+  &quot;class&quot;: &quot;typed_fault&quot;,
+  &quot;identity&quot;: null,
+  &quot;act_sha256&quot;: &quot;01928374655647382910abcdef1234567890abcdef1234567890abcdef123456&quot;,
+  &quot;canonical&quot;: &quot;{\&quot;actor\&quot;:\&quot;agent_er_worker_01\&quot;,\&quot;artifactHash\&quot;:\&quot;4a9c8e12f03b7d651928374655647382910abcdef1234567890abcdef1234567\&quot;,\&quot;boundedReason\&quot;:\&quot;Pair asserted without admitted counterevidence.\&quot;,\&quot;confidence\&quot;:{\&quot;bps\&quot;:9100},\&quot;evidenceRefs\&quot;:[],\&quot;opcode\&quot;:\&quot;AssertDuplicatePair\&quot;,\&quot;operands\&quot;:{\&quot;counter\&quot;:[],\&quot;id\&quot;:\&quot;act_dup_101_102\&quot;,\&quot;pair\&quot;:[\&quot;rec_101\&quot;,\&quot;rec_102\&quot;],\&quot;support\&quot;:[\&quot;act_bind_email_01\&quot;]},\&quot;sourceEvent\&quot;:\&quot;evt_0123456789abcdef_a1b2c3d4\&quot;,\&quot;stage\&quot;:\&quot;Fracture\&quot;,\&quot;version\&quot;:\&quot;EISA_ACT_V1\&quot;}&quot;,
+  &quot;fault&quot;: {
+    &quot;code&quot;: &quot;counterevidence_suppressed&quot;,
+    &quot;detail&quot;: &quot;admitted counterevidence on this pair is not listed in counter: act_bind_counter_03&quot;
+  },
+  &quot;observations&quot;: [],
+  &quot;comparator&quot;: null,
+  &quot;depends_on&quot;: [],
+  &quot;evidence_refs&quot;: []
+}
+</code></pre>
+<p>The refusal is not a score penalty. It is the absence of standing for that pair.</p>
+<h2>6. Proof Lane A: Spatial Relations Without Visual Guesswork</h2>
+<p>A flowchart can have perfect OCR and still produce a false graph. Recognizing the words inside two boxes does not establish which arrow connects them, which direction the arrow points, whether the tip touches a node or an enclosing frame, or whether “Yes” and “No” label the same geometric edge.</p>
+<p>EISA&#39;s layout family does not ask a model to settle those questions from prose. It judges <code>AssertLayoutRelation</code> over parser-committed <code>LayoutFact</code> values sealed from whole-node document citations.</p>
+<h3>From PDF operators to integer evidence</h3>
+<p>The layout projection decodes PDF content streams, tracks affine transforms and graphics-state nesting, interprets subpaths and paint operators, and expands Form XObjects within bounded recursion. Coordinates become integer <strong>centi-points</strong>—hundredths of a PDF point—only when finite and within the declared coordinate ceiling.</p>
+<p>The projection is bounded at 4,000 elements per page and 20,000 points per path. Cubic Bezier bounding boxes solve derivative extrema rather than treating control points as the painted extent. Course tracing samples each cubic segment 16 times and keeps at most 4,096 trace points.</p>
+<p>Small filled triangular marks no larger than 24 points can become arrowheads. The attachment logic associates marks with open connector ends, so direction and touch are measured from the actual marked end. Branch labels up to 20 points high are assigned to a connector when the traced course establishes ownership. A label beside a course must be within 12 points and every other course must be at least twice as far; otherwise it is tied and assigned to neither.</p>
+<p>The recognizer never accepts replacement geometry from the act.</p>
+<h3>The <code>CONNECTS</code> proof</h3>
+<p><code>CONNECTS</code> is the only relation in the current layout alphabet. The act names three distinct sealed records—connector, from, and to—and its <code>evidenceRefs</code> must be exactly those three handles, each once. An outer frame is found through the parser-committed attachment and must also be sealed in the case, but it is not added as a fourth citation.</p>
+<p>The recognizer then enforces:</p>
+<ol>
+<li><strong>Provenance.</strong> All three records come from one Room, view digest, source revision, parser digest, and page. Each record&#39;s committed <code>LayoutFact.node</code> is exactly the node its evidence handle cites.</li>
+<li><strong>Element types.</strong> The connector is an open <code>line</code>, <code>polyline</code>, or <code>open_curve</code> with stroke paint and bounded start/end geometry. Both endpoints&#39; targets are closed <code>rect</code>, <code>rects</code>, <code>closed_curve</code>, or <code>compound</code> shapes.</li>
+<li><strong>Direction.</strong> The committed direction is <code>toward_end</code> or <code>toward_start</code>, determined by one marked end. No direction or an ambiguous direction is <code>relation_indeterminate</code>.</li>
+<li><strong>Unique attachment.</strong> Neither end may carry parser-recorded ambiguity or no attached node. The parser&#39;s attached <code>from</code> and <code>to</code> node IDs must equal the act&#39;s cited nodes exactly.</li>
+<li><strong>Touch.</strong> A direct tail lies within <code>LAYOUT_TOUCH = 150</code> centi-points (1.5 pt) of the <code>from</code> box. A direct head or its mark touches the <code>to</code> box within 150; a marked head can use <code>LAYOUT_NEAR_TOUCH = 200</code> centi-points (2.0 pt) for mark-box contact.</li>
+<li><strong>Frame proof.</strong> When the parser routed an end through an outer frame, the frame and cited inner shape must independently satisfy the sealed frame law rather than letting a group boundary impersonate a target.</li>
+</ol>
+<p>A frame must be a sealed, stroke-only closed shape on the same view and page with exactly the committed box. The cited inner shape must be closed and filled. All four inner-minus-outer gaps must be nonnegative, and the <strong>maximum</strong> gap may not exceed <code>LAYOUT_FRAME_GAP = 600</code> centi-points (6.0 pt). The frame node must be sealed whole exactly once, and no other sealed closed shape may create an inner-shape tie. Page-wide uniqueness is reported as <code>parser_committed</code>; the recognizer separately checks contradictions present in the sealed case.</p>
+<p>The thresholds are therefore not interchangeable: 150 is direct touch, 200 is marked-head near-touch, and 600 is the maximum frame-to-inner gap.</p>
+<h3>Branch labels enter relation identity</h3>
+<p>A connector&#39;s committed <code>path_labels</code> qualify the relation. Their label-node IDs enter <code>consensusIdentity</code>, so a “Yes” edge and a “No” edge between the same two shapes are not the same constitutional relation. The recognizer reads label words only when the corresponding text node is sealed whole from the same view. <code>labels_tied</code> remains visible and is assigned to neither connector.</p>
+<p>The result is deliberately narrow: EISA can prove one directed <code>CONNECTS</code> relation under declared geometry. It does not infer <code>flows_to</code>, <code>branches_to</code>, <code>grouped_with</code>, electrical correctness, process safety, or the diagram author&#39;s intent.</p>
+<h2>Exhibit C — An Operative Layout Relation</h2>
+<p>This is the layout portion of a synthetic recognized-act report. The frame fields are observations in the current report shape, not an agent-authored <code>layout_proof</code> object.</p>
+<pre><code class="language-json">{
+  &quot;index&quot;: 0,
+  &quot;id&quot;: &quot;layout_connect_07&quot;,
+  &quot;opcode&quot;: &quot;AssertLayoutRelation&quot;,
+  &quot;class&quot;: &quot;operative&quot;,
+  &quot;identity&quot;: &quot;9f2d4b8c1e7a0356d4c2b1a0987654321fedcba0987654321fedcba098765432&quot;,
+  &quot;fault&quot;: null,
+  &quot;observations&quot;: [
+    {
+      &quot;recordId&quot;: &quot;ev_11111111111111111111111111111111&quot;,
+      &quot;node_id&quot;: &quot;page4/e42&quot;,
+      &quot;shape&quot;: &quot;polyline&quot;,
+      &quot;direction&quot;: &quot;toward_end&quot;,
+      &quot;tail&quot;: [24100, 41200],
+      &quot;head&quot;: [28900, 42150],
+      &quot;tail_via&quot;: &quot;direct&quot;,
+      &quot;head_via&quot;: &quot;frame&quot;,
+      &quot;path_labels&quot;: [
+        {
+          &quot;label&quot;: &quot;page4/e43&quot;,
+          &quot;bbox&quot;: [26000, 41400, 27800, 41700],
+          &quot;text_node&quot;: &quot;page4/t9&quot;,
+          &quot;text&quot;: { &quot;recordId&quot;: &quot;ev_44444444444444444444444444444444&quot;, &quot;text&quot;: &quot;ADMITTED&quot; },
+          &quot;text_sealed&quot;: true,
+          &quot;on&quot;: &quot;course&quot;,
+          &quot;beside_gap&quot;: null
+        }
+      ],
+      &quot;labels_tied&quot;: []
+    },
+    {
+      &quot;recordId&quot;: &quot;ev_22222222222222222222222222222222&quot;,
+      &quot;node_id&quot;: &quot;page4/e18&quot;,
+      &quot;shape&quot;: &quot;rect&quot;,
+      &quot;bbox&quot;: [23000, 40000, 24500, 42400]
+    },
+    {
+      &quot;recordId&quot;: &quot;ev_33333333333333333333333333333333&quot;,
+      &quot;node_id&quot;: &quot;page4/e29&quot;,
+      &quot;shape&quot;: &quot;rect&quot;,
+      &quot;bbox&quot;: [28000, 41000, 29600, 43000],
+      &quot;head_marks&quot;: [
+        { &quot;node&quot;: &quot;page4/e40&quot;, &quot;bbox&quot;: [28700, 41900, 28900, 42200] }
+      ]
+    },
+    {
+      &quot;end&quot;: &quot;head&quot;,
+      &quot;recordId&quot;: &quot;ev_55555555555555555555555555555555&quot;,
+      &quot;node_id&quot;: &quot;page4/e5&quot;,
+      &quot;shape&quot;: &quot;rect&quot;,
+      &quot;paint&quot;: &quot;stroke&quot;,
+      &quot;bbox&quot;: [27500, 40500, 30100, 43500],
+      &quot;inner&quot;: &quot;page4/e29&quot;,
+      &quot;gap&quot;: 500,
+      &quot;uniqueness&quot;: &quot;parser_committed&quot;,
+      &quot;sealed_case_other_inner&quot;: 0
+    }
+  ],
+  &quot;comparator&quot;: &quot;LayoutConnects(touch=150,mark_touch=200,frame=parser_committed_inner,frame_gap=600)&quot;,
+  &quot;depends_on&quot;: [],
+  &quot;evidence_refs&quot;: [
+    &quot;ev_11111111111111111111111111111111&quot;,
+    &quot;ev_22222222222222222222222222222222&quot;,
+    &quot;ev_33333333333333333333333333333333&quot;
+  ]
+}
+</code></pre>
+<p>The frame and label-text records are sealed in the case for verification, but the act&#39;s citations remain exactly connector, from, and to as required.</p>
+<h2>Exhibit D — Two Distinct Partition Failures</h2>
+<pre><code class="language-json">[
+  {
+    &quot;index&quot;: 3,
+    &quot;id&quot;: &quot;act_part_split_cluster&quot;,
+    &quot;opcode&quot;: &quot;ProposePartition&quot;,
+    &quot;class&quot;: &quot;typed_fault&quot;,
+    &quot;identity&quot;: null,
+    &quot;fault&quot;: {
+      &quot;code&quot;: &quot;partition_contradicts_support&quot;,
+      &quot;detail&quot;: &quot;&#39;act_dup_101_102&#39; asserts rec_101 and rec_102 are one record, but they are in different groups&quot;
+    },
+    &quot;observations&quot;: [],
+    &quot;comparator&quot;: null,
+    &quot;depends_on&quot;: [],
+    &quot;evidence_refs&quot;: []
+  },
+  {
+    &quot;index&quot;: 3,
+    &quot;id&quot;: &quot;act_part_unconnected_cluster&quot;,
+    &quot;opcode&quot;: &quot;ProposePartition&quot;,
+    &quot;class&quot;: &quot;typed_fault&quot;,
+    &quot;identity&quot;: null,
+    &quot;fault&quot;: {
+      &quot;code&quot;: &quot;partition_unsupported_group&quot;,
+      &quot;detail&quot;: &quot;group 0 is not connected by its cited relations&quot;
+    },
+    &quot;observations&quot;: [],
+    &quot;comparator&quot;: null,
+    &quot;depends_on&quot;: [],
+    &quot;evidence_refs&quot;: []
+  }
+]
+</code></pre>
+<p>The first splits records already proven equivalent. The second groups records without proving connectivity. They are different defects and receive different faults.</p>
+<h2>7. Proof Lane B: Semantic Switch First, Then the Entity-Resolution Stack</h2>
+<p>Entity resolution adds a different danger: the evidence can contain direct identifiers, and the final merge can be difficult or impossible to reverse through the destination&#39;s ordinary product operations. The architecture protects the data <strong>before any provider-exposed computation</strong>, then protects the resolved baseline afterward.</p>
+<pre><code class="language-text">Native contacts, companies, products, or other records
+→ Stage 0: Semantic Switch protected representation
+→ Stage 1: qBlock / Qdrant Edge candidate mesh over protected records
+→ Stage 2: EISA Fracture identity adjudication
+→ Stage 3: EISA Forge canonical state compilation
+→ local restoration of authorized native values through the private crosswalk
+→ Stage 4: Shield forward-only baseline defense
+→ Room-governed destination transition
+</code></pre>
+<h3>Stage 0 — Semantic Switch: protected computation before external AI</h3>
+<p>Semantic Switch converts native values into structure-preserving fictional representations while retaining native rows, keys, and the private crosswalk locally. External AI providers and downstream reviewers receive the fictional records—not the declared raw identifiers. The downstream party returns partitions, unresolved membership, and optional field-source references; local restoration maps authorized references back to exact native values.</p>
+<p>This is the privacy-first ordering rule: <strong>Semantic Switch runs before qBlock, Fracture, or any other computation that exposes records to an external model.</strong> Candidate generation, adjudication, and canonical-value selection all operate on the protected representation.</p>
+<p>The accurate privacy description is <strong>deterministic, structure-preserving pseudonymization</strong>, not anonymity. The fictional surface preserves declared comparison structure while native data and restoration authority remain under client control.</p>
+<p><strong>Engineering trade-off note:</strong> Semantic Switch is purpose-built for structured entity resolution, CRM deduplication (Keiki), and topological claim graphs. In those workloads, structural edges, blocking keys, and relational patterns carry the primary signal. Lexical identifiers such as names, emails, and account numbers are severed into local <code>SeveranceAntiKnowledgeObjects</code> before any external embedding provider or qBlock / Qdrant Edge computation, preserving useful comparison structure without shipping the native identifiers.</p>
+<table>
+<thead>
+<tr>
+<th>Check</th>
+<th>Current contract and evidence</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><code>SS01</code></td>
+<td><strong>Privacy-first stage responsibility.</strong> Semantic Switch transforms native records before provider-exposed qBlock, Fracture, Forge, or Shield computation. Separate stages own identity judgment and destination mutation.</td>
+</tr>
+<tr>
+<td><code>SS02</code></td>
+<td><strong>Whole blocks remain the unit of work.</strong> Disjoint IDs, member existence, non-overlap, and in-block edge evidence are checked; no pair-request fragmentation or cross-block merge.</td>
+</tr>
+<tr>
+<td><code>SS03</code></td>
+<td><strong>Input validation prevents silent loss.</strong> Unknown fields, nested/numeric values in the declared string schema, duplicate keys/IDs, unknown members, and overlapping membership are refused; unblocked rows remain local and counted.</td>
+</tr>
+<tr>
+<td><code>SS04</code></td>
+<td><strong>Relation-isomorphic fiction retains declared signals.</strong> Scoped references, presence, exact and normalized equality, ordered components, and substitution, insertion, deletion, and transposition relations survive the transformation.</td>
+</tr>
+<tr>
+<td><code>SS05</code></td>
+<td><strong>Per-block reproducible scope.</strong> HMAC-SHA256 derivation binds schema, release, original block, canonical membership, and native content; no exported global dictionary, and no claim of cross-block unlinkability.</td>
+</tr>
+<tr>
+<td><code>SS06</code></td>
+<td><strong>Complete partitions and explicit uncertainty.</strong> Every emitted record appears exactly once across partitions and unresolved lists; omissions, duplicates, foreign records, and dual membership are refused.</td>
+</tr>
+<tr>
+<td><code>SS07</code></td>
+<td><strong>Reference-based exact restoration.</strong> A selection names an emitted record and issued field-value reference inside the same partition; local restoration retrieves the exact native value and source provenance rather than asking a model to reproduce it.</td>
+</tr>
+<tr>
+<td><code>SS08</code></td>
+<td><strong>Release-inventory verification.</strong> The expected <code>release_inventory</code> manifest is reconstructed from the authenticated crosswalk; admitted/held payload SHA-256 digests, counts, field-reference coverage, unexpected files/directories, and complete native accounting are checked.</td>
+</tr>
+<tr>
+<td><code>SS09</code></td>
+<td><strong>Measured transport and relation fidelity.</strong> Retained executions establish complete block, record, field-restoration, relabeling-invariance, and exact edit-relation accounting—not population matching accuracy.</td>
+</tr>
+<tr>
+<td><code>SS10</code></td>
+<td><strong>Whole-block capacity.</strong> Oversized blocks remain intact and held rather than being truncated or semantically fragmented; raising capacity requires a new preparation run.</td>
+</tr>
+<tr>
+<td><code>SS11</code></td>
+<td><strong>Privacy and custody ceiling.</strong> Native IDs, original rows, keys, crosswalks, and restored outputs stay local; keyed checks protect integrity, while host confidentiality and key custody remain deployment duties.</td>
+</tr>
+<tr>
+<td><code>SS12</code></td>
+<td><strong>Reproducible packaging and handoff.</strong> Pinned builds, launcher compatibility, manifest verification, new-output-location rules, and retained receipt and refusal artifacts support repeatable operation.</td>
+</tr>
+</tbody></table>
+<h4>The retained transport-measurement record</h4>
+<table>
+<thead>
+<tr>
+<th>Execution input</th>
+<th align="right">Native rows</th>
+<th align="right">Whole blocks</th>
+<th align="right">Fictionalized rows</th>
+<th align="right">Exact field restorations</th>
+<th align="right">Unblocked rows retained locally</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>Inspected restaurant development data</td>
+<td align="right">250</td>
+<td align="right">17</td>
+<td align="right">212</td>
+<td align="right">2,120</td>
+<td align="right">38</td>
+</tr>
+<tr>
+<td>Synthetic stress data</td>
+<td align="right">2,500</td>
+<td align="right">33</td>
+<td align="right">2,492</td>
+<td align="right">24,920</td>
+<td align="right">8</td>
+</tr>
+<tr>
+<td><strong>Total</strong></td>
+<td align="right"><strong>2,750</strong></td>
+<td align="right"><strong>50</strong></td>
+<td align="right"><strong>2,704</strong></td>
+<td align="right"><strong>27,040</strong></td>
+<td align="right"><strong>46</strong></td>
+</tr>
+</tbody></table>
+<p>All 2,750 inputs are accounted for. The retained Stage 1 executions made zero provider calls. A separate inspection checked 15,932 ordered component positions and the declared normalized-equality and component bijections.</p>
+<h4>Relation-isomorphism and adversarial verification</h4>
+<table>
+<thead>
+<tr>
+<th>Verification surface</th>
+<th align="right">Verified result</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>Relabeling-invariance blocks</td>
+<td align="right"><strong>20/20</strong></td>
+</tr>
+<tr>
+<td>Eligible native edit relations preserved exactly</td>
+<td align="right"><strong>23/23</strong></td>
+</tr>
+<tr>
+<td>Records verified in each relation-isomorphism run</td>
+<td align="right"><strong>53/53</strong></td>
+</tr>
+<tr>
+<td>Field values verified in each run</td>
+<td align="right"><strong>529/529</strong></td>
+</tr>
+<tr>
+<td>Batch-restoration adversarial cases</td>
+<td align="right"><strong>14/14</strong></td>
+</tr>
+<tr>
+<td>Transformation adversarial cases</td>
+<td align="right"><strong>10/10</strong></td>
+</tr>
+<tr>
+<td>Provider calls during preparation</td>
+<td align="right"><strong>0</strong></td>
+</tr>
+</tbody></table>
+<p>These are transport-fidelity and relation-preservation measurements. They do not establish matching accuracy, fresh-holdout performance, an AI advantage, anonymity, inference resistance, or independent validation.</p>
+<h4><code>SS08</code>: authenticate the release universe, not just a reply</h4>
+<p>A valid response for one block proves nothing about another block hidden from the release. The release verifier therefore closes the inventory around the authenticated crosswalk:</p>
+<pre><code class="language-text">authenticated private crosswalk
+→ reconstruct expected release_inventory manifest
+→ compare admitted and held block references, payload SHA-256 digests, counts, and bytes
+→ verify field-reference coverage and complete native-record accounting
+→ refuse missing/unexpected payloads, files, and directories
+→ only then release the listed fictional artifacts
+→ require complete block results before local restoration
+</code></pre>
+<p>Altered manifest counts, hidden blocks, unexpected native-data canaries, and unexpected public directories are refusal conditions. This is local software verification with a locally held key—not hardware attestation or control over every later copy.</p>
+<h3>Stage 1 — qBlock: candidate nomination over protected records</h3>
+<p><code>qBlock</code>/Qdrant Edge consumes the Semantic Switch representation and partitions protected records into candidate blocks and edges. This narrows the comparison universe without sending the native rows through the provider-exposed candidate path. It does not prove that any two records match, and its recall ceiling remains explicit: a true pair absent from every nominated block cannot be adjudicated by a later stage.</p>
+<p>The blocks and edge evidence remain inside the nominated parent block. The Semantic Switch interface requires disjoint blocks; overlapping blocker output needs an explicit upstream ownership policy. Candidate nomination supplies a partition for adjudication—not an identity conclusion.</p>
+<h3>Stage 2 — EISA Fracture: identity adjudication with dissent preserved</h3>
+<p>Fracture is where candidate relations become constitutional acts. Role-separated defense, prosecution, and tribunal participants can nominate support and contradiction, but their votes are not the proof. The Four-Gate recognizer recomputes every binding and partition law.</p>
+<p>BFT-style panels and persistent role separation improve review structure and attributable dissent. They do not create independent model accuracy, and they cannot override a failed comparator or a hidden counter binding.</p>
+<p>The output is an identity partition, a review request, anti-knowledge, or typed residue—not a mutated customer record.</p>
+<h3>Stage 3 — EISA Forge: canonical state is a separate decision</h3>
+<p>Identity equivalence does not decide which values should survive. Forge consumes an admitted partition and compiles a canonical record field by field:</p>
+<ul>
+<li>every surviving value names its source record and field pointer;</li>
+<li>provenance and validity intervals remain inspectable;</li>
+<li>declared field quorums and canonical claims decide support;</li>
+<li>unsupported values do not win through confidence alone;</li>
+<li>a conditional reversal plan records pre-state and post-state commitments before destination execution.</li>
+</ul>
+<p>This is the <strong>Field Provenance Matrix</strong> and reversible transition plan. Forge does not inherit ambient permission to run a CRM merge. Article 07&#39;s controller-fixed act and destination pre-state checks remain necessary.</p>
+<p>As Fracture partitions and Forge field selections return, Semantic Switch maps their authorized references through the private crosswalk to exact native values and source provenance. Restoration is local and reference-driven; no external model reconstructs or invents the original data. Shield then defends the resulting baseline, while any destination mutation remains separately governed.</p>
+<h3>Stage 4 — Shield: the baseline moves forward or does not move</h3>
+<p>A sealed baseline is not allowed to be rewritten by every later record. Shield evaluates new input through pre-provider switching and leak scanning, the declared embedding quorum, exact-baseline-run retrieval, and deterministic anchor gating. It then assigns one of three forward-only dispositions:</p>
+<ul>
+<li><strong><code>DEFLECT</code></strong> — contradictory or unverified matter is held away from the sealed baseline.</li>
+<li><strong><code>GROWTH</code></strong> — compatible evidence extends the provenance graph through a sealed forward path.</li>
+<li><strong><code>ESCALATE</code></strong> — genuine conflict enters autonomous quarantine and review rather than overwriting established state.</li>
+</ul>
+<p>No route mutates the sealed L3 baseline in place. Shield is temporal baseline defense, not a claim of universal entity accuracy or control over undeclared ingress paths.</p>
+<h2>8. From Duplicate Records to Evidence-Linked Relationship Graphs</h2>
+<p>The commercial value is not “AI deduplication” as a slogan. It is a defensible identity substrate on which relationship paths can be inspected.</p>
+<pre><code class="language-text">Semantic Switch protected records
+→ qBlock candidate nominations
+→ evidence-bound identity partitions
+→ canonical records with field provenance
+→ evidence-linked relationships
+→ inspectable graph paths with freshness, relation type, and status
+→ bounded vertical pilot
+</code></pre>
+<p>A six-hop query can be a useful exploration horizon. It is not proof of influence, consent, or authority. No graph path, by itself, authorizes outreach, enrichment, disclosure, or CRM mutation. Each resulting transition must still earn standing under the receiving domain&#39;s current rules.</p>
+<h2>9. The 2026 Research Landscape: Proposal Quality Is Not Transition Standing</h2>
+<p>The current research supports a hybrid division of labor: models can improve nomination, comparison, and review, while deterministic systems must decide which declared predicates actually hold. The sources do not endorse AINA, and their results need their original scopes.</p>
+<table>
+<thead>
+<tr>
+<th>2026 primary source</th>
+<th>What it establishes</th>
+<th>How EISA composes with it—without overclaiming</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>Teofili et al., <a href="https://arxiv.org/abs/2606.01210"><em>Can we trust LLM Self-Explanations for Entity Resolution?</em></a>, June 2026 preprint</td>
+<td>Across three LLMs, ten datasets, and multiple prompting strategies, self-explanations were often unstable, weakly faithful, and poorly aligned with counterfactual evidence. Established post-hoc methods were more trustworthy but costly.</td>
+<td><code>boundedReason</code> is audit context, not causal evidence. EISA admission depends on coordinates, comparators, dependencies, and counterevidence—not on the persuasiveness of an explanation.</td>
+</tr>
+<tr>
+<td>Papadakis et al., <a href="https://arxiv.org/abs/2607.27435"><em>AgenticER: the next frontier in Entity Resolution</em></a>, July 2026 vision paper</td>
+<td>Formalizes ER as sequential evidence gathering and decision-making with external sources and selective human involvement; proposes a reference architecture and evaluation dimensions.</td>
+<td>Agentic ER needs constitutional checkpoints as iteration increases authority and cost. This is a vision paper, not an empirical superiority result.</td>
+</tr>
+<tr>
+<td>Smith et al., <a href="https://arxiv.org/abs/2603.11051"><em>OpenSanctions Pairs</em></a>, February 2026 preprint, revised August 2026</td>
+<td>Provides 755,540 expert-labeled pairs from 293 sources across 45 jurisdictions. The rule baseline reached 91.3% F1, GPT-4o 99.0%, and a local DeepSeek model 98.2%; rules and LLMs failed in complementary ways.</td>
+<td>Strong pairwise models are valuable proposers. The authors also point attention toward blocking, clustering, and uncertainty review—the exact places where candidate recall, counterevidence, partitions, and human review need separate proof.</td>
+</tr>
+<tr>
+<td>Kasprova et al., <a href="https://arxiv.org/abs/2604.02668"><em>Too Polite to Disagree</em></a>, April 2026 preprint, revised July 2026; SIGDIAL 2026</td>
+<td>In six open-source model discussions, supplying peer-sycophancy rankings reduced the influence of sycophancy-prone peers and error cascades, improving final accuracy by 10.5 percentage points.</td>
+<td>Multi-agent review can be improved, but social mitigation is not deterministic adjudication. EISA does not infer standing from a vote, whether the vote is naive or carefully managed.</td>
+</tr>
+<tr>
+<td>Deußer et al., <a href="https://arxiv.org/abs/2609.11335"><em>On the Impact of Anonymization on the Performance of Large Language Models</em></a>, September 2026 preprint</td>
+<td>Across five models and eleven benchmarks, anonymization effects were task- and model-dependent. Reversible methods preserving entity uniqueness outperformed irreversible approaches; explicitly prompting about anonymization did not help.</td>
+<td>Structure-preserving pseudonymization belongs in the transport design, not in a prompt. Semantic Switch&#39;s measured restoration still does not prove anonymity or downstream matching accuracy.</td>
+</tr>
+<tr>
+<td>Deng et al., <a href="https://arxiv.org/abs/2609.15668"><em>Circuit-MLLM</em></a>, September 2026 preprint; ECCV 2026</td>
+<td>Addresses the difficulty dense circuit schematics pose for multimodal models through device localization, path tracing, and topology-guided latent reasoning; reports a 25% higher average score than GPT-5.1 on its tasks.</td>
+<td>Topological structure deserves explicit representation and verification. A stronger VLM remains a proposal mechanism; EISA&#39;s separate claim is a deterministic proof over committed PDF vector facts.</td>
+</tr>
+<tr>
+<td>Kogilathota et al., <a href="https://arxiv.org/abs/2603.05465"><em>HALP</em></a>, March 2026 preprint; EACL 2026</td>
+<td>Shows that hallucination risk can be probed before generation across eight VLMs, with up to 0.93 AUROC on several models and architecture-dependent variation.</td>
+<td>Early abstention and routing are useful. Risk probes do not prove which connector touches which shape; <code>AssertLayoutRelation</code> still requires committed geometry, unique attachments, and direction.</td>
+</tr>
+<tr>
+<td><a href="https://nvd.nist.gov/vuln/detail/CVE-2026-71847"><code>CVE-2026-71847</code></a>, August 2026</td>
+<td>Ruby JSON 2.20.0–2.21.x before 2.21.2 could dereference stale pointers and terminate when incomplete attacker-controlled objects containing duplicate keys reached the affected warning path.</td>
+<td>Duplicate-key handling is a real parser-security boundary as well as a semantic ambiguity. EISA refuses duplicate keys before schema evaluation rather than delegating meaning to parser defaults.</td>
+</tr>
+</tbody></table>
+<p>The architectural conclusion is not that models are unnecessary. It is that <strong>proposal quality and transition standing are different evidence claims</strong>. Better models reduce the number of bad candidates requiring refusal. They do not remove the need for the refusal boundary.</p>
+<h2>10. The Continuous Wire into the Room</h2>
+<p>EISA recognition and Room admission share one path. <code>recognize</code> previews a verdict; <code>submit</code> runs the same recognition logic and records the result. The caller is authenticated, the Room is admitted, the case is loaded and rechecked, and every evidence handle used by a non-faulted act is prepared for that Room. Foreign-Room evidence is refused rather than cited across an authority boundary.</p>
+<p>The recorded <code>squad.eisa.submission/1</code> payload binds:</p>
+<ul>
+<li><code>by</code> and native <code>session</code>;</li>
+<li><code>room</code> and optional <code>task</code>;</li>
+<li>the case&#39;s bare <code>artifactHash</code>;</li>
+<li>the complete recognition result;</li>
+<li>submission time.</li>
+</ul>
+<p>Its content identity becomes <code>eisa_&lt;32hex&gt;</code>. Citation edges then link that immutable submission to its sealed case and every checked <code>ev_</code> handle. Resolved source values stay in the case; the recognized report carries their digests.</p>
+<pre><code class="language-text">server-cut evidence (ev_)
+→ sealed case (eisacase_)
+→ Four-Gate recognized acts and consensus identities
+→ Room submission (eisa_)
+→ actor, native session, task, project, and wake authority
+→ typed lease and monotonic generation
+→ controller-fixed RequestedAct
+→ fenced destination mutation and independent observation
+→ strict original receipt or non-fabricating successor grant
+→ terminal evidence
+</code></pre>
+<p>This is the fully wired machine, with authority changing form at every boundary rather than leaking across it. The EISA verdict supplies recognized matter for Room authority evaluation. It does not execute itself. The destination still has to accept the exact act under current ownership, pre-state, time, and release conditions.</p>
+<h2>Exhibit E — The Current Room Ledger Envelope</h2>
+<p>This synthetic <code>show</code> response illustrates the current ledger shape with one operative binding. The per-act report remains inside <code>result</code>.</p>
+<pre><code class="language-json">{
+  &quot;submission&quot;: &quot;eisa_7c4e91a02f8b3d651092a8b7c6d5e4f3&quot;,
+  &quot;room&quot;: &quot;architecture-demo&quot;,
+  &quot;record&quot;: {
+    &quot;schema&quot;: &quot;squad.eisa.submission/1&quot;,
+    &quot;by&quot;: &quot;agent_er_worker_01&quot;,
+    &quot;session&quot;: &quot;worker-mcp:00000000-0000-0000-0000-000000000001&quot;,
+    &quot;room&quot;: &quot;architecture-demo&quot;,
+    &quot;task&quot;: &quot;TSK-2026-ER-001&quot;,
+    &quot;artifactHash&quot;: &quot;4a9c8e12f03b7d651928374655647382910abcdef1234567890abcdef1234567&quot;,
+    &quot;result&quot;: {
+      &quot;version&quot;: &quot;EISA_ACT_V1&quot;,
+      &quot;profile&quot;: &quot;eisa.fracture.contact/1&quot;,
+      &quot;class&quot;: &quot;recognized&quot;,
+      &quot;raw_sha256&quot;: &quot;e01928374655647382910abcdef1234567890abcdef1234567890abcdef12345&quot;,
+      &quot;artifactHash&quot;: &quot;4a9c8e12f03b7d651928374655647382910abcdef1234567890abcdef1234567&quot;,
+      &quot;case&quot;: &quot;eisacase_3b8f19c04e2a7d6518293a4b5c6d7e8f&quot;,
+      &quot;acts&quot;: [
+        {
+          &quot;index&quot;: 0,
+          &quot;id&quot;: &quot;act_bind_email_01&quot;,
+          &quot;opcode&quot;: &quot;BindEvidenceTag&quot;,
+          &quot;class&quot;: &quot;operative&quot;,
+          &quot;identity&quot;: &quot;6b8f1029384756ab12cd34ef567890124a9c8e12f03b7d651928374655647382&quot;,
+          &quot;act_sha256&quot;: &quot;01928374655647382910abcdef1234567890abcdef1234567890abcdef123456&quot;,
+          &quot;canonical&quot;: &quot;{\&quot;actor\&quot;:\&quot;agent_er_worker_01\&quot;,\&quot;artifactHash\&quot;:\&quot;4a9c8e12f03b7d651928374655647382910abcdef1234567890abcdef1234567\&quot;,\&quot;boundedReason\&quot;:\&quot;Both sealed values share one local part.\&quot;,\&quot;confidence\&quot;:{\&quot;bps\&quot;:9400},\&quot;evidenceRefs\&quot;:[\&quot;ev_8f31c09a4b2e11d08a7c65e41902b3a1\&quot;],\&quot;opcode\&quot;:\&quot;BindEvidenceTag\&quot;,\&quot;operands\&quot;:{\&quot;coordinates\&quot;:[{\&quot;artifact\&quot;:\&quot;records\&quot;,\&quot;pointer\&quot;:\&quot;/email\&quot;,\&quot;recordId\&quot;:\&quot;rec_101\&quot;},{\&quot;artifact\&quot;:\&quot;records\&quot;,\&quot;pointer\&quot;:\&quot;/contact/workEmail\&quot;,\&quot;recordId\&quot;:\&quot;rec_102\&quot;}],\&quot;id\&quot;:\&quot;act_bind_email_01\&quot;,\&quot;tag\&quot;:\&quot;EMAIL_LOCAL_MATCH\&quot;},\&quot;sourceEvent\&quot;:\&quot;evt_0123456789abcdef_a1b2c3d4\&quot;,\&quot;stage\&quot;:\&quot;Fracture\&quot;,\&quot;version\&quot;:\&quot;EISA_ACT_V1\&quot;}&quot;,
+          &quot;fault&quot;: null,
+          &quot;observations&quot;: [
+            {
+              &quot;recordId&quot;: &quot;rec_101&quot;,
+              &quot;pointer&quot;: &quot;/email&quot;,
+              &quot;value_sha256&quot;: &quot;1111111111111111111111111111111111111111111111111111111111111111&quot;
+            },
+            {
+              &quot;recordId&quot;: &quot;rec_102&quot;,
+              &quot;pointer&quot;: &quot;/contact/workEmail&quot;,
+              &quot;value_sha256&quot;: &quot;2222222222222222222222222222222222222222222222222222222222222222&quot;
+            }
+          ],
+          &quot;comparator&quot;: &quot;EmailLocalEqual&quot;,
+          &quot;depends_on&quot;: [],
+          &quot;evidence_refs&quot;: [&quot;ev_8f31c09a4b2e11d08a7c65e41902b3a1&quot;]
+        }
+      ],
+      &quot;classes&quot;: { &quot;operative&quot;: 1 },
+      &quot;decision&quot;: &quot;none&quot;,
+      &quot;partition&quot;: null
+    },
+    &quot;at&quot;: &quot;2026-10-31T21:50:00Z&quot;
+  }
+}
+</code></pre>
+<p>The immutable node is constitutional proof matter for the next boundary. It is not a destination receipt.</p>
+<p><strong>Evidence availability:</strong> the EISA implementation, recognition artifacts, and Semantic Switch measurement record are <code>CONTROLLED</code> for qualified, method-scoped technical review, with adverse findings permitted. They are not represented as unrestricted public downloads or independent validation. Performance and privacy claims must be evaluated against the declared record population, parser/profile, and deployment threat model.</p>
+<h2>Bring One Bounded Protected-Computation Problem</h2>
+<p>The <strong>Semantic Switch &amp; Entity Resolution Challenge</strong> applies this constitutional layer to one bounded contact, company, product, or other duplicate-record workflow. The demonstration follows Semantic Switch → qBlock → Fracture → Forge → local restoration → Shield and returns a relation-fidelity report, comparator and counterevidence map, exact-restoration record, and the predicates required before any production destination mutation.</p>
+<p>The challenge excludes custom schema engineering, production CRM write-back, lead-list generation, universal privacy or matching-accuracy claims, and independent validation. Deployment and paid pilots are separately scoped; independent evaluation remains outside the commercial ladder through <a href="https://blayneaina.com/09-bring-one-real-boundary-work-with-blayne/">Article 09</a>.</p>
+<h2>The Article 03 Claim Card</h2>
+<pre><code class="language-text">Mechanism:
+  Semantic Switch Protected Computation + EISA Constitutional Act Recognition
+  (native-data minimization, relation-isomorphic fictional records,
+   qBlock candidates, Fracture, Forge, local exact restoration, Shield,
+   strict parsing, sealed cases, pointer law, deterministic comparators,
+   Four-Gate recognition, layout proof, and Room ledger)
+
+Failure it governs:
+  Native identifiers exposed to external AI computation;
+  comparison structure destroyed by destructive redaction;
+  ambiguous or schema-valid model prose becoming authority;
+  fabricated coordinates and geometry; suppressed counterevidence;
+  broken transitive claims; incomplete or contradictory partitions;
+  unprotected external comparison; and model votes impersonating proof.
+
+Positive path:
+  native records held locally
+  → Semantic Switch protected representation
+  → qBlock / Qdrant Edge candidates over protected records
+  → Fracture partitions and Forge canonical selections
+  → local exact restoration through the private crosswalk
+  → Shield forward-only baseline defense
+  → doc_ / ev_ evidence and eisacase_ sealed records
+  → strict EISA_ACT_V1 acts and deterministic recognition
+  → squad.eisa.submission/1 as eisa_
+  → Room authority, RequestedAct, fenced execution, terminal receipt.
+
+Refusal / non-operative path:
+  Whole-submission inadmissibility for malformed envelopes.
+  typed_fault with one of 47 registered per-act fault classes.
+  counterevidence_suppressed and partition_contradicts_support.
+  partition_unsupported_group and relation_indeterminate.
+  lawful_non_operative RequestHumanReview and anti_knowledge rejection.
+  Foreign-Room, unrevealed, drifted, textless, or out-of-scope evidence refused.
+
+Evidence status:
+  EISA: Implemented and Author-Verified on declared wire, graph, and geometry paths.
+  Semantic Switch: Implemented, Measured, and Author-Verified on retained executions.
+  2,750 inputs; 50 whole blocks; 2,704 fictionalized records;
+  27,040 exact field restorations; 46 unblocked records retained;
+  20/20 relabeling-invariance blocks; 23/23 exact native edit relations;
+  53/53 records and 529/529 field values verified per isomorphic run;
+  14/14 batch and 10/10 transformation adversarial cases;
+  zero provider calls in retained Stage 1 executions.
+  Not Independently Validated; external research does not endorse AINA.
+
+Verifier and artifacts:
+  strict::parse, pointer::parse/resolve, Comparator::holds,
+  recognize::recognize, case::load, layout::LayoutFact,
+  Semantic Switch authenticated crosswalk and release-inventory verifier,
+  relation-isomorphism and exact-restoration reports,
+  batch and transformation adversarial receipts,
+  consensusIdentity, eisacase_, eisa_, cor_/coa_ where views correspond,
+  and the Room citation graph.
+
+Scope and claim ceiling:
+  Comparators are declared policies, not universal identity semantics.
+  Counterevidence and partition scans cover the current admitted submission,
+  not every historical or external fact.
+  Sealed evidence is not source truth; consensus identity is not independence.
+  Semantic Switch establishes transport and relation fidelity, not anonymity or ER accuracy.
+  Layout proves only CONNECTS under committed geometry and declared thresholds.
+  EISA recognition is not a destination mutation or independent validation.
+
+Next stage in the machine:
+  Article 03 protects native computation and recognizes constitutional acts.
+  Article 04 binds them to live actors, sessions, tasks, wake delivery,
+  acceptance, and current Room authority before execution.
+
+Commercial doorway:
+  Semantic Switch &amp; Entity Resolution Challenge — bring one bounded contact,
+  company, product, or other duplicate-record workflow; receive a replayable
+  protected-computation demonstration, relation-fidelity report, comparator
+  and counterevidence map, exact-restoration record, and explicit
+  production-integration predicate list (Article 09 · me@blayneaina.com).
+</code></pre>
+<h2>Before the Room Can Govern, the Act Must Mean One Thing</h2>
+<p>Return to the three agents voting for a merger.</p>
+<p>The conventional system can report that the vote was unanimous, the JSON matched a schema, and the judge was 97% confident. It still cannot answer which exact values were compared, whether the domain contradiction was included, whether the chain closes, or whether every candidate appears exactly once in the result.</p>
+<p>EISA answers those questions mechanically. The duplicate keys are gone. The case is sealed. The pointers resolve. The comparator runs on the actual values. The counter binding stays visible. The transitive path is walked. The partition is checked against every admitted relation and reconstructed with Union-Find. The surviving act receives a canonical identity and enters the Room with actor, session, task, and citation continuity.</p>
+<p>Only then does the proposal become something a coordination plane can safely govern.</p>
+<blockquote>
+<p><strong>Models propose. EISA recognizes. The Room governs. Execution is fenced. Effects are observed. Every transition closes with evidence.</strong></p>
+</blockquote>
+<p>Article 04 takes up the next non-equivalence: a recognized act still needs a live authority domain. Git history and chat transcripts cannot supply one.</p>
+<h2>Frequently Asked Questions</h2>
+<h3>Why is JSON Schema or constrained decoding insufficient to govern AI actions?</h3>
+<p>Constrained decoding establishes shape. It does not resolve record-relative pointers against a sealed case, run deterministic comparators on the values, reject faulted dependencies, force counterevidence into the decision, or prove that a partition is complete, connected, and non-contradicted. EISA also refuses duplicate keys before schema evaluation.</p>
+<h3>How does EISA prevent an AI agent from suppressing conflicting evidence?</h3>
+<p>Every admitted counter binding on a pair must appear in that pair&#39;s <code>counter</code> array. EISA scans all admitted acts in the submission and returns <code>counterevidence_suppressed</code> if one is omitted. Separately, any admitted identity relation crossing a proposed partition boundary causes <code>partition_contradicts_support</code>.</p>
+<h3>Does <code>consensusIdentity</code> prove independent agreement?</h3>
+<p>No. It proves that two acts encode the same structural transition over the same sealed case after actor, prose, confidence, source event, evidence references, and local IDs are removed. Shared evidence, shared models, and shared mistakes can still produce the same identity.</p>
+<h3>Why does Semantic Switch run before qBlock?</h3>
+<p>Because qBlock and later stages may use external AI computation. Semantic Switch transforms native values first, so Qdrant Edge and qBlock operate on structure-preserving fictional records rather than the declared raw identifiers. Native rows, keys, and the private crosswalk remain local while qBlock nominates candidates for Fracture.</p>
+<h3>Is Semantic Switch anonymization?</h3>
+<p>No. It is deterministic, structure-preserving pseudonymization, with native rows, keys, crosswalks, and restoration mappings retained locally. Its measured exact restoration and relation fidelity do not prove anonymity, cross-block unlinkability, inference resistance, or matching accuracy.</p>
+<h3>How does EISA verify flowchart connections without trusting VLM prose?</h3>
+<p>It seals parser-committed PDF vector facts and evaluates only <code>CONNECTS</code>: one stroked open connector, two closed shapes, one marked direction, unique attachments, touch thresholds of 150/200 centi-points, and a maximum 600-centi-point frame gap when an outer frame is involved. Ambiguity becomes <code>relation_indeterminate</code>.</p>
+<h3>Does an operative EISA verdict execute the proposed transition?</h3>
+<p>No. It creates recognized constitutional matter and commits it to the Room as <code>eisa_&lt;32hex&gt;</code>. Actor eligibility, task and lease authority, controller-fixed execution, destination pre-state, effect observation, and terminal closure remain separate gates.</p>
+<h2>Continue the Series</h2>
+<ul>
+<li><strong>Series index:</strong> <a href="https://blayneaina.com/">From Proposal to Consequence: The AINA Transition-Governance Series</a></li>
+<li><strong>Previous:</strong> <a href="https://blayneaina.com/02-zero-trust-document-ingestion-and-server-cut-evidence/">Article 02 — Zero-Trust Document Ingestion and Server-Cut Evidence</a></li>
+<li><strong>Next:</strong> <a href="https://blayneaina.com/04-the-room-why-git-and-chat-are-not-coordination-planes/">Article 04 — The Room: Why Git and Chat Are Not Coordination Planes</a></li>
+<li><strong>Deployment and independent review:</strong> <a href="https://blayneaina.com/09-bring-one-real-boundary-work-with-blayne/">Article 09 — Bring One Real Boundary</a></li>
+</ul>
+<hr>
+<h2>Primary 2026 Sources</h2>
+<ul>
+<li><a href="https://arxiv.org/abs/2606.01210">Teofili et al. — <em>Can we trust LLM Self-Explanations for Entity Resolution?</em>, <code>arXiv:2606.01210</code></a></li>
+<li><a href="https://arxiv.org/abs/2607.27435">Papadakis et al. — <em>AgenticER: the next frontier in Entity Resolution</em>, <code>arXiv:2607.27435</code></a></li>
+<li><a href="https://arxiv.org/abs/2603.11051">Smith et al. — <em>OpenSanctions Pairs: Large-Scale Entity Matching with LLMs</em>, <code>arXiv:2603.11051</code></a></li>
+<li><a href="https://arxiv.org/abs/2604.02668">Kasprova et al. — <em>Too Polite to Disagree: Understanding Sycophancy Propagation in Multi-Agent Systems</em>, <code>arXiv:2604.02668</code></a></li>
+<li><a href="https://arxiv.org/abs/2609.11335">Deußer et al. — <em>On the Impact of Anonymization on the Performance of Large Language Models</em>, <code>arXiv:2609.11335</code></a></li>
+<li><a href="https://arxiv.org/abs/2609.15668">Deng et al. — <em>Circuit-MLLM</em>, <code>arXiv:2609.15668</code></a></li>
+<li><a href="https://arxiv.org/abs/2603.05465">Kogilathota et al. — <em>HALP: Detecting Hallucinations in Vision-Language Models without Generating a Single Token</em>, <code>arXiv:2603.05465</code></a></li>
+<li><a href="https://nvd.nist.gov/vuln/detail/CVE-2026-71847">NVD — <code>CVE-2026-71847</code>, Ruby JSON duplicate-key warning-path use-after-free</a></li>
+</ul>
+<hr>
+<h2>Publication Metadata</h2>
+<p><strong>Title tag:</strong> Semantic Switch and EISA: Protected Computation and Entity Resolution<br><strong>Meta description:</strong> Semantic Switch protects native data before external AI computation, then qBlock, Fracture, Forge, and Shield turn fictionalized records into governed entity state.<br><strong>Series navigation:</strong> <a href="https://blayneaina.com/">Series index</a> · Article 03 of <em>From Proposal to Consequence: The AINA Transition-Governance Series</em>.<br><strong>Previous installment:</strong> <a href="https://blayneaina.com/02-zero-trust-document-ingestion-and-server-cut-evidence/">Article 02 — Zero-Trust Document Ingestion and Server-Cut Evidence</a>.<br><strong>Next installment:</strong> <a href="https://blayneaina.com/04-the-room-why-git-and-chat-are-not-coordination-planes/">Article 04 — The Room: Why Git and Chat Are Not Coordination Planes</a>.</p>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "TechArticle",
+      "@id": "https://blayneaina.com/03-eisa-four-gate-verdict-machine-and-entity-resolution/#article",
+      "mainEntityOfPage": {
+        "@type": "WebPage",
+        "@id": "https://blayneaina.com/03-eisa-four-gate-verdict-machine-and-entity-resolution/"
+      },
+      "headline": "Semantic Switch and EISA: Protected Computation and Entity Resolution",
+      "alternativeHeadline": "Native Data Stays Local: Semantic Switch, qBlock, Fracture, Forge, Shield, and Deterministic EISA Judgment",
+      "description": "Semantic Switch protects native data before external AI computation, then qBlock, Fracture, Forge, and Shield turn fictionalized records into governed entity state.",
+      "proficiencyLevel": "Expert",
+      "inLanguage": "en-US",
+      "isAccessibleForFree": true,
+      "datePublished": "2026-10-31T10:00:00-06:00",
+      "dateModified": "2026-10-31T11:00:00-06:00",
+      "position": 3,
+      "keywords": [
+        "Semantic Switch protected computation",
+        "structure-preserving fictionalization",
+        "exact native value restoration",
+        "relation-isomorphic entity resolution",
+        "qBlock Qdrant Edge",
+        "EISA Evidence Instruction Set Architecture",
+        "deterministic entity resolution"
+      ],
+      "author": {
+        "@type": "Person",
+        "@id": "https://blayneaina.com/#blayne-aina",
+        "name": "Blayne Aina",
+        "url": "https://blayneaina.com",
+        "email": "mailto:me@blayneaina.com",
+        "jobTitle": "Principal Systems Architect and creator of the AINA Protocol"
+      },
+      "publisher": {
+        "@type": "Person",
+        "@id": "https://blayneaina.com/#blayne-aina",
+        "name": "Blayne Aina",
+        "url": "https://blayneaina.com"
+      },
+      "isPartOf": {
+        "@type": "CreativeWorkSeries",
+        "@id": "https://blayneaina.com/#series",
+        "name": "From Proposal to Consequence: The AINA Transition-Governance Series",
+        "url": "https://blayneaina.com"
+      },
+      "about": [
+        { "@type": "Thing", "name": "Semantic Switch Protected Computation" },
+        { "@type": "Thing", "name": "Relation-Isomorphic Fictionalization" },
+        { "@type": "Thing", "name": "Evidence Instruction Set Architecture" },
+        { "@type": "Thing", "name": "Deterministic AI Verification" },
+        { "@type": "Thing", "name": "Agentic Entity Resolution Governance" },
+        { "@type": "Thing", "name": "Structure-Preserving Reversible Pseudonymization" },
+        { "@type": "Thing", "name": "PDF Vector Layout Adjudication" }
+      ],
+      "citation": [
+        "https://arxiv.org/abs/2606.01210",
+        "https://arxiv.org/abs/2607.27435",
+        "https://arxiv.org/abs/2603.11051",
+        "https://arxiv.org/abs/2604.02668",
+        "https://arxiv.org/abs/2609.11335",
+        "https://arxiv.org/abs/2609.15668",
+        "https://arxiv.org/abs/2603.05465",
+        "https://nvd.nist.gov/vuln/detail/CVE-2026-71847"
+      ]
+    },
+    {
+      "@type": "BreadcrumbList",
+      "@id": "https://blayneaina.com/03-eisa-four-gate-verdict-machine-and-entity-resolution/#breadcrumb",
+      "itemListElement": [
+        {
+          "@type": "ListItem",
+          "position": 1,
+          "name": "Architecture",
+          "item": "https://blayneaina.com/"
+        },
+        {
+          "@type": "ListItem",
+          "position": 2,
+          "name": "Semantic Switch and EISA: Protected Computation and Entity Resolution",
+          "item": "https://blayneaina.com/03-eisa-four-gate-verdict-machine-and-entity-resolution/"
+        }
+      ]
+    }
+  ]
+}
+</script><script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "@id": "https://blayneaina.com/03-eisa-four-gate-verdict-machine-and-entity-resolution/#faq",
+  "mainEntity": [
+    {
+      "@type": "Question",
+      "name": "Why is JSON Schema or constrained decoding insufficient to govern AI actions?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Constrained decoding establishes shape. It does not resolve record-relative pointers against a sealed case, run deterministic comparators on the values, reject faulted dependencies, force counterevidence into the decision, or prove that a partition is complete, connected, and non-contradicted. EISA also refuses duplicate keys before schema evaluation."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "How does EISA prevent an AI agent from suppressing conflicting evidence?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Every admitted counter binding on a pair must appear in that pair's `counter` array. EISA scans all admitted acts in the submission and returns `counterevidence_suppressed` if one is omitted. Separately, any admitted identity relation crossing a proposed partition boundary causes `partition_contradicts_support`."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Does `consensusIdentity` prove independent agreement?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "No. It proves that two acts encode the same structural transition over the same sealed case after actor, prose, confidence, source event, evidence references, and local IDs are removed. Shared evidence, shared models, and shared mistakes can still produce the same identity."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Why does Semantic Switch run before qBlock?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Because qBlock and later stages may use external AI computation. Semantic Switch transforms native values first, so Qdrant Edge and qBlock operate on structure-preserving fictional records rather than the declared raw identifiers. Native rows, keys, and the private crosswalk remain local while qBlock nominates candidates for Fracture."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Is Semantic Switch anonymization?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "No. It is deterministic, structure-preserving pseudonymization, with native rows, keys, crosswalks, and restoration mappings retained locally. Its measured exact restoration and relation fidelity do not prove anonymity, cross-block unlinkability, inference resistance, or matching accuracy."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "How does EISA verify flowchart connections without trusting VLM prose?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "It seals parser-committed PDF vector facts and evaluates only `CONNECTS`: one stroked open connector, two closed shapes, one marked direction, unique attachments, touch thresholds of 150/200 centi-points, and a maximum 600-centi-point frame gap when an outer frame is involved. Ambiguity becomes `relation_indeterminate`."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Does an operative EISA verdict execute the proposed transition?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "No. It creates recognized constitutional matter and commits it to the Room as `eisa_<32hex>`. Actor eligibility, task and lease authority, controller-fixed execution, destination pre-state, effect observation, and terminal closure remain separate gates."
+      }
+    }
+  ]
+}
+</script>
+        </div>
+
+        
+    <aside class="proof-link-panel" aria-label="Semantic Switch public evidence">
+      <div>
+        <div class="brief-label">EXPERIMENTAL ALPHA · SYNTHETIC INVARIANCE TESTBED</div>
+        <h2>Inspect the Semantic Switch alpha evidence pack</h2>
+        <p>Download synthetic fixtures and verification harnesses, inspect raw results, and reproduce 20/20 invariance blocks and 23/23 exact native relations.</p>
+      </div>
+      <a href="/semantic-switch-proof/" class="btn-primary">Open proof pack</a>
+    </aside>
+  
+
+        
+    <nav class="article-pagination" aria-label="Article navigation">
+      
+        <a href="/02-zero-trust-document-ingestion-and-server-cut-evidence/" class="pagination-link prev">
+          <span class="pagination-sub">← Previous</span>
+          <span class="pagination-title">§02: Zero-Trust Document Ingestion</span>
+        </a>
+      
+      
+        <a href="/04-the-room-why-git-and-chat-are-not-coordination-planes/" class="pagination-link next">
+          <span class="pagination-sub">Next Article →</span>
+          <span class="pagination-title">§04: The Room Coordination Plane</span>
+        </a>
+      
+    </nav>
+  
+
+        <footer class="article-footer-cta">
+          <h3>Work With Blayne (§09): Bring One Real Boundary</h3>
+          <p>Do not bring a vision deck. Bring one consequential enterprise transition—workflow standing, hostile document adjudication, or protected entity resolution. We establish a written acceptance boundary, run the existing implementation, and make the positive, refusal, and unresolved evidence inspectable.</p>
+          <div class="cta-actions">
+            <a href="/09-bring-one-real-boundary-work-with-blayne/" class="btn-primary">Work With Blayne (§09)</a>
+            <a href="mailto:me@blayneaina.com?subject=[CHALLENGE]%20Enterprise%20Boundary" class="btn-secondary">me@blayneaina.com</a>
+          </div>
+        </footer>
+      </article>
+    </main>
+  </div>
+
+  <footer class="site-footer">
+    <div class="footer-inner">
+      <div class="footer-left">
+        <strong>blayneaina.com</strong> — Architectural invariants, verifiable execution, and production governance for autonomous systems.
+      </div>
+      <div class="footer-right">
+        <span>© 2026 Blayne Aina. All rights reserved.</span>
+      </div>
+    </div>
+  </footer>
+
+
+
+  <dialog class="quick-search" id="quickSearchDialog" aria-labelledby="quick-search-title">
+    <div class="quick-search-head">
+      <label id="quick-search-title" for="quickSearchInput">Search architecture and evidence</label>
+      <button type="button" id="quickSearchClose" aria-label="Close search">Close</button>
+    </div>
+    <input id="quickSearchInput" type="search" placeholder="Try EISA, PCNA, SQLite, leases, Semantic Switch…" autocomplete="off">
+    <div class="quick-search-results" id="quickSearchResults">
+      <a href="/refusal-proof/" data-search-item><strong>Refusal &amp; Unchanged-Destination Proof</strong><span>PCNA · EISA · verifier · SQLite · 45 cases</span></a>
+      <a href="/proof/conformance/conformance_45_manifest.json" data-search-item><strong>45-case conformance manifest</strong><span>release qualification · candidate results</span></a>
+      <a href="/proof/README.md" data-search-item><strong>Schemas and verifier guide</strong><span>offline verification · artifact index</span></a>
+      <a href="/semantic-switch-proof/" data-search-item><strong>Semantic Switch proof</strong><span>AKO · Lampson confinement · relation isomorphism</span></a>
+      <a href="/#formal-confinement" data-search-item><strong>Formal confinement and A2E</strong><span>bounded TCB · finiteness · three provisionals</span></a>
+      <a href="/#career-snapshot" data-search-item><strong>Enterprise delivery snapshot</strong><span>2015–2026 · CRM · migrations · production cutovers</span></a>
+      <a href="/01-an-ai-output-is-not-an-act/" data-search-item><strong>§01 · An AI Output Is Not an Act</strong><span>Ambient Authority &amp; Machine Standing</span></a><a href="/02-zero-trust-document-ingestion-and-server-cut-evidence/" data-search-item><strong>§02 · Zero-Trust Document Ingestion</strong><span>Parser Jails &amp; Server-Cut Evidence</span></a><a href="/03-eisa-four-gate-verdict-machine-and-entity-resolution/" data-search-item><strong>§03 · Semantic Switch &amp; EISA</strong><span>Protected Computation &amp; 4-Gate Verdicts</span></a><a href="/04-the-room-why-git-and-chat-are-not-coordination-planes/" data-search-item><strong>§04 · The Room Coordination Plane</strong><span>Transaction Graphs vs. Git &amp; Chat</span></a><a href="/05-expiry-is-not-fencing-typed-leases-and-kernel-write-exclusion/" data-search-item><strong>§05 · Expiry Is Not Fencing</strong><span>Typed Leases &amp; Kernel Write Exclusion</span></a><a href="/06-rollback-is-not-erasure-dual-tier-vaults-and-ungated-quarantine/" data-search-item><strong>§06 · Rollback Is Not Erasure</strong><span>Dual-Tier Vaults &amp; Forensic Quarantine</span></a><a href="/07-defeating-approval-laundering-act-pinning-and-successor-grants/" data-search-item><strong>§07 · Defeating Approval Laundering</strong><span>Act Pinning &amp; Successor Continuity</span></a><a href="/08-sovereign-kill-switch-break-glass-epochs-and-conformance-gate/" data-search-item><strong>§08 · The Sovereign Kill Switch</strong><span>Break-Glass Epochs &amp; Conformance Release Gate</span></a><a href="/09-bring-one-real-boundary-work-with-blayne/" data-search-item><strong>§09 · AI-Native Builder, Fleet Orchestrator &amp; FDE</strong><span>Live Enterprise Problem Solving &amp; Verification</span></a>
+    </div>
+  </dialog>
+
+  <script src="/script.js?v=20261105-final-qc"></script>
+</body>
+</html>

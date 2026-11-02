@@ -1,0 +1,4 @@
+alpha
+The timeout is 60 seconds.
+beta
+The timeout is 60 seconds.

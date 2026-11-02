@@ -1,0 +1,22 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "EISA Act Envelope (EISA_ACT_V1)",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["version", "stage", "actor", "opcode", "operands", "evidenceRefs", "confidence", "boundedReason", "sourceEvent", "artifactHash"],
+  "properties": {
+    "version": { "const": "EISA_ACT_V1" },
+    "stage": { "type": "string", "enum": ["Mesh", "Fracture", "Forge", "Shield", "Room"] },
+    "actor": { "type": "string", "maxLength": 64 },
+    "opcode": {
+      "type": "string",
+      "enum": ["BindEvidenceTag", "AssertDuplicatePair", "AssertTransitiveClosure", "ProposePartition", "RequestHumanReview", "RejectUnlawfulAct", "AssertLayoutRelation"]
+    },
+    "operands": { "type": "object" },
+    "evidenceRefs": { "type": "array", "maxItems": 16, "items": { "type": "string" } },
+    "confidence": { "type": ["number", "null"], "minimum": 0, "maximum": 1 },
+    "boundedReason": { "type": "string", "maxLength": 1024 },
+    "sourceEvent": { "type": ["string", "null"] },
+    "artifactHash": { "type": "string", "pattern": "^[0-9a-f]{64}$" }
+  }
+}

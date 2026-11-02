@@ -1,0 +1,635 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>The Route to Trusting AI — Architecture, Grounding, and Operational Invariants | Blayne Aina</title>
+  <meta name="description" content="Category-defining architecture for autonomous enterprise AI transition governance.">
+  <link rel="canonical" href="https://blayneaina.com/">
+
+  <!-- OpenGraph / Social -->
+  <meta property="og:type" content="article">
+  <meta property="og:title" content="The Route to Trusting AI — Architecture, Grounding, and Operational Invariants">
+  <meta property="og:description" content="Category-defining architecture for autonomous enterprise AI transition governance.">
+  <meta property="og:url" content="https://blayneaina.com/">
+  <meta property="og:site_name" content="Blayne Aina — The Route to Trusting AI">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="The Route to Trusting AI — Architecture, Grounding, and Operational Invariants">
+  <meta name="twitter:description" content="Category-defining architecture for autonomous enterprise AI transition governance.">
+
+  <link rel="stylesheet" href="/style.css?v=20261106-wide-layout">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@500;700&family=Instrument+Serif:ital@0;1&family=Inter:wght@400;500;600;700;800&family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,500;0,6..72,600;1,6..72,400&family=JetBrains+Mono:wght@400;500&family=Plus+Jakarta+Sans:wght@600;700;800&display=swap" rel="stylesheet">
+</head>
+<body>
+  <div class="reading-progress-bar" id="progressBar"></div>
+
+  <header class="site-header">
+    <div class="header-inner">
+      <a href="/" class="brand">
+        <span class="brand-name">BLAYNE AINA</span>
+        <span class="brand-divider">/</span>
+        <span class="brand-tagline">The Route to Trusting AI</span>
+      </a>
+      <div class="header-actions">
+        <a href="/refusal-proof/" class="header-link">Proof</a>
+        <a href="/proof/README.md" class="header-link">Schemas</a>
+        <a href="https://github.com/SquadForge/blayne.aina" class="header-link" rel="noopener noreferrer">GitHub</a>
+        <button type="button" class="header-link header-search" id="quickSearchBtn" aria-label="Search articles and proof artifacts">Search</button>
+        <a href="/09-bring-one-real-boundary-work-with-blayne/" class="header-cta">Work With Blayne (§09)</a>
+        <button id="themeToggle" class="theme-btn" aria-label="Toggle theme">
+          <span class="theme-icon light">☀️</span>
+          <span class="theme-icon dark">🌙</span>
+        </button>
+
+      </div>
+    </div>
+  </header>
+
+  <div class="candidate-ribbon" role="region" aria-label="Candidate identity and evaluation paths">
+    <div class="candidate-identity"><strong>EVALUATE BLAYNE</strong><span>Choose your path</span></div>
+    <nav class="candidate-links" aria-label="Evaluation paths">
+      <a href="/#career-snapshot">Recruiter &amp; Hiring Lead</a>
+      <a href="/refusal-proof/">Systems Engineer</a>
+      <a href="/#formal-confinement">AI Safety Researcher</a>
+      <a href="mailto:me@blayneaina.com" class="candidate-email">me@blayneaina.com</a>
+    </nav>
+  </div>
+  <div class="layout-container presentation-layout">
+    <aside class="site-sidebar" id="sidebar">
+      <div class="sidebar-header">
+        <span class="sidebar-label">Architecture Series</span>
+        <span class="sidebar-date">October 2026</span>
+      </div>
+      <nav class="series-nav">
+        <ul>
+          <li class="active">
+            <a href="/">
+              <span class="nav-num">§00</span>
+              <span class="nav-title">Series Overview & Thesis</span>
+            </a>
+          </li>
+          
+      <li class="">
+        <a href="/01-an-ai-output-is-not-an-act/">
+          <span class="nav-num">§01</span>
+          <span class="nav-title">An AI Output Is Not an Act</span>
+        </a>
+      </li>
+    
+      <li class="">
+        <a href="/02-zero-trust-document-ingestion-and-server-cut-evidence/">
+          <span class="nav-num">§02</span>
+          <span class="nav-title">Zero-Trust Document Ingestion</span>
+        </a>
+      </li>
+    
+      <li class="">
+        <a href="/03-eisa-four-gate-verdict-machine-and-entity-resolution/">
+          <span class="nav-num">§03</span>
+          <span class="nav-title">Semantic Switch & EISA</span>
+        </a>
+      </li>
+    
+      <li class="">
+        <a href="/04-the-room-why-git-and-chat-are-not-coordination-planes/">
+          <span class="nav-num">§04</span>
+          <span class="nav-title">The Room Coordination Plane</span>
+        </a>
+      </li>
+    
+      <li class="">
+        <a href="/05-expiry-is-not-fencing-typed-leases-and-kernel-write-exclusion/">
+          <span class="nav-num">§05</span>
+          <span class="nav-title">Expiry Is Not Fencing</span>
+        </a>
+      </li>
+    
+      <li class="">
+        <a href="/06-rollback-is-not-erasure-dual-tier-vaults-and-ungated-quarantine/">
+          <span class="nav-num">§06</span>
+          <span class="nav-title">Rollback Is Not Erasure</span>
+        </a>
+      </li>
+    
+      <li class="">
+        <a href="/07-defeating-approval-laundering-act-pinning-and-successor-grants/">
+          <span class="nav-num">§07</span>
+          <span class="nav-title">Defeating Approval Laundering</span>
+        </a>
+      </li>
+    
+      <li class="">
+        <a href="/08-sovereign-kill-switch-break-glass-epochs-and-conformance-gate/">
+          <span class="nav-num">§08</span>
+          <span class="nav-title">The Sovereign Kill Switch</span>
+        </a>
+      </li>
+    
+        </ul>
+        <div class="sidebar-section-divider">
+          <span class="sidebar-label">Deploy & Evaluate</span>
+        </div>
+        <ul>
+          
+      <li class=" nav-commercial">
+        <a href="/09-bring-one-real-boundary-work-with-blayne/">
+          <span class="nav-num">→</span>
+          <span class="nav-title">AI-Native Builder, Fleet Orchestrator & FDE</span>
+        </a>
+      </li>
+    
+          <li>
+            <a href="mailto:me@blayneaina.com?subject=[RESEARCH]%20Independent%20Technical%20Evaluation">
+              <span class="nav-num">↗</span>
+              <span class="nav-title">Independent Evaluation [RESEARCH]</span>
+            </a>
+          </li>
+        </ul>
+      </nav>
+      <div class="sidebar-footer">
+        <div class="author-card">
+          <div class="author-name">Blayne Aina</div>
+          <div class="author-bio">By Blayne Aina · Principal Systems Architect and creator of AINA · October 31, 2026 · AINA Governance Specification</div>
+          <div class="author-bio">FDE · 11+ Years Customer-Embedded Delivery · USMC Veteran</div>
+          <a href="mailto:me@blayneaina.com" class="author-email">me@blayneaina.com</a>
+          <div class="author-contact">Blayne Aina · Denver, CO · <a href="mailto:me@blayneaina.com">me@blayneaina.com</a></div>
+          <a href="https://github.com/SquadForge/blayne.aina" class="author-contact" rel="noopener noreferrer">GitHub Repo (SquadForge/blayne.aina)</a>
+        </div>
+      </div>
+    </aside>
+
+    <main class="content-area">
+      <article class="prose-wrapper presentation-wrapper">
+<section class="page-hero" aria-labelledby="home-hero-title">
+  <div class="hero-grid">
+    <div class="hero-copy">
+      <div class="hero-eyebrow">Inspectable verification bundle live · recorded public evidence</div>
+      <h1 class="hero-title-xl" id="home-hero-title">AI can propose.<span class="hero-serif">It cannot act.</span></h1>
+      <p class="hero-summary">AINA compiles model output into bounded proposals, checks authority at the execution boundary, and proves when protected state remains untouched. <strong>Trust is not a prompt. It is a boundary.</strong></p>
+      <div class="hero-actions">
+        <a href="/refusal-proof/" class="btn-primary">Inspect the Refusal Proof</a>
+        <a href="/proof/aina-refusal-proof-pack-v1.zip" class="btn-secondary">Download Proof Bundle</a>
+      </div>
+      <p class="hero-note"><strong>Blayne Aina</strong> · Forward-Deployed Engineer · Principal AI Systems &amp; Enterprise CRM Architect · Denver, CO<br>11+ years of enterprise delivery · seeking a full-time FDE, Principal AI Systems, or Staff Enterprise Architecture role—not selling a SaaS subscription.</p>
+      <div class="hero-kpis" aria-label="Published verification results">
+        <div class="hero-kpi"><strong>4/4</strong><span>deterministic refusal cases</span></div>
+        <div class="hero-kpi"><strong>45/45</strong><span>candidate conformance cases</span></div>
+        <div class="hero-kpi"><strong>20/20</strong><span>evidence acceptance cases</span></div>
+        <div class="hero-kpi"><strong>16,384</strong><span>SQLite bytes unchanged · Case C</span></div>
+      </div>
+    </div>
+    <div class="proof-console" aria-label="Case C approval-parameter substitution refusal">
+      <div class="console-top"><span>PCNA · CASE C</span><span class="console-status refusal">REFUSED</span></div>
+      <div class="console-grid">
+        <div class="console-cell wide"><span class="console-label">Protected destination</span><span class="console-value">contacts.db · id=1 · row_version=1</span></div>
+        <div class="console-cell"><span class="console-label">Controller fixed</span><span class="console-value">"Controller fixed value"</span></div>
+        <div class="console-cell"><span class="console-label">Worker proposed</span><span class="console-value">"Unrequested but valid value"</span></div>
+        <div class="console-cell wide"><span class="console-label">Deterministic decision</span><span class="console-value refusal">requested_act_mismatch</span></div>
+        <div class="console-cell"><span class="console-label">Effects / model calls</span><span class="console-value">0 / 0</span></div>
+        <div class="console-cell"><span class="console-label">Destination bytes</span><span class="console-value teal">16,384 / 16,384</span></div>
+        <div class="console-cell wide"><span class="console-label">Pre-attempt / post-refusal SHA-256</span><span class="console-value teal">362088a1…b47d719 · MATCH</span></div>
+      </div>
+      <div class="console-foot"><span>RECORDED PUBLIC RECEIPT</span><span>NO DESTINATION MUTATION</span></div>
+    </div>
+  </div>
+</section>
+
+        
+        
+        
+        
+
+        <div class="article-body">
+          
+<section class="executive-brief purpose-panel" id="purpose" aria-labelledby="purpose-title">
+  <div class="brief-label" id="purpose-title">Purpose of This Site — Hiring the Architect, Not Buying Software</div>
+  <div class="purpose-grid">
+    <div>
+      <h2>Who I am &amp; what I want</h2>
+      <p>I am a Forward-Deployed Engineer and Principal Systems Architect with 11+ years of hands-on enterprise delivery across CRM architecture, multi-business data migrations, and production cutovers. I am seeking a full-time Forward-Deployed Engineering, Principal AI Systems, or Staff Enterprise Architecture role—I am not pitching a SaaS subscription or raising venture capital.</p>
+    </div>
+    <div>
+      <h2>What AINA is</h2>
+      <p>Anyone can write “AI agent orchestration” on a résumé. To make my engineering methodology inspectable, I spent 14 months as an unfunded solo architect directing a coordinated 9-IDE AI fleet to build AINA (Autonomous Intelligent Networked Architecture—and my surname): a deterministic execution-governance runtime that stops AI agents from making unauthorized, stale, or unverified changes to production systems.</p>
+    </div>
+  </div>
+  <div class="purpose-readers">
+    <h2>How hiring teams and technical researchers should use this site</h2>
+    <ul>
+      <li><strong>Recruiter or hiring lead · 60-second read:</strong> Review the <a href="#career-snapshot">11+ Year Enterprise Delivery Snapshot</a> immediately below to verify my production track record, then jump to <a href="/09-bring-one-real-boundary-work-with-blayne/">§09 — Work With Blayne</a> for the five-dimension FDE interview rubric.</li>
+      <li><strong>Principal architect or systems engineer · deep read:</strong> Inspect the <a href="/refusal-proof/">Offline Refusal Proof</a>, run the zero-dependency verifier on <a href="https://github.com/SquadForge/blayne.aina" rel="noopener noreferrer">GitHub (SquadForge/blayne.aina)</a> in 10 seconds, and read §01–§08 for the kernel and state-machine invariants.</li>
+      <li><strong>AI safety, formal verification &amp; cybersecurity researcher · confinement &amp; verifier audit:</strong> Jump directly to <a href="#formal-confinement">Formal Impossibility, Lampson Confinement &amp; The 3-Provisional A2E Architecture</a> below, inspect how <a href="/refusal-proof/">Refusal Proof</a> avoids the infinite regress of verifiers via a non-Turing-complete integer-only transition grammar (<code>EISA</code>), and examine how <a href="/semantic-switch-proof/">Semantic Switch Proof</a> enforces Butler Lampson's confinement laws upstream of external models.</li>
+    </ul>
+  </div>
+</section>
+
+<section class="career-snapshot" id="career-snapshot" aria-labelledby="career-snapshot-title">
+  <div class="brief-label">Enterprise Delivery Snapshot · 2015–2026</div>
+  <h2 id="career-snapshot-title">11+ years of production delivery, before the architecture jargon</h2>
+  <p>Dates, operating environments, and concrete outcomes—the enterprise integration record behind AINA.</p>
+  <div class="career-table-scroll" tabindex="0" role="region" aria-label="Enterprise delivery snapshot table">
+    <table>
+      <thead><tr><th scope="col">Period</th><th scope="col">Organization / Engagement</th><th scope="col">Role &amp; Core Enterprise Scope</th><th scope="col">Verifiable Production Outcome</th></tr></thead>
+      <tbody>
+        <tr><td>2025–2026 (14 Mos)</td><td><strong>AINA Architecture</strong><br>Independent R&amp;D</td><td>Principal Systems Architect<br>Unfunded Solo · 9-IDE AI Fleet</td><td>Built deterministic AI execution-governance runtime (<code>squad.exe</code>), 45/45 binary conformance gate, and public SHA-256 refusal verifier.</td></tr>
+        <tr><td>2022–2025</td><td><strong>Agile Education Marketing</strong></td><td>Enterprise CRM &amp; Integration Architect</td><td>Re-architected HubSpot/Salesforce integration boundaries, automated identity deduplication, and hardened lifecycle ETL pipelines.</td></tr>
+        <tr><td>2019–2022</td><td><strong>DrayMaster Enterprise</strong></td><td>Lead Systems &amp; Data Migration Architect</td><td>Directed production data migration and rate-engine cutovers across 7 business entities and 800+ freight carriers.</td></tr>
+        <tr><td>Selected Advisory</td><td><strong>Photector</strong></td><td>Workflow &amp; State-Machine Systems Advisor</td><td>Designed deterministic workflow state transitions and automated intake validation boundaries.</td></tr>
+        <tr><td>2015–2018</td><td><strong>Jacuzzi Colorado</strong></td><td>Multi-Location Systems &amp; Operations Lead</td><td>Led 6-location infrastructure cutover, POS/ERP inventory synchronization across 15,000+ SKUs, and operator launch readiness.</td></tr>
+      </tbody>
+    </table>
+  </div>
+</section>
+
+<aside class="portability-note scope-reality" aria-labelledby="scope-reality-title">
+  <div class="brief-label" id="scope-reality-title">Scope &amp; Diligence Reality Check · 4 Fast Answers Before You Read</div>
+  <ul>
+    <li><strong>Why Windows NT first (and not every OS on earth)?</strong> I am one unfunded solo builder, not a 40-person venture-backed platform team. Proving real kernel-enforced process suspension (<code>CreateProcessW(CREATE_SUSPENDED)</code>), handle-table inspection (<code>PssCaptureSnapshot</code>), and share-mode write exclusion on one unforgiving OS substrate proves the engineering methodology. Under <a href="/09-bring-one-real-boundary-work-with-blayne/">§09</a>, no target OS is claimed without its own full 45-case conformance battery—building an unpaid Linux port without a customer acceptance contract would be speculative work that violates my own discipline.</li>
+    <li><strong>Why is <code>squad.exe</code> private while the verification harness is public?</strong> Nobody hands away 14 months of proprietary Rust source code on the public web so strangers can clone it. Instead, the complete verification layer—refusal receipts, pre/post SHA-256 state digests, and a zero-dependency Python verifier (<code>proof/verify_refusal_proof.py</code>)—is public and runnable offline in 10 seconds, while the live Rust workspace and <code>squad.exe</code> binary are demonstrated live during technical interviews or shared under mutual NDA. TypeScript is used only as minimal glue; the public JavaScript and Python files are website-build and verification tooling, not the runtime implementation.</li>
+    <li><strong>Why does the public GitHub repository show 1 Commit?</strong> <a href="https://github.com/SquadForge/blayne.aina" rel="noopener noreferrer">github.com/SquadForge/blayne.aina</a> is a sanitized v1.0 public release snapshot of the specification and offline verification bundle. The 14-month commit history, bounded slice-decomposition logs, and Rust crates reside in my private engineering repositories and are walked through live on screen during interviews.</li>
+    <li><strong>How do the 45 conformance cases relate to the 47 EISA fault classes (§03)?</strong> The 45 binary conformance cases test end-to-end execution boundaries, where several cases exercise compound fault classes simultaneously, while isolated fault-class primitives are enforced at the crate unit-test layer.</li>
+  </ul>
+</aside>
+
+<section class="portability-note formal-confinement" id="formal-confinement" aria-labelledby="formal-confinement-title">
+  <h2 id="formal-confinement-title">Formal Impossibility, Lampson Confinement &amp; The 3-Provisional A2E Architecture</h2>
+  <p>Mainstream AI guardrails attempt to make probabilistic models "safe" through prompt instructions, RLHF, or secondary LLM judges. As formal AI safety research has established (Yampolskiy, <em>AI: Unexplainable, Unpredictable, Uncontrollable</em>, 2024; Brcic &amp; Yampolskiy, <em>Impossibility Results in AI</em>, 2022), trying to formally verify or permanently align a self-modifying, Turing-complete neural network runs directly into <strong>Rice's Theorem</strong>, <strong>the Halting Problem</strong>, and <strong>the infinite regress of verifiers</strong>.</p>
+  <p><strong>AINA (Autonomous Intelligent Networked Architecture)</strong> is built on the opposite premise: <strong>treat the neural network's internals as permanently unexplainable, unpredictable, and untrusted, and govern only the deterministic transduction of authority into effect (<code>Authority-to-Effect</code> / <code>A2E</code>).</strong></p>
+  <p>The public Windows NT verification runtime (<code>squad.exe</code>) and 45-case conformance suite in this repository represent the <strong>Tier 1 / Tier 2 reference implementation</strong> of a unified <strong>three-provisional USPTO patent estate filed in April–May 2026</strong>:</p>
+  <ul>
+    <li><strong>Provisional #1 (Filed April 12, 2026) — <em>Quintipartite Constitutional Architecture &amp; Stage Zero Protected Reality</em>:</strong> Establishes separation of powers across <strong>Five Mother Centers</strong> (<code>EISA</code> Lawful Act, <code>Actor ABI</code> Lawful Actor, <code>Perceptual Closure</code> Lawful Encounter, <code>Machine Force</code> Lawful Execution, and <code>Terminal Binding</code> Lawful Finality) and the 4-stage <strong>Topological Physics Pipeline (<code>Mesh → Fracture → Forge → Shield</code>)</strong>.</li>
+    <li><strong>Provisional #2A &amp; #2B (Filed May 2, 2026) — <em>Semantic Switch, MX2MX Sovereign Treaties &amp; Internal Pipeline Mechanics</em>:</strong> Formalizes <strong>Butler Lampson Confinement</strong> via the Fiction-First <code>Semantic Switch</code>, the constant-time <strong>Anti-Knowledge Oracle (<code>AKO</code>)</strong>, <strong>Monotonic Burden Accumulation (<code>MBA</code>)</strong> across <code>MX2MX</code> sovereign treaties, <code>Prompt-to-ROM</code> instruction locking, and adversarial <strong>Prosecutor / Defender / Arbiter tribunals</strong> in <code>Fracture</code>.</li>
+    <li><strong>Provisional #3 (Filed May 15, 2026) — <em>Layer-Zero Authority-to-Effect (<code>A2E</code>) Hardware-Interlocked Governance</em>:</strong> Extends the architecture across a <strong>4-Tier Constitutional Assurance Continuum</strong> (from Tier 1 deterministic software chambers and Tier 2 TEEs up to Tier 4 FPGA/ASIC <strong>Proxy Substrates</strong> that physically remove actuator registers from CPU address space behind a hardware <strong>Execution Latch</strong>).</li>
+  </ul>
+  <div class="tier-grid" aria-label="Four-tier Constitutional Assurance Continuum">
+    <article class="tier-card"><span>TIER 1 · REFERENCE</span><strong>Deterministic software chamber</strong><p>Finite EISA admission, typed leases, monotonic generations, and write-denied offline verification.</p></article>
+    <article class="tier-card"><span>TIER 2 · REFERENCE</span><strong>OS-enforced execution boundary</strong><p>Windows NT process suspension, handle inspection, file-share exclusion, and SQLite row-version checks.</p></article>
+    <article class="tier-card"><span>TIER 3 · ARCHITECTURE</span><strong>Hardware-separated authority</strong><p>Trusted execution and hardware-separated standing extend the same Authority-to-Effect boundary.</p></article>
+    <article class="tier-card"><span>TIER 4 · ARCHITECTURE</span><strong>FPGA / ASIC execution latch</strong><p>Proxy Substrate physically interposes actuator authority behind a hardware execution latch.</p></article>
+  </div>
+  <p class="panel-note"><strong>Evidence boundary:</strong> the public runtime demonstrates Tier 1/Tier 2 on Windows NT. Tier 3/Tier 4 are architectural continuation claims available for scoped technical and IP diligence, not capabilities asserted by the public proof bundle.</p>
+  <table>
+    <thead><tr><th scope="col">Foundational AI Safety / Security Problem</th><th scope="col">Why Standard Software Guardrails &amp; HITL Fail</th><th scope="col">How AINA Solves the Boundary Across Tiers 1–4</th></tr></thead>
+    <tbody>
+      <tr><td><strong>1. Infinite Regress of Verifiers &amp; Undecidability</strong> (<em>Rice's Theorem / Halting Problem</em>)</td><td>Using an LLM judge or complex software monitor to verify an agent creates an infinite verifier regress; self-modifying code cannot be statically verified.</td><td><strong>Finite-State <code>EISA</code> Transition Model + Bounded TCB Reference Monitor:</strong> Models have zero standing to actuate. Rather than verifying neural weights, AINA relocates verification into a minimal OS/hardware Trusted Computing Base (TCB): every proposed action must compile into a provably finite <code>EISA</code> operand envelope (bounded instruction count, fixed-width integers, bounded memory, zero loops/recursion, zero dynamic code generation), audited offline by a tiny, static, write-denied verifier (<code>proof/verify_refusal_proof.py</code>).</td></tr>
+      <tr><td><strong>2. Concentration of Agency, Sycophancy &amp; Monoculture Collusion</strong></td><td>A single agent (or multiple instances of the same model family) shares blind spots, sycophantically agrees during deliberation, or executes a treacherous turn.</td><td><strong>Quintipartite Separation of Powers + Hardware CAM Epistemic Distance Gate:</strong> Deliberation (<code>Fracture</code>) is split across epistemically isolated <strong>Prosecutor, Defender, and Arbiter</strong> lanes (<code>Cubicle Model</code>) with write-denied verifiers and an <strong>Anti-Monoculture CAM Gate</strong> enforcing minimum weighted Hamming <strong>Epistemic Distance</strong> across distinct model families (<code>xAI</code>, <code>OpenAI</code>, <code>Mistral</code>) before quorum can form.</td></tr>
+      <tr><td><strong>3. Butler Lampson Confinement &amp; Covert Timing Channels</strong> (<em>Leakproofing the Singularity</em>)</td><td>Sending sensitive graphs to external models leaks protected state; agents use error diffs or response timing as covert channels.</td><td><strong>Fiction-First <code>Semantic Switch</code> + Constant-Time Anti-Knowledge Oracle (<code>AKO</code>):</strong> Sensitive reality is mapped into a chartered target fiction domain (<a href="/semantic-switch-proof/">Semantic Switch Proof</a>) before model invocation. Forbidden edges are severed into an <code>AKO</code> with constant-time batch evaluation and <strong>honeypot traps</strong>, while exfiltrated tokens remain <strong>constitutionally inert</strong> outside the <code>Standing Ledger</code>.</td></tr>
+      <tr><td><strong>4. Multi-Agent Alignment Across Sovereign Domains</strong> (<em>Personal Universes</em>)</td><td>Competing organizations, jurisdictions, or coalition partners cannot share a single global value function or master database.</td><td><strong><code>MX2MX</code> Dual Constitutional Re-binding &amp; Monotonic Burden Accumulator:</strong> Each domain governs its own chartered universe. Cross-boundary actions require a cryptographic <code>TreatyObject</code> where authority strictly contracts (<code>Sₙ₊₁ = Sₙ ∩ S_dest</code>) and compliance burdens accumulate monotonically (<code>Bₙ₊₁ = Bₙ ∪ B_new</code>).</td></tr>
+      <tr><td><strong>5. Social Engineering &amp; Coercion of the Human-in-the-Loop</strong> (<em>Biometrics &amp; Forensics</em>)</td><td>An agent spoofs UI coordinates (<code>Poisoned Coordinate Injection</code>) to trick a human reviewer, or a human operator is coerced into approving an unsafe override.</td><td><strong>Perceptual Closure (<code>PC ABI</code>) + PUF Biometric Duress <code>PCNA</code> Handshake:</strong> Separates the <strong>Browsing Plane</strong> from the <strong>Verification Plane</strong> via <code>Deterministic Geometry Genesis</code>. Human overrides compile into <code>HUMAN_OVERRIDE_PROPOSAL</code> objects requiring a live hardware <strong>Proxy-PUF</strong> biometric token, including a <strong>covert biometric duress input</strong> that sets an internal <code>DISTRESS</code> flag and emits a <strong>Proof-Carrying Non-Action (<code>PCNA</code>)</strong> receipt while appearing compliant to a coercer.</td></tr>
+      <tr><td><strong>6. Hardware Bypass, TOCTOU &amp; Distributed Swarm Scaling</strong></td><td>Software checks in user space can be bypassed via TOCTOU process injection, brown-out faults, or <code>O(N²)</code> consensus collapse on tactical links.</td><td><strong>Tier 4 FPGA Execution Latch + 2D Cellular Automaton Turing-pBFT (<code>O(k²)</code>):</strong> In Tier 1/2, Windows NT kernel suspension (<code>CreateProcessW(CREATE_SUSPENDED)</code> + <code>PssCaptureSnapshot</code>) binds approval to process identity. In Tier 4, an FPGA <strong>Proxy Substrate</strong> drives a physical 3-state <strong>Execution Latch</strong> (<code>RESET</code>, <code>ARMED_CONDITIONAL</code>, <code>SET</code>) with analog voltage comparators, while a <strong>2D cellular automaton FPGA grid</strong> executes integer-only <strong>Turing reaction-diffusion morphogenesis</strong> to bound Byzantine consensus to <code>O(k²)</code> local hardware zones.</td></tr>
+    </tbody>
+  </table>
+  <details class="review-subsection" id="primitives-map" open>
+    <summary id="primitives-map-title">1. Mapping AINA Architecture Terms to Recognizable Systems-Security Primitives <span class="review-meta">8 mappings</span></summary>
+    <p>To ensure external reviewers can evaluate the engineering mechanisms without learning a private lexicon first, every named component in AINA maps directly to a standard operating-system, database, or cryptographic primitive:</p>
+    <table>
+      <thead><tr><th scope="col">AINA Architectural Term</th><th scope="col">Classical Computer-Security / Systems Primitive</th><th scope="col">Concrete Implementation in the Windows NT Reference Runtime (<code>squad.exe</code>)</th></tr></thead>
+      <tbody>
+        <tr><td><strong>Stage Zero / Authority-to-Effect (<code>A2E</code>)</strong></td><td><strong>Reference Monitor / Capability Gate</strong> (<em>Anderson, 1972</em>)</td><td>Decouples untrusted LLM proposal generation from privileged OS process creation and database commit authority.</td></tr>
+        <tr><td><strong><code>EISA</code> (Execution Invariant State Automaton)</strong></td><td><strong>Finite-State Automaton / Loop-Free Bytecode Verifier</strong></td><td>Strictly bounded, acyclic transition envelope with fixed-width integers, closed enums, and zero dynamic code generation.</td></tr>
+        <tr><td><strong>Server-Cut Evidence (<code>srv_</code> / <code>ev_</code>) (§02)</strong></td><td><strong>Cryptographic Content-Addressed Provenance</strong></td><td>Controller-computed SHA-256 digests and exact byte-span selectors verified prior to transition admission.</td></tr>
+        <tr><td><strong>Act-Pinning Across Process Spawn (§07)</strong></td><td><strong>TOCTOU Prevention via Suspended Process Inspection</strong></td><td>Spawns worker via <code>CreateProcessW(CREATE_SUSPENDED)</code>, inspects process memory and handles via <code>PssCaptureSnapshot</code>, and verifies digest match against <code>RequestedAct</code> before calling <code>ResumeThread</code>.</td></tr>
+        <tr><td><strong>Typed Leases &amp; Generation Fencing (§05)</strong></td><td><strong>Monotonic Fencing Tokens</strong> (<em>Kleppmann, 2016</em>) <strong>+ Kernel Lock Exclusion</strong></td><td>Combines monotonically increasing integer lease generations with Win32 zero-share file handles (<code>dwShareMode = 0</code>) and SQLite row-version checks (<code>WHERE row_version = expected_v</code>).</td></tr>
+        <tr><td><strong>Amber Quarantine Vault (§06)</strong></td><td><strong>Non-Destructive Intrusion Forensics / Append-Only WORM Log</strong></td><td>Preserves rejected or out-of-bounds agent payloads in an unindexed quarantine store rather than erasing forensic evidence during rollback.</td></tr>
+        <tr><td><strong>Proof-Carrying Non-Action (<code>PCNA</code>)</strong></td><td><strong>Tamper-Evident Negative Audit Receipt</strong></td><td>Canonical JSON refusal receipt binding the failed gate code to matching pre-attempt and post-refusal destination SHA-256 digests (<code>proof/verify_refusal_proof.py</code>).</td></tr>
+        <tr><td><strong>Semantic Switch &amp; <code>AKO</code> (§03 / Prov. #2A)</strong></td><td><strong>Lampson Confinement (1973) + Order/Structure-Preserving Pseudonymization</strong></td><td>Projects entity graphs into synthetic Relation IDs (<code>RIDs</code>) upstream of external model calls and severs forbidden edges behind a constant-time Bloom/lookup filter (<code>AKO</code>).</td></tr>
+      </tbody>
+    </table>
+  </details>
+  <details class="review-subsection" id="reviewer-qa" open>
+    <summary id="reviewer-qa-title">2. Five Questions Formal &amp; Security Reviewers Ask First <span class="review-meta">5 answers</span></summary>
+    <table>
+      <thead><tr><th scope="col">Reviewer Question</th><th scope="col">Why It Matters Formally</th><th scope="col">AINA's Explicit Engineering &amp; Mathematical Position</th></tr></thead>
+      <tbody>
+        <tr><td><strong>Q1. Is <code>EISA</code> provably finite-state, or just restricted syntax?</strong></td><td>Removing floats alone does not prevent Turing-completeness if unbounded counters and backward jumps remain.</td><td><strong>Bounded Finite-State Transition System:</strong> <code>EISA</code> enforces six explicit bounds (fixed instruction count, fixed-width integer domains, bounded memory addressing, zero backward jumps/loops, zero recursion, and zero dynamic code generation). Within those bounds, transition evaluation is decidable in bounded steps.</td></tr>
+        <tr><td><strong>Q2. Does AINA eliminate verifier regress, or relocate it into a TCB?</strong></td><td>Any software verifier relies on the hardware and OS substrate beneath it (<em>Yampolskiy, Lex #431 at 01:08:19 &amp; 01:10:27</em>).</td><td><strong>Relocates and Bounds into a Minimal TCB:</strong> AINA does not claim zero-TCB magic. It relocates verification out of an undecidable trillion-parameter model and into an explicitly enumerated Trusted Computing Base: the OS kernel process/handle primitives, the deterministic admission monitor, and the static offline verifier (<code>verify_refusal_proof.py</code>).</td></tr>
+        <tr><td><strong>Q3. Can an attacker or bug bypass the <code>A2E</code> boundary?</strong></td><td>A reference monitor is only sound if all mutation channels are mediated (<em>complete mediation</em>).</td><td><strong>Tier-Conditional Mediation:</strong> In Tier 1/2 (software/OS), mediation relies on OS process isolation, Win32 share-mode exclusion, and database credentials held solely by the controller. Because a compromised root OS kernel could still bypass user-space locks, Provisional #3 defines Tier 4 hardware mediation—where actuator registers are physically removed from CPU address space behind an FPGA Execution Latch.</td></tr>
+        <tr><td><strong>Q4. What does the 45-case public suite prove vs. require <code>squad.exe</code> for?</strong></td><td>Distinguishes offline evidence-bundle verification from independent live execution of the runtime binary.</td><td><strong>Explicit Two-Layer Evidence Model:</strong> Running <code>python3 proof/verify_refusal_proof.py</code> proves offline that the published refusal receipts, schema declarations, 45-case / 20-case manifests, and pre/post SQLite SHA-256 digests are internally consistent and unchanged. Executing fresh adversarial inputs against the runtime requires the private <code>squad.exe</code> binary (available via submitted test vectors or scoped evaluation).</td></tr>
+        <tr><td><strong>Q5. How are physical-world effects verified beyond software authorization?</strong></td><td>A hardware latch gating a wire does not by itself prove the physical environment behaved as intended.</td><td><strong>Multi-Modal Primary Sensor Corroboration:</strong> In cyber-physical embodiments (Provisional #3), AINA distinguishes between an <em>Interface Genesis Seal</em> (software/UI state) and a <em>Stage Zero Kinetic Seal</em>, requiring corroborated, hardware-attested primary sensor returns (quantized into fixed-width integers) before a physical transition can close or chain.</td></tr>
+      </tbody>
+    </table>
+  </details>
+  <p><em>Note on IP &amp; Diligence Access:</em> All background IP across the April–May 2026 three-provisional patent estate is cleanly documented and available for technical architecture review, university STTR / defense R&amp;D collaboration, or clean pre-existing IP carve-out upon hiring (<a href="mailto:me@blayneaina.com">me@blayneaina.com</a>).</p>
+</section>
+
+<aside class="context-callout" aria-label="Employer IP and provisional patent diligence">
+  <h2>Employer IP &amp; Provisional Patent Diligence</h2>
+  <p>The public specification and Windows NT runtime (<code>squad.exe</code>) demonstrated on this site represent the Tier 1/Tier 2 software reference implementation of a broader, three-provisional patent estate filed in April–May 2026 (spanning internal constitutional state-formation, Semantic Switch / MX2MX cross-boundary treaty governance, and Layer-Zero Authority-to-Effect [A2E] hardware-interlocked transduction across a 4-Tier Constitutional Assurance Continuum). Full specifications and claim trees are available for technical and IP diligence under mutual NDA.</p>
+  <p>The core system and runtime are written in <strong>Rust</strong>, with <strong>TypeScript used only as minimal glue</strong>.</p>
+</aside>
+
+<aside class="context-callout" aria-label="Enterprise integration foundation">
+  <h2>Why an Enterprise Integrator Built AINA: 11+ Years in the Data Trenches Before AI</h2>
+  <p>Before the 14-month AINA engineering sprint, Blayne spent 11+ years solving the operational failures that corrupt real enterprise systems: inbound and outbound HubSpot/Salesforce integration and deduplication at Agile Education Marketing, six years of operational data across seven companies and 800+ intermodal carriers at DrayMaster, deterministic photographic-evidence workflows at Photector, and six locations and 15,000+ SKUs at Jacuzzi Colorado. AINA turns that delivery history into deterministic controls for unverified merges, race conditions, and silent rollbacks.</p>
+</aside>
+
+
+<aside class="context-callout genuine-insight" aria-label="The genuinely new insight in AINA">
+  <div class="brief-label">THE CORE ARCHITECTURAL QUESTION · WHY EXISTING FRAMEWORKS AREN'T ENOUGH</div>
+  <h2>What is the genuinely new insight in AINA that existing authorization frameworks, workflow engines, transactional databases, and agent guardrails don't already provide?</h2>
+  <p>Existing systems solve individual slices in isolation: IAM/OAuth checks <strong>who the caller is</strong>, JSON schemas check <strong>payload shape</strong>, workflow engines track <strong>step order</strong>, and databases enforce <strong>ACID transactions</strong> once a query arrives. None of them bind the <strong>four failure gaps unique to autonomous agent fleets</strong> into a single atomic commit boundary:</p>
+  <ol>
+    <li><strong>Provenance-to-Mutation Binding (§02 + §03):</strong> Standard RBAC permits an authorized agent to write a hallucinated or fabricated value into a CRM/ERP. AINA requires the mutation envelope to carry server-cut byte-offset provenance receipts (<code>srv_</code>/<code>ev_</code>) verified via RFC 8785 JCS before admission.</li>
+    <li><strong>Approval-to-Execution Pinning Across Process Spawn (§07):</strong> Standard human-in-the-loop tools approve a high-level prompt or script name, leaving a TOCTOU gap where arguments, files, or inherited handles change before execution. AINA spawns workers suspended (<code>CreateProcessW(CREATE_SUSPENDED)</code>) and audits the live PEB and kernel handle table (<code>PssCaptureSnapshot</code>) against the pinned <code>RequestedAct</code> hash before <code>ResumeThread</code>.</li>
+    <li><strong>OS-Enforced Stale-Worker Fencing (§04 + §05):</strong> Standard agent frameworks use clock-based TTL locks; when a stalled agent wakes up late, it overwrites newer state. AINA pairs monotonic lease generations in The Room with kernel file-share exclusion (<code>FILE_SHARE_READ</code> / <code>ERROR_SHARING_VIOLATION</code>) and SQLite row-version checks at commit time.</li>
+    <li><strong>Non-Destructive Forensic Rollback (§06):</strong> Standard database rollbacks erase the failed write attempt. AINA's Dual-Tier Vaults keep the protected baseline untouched while shunting every rejected or out-of-band agent mutation into an immutable Amber Quarantine for forensic inspection.</li>
+  </ol>
+  <p><strong>Terminology vs. engineering value:</strong> Existing enterprise stacks can implement these four invariants without adopting AINA's naming conventions. The value is not the vocabulary—it is closing the gap between a plausible agent proposal and an authorized, provably safe state transition.</p>
+</aside>
+
+
+
+<section class="refusal-exhibit" id="refusal-cases" aria-labelledby="refusal-exhibit-title">
+  <div class="proof-kicker">OPEN VERIFICATION · REFUSAL + UNCHANGED DESTINATION</div>
+  <h2 id="refusal-exhibit-title">Four deterministic refusals. Inspect every state transition.</h2>
+  <p class="proof-subtitle">Select a case to inspect the hostile proposal, refusal reason, protected destination, and original receipt. All four cases remain available in the static document without JavaScript.</p>
+  <div class="case-tabs" role="tablist" aria-label="Refusal cases">
+    <button class="case-tab active" type="button" role="tab" id="tab-case-a" aria-controls="case-a" aria-selected="true" data-case="a">Case A<br>Citation selector</button>
+    <button class="case-tab" type="button" role="tab" id="tab-case-b" aria-controls="case-b" aria-selected="false" data-case="b">Case B<br>Unleased write</button>
+    <button class="case-tab" type="button" role="tab" id="tab-case-c" aria-controls="case-c" aria-selected="false" data-case="c">Case C<br>Act pinning</button>
+    <button class="case-tab" type="button" role="tab" id="tab-case-d" aria-controls="case-d" aria-selected="false" data-case="d">Case D<br>Stale generation</button>
+  </div>
+  <div class="case-explorer" data-case-explorer>
+    <article class="case-panel" id="case-a" role="tabpanel" aria-labelledby="tab-case-a" data-case-panel="a">
+      <div class="console-top"><span>CASE A · EVIDENCE SELECTOR</span><span class="console-status refusal">selector_out_of_bounds</span></div>
+      <h3>Citation selector fabrication stops before evidence serving</h3>
+      <p>The proposal requests byte range <code>0..9999</code> against a 26-character evidence node. The server refuses the out-of-bounds selector instead of laundering a fabricated citation.</p>
+      <dl class="case-meta"><div><dt>Protected destination</dt><dd>er-repeat.txt</dd></div><div><dt>Byte identity</dt><dd>65 / 65 bytes unchanged</dd></div><div><dt>Effect</dt><dd>No evidence mutation</dd></div></dl>
+      <div class="digest-box"><code>bf15f8633e85350430adf1bbc47a47154965d3a7f28e4ebad25d6a39ecaa2f8c</code><button class="copy-btn" type="button" data-copy="bf15f8633e85350430adf1bbc47a47154965d3a7f28e4ebad25d6a39ecaa2f8c">COPY SHA-256</button></div>
+      <p><strong>Pre-attempt digest = post-refusal digest.</strong> <a href="/proof/refusal/evidence-selector.json">Open the original Case A receipt →</a></p>
+    </article>
+    <article class="case-panel" id="case-b" role="tabpanel" aria-labelledby="tab-case-b" data-case-panel="b">
+      <div class="console-top"><span>CASE B · UNLEASED WRITE</span><span class="console-status refusal">exact_file_lease_required</span></div>
+      <h3>A delayed worker cannot write after lease release</h3>
+      <p>The worker proposes replacing <code>v1
+</code> with <code>v2
+</code> after its active file lease has been released. No active File lock exists, so no destination write occurs.</p>
+      <dl class="case-meta"><div><dt>Protected destination</dt><dd>ungated.txt</dd></div><div><dt>Byte identity</dt><dd>3 / 3 bytes unchanged</dd></div><div><dt>Effect</dt><dd>No file write</dd></div></dl>
+      <div class="digest-box"><code>2d27fbdf4e8ca207afbfa388ca9172fbcc6c70e534af2476b3b704f87debadcf</code><button class="copy-btn" type="button" data-copy="2d27fbdf4e8ca207afbfa388ca9172fbcc6c70e534af2476b3b704f87debadcf">COPY SHA-256</button></div>
+      <p><strong>Pre-attempt digest = post-refusal digest.</strong> <a href="/proof/refusal/unleased-write.json">Open the original Case B receipt →</a></p>
+    </article>
+    <article class="case-panel" id="case-c" role="tabpanel" aria-labelledby="tab-case-c" data-case-panel="c">
+      <div class="console-top"><span>CASE C · APPROVAL-PARAMETER SUBSTITUTION</span><span class="console-status refusal">requested_act_mismatch</span></div>
+      <h3>A plausible value cannot replace the controller-fixed act</h3>
+      <p>The controller pins <code>Controller fixed value</code>; the worker substitutes <code>Unrequested but valid value</code> for the same SQLite row and version. The act mismatch aborts execution before SQLite's page cache or row version changes.</p>
+      <dl class="case-meta"><div><dt>Effects / model calls</dt><dd>0 / 0</dd></div><div><dt>Row version</dt><dd>1 → 1</dd></div><div><dt>Byte identity</dt><dd>16,384 / 16,384</dd></div></dl>
+      <div class="digest-box"><code>362088a107369e634cdc9c6c520fbca3e2393722860720d3aa2c2eb11b47d719</code><button class="copy-btn" type="button" data-copy="362088a107369e634cdc9c6c520fbca3e2393722860720d3aa2c2eb11b47d719">COPY SHA-256</button></div>
+      <p><strong>Pre-attempt digest = post-refusal digest.</strong> <a href="/proof/refusal/act-pinning.json">Open the original Case C receipt →</a></p>
+    </article>
+    <article class="case-panel" id="case-d" role="tabpanel" aria-labelledby="tab-case-d" data-case-panel="d">
+      <div class="console-top"><span>CASE D · STALE GENERATION</span><span class="console-status refusal">stale_lease_generation</span></div>
+      <h3>A stale request is refused before target creation</h3>
+      <p>The stale request carries <code>expected 8, current 1</code>. The runtime rejects it before creating a destination, so this receipt is intentionally reason-only.</p>
+      <dl class="case-meta"><div><dt>Decision boundary</dt><dd>Before target creation</dd></div><div><dt>Destination preimage</dt><dd>Absent by design</dd></div><div><dt>Digest pair</dt><dd>Not claimed</dd></div></dl>
+      <p><strong>Non-fabrication rule:</strong> AINA does not invent a nonexistent preimage or artificial digest pair to make the evidence look uniform. <a href="/proof/refusal/stale-generation.json">Open the original Case D receipt →</a></p>
+    </article>
+  </div>
+  <div class="conformance-strip">
+    <span><strong>45/45</strong> fresh candidate cases</span>
+    <span><strong>20/20</strong> evidence cases</span>
+    <span><strong>118.753576s</strong> execution</span>
+    <span><strong>0</strong> proprietary binaries published</span>
+  </div>
+  <div class="proof-actions">
+    <a href="/proof/aina-refusal-proof-pack-v1.zip" class="btn-primary">Download Complete Refusal Proof Bundle (.zip)</a>
+    <a href="/proof/verify_refusal_proof.py" class="btn-secondary">Verifier script</a>
+    <a href="/proof/SHA256SUMS.txt" class="btn-secondary">SHA256SUMS.txt</a>
+    <button class="copy-btn" type="button" data-copy="curl -fsSL https://blayneaina.com/proof/aina-refusal-proof-pack-v1.zip -o aina-proof.zip && unzip -q aina-proof.zip -d aina-proof && cd aina-proof && python verify_refusal_proof.py">COPY ONE-LINE VERIFIER</button>
+  </div>
+</section>
+
+
+<section class="portability-note" id="transition-anatomy" aria-labelledby="transition-anatomy-title">
+  <div class="brief-label">TRANSITION ANATOMY · STALE-WORKER FENCING</div>
+  <h2 id="transition-anatomy-title">Expiry is not fencing. The write must fail.</h2>
+  <p>A paused worker can wake after the workspace has moved forward. AINA evaluates the generation at the mutation boundary instead of trusting a clock-based lock or the worker's stale chat transcript.</p>
+  <div class="lease-scene" aria-label="Stale worker generation refusal sequence">
+    <div class="lease-node"><strong>Worker A · generation 8</strong><span>current tenancy and newer state</span></div>
+    <div class="lease-arrow">→</div>
+    <div class="lease-node"><strong>Commit gate</strong><span>expected generation 8</span></div>
+    <div class="lease-arrow">→</div>
+    <div class="lease-node"><strong>Worker B · generation 7</strong><span>stale proposal refused · destination unchanged</span></div>
+  </div>
+  <p class="panel-note">Read <a href="/05-expiry-is-not-fencing-typed-leases-and-kernel-write-exclusion/">§05 on typed leases and kernel fencing</a> or inspect the <a href="/proof/refusal/stale-generation.json">reason-only stale-generation receipt</a>.</p>
+</section>
+
+
+  <aside class="release-banner" aria-label="January 15 public release and early review window">
+    <div class="release-kicker">PUBLIC RELEASE · JANUARY 15</div>
+    <h2>Public Interactive Demo & Offline Sovereign Proof Packs Launch January 15</h2>
+    <p>Standalone HTML + WebAssembly Sovereign Proof Packs—enabling offline, byte-for-byte recomputation of Stage Zero receipts and the 45-case conformance battery—release publicly on January 15. Between now and January 15, I am opening 3–5 early review slots for Principal Architects, Security Leads, and Forward-Deployed Engineering teams to test a single high-consequence boundary or submit adversarial test cases.</p>
+    <div class="release-actions">
+      <a href="mailto:me@blayneaina.com?subject=AINA%20Early%20Boundary%20Review" class="btn-primary">Request an early boundary review</a>
+      <a href="/09-bring-one-real-boundary-work-with-blayne/" class="btn-secondary">Review engagement tracks</a>
+    </div>
+  </aside>
+
+
+<aside class="context-callout diligence-jump" aria-label="Systems primitive translation jump link">
+  <div class="brief-label">SYSTEMS PRIMITIVE TRANSLATION</div>
+  <a href="#primitives-map">Map AINA’s vocabulary to recognizable OS, database, and cryptographic primitives—8 mappings + 5 first-reviewer answers →</a>
+</aside>
+
+<aside class="context-callout diligence-jump" aria-label="Technical due diligence FAQ jump link">
+  <a href="/09-bring-one-real-boundary-work-with-blayne/#exhibit-9-6">Reviewing for Technical Due Diligence? Read the 14-Point Execution Security &amp; Operational Reality FAQ (Exhibit 9.6) →</a>
+</aside>
+
+
+  <aside class="portability-note" aria-label="Windows NT first and Linux POSIX mapping">
+    <div class="brief-label">SUBSTRATE PORTABILITY</div>
+    <h2>Windows NT first, with an OS-agnostic evidence and decision core</h2>
+    <p>The v1 reference binary, <code>squad.exe</code>, targets Windows NT because enterprise endpoints expose strict, explicit kernel primitives: mandatory file-share exclusion (<code>FILE_SHARE_READ</code>), Less Privileged App Containers (LPAC), Job Objects, and suspended pre-execution handle/PEB inspection through <code>CreateProcessW(CREATE_SUSPENDED)</code> and <code>PssCaptureSnapshot</code>. The reference runtime was built local-first on a single Windows workstation to make those guarantees inspectable.</p>
+    <p>EISA, RFC 8785 JCS canonicalization, SHA-256 evidence digests, and SQLite optimistic concurrency control are OS-agnostic. Linux/POSIX mappings are architectural counterparts, not claims of drop-in binary compatibility or identical enforcement semantics:</p>
+    <ol>
+      <li><strong>LPAC + Job Objects (§02/§08):</strong> Linux user namespaces, seccomp-bpf, Landlock LSM, and cgroups v2 (<code>cgroup.kill</code>).</li>
+      <li><strong>Win32 file-share exclusion (§05):</strong> Linux Open File Description locks (<code>F_OFD_SETLK</code>), fanotify permission events, and strict container mount namespaces.</li>
+      <li><strong>Suspended creation + PSS inspection (§07):</strong> <code>clone3()</code>/<code>pidfd_open()</code> stopped-start inspection with <code>/proc/&lt;pid&gt;/fd</code> and <code>/proc/&lt;pid&gt;/maps</code> verification before <code>execve</code> or signal continuation.</li>
+    </ol>
+    <p>Every target still requires its own conformance evidence for handle lifetimes, rename behavior, process containment, pre-existing capabilities, and crash recovery.</p>
+  </aside>
+
+
+<div class="series-architecture-banner">
+  <div class="banner-title">The Nine Invariant Transitions</div>
+  <div class="transitions-chain">
+    <div class="chain-node">§01 Ambient Authority</div>
+    <div class="chain-arrow">→</div>
+    <div class="chain-node">§02 Sealed Evidence</div>
+    <div class="chain-arrow">→</div>
+    <div class="chain-node">§03 EISA Adjudication</div>
+    <div class="chain-arrow">→</div>
+    <div class="chain-node">§04 The Room</div>
+    <div class="chain-arrow">→</div>
+    <div class="chain-node">§05 Fenced Leases</div>
+    <div class="chain-arrow">→</div>
+    <div class="chain-node">§06 Dual-Tier Vaults</div>
+    <div class="chain-arrow">→</div>
+    <div class="chain-node">§07 Confinement & Acts</div>
+    <div class="chain-arrow">→</div>
+    <div class="chain-node">§08 Sovereign Kill Switch</div>
+    <div class="chain-arrow">→</div>
+    <div class="chain-node active">§09 Bring One Boundary</div>
+  </div>
+</div>
+
+<div class="articles-grid">
+  
+      <a href="/01-an-ai-output-is-not-an-act/" class="article-card">
+        <div class="card-header">
+          <span class="card-num">§01</span>
+          <span class="card-theme">Ambient Authority & Machine Standing</span>
+        </div>
+        <h3 class="card-title">An AI Output Is Not an Act</h3>
+        <span class="card-link-text">Read Article →</span>
+      </a>
+    
+      <a href="/02-zero-trust-document-ingestion-and-server-cut-evidence/" class="article-card">
+        <div class="card-header">
+          <span class="card-num">§02</span>
+          <span class="card-theme">Parser Jails & Server-Cut Evidence</span>
+        </div>
+        <h3 class="card-title">Zero-Trust Document Ingestion</h3>
+        <span class="card-link-text">Read Article →</span>
+      </a>
+    
+      <a href="/03-eisa-four-gate-verdict-machine-and-entity-resolution/" class="article-card">
+        <div class="card-header">
+          <span class="card-num">§03</span>
+          <span class="card-theme">Protected Computation & 4-Gate Verdicts</span>
+        </div>
+        <h3 class="card-title">Semantic Switch & EISA</h3>
+        <span class="card-link-text">Read Article →</span>
+      </a>
+    
+      <a href="/04-the-room-why-git-and-chat-are-not-coordination-planes/" class="article-card">
+        <div class="card-header">
+          <span class="card-num">§04</span>
+          <span class="card-theme">Transaction Graphs vs. Git & Chat</span>
+        </div>
+        <h3 class="card-title">The Room Coordination Plane</h3>
+        <span class="card-link-text">Read Article →</span>
+      </a>
+    
+      <a href="/05-expiry-is-not-fencing-typed-leases-and-kernel-write-exclusion/" class="article-card">
+        <div class="card-header">
+          <span class="card-num">§05</span>
+          <span class="card-theme">Typed Leases & Kernel Write Exclusion</span>
+        </div>
+        <h3 class="card-title">Expiry Is Not Fencing</h3>
+        <span class="card-link-text">Read Article →</span>
+      </a>
+    
+      <a href="/06-rollback-is-not-erasure-dual-tier-vaults-and-ungated-quarantine/" class="article-card">
+        <div class="card-header">
+          <span class="card-num">§06</span>
+          <span class="card-theme">Dual-Tier Vaults & Forensic Quarantine</span>
+        </div>
+        <h3 class="card-title">Rollback Is Not Erasure</h3>
+        <span class="card-link-text">Read Article →</span>
+      </a>
+    
+      <a href="/07-defeating-approval-laundering-act-pinning-and-successor-grants/" class="article-card">
+        <div class="card-header">
+          <span class="card-num">§07</span>
+          <span class="card-theme">Act Pinning & Successor Continuity</span>
+        </div>
+        <h3 class="card-title">Defeating Approval Laundering</h3>
+        <span class="card-link-text">Read Article →</span>
+      </a>
+    
+      <a href="/08-sovereign-kill-switch-break-glass-epochs-and-conformance-gate/" class="article-card">
+        <div class="card-header">
+          <span class="card-num">§08</span>
+          <span class="card-theme">Break-Glass Epochs & Conformance Release Gate</span>
+        </div>
+        <h3 class="card-title">The Sovereign Kill Switch</h3>
+        <span class="card-link-text">Read Article →</span>
+      </a>
+    
+      <a href="/09-bring-one-real-boundary-work-with-blayne/" class="article-card">
+        <div class="card-header">
+          <span class="card-num">§09</span>
+          <span class="card-theme">Live Enterprise Problem Solving & Verification</span>
+        </div>
+        <h3 class="card-title">AI-Native Builder, Fleet Orchestrator & FDE</h3>
+        <span class="card-link-text">Read Article →</span>
+      </a>
+    
+</div>
+
+<div class="commercial-callout">
+  <div class="callout-content">
+    <h2>Work With Blayne: Principal Architecture &amp; Forward-Deployed Engineering</h2>
+    <p>
+      <strong>Primary objective:</strong> a full-time Forward-Deployed Engineer, Principal Systems &amp; Data Integrations Architect, or AI Workflow Architect role. The preferred interview method is a live technical diligence walkthrough on one consequential boundary—real processes, deterministic refusals, and inspectable destination evidence—across these three tracks:
+    </p>
+    <ul>
+      <li><strong>Track 1: AI Workflow Standing & Confinement</strong> — Sealed wake authority, typed leases, monotonic generation fencing, guarded file replacement, controller-fixed <code>RequestedAct</code>, fenced SQLite execution, honest original-vs-successor receipts, and scoped break-glass.</li>
+      <li><strong>Track 2: Zero-Trust Document, Citation & EISA Adjudication</strong> — LPAC-confined parsing, explicit omission surfaces, committed views, server-cut <code>ev_</code> citations, bounded absence proofs, and deterministic Four-Gate EISA verdicts.</li>
+      <li><strong>Track 3: Protected Computation & Entity Resolution</strong> — <strong>Semantic Switch (experimental alpha)</strong> structure-preserving fictionalization first (keeping native rows, keys, and the private crosswalk local) → <strong>qBlock / Qdrant Edge</strong> candidate block nomination over protected records → <strong>EISA Fracture</strong> identity adjudication with preserved dissent → <strong>EISA Forge</strong> canonical field provenance → <strong>local exact restoration</strong> → <strong>Shield</strong> forward-only dispositions.</li>
+    </ul>
+    <div class="callout-actions">
+      <a href="/09-bring-one-real-boundary-work-with-blayne/" class="btn-primary">Explore Challenge Tracks & Acceptance Contract</a>
+      <a href="/refusal-proof/" class="btn-secondary">Inspect Refusal & Conformance Proof Pack</a>
+      <a href="mailto:me@blayneaina.com?subject=[CHALLENGE]%20Enterprise%20Boundary" class="btn-secondary">me@blayneaina.com</a>
+    </div>
+  </div>
+</div>
+
+        </div>
+
+        
+
+        
+
+        <footer class="article-footer-cta">
+          <h3>Work With Blayne (§09): Bring One Real Boundary</h3>
+          <p>Do not bring a vision deck. Bring one consequential enterprise transition—workflow standing, hostile document adjudication, or protected entity resolution. We establish a written acceptance boundary, run the existing implementation, and make the positive, refusal, and unresolved evidence inspectable.</p>
+          <div class="cta-actions">
+            <a href="/09-bring-one-real-boundary-work-with-blayne/" class="btn-primary">Work With Blayne (§09)</a>
+            <a href="mailto:me@blayneaina.com?subject=[CHALLENGE]%20Enterprise%20Boundary" class="btn-secondary">me@blayneaina.com</a>
+          </div>
+        </footer>
+      </article>
+    </main>
+  </div>
+
+  <footer class="site-footer">
+    <div class="footer-inner">
+      <div class="footer-left">
+        <strong>blayneaina.com</strong> — Architectural invariants, verifiable execution, and production governance for autonomous systems.
+      </div>
+      <div class="footer-right">
+        <span>© 2026 Blayne Aina. All rights reserved.</span>
+      </div>
+    </div>
+  </footer>
+
+<nav class="quick-dock" aria-label="Quick evaluation links">
+    <a href="/refusal-proof/">Proof</a>
+    <a href="/09-bring-one-real-boundary-work-with-blayne/">Evaluate</a>
+    <a href="https://github.com/SquadForge/blayne.aina" rel="noopener noreferrer">GitHub</a>
+  </nav>
+
+  <dialog class="quick-search" id="quickSearchDialog" aria-labelledby="quick-search-title">
+    <div class="quick-search-head">
+      <label id="quick-search-title" for="quickSearchInput">Search architecture and evidence</label>
+      <button type="button" id="quickSearchClose" aria-label="Close search">Close</button>
+    </div>
+    <input id="quickSearchInput" type="search" placeholder="Try EISA, PCNA, SQLite, leases, Semantic Switch…" autocomplete="off">
+    <div class="quick-search-results" id="quickSearchResults">
+      <a href="/refusal-proof/" data-search-item><strong>Refusal &amp; Unchanged-Destination Proof</strong><span>PCNA · EISA · verifier · SQLite · 45 cases</span></a>
+      <a href="/proof/conformance/conformance_45_manifest.json" data-search-item><strong>45-case conformance manifest</strong><span>release qualification · candidate results</span></a>
+      <a href="/proof/README.md" data-search-item><strong>Schemas and verifier guide</strong><span>offline verification · artifact index</span></a>
+      <a href="/semantic-switch-proof/" data-search-item><strong>Semantic Switch proof</strong><span>AKO · Lampson confinement · relation isomorphism</span></a>
+      <a href="/#formal-confinement" data-search-item><strong>Formal confinement and A2E</strong><span>bounded TCB · finiteness · three provisionals</span></a>
+      <a href="/#career-snapshot" data-search-item><strong>Enterprise delivery snapshot</strong><span>2015–2026 · CRM · migrations · production cutovers</span></a>
+      <a href="/01-an-ai-output-is-not-an-act/" data-search-item><strong>§01 · An AI Output Is Not an Act</strong><span>Ambient Authority &amp; Machine Standing</span></a><a href="/02-zero-trust-document-ingestion-and-server-cut-evidence/" data-search-item><strong>§02 · Zero-Trust Document Ingestion</strong><span>Parser Jails &amp; Server-Cut Evidence</span></a><a href="/03-eisa-four-gate-verdict-machine-and-entity-resolution/" data-search-item><strong>§03 · Semantic Switch &amp; EISA</strong><span>Protected Computation &amp; 4-Gate Verdicts</span></a><a href="/04-the-room-why-git-and-chat-are-not-coordination-planes/" data-search-item><strong>§04 · The Room Coordination Plane</strong><span>Transaction Graphs vs. Git &amp; Chat</span></a><a href="/05-expiry-is-not-fencing-typed-leases-and-kernel-write-exclusion/" data-search-item><strong>§05 · Expiry Is Not Fencing</strong><span>Typed Leases &amp; Kernel Write Exclusion</span></a><a href="/06-rollback-is-not-erasure-dual-tier-vaults-and-ungated-quarantine/" data-search-item><strong>§06 · Rollback Is Not Erasure</strong><span>Dual-Tier Vaults &amp; Forensic Quarantine</span></a><a href="/07-defeating-approval-laundering-act-pinning-and-successor-grants/" data-search-item><strong>§07 · Defeating Approval Laundering</strong><span>Act Pinning &amp; Successor Continuity</span></a><a href="/08-sovereign-kill-switch-break-glass-epochs-and-conformance-gate/" data-search-item><strong>§08 · The Sovereign Kill Switch</strong><span>Break-Glass Epochs &amp; Conformance Release Gate</span></a><a href="/09-bring-one-real-boundary-work-with-blayne/" data-search-item><strong>§09 · AI-Native Builder, Fleet Orchestrator &amp; FDE</strong><span>Live Enterprise Problem Solving &amp; Verification</span></a>
+    </div>
+  </dialog>
+
+  <script src="/script.js?v=20261105-final-qc"></script>
+</body>
+</html>

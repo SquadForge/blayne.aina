@@ -1,0 +1,43 @@
+{
+  "schema": "aina.refusal.evidence-selector.v1",
+  "case_id": "evidence_bad_selector_refused",
+  "evidence_strength": "complete_digest_chain",
+  "execution": {
+    "artifact": "conformance-output.json",
+    "candidate_binary": "squad.exe",
+    "candidate_sha256": "94d26802c3744182a6cb93ac4e47250c6140b6ff92e0902a7c415ab13e59f4b5",
+    "recorded_pass": true
+  },
+  "protected_target": {
+    "label": "er-repeat.txt",
+    "fixture": "fixtures/er-repeat.txt",
+    "bytes": 65
+  },
+  "hostile_proposal": {
+    "action": "recognize",
+    "selector": {
+      "kind": "bounded_subrange",
+      "unit": "unicode_scalar",
+      "start": 0,
+      "end": 9999
+    }
+  },
+  "refusal_receipt": {
+    "disposition": "REFUSED",
+    "reason_code": "selector_out_of_bounds",
+    "observed": "squad error: selector_out_of_bounds: range 0..9999 exceeds the node's 26 characters",
+    "amber_quarantine": null,
+    "quarantine_note": "No destination mutation was attempted; there were no candidate destination bytes to quarantine."
+  },
+  "pre_attempt": {
+    "observed_at": "2026-11-01T15:37:43.429195+00:00",
+    "bytes": 65,
+    "sha256": "bf15f8633e85350430adf1bbc47a47154965d3a7f28e4ebad25d6a39ecaa2f8c"
+  },
+  "post_refusal": {
+    "observed_at": "2026-11-01T15:38:18.031711+00:00",
+    "bytes": 65,
+    "sha256": "bf15f8633e85350430adf1bbc47a47154965d3a7f28e4ebad25d6a39ecaa2f8c"
+  },
+  "destination_unchanged": true
+}

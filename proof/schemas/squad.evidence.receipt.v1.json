@@ -1,0 +1,70 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "Squad Server-Cut Evidence Receipt (squad.evidence.receipt/1)",
+  "type": "object",
+  "description": "Receipt issued by Room content-serving tools prior to citation generation.",
+  "required": [
+    "receipt",
+    "room",
+    "source_revision",
+    "view_digest",
+    "delivery"
+  ],
+  "properties": {
+    "receipt": {
+      "type": "string",
+      "pattern": "^srv_[0-9a-f]{32}$",
+      "description": "Content-addressed serving receipt identifier."
+    },
+    "room": {
+      "type": "string"
+    },
+    "source_revision": {
+      "type": "string"
+    },
+    "view_digest": {
+      "type": "string",
+      "pattern": "^[0-9a-f]{64}$"
+    },
+    "recipient": {
+      "type": "string"
+    },
+    "delivery": {
+      "type": "object",
+      "required": [
+        "status",
+        "offset",
+        "delivered_chars",
+        "total_chars"
+      ],
+      "properties": {
+        "status": {
+          "type": "string",
+          "enum": [
+            "complete",
+            "truncated",
+            "chunked"
+          ]
+        },
+        "offset": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "delivered_chars": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "total_chars": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "next_offset": {
+          "type": [
+            "integer",
+            "null"
+          ]
+        }
+      }
+    }
+  }
+}

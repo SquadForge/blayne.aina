@@ -1,0 +1,16 @@
+node_modules/
+.wrangler/
+.env*
+.DS_Store
+Thumbs.db
+combined-article/
+proof_staging/
+proof_capture/
+archive/
+blueprints/
+from-gpt*
+*QC-RESEARCH*
+*ADDENDUM*
+*.ps1
+*.mp4
+*.tmp

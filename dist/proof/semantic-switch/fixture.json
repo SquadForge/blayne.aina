@@ -1,0 +1,110 @@
+{
+ "schema": "ISOMORPH_FIXTURE_V1",
+ "cipher_src": "abcdefghijklmnopqrstuvwxyz0123456789",
+ "cipher_dst": "qwertyuiopasdfghjklzxcvbnm5738164290",
+ "blocks": [
+  {
+   "block_id": "KAL",
+   "purpose": "short-name variants; the stated premise case",
+   "records": 4
+  },
+  {
+   "block_id": "SUB",
+   "purpose": "one substitution, word length 3 to 8",
+   "records": 6
+  },
+  {
+   "block_id": "DEL",
+   "purpose": "one deletion / insertion, word length 4 and 7",
+   "records": 4
+  },
+  {
+   "block_id": "EXT",
+   "purpose": "true name extension, not variation",
+   "records": 3
+  },
+  {
+   "block_id": "EQ",
+   "purpose": "exact equality and clean inequality",
+   "records": 3
+  },
+  {
+   "block_id": "MISS",
+   "purpose": "value, empty, null and absent field states",
+   "records": 4
+  },
+  {
+   "block_id": "TRN",
+   "purpose": "adjacent transposition",
+   "records": 3
+  },
+  {
+   "block_id": "S03",
+   "purpose": "one substitution at index 1, length 3",
+   "records": 2
+  },
+  {
+   "block_id": "S04",
+   "purpose": "one substitution at index 1, length 4",
+   "records": 2
+  },
+  {
+   "block_id": "S05",
+   "purpose": "one substitution at index 1, length 5",
+   "records": 2
+  },
+  {
+   "block_id": "S06",
+   "purpose": "one substitution at index 1, length 6",
+   "records": 2
+  },
+  {
+   "block_id": "S07",
+   "purpose": "one substitution at index 1, length 7",
+   "records": 2
+  },
+  {
+   "block_id": "S08",
+   "purpose": "one substitution at index 1, length 8",
+   "records": 2
+  },
+  {
+   "block_id": "S09",
+   "purpose": "one substitution at index 1, length 9",
+   "records": 2
+  },
+  {
+   "block_id": "D04",
+   "purpose": "one deletion at index 1, length 4 to 3",
+   "records": 2
+  },
+  {
+   "block_id": "D05",
+   "purpose": "one deletion at index 1, length 5 to 4",
+   "records": 2
+  },
+  {
+   "block_id": "D06",
+   "purpose": "one deletion at index 1, length 6 to 5",
+   "records": 2
+  },
+  {
+   "block_id": "D07",
+   "purpose": "one deletion at index 1, length 7 to 6",
+   "records": 2
+  },
+  {
+   "block_id": "D08",
+   "purpose": "one deletion at index 1, length 8 to 7",
+   "records": 2
+  },
+  {
+   "block_id": "D09",
+   "purpose": "one deletion at index 1, length 9 to 8",
+   "records": 2
+  }
+ ],
+ "record_count": 53,
+ "guard_problems": [],
+ "claim": "Set B is set A under a fixed character bijection. Lengths, edit operations and positions, equality relations, component counts, field states and block membership are identical by construction. No labels or prior decisions are read."
+}
