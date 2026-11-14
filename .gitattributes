@@ -1,0 +1,4 @@
+proof/** -text
+dist/proof/** -text
+*.db binary
+*.zip binary

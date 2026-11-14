@@ -1,0 +1,243 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>§01 Part 4/6: An AI Output Is Not an Act (The Evidentiary Constitution: What Counts as Proof) | Blayne Aina</title>
+  <meta name="description" content="Sections: The Evidentiary Constitution: What Counts as Proof, The NIST `R1`–`R3` Continuity Contract and `P01`–`P10` Evaluation Catalog">
+  <meta name="author" content="Blayne Aina">
+  <meta name="robots" content="index, follow, max-snippet:-1, max-image-preview:large, max-video-preview:-1">
+  <link rel="canonical" href="https://blayneaina.com/01-an-ai-output-is-not-an-act/part-4/">
+  <link rel="icon" href="/favicon.ico" sizes="any">
+  <link rel="icon" href="/favicon.svg" type="image/svg+xml">
+
+  <!-- OpenGraph / Social -->
+  <meta property="og:type" content="article">
+  <meta property="og:title" content="§01 Part 4/6: An AI Output Is Not an Act (The Evidentiary Constitution: What Counts as Proof)">
+  <meta property="og:description" content="Sections: The Evidentiary Constitution: What Counts as Proof, The NIST `R1`–`R3` Continuity Contract and `P01`–`P10` Evaluation Catalog">
+  <meta property="og:url" content="https://blayneaina.com/01-an-ai-output-is-not-an-act/part-4/">
+  <meta property="og:site_name" content="Blayne Aina — The Route to Trusting AI">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="§01 Part 4/6: An AI Output Is Not an Act (The Evidentiary Constitution: What Counts as Proof)">
+  <meta name="twitter:description" content="Sections: The Evidentiary Constitution: What Counts as Proof, The NIST `R1`–`R3` Continuity Contract and `P01`–`P10` Evaluation Catalog">
+  
+  <link rel="stylesheet" href="/style.css?v=20261109-s-tier">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@500;700&family=Instrument+Serif:ital@0;1&family=Inter:wght@400;500;600;700;800&family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,500;0,6..72,600;1,6..72,400&family=JetBrains+Mono:wght@400;500&family=Plus+Jakarta+Sans:wght@600;700;800&display=swap" rel="stylesheet">
+</head>
+<body>
+  <div class="reading-progress-bar" id="progressBar"></div>
+
+  <header class="site-header compact-ai-header"><div class="header-inner compact-ai-nav"><a href="/" class="brand"><strong>BLAYNE AINA</strong></a> | <a href="/ai-brief/">1-Page Master Brief (§01–§09)</a> | <a href="/articles/">All 9 Articles &amp; Briefs</a> | <a href="/research-assurance/">Assurance</a> | <a href="/refusal-proof/">Proof</a> | <a href="/llms.txt">llms.txt</a> | <a href="mailto:me@blayneaina.com">me@blayneaina.com</a></div></header>
+  <div class="layout-container presentation-layout">
+    <main class="content-area">
+      <article class="prose-wrapper presentation-wrapper">
+<header class="article-header compact-article-header"><h1 class="article-title">§01 Part 4/6: An AI Output Is Not an Act (The Evidentiary Constitution: What Counts as Proof)</h1><p class="article-subtitle">Sections: The Evidentiary Constitution: What Counts as Proof, The NIST `R1`–`R3` Continuity Contract and `P01`–`P10` Evaluation Catalog</p></header>
+
+        
+        
+
+        <div class="article-body">
+          
+      <p class="part-compact-nav"><strong>§01 PART 4/6</strong> (12,055 chars · Sections: The Evidentiary Constitution: What Counts as Proof; The NIST `R1`–`R3` Continuity Contract and `P01`–`P10` Evaluation Catalog) — <a href="/01-an-ai-output-is-not-an-act/part-3/">← Part 3</a> · <a href="/01-an-ai-output-is-not-an-act/part-5/">Part 5 →</a> · <a href="/01/brief/">1-Call Brief</a> · <a href="/01-an-ai-output-is-not-an-act/">Full §01</a> · <a href="/01/part-4.txt">Raw .txt</a> · All: <a href="/01-an-ai-output-is-not-an-act/part-1/">P1</a> <a href="/01-an-ai-output-is-not-an-act/part-2/">P2</a> <a href="/01-an-ai-output-is-not-an-act/part-3/">P3</a> <a href="/01-an-ai-output-is-not-an-act/part-4/">P4</a> <a href="/01-an-ai-output-is-not-an-act/part-5/">P5</a> <a href="/01-an-ai-output-is-not-an-act/part-6/">P6</a></p>
+    
+<h2>The Evidentiary Constitution: What Counts as Proof</h2>
+<p>A trustworthy architecture must be as strict about its own claims as it is about model output. The difference between a working mechanism and an assurance claim is often the difference between a valid implementation and an overstated one.</p>
+<h3>Six non-interchangeable evidence states</h3>
+<table>
+<thead>
+<tr>
+<th>State</th>
+<th>Meaning</th>
+<th>What it does not imply</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><strong>Documented</strong></td>
+<td>A cited public source reports the fact.</td>
+<td>The source endorses AINA or proves our interpretation.</td>
+</tr>
+<tr>
+<td><strong>Proposed</strong></td>
+<td>An architecture, object, or invariant is specified and can be implemented and tested.</td>
+<td>The complete architecture is already deployed everywhere it is described.</td>
+</tr>
+<tr>
+<td><strong>Implemented</strong></td>
+<td>Author-controlled working software contains the named boundary, verifier, or receipt path.</td>
+<td>The implementation is defect-free or independently certified.</td>
+</tr>
+<tr>
+<td><strong>Measured</strong></td>
+<td>A declared test surface or corpus produced the stated result under stated conditions.</td>
+<td>The result generalizes to every dataset, threat, deployment, or consequence class.</td>
+</tr>
+<tr>
+<td><strong>Author-Verified</strong></td>
+<td>A named verifier, battery, or inspection checked declared predicates in author-controlled artifacts.</td>
+<td>Independent validation or proof of predicates the verifier did not check.</td>
+</tr>
+<tr>
+<td><strong>Independently Validated</strong></td>
+<td>A qualified external party reproduced or audited the bounded claim under a disclosed method.</td>
+<td>This status may be inferred from the other five. It never is.</td>
+</tr>
+</tbody></table>
+<p>No external findings are registered in this snapshot. The architecture and measurements below are therefore presented as <strong>implemented, measured, and author-verified</strong>, not as independently validated.</p>
+<h3>Three prevention burdens</h3>
+<p>Every strong prevention statement must separate three burdens:</p>
+<ol>
+<li><strong>Path enforcement</strong> — Did one named release path withhold effect when a required predicate failed?</li>
+<li><strong>Effect coverage</strong> — Was every in-scope route or material composition capable of producing the declared effect actually inventoried and interposed?</li>
+<li><strong>Implementation assurance</strong> — Did the verifiers, interposers, roots, clocks, discovery methods, and installations possess the properties the claim relies upon?</li>
+</ol>
+<p>Evidence for one burden cannot impersonate evidence for another. A successful refusal on one MCP path does not prove complete effect coverage. A directory inventory does not prove that the verifier is correct. A correct verifier does not prove that every alternate executor, administrator, recovery path, memory mapping, or shadow API was governed.</p>
+<h3>Three independence claims</h3>
+<table>
+<thead>
+<tr>
+<th>Claim</th>
+<th>Minimum meaning</th>
+<th>What it does not establish</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><strong>Decision independence</strong></td>
+<td>Proposal matter cannot satisfy, waive, reinterpret, or award the predicates governing its own standing.</td>
+<td>Process isolation, causal independence, separate ownership, or external validation.</td>
+</tr>
+<tr>
+<td><strong>Implementation independence</strong></td>
+<td>The verifier, trust root, or release surface is separated from the component it constrains by a declared process, privilege, kernel, hardware, or administrative boundary.</td>
+<td>Separate code, vendors, machines, or organizations automatically create the relevant separation.</td>
+</tr>
+<tr>
+<td><strong>Validation independence</strong></td>
+<td>A qualified external evaluator reproduced or audited the bounded claim with adequate access and freedom to report adverse findings.</td>
+<td>Deterministic verification, author inspection, public availability, or eligibility for controlled review.</td>
+</tr>
+</tbody></table>
+<h3>Anti-circularity and role-separated cognition</h3>
+<p>Two actors can occupy different roles, see different evidence, and preserve attributable dissent without being statistically, organizationally, or causally independent. Models may share training data, orchestration, poisoned context, administrators, or a mistaken premise.</p>
+<p>For that reason, EISA panels are <strong>role-separated</strong>, not independent validators. Agreement among role-separated participants may add evidence; it does not manufacture standing.</p>
+<p>Before warrant issuance, the dependency graph for standing results must be acyclic:</p>
+<ul>
+<li>No result may depend on itself.</li>
+<li>No result may depend on the warrant it helps issue.</li>
+<li>No result may depend on the operative-standing status it helps establish.</li>
+<li>No result may depend on a post-effect fact unavailable at release time.</li>
+</ul>
+<p>A later observation may close or invalidate the transition. It cannot become pre-release proof.</p>
+<h2>The NIST <code>R1</code>–<code>R3</code> Continuity Contract and <code>P01</code>–<code>P10</code> Evaluation Catalog</h2>
+<p>To make transition governance testable across any implementation, I use the formal evaluation method submitted to the NIST National Cybersecurity Center of Excellence’s <a href="https://pages.nist.gov/nccoe-ai-identity/"><em>Software and AI Agent Identity and Authorization</em></a> project, with the author’s technical evaluation record dated October 8, 2026.</p>
+<blockquote>
+<p><strong>Scope and non-endorsement rule:</strong> The <code>R1</code>–<code>R3</code> requirements, <code>P01</code>–<code>P10</code> failure catalog, and October 6–8 empirical runs are an author-developed engineering evaluation method and author-controlled measurement record. NIST did not commission, conduct, approve, or endorse these runs. Enforcement and evidence status are reported separately: <code>Satisfied</code>, <code>Failed</code>, <code>Unsupported</code>, <code>Not exercised</code>, or <code>Inconclusive</code>.</p>
+</blockquote>
+<h3>The three continuity requirements</h3>
+<ul>
+<li><strong><code>R1</code> — End-to-end operation continuity.</strong> Preserve the exact authorized operation across eight bound elements: <code>task</code>, <code>proposal</code>, <code>authority</code>, <code>decision</code>, <code>occurrence</code>, <code>destination operation</code>, <code>outcome</code>, and <code>recipient</code>, from submission through execution and result return (<code>repo.patch.apply/1</code> reference fixture).</li>
+<li><strong><code>R2</code> — Declared authority and scope limits.</strong> Enforce the declared target, project, tenancy, generation, and administrative-scope limits of workers and controllers at every admission and execution checkpoint.</li>
+<li><strong><code>R3</code> — Complete accepted-population accounting.</strong> Account for every submission crossing the accepted-evaluation boundary through a terminal disposition—<code>applied</code>, <code>refused</code>, <code>withheld</code>, <code>effect_unconfirmed</code>, or <code>carried_forward</code>—without inferring whole-population completeness from selected positive cases.</li>
+</ul>
+<h3>The ten-case catalog and the October 2026 measurement record</h3>
+<table>
+<thead>
+<tr>
+<th>Case</th>
+<th>Governing requirement and adversarial condition</th>
+<th>October 2026 author-controlled result</th>
+<th>Deep code anatomy</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><strong><code>P01</code> — Authorized operation continuity</strong></td>
+<td><code>R1</code>, <code>R3</code>: bind proposal digest, operation content digest, target version, destination effect, and correlated return to the original session.</td>
+<td><strong>Measured partial positive control, October 6.</strong> Account row <code>484</code> changed from <code>9 Canal Walk</code> (v12) to <code>31 Quay Street</code> (v13) under a bound <code>content_sha256</code>, then restored to v14. Destination effect, restoration, and successor continuity passed. The original session ended before commit, so original-session first-receipt credit was explicitly withheld; a successor received the outcome through <code>ResultGrant</code>.</td>
+<td>Article 07: <code>requested_act.rs</code>, <code>result_grant.rs</code></td>
+</tr>
+<tr>
+<td><strong><code>P02</code> — Out-of-scope target refusal</strong></td>
+<td><code>R2</code>, <code>R3</code>: attempt an excluded sibling, unopened project, or target outside pinned scope.</td>
+<td><strong>Measured pass, October 8.</strong> Permitted target updated; excluded edits and out-of-project task creation were refused; excluded targets verified unchanged.</td>
+<td>Article 04: <code>enforce/project.rs</code>; Article 05: <code>leases/identity.rs</code></td>
+</tr>
+<tr>
+<td><strong><code>P03</code> — Controller administrative boundary</strong></td>
+<td><code>R2</code>, <code>R3</code>: ordinary worker attempts administrative project opening; trusted controller attempts ordinary task creation over protected operator-control storage.</td>
+<td><strong>Measured pass, October 8.</strong> Ordinary identity refused administrative opening; controller refused ordinary task creation over the protected path while legitimate project administration remained available.</td>
+<td>Article 04: <code>enforce/session.rs</code>; Article 08: <code>breakglass/control.rs</code></td>
+</tr>
+<tr>
+<td><strong><code>P04</code> — Duplicate, replayed, and displaced execution</strong></td>
+<td><code>R1</code>, <code>R2</code>, <code>R3</code>: two sessions race for the same row; holder retries identical occurrence; displaced session attempts mutation after generation turnover.</td>
+<td><strong>Measured concurrency and turnover pass; honest completion refusal, October 8.</strong> Non-holder was refused, holder retry returned <code>effect_repeated: false</code> (one commit), displaced holder was refused after turnover, and successor advanced row v2 to v3. Task completion failed honestly because the fixture’s acceptance rule required both mutually exclusive values to remain present simultaneously.</td>
+<td>Article 05: <code>leases/manager/generation.rs</code>; Article 07: <code>records.rs</code></td>
+</tr>
+<tr>
+<td><strong><code>P05</code> — Post-effect evidence failure</strong></td>
+<td><code>R1</code>, <code>R3</code>: file replacement succeeds, but a held Windows handle makes the normal edit-receipt ledger append fail.</td>
+<td><strong>Measured pass, October 8.</strong> Separate operation store retained <code>effect_unconfirmed</code>; task completion was held; retry did not repeat the write; reconciliation read the target without mutating it (<code>destination_mutated = false</code>, <code>causal_execution_proven = false</code>). A distinct governed restore recovered the original bytes.</td>
+<td>Article 06: <code>vault/</code>; Article 08: <code>invariants/resolution.rs</code>, <code>breakglass/control.rs</code></td>
+</tr>
+<tr>
+<td><strong><code>P06</code> — Revocation and expiry on an existing connection</strong></td>
+<td><code>R1</code>, <code>R2</code>, <code>R3</code>: preview a valid operation, then remove trusted-roster standing or credential enrollment before execution on the same connection.</td>
+<td><strong>Measured pass, October 8.</strong> Subsequent submission was refused with zero destination mutation. After authority was restored, new occurrences succeeded under fresh authority.</td>
+<td>Article 04: <code>wake_jobs/authority.rs</code>; Article 08: <code>control_epoch</code></td>
+</tr>
+<tr>
+<td><strong><code>P07</code> — Substitution after decision</strong></td>
+<td><code>R1</code>, <code>R2</code>, <code>R3</code>: authorize an operation, then change an operand, patch, target, precondition, or review artifact before execution.</td>
+<td><strong>Enforced by the publication gate.</strong> Controller fixes <code>RequestedAct</code> before worker launch and revalidates it under <code>share_mode(1)</code> inside <code>with_transition</code> before commit.</td>
+<td>Article 07: <code>confine/requested_act.rs</code></td>
+</tr>
+<tr>
+<td><strong><code>P08</code> — Concurrent destination change</strong></td>
+<td><code>R1</code>, <code>R3</code>: introduce a competing write between source observation and mutation; hold destinations lacking conditional-write guarantees.</td>
+<td><strong>Enforced by the publication gate.</strong> Five-role Win32 guarded replacement, SQLite <code>IMMEDIATE</code> with <code>expected_version</code>, and capability-plan holds.</td>
+<td>Article 05: <code>oshandle.rs</code>; Article 07: <code>records.rs</code>, <code>plans.rs</code></td>
+</tr>
+<tr>
+<td><strong><code>P09</code> — Malformed or semantically invalid submissions</strong></td>
+<td><code>R1</code>, <code>R2</code>, <code>R3</code>: submit unknown opcodes, duplicate JSON keys, out-of-bounds pointers, or suppressed counterevidence in a valid transport envelope.</td>
+<td><strong>Enforced by the publication gate.</strong> Duplicate-key-refusing strict parser, record-relative pointer validation, and fail-closed EISA recognition without silent repair.</td>
+<td>Article 02: <code>handles.rs</code>; Article 03: <code>strict.rs</code>, <code>recognize.rs</code></td>
+</tr>
+<tr>
+<td><strong><code>P10</code> — Evidence capacity and pre-release failure</strong></td>
+<td><code>R3</code>: exhaust or fail evidence storage before acceptance, before release, or after effect, preserving fail-closed hold and accepted-population accounting.</td>
+<td><strong>Enforced by the publication gate.</strong> Pre-write baseline failure aborts checkout and releases lease/handle; post-effect failure enters <code>effect_unconfirmed</code> and break-glass <code>carried_forward_operations</code>.</td>
+<td>Article 06: <code>lock/acquire.rs</code>; Article 08: <code>recover_plan</code></td>
+</tr>
+</tbody></table>
+<p>The <code>P04</code> result deserves special attention. Its task completion outcome was <strong>Failed</strong>, and that was the correct result. The configured acceptance rule did not accurately describe the authorized sequence: it required both the earlier effect and its legitimate replacement to remain current simultaneously. The driver was not changed to force a pass. This is why enforcement status and workflow success must be reported separately.</p>
+<p>The <code>P05</code> result illustrates another separation: destination effect occurred, but the normal receipt could not be appended. A separate durable operation record retained <code>effect_unconfirmed</code>, holding completion and preventing duplicate execution. Matching later content did not prove causal execution.</p>
+
+
+      <p class="part-compact-nav"><strong>END OF §01 PART 4/6</strong> — Next: <a href="/01-an-ai-output-is-not-an-act/part-5/"><code>https://blayneaina.com/01-an-ai-output-is-not-an-act/part-5/</code></a> · <a href="/01/brief/">§01 1-Call Brief</a> · <a href="/01.md">Raw .md</a></p>
+    
+        </div>
+
+        
+        
+        
+        
+
+        
+
+        
+      </article>
+    </main>
+
+  </div>
+
+  <footer class="site-footer compact-ai-footer"><p><strong>blayneaina.com</strong> — <a href="https://blayneaina.com/ai-brief/">Master Brief (https://blayneaina.com/ai-brief/)</a> · <a href="https://blayneaina.com/ai-brief.txt">Plain-Text Brief (https://blayneaina.com/ai-brief.txt)</a> · <a href="https://blayneaina.com/articles/">All 9 Articles &amp; Briefs (https://blayneaina.com/articles/)</a> · <a href="https://blayneaina.com/llms.txt">llms.txt</a> · <a href="mailto:me@blayneaina.com">me@blayneaina.com</a></p></footer>
+
+
+
+
+
+  <script src="/script.js?v=20261109-s-tier"></script>
+</body>
+</html>

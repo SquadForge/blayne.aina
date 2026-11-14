@@ -1,0 +1,142 @@
+# §07 Part 1/3 — Defeating Approval Laundering
+Canonical: https://blayneaina.com/07-defeating-approval-laundering-act-pinning-and-successor-grants/part-1/ | Raw Article: https://blayneaina.com/07.md | Next Part: https://blayneaina.com/07/part-2.txt
+
+# Defeating Approval Laundering: Act Pinning and Successor Grants
+
+*Approval must bind the exact act before the worker environment exists, authority must be re-derived at commit, and recovery must not fabricate the original session's receipt.*
+
+**By Blayne Aina · Principal Systems Architect and creator of AINA · October 31, 2026**
+
+---
+
+Hashing a worker's proposal after it arrives is too late.
+
+A human or policy may approve action \(A\), but the worker can still execute \(A'\): a different row, target, payload, route, or time. A safe execution boundary cannot trust that the proposal and its effect remain identical unless the trusted controller fixes the act before the worker environment exists and revalidates that exact object at the destination's ordering point.
+
+Three coupled failures follow:
+
+1. **Launch substitution:** a worker begins life with an unclassified handle, an inherited capability, or a native unconfined route.
+2. **Approval laundering:** a valid general approval becomes a different mutation at execution.
+3. **Crash-straddling:** the destination commits, the worker dies before first receipt, and a successor either repeats the effect or invents original-session completion.
+
+Article 06 preserved recovery evidence. Article 07 binds the execution itself: pre-resume kernel inspection, controller-brokered model egress, `RequestedAct`, fenced SQLite execution, multi-destination holds, and non-fabricating successor grants.
+
+> **The controller fixes the act. The destination rechecks it. History may be read by a successor, but the original return is never invented.**
+
+## One Approved Mutation, Three Places to Fail
+
+Suppose a policy approves raising one customer's credit limit from 10,000 to 25,000.
+
+The trusted controller first projects exactly that row and prepares the change. A prompt-injected worker then tries to substitute a different customer and a higher limit. At the same time, an unrelated writer increments the approved row's version, and the worker's host dies immediately after the database commits.
+
+The machine handles each failure separately:
+
+- **Before launch:** the suspended worker's package SID, LPAC attribute, capabilities, Job membership, and current handle inventory are verified. A sentinel match or unclassified handle terminates the Job before instruction 0.
+- **Before execution:** the controller has already fixed the exact row, key, fields, and expected version in `RequestedAct`. The substitute customer is not a permissible interpretation of that act.
+- **At the destination:** SQLite takes its write reservation, the row is reread, recovery is captured, and current task, source, tenancy, act, and approval are revalidated. The other writer's version increment makes the conditional update fail instead of overwriting new state.
+- **After commit:** a fresh result-only successor may read the historical outcome if its tenancy, grant, wake, source, and Room-return proofs all hold. It does not repeat the write and does not claim the dead worker received the result.
+
+Approval is therefore not one event at the prompt. It is a chain of proof that survives substitution, concurrency, and crash—without being confused with the original session's receipt.
+
+## 1. Pre-Resume Kernel Verification
+
+A confined process must be inspected before instruction 0. Once the worker runs, every later control is negotiating with an already-active environment.
+
+### Exhibit 7.1 — Pre-resume kernel audit
+
+```text
+Derive exclusive AppContainer profile or per-launch host SID
+→ CreateProcessW(CREATE_SUSPENDED) inside owned Job Object
+→ Query raw token: package SID + WIN://NOALLAPPPKG + exact capabilities
+→ PssCaptureSnapshot + PssWalkSnapshot handle table
+→ DuplicateHandle + CompareObjectHandles against owned references
+→ reject any sentinel match or unclassified object
+     ├─ PASS → ResumeThread exactly once
+     └─ FAIL → terminate suspended Job; no worker instruction executes
+```
+
+<aside class="context-callout" aria-label="Linux and POSIX kernel counterparts">
+  <h2>Linux / POSIX Kernel Counterparts</h2>
+  <p><code>CreateProcessW(CREATE_SUSPENDED)</code> + <code>PssCaptureSnapshot</code> + PEB inspection maps on Linux to <code>clone3()</code> / <code>pidfd_open()</code> stopped-start spawning with <code>/proc/&lt;pid&gt;/fd</code>, <code>/proc/&lt;pid&gt;/cmdline</code>, and <code>/proc/&lt;pid&gt;/maps</code> verification prior to <code>execve</code> / signal continuation.</p>
+</aside>
+
+### Exclusive identity and anti-reuse
+
+`container_sid` calls `CreateAppContainerProfile` for a fresh per-launch profile. `E_ALREADY_EXISTS_HR = 0x8007_00B7` becomes `confinement_identity_reused`; an existing profile cannot be borrowed with its old ACLs, files, or residual state.
+
+Brokered hosts that cannot run inside an AppContainer receive an application-defined Resource Manager SID in `S-1-9`. Its first sub-authority is ASCII `"SQAD"` (`0x5351_4144`), followed by four 32-bit words carrying 128 SHA-256 bits derived from the launch's container name. It names no local user, group, or domain account, so host permissions come only from explicit launch grants.
+
+### Raw LPAC attribute verification
+
+`verify_worker_token` queries the suspended process token directly:
+
+- `TokenAppContainerSid` must equal the owned package SID;
+- `TokenSecurityAttributes` must contain `WIN://NOALLAPPPKG`;
+- the attribute must be integer kind `2`, count `1`, not disabled (`flags & 0x10 == 0`), and nonzero.
+
+The controller does not rely on a platform LPAC query that may be unavailable. It parses the raw table with buffer bounds and UTF-16 decoding, then compares the actual restriction to the requested one.
+
+### Handle-table object identity, not numeric equality
+
+Windows handle values are process-local indices. They do not prove which kernel object they name, and two different values can name the same object.
+
+`PssCaptureSnapshot` and `PssWalkSnapshot` enumerate the suspended child's current handle table. The controller duplicates candidate handles and calls `CompareObjectHandles` against owned references for expected stdio, Job, and other provenance objects. A deliberately excluded sentinel proves whether anything outside the launch list was inherited. Unknown objects, missing expected matches, sentinel matches, incomplete inventory, or token mismatch refuse the resume.
+
+PSS proves the **current handle inventory at capture time**, not historical inheritance. The architecture therefore combines the explicit launch `HANDLE_LIST`, current inventory, and object comparison rather than inventing an inheritance proof.
+
+### The native spawn gate
+
+`require_native_spawn_allowed` refuses a native launch or existing-session attachment whenever owner policy or staged grants mandate confinement. Expired or revoked grants do not create an unconfined fallback. Project-mandated work runs only under its staged project identity.
+
+This is the anti-fallback rule: if the worker cannot launch under the required boundary, it does not launch.
+
+## 2. Controller-Brokered Model Egress
+
+Confined workers have no general network capability. Model access is a separate controller-owned transition, not an ambient HTTP client.
+
+### Authenticated local channels
+
+For LPAC workers, the controller exposes a per-worker `AF_UNIX` endpoint with a restrictive ACL. It verifies the held worker with `IsProcessInJob`, `verify_worker_token`, exact capabilities, and a 32-byte launch nonce. It does not pretend that AF_UNIX supplies a portable peer-process identity; the held process is the evidence.
+
+Brokered hosts use a first-instance Named Pipe with `PIPE_REJECT_REMOTE_CLIENTS`. `QueryFullProcessImageNameW` must resolve to the exact staged bridge executable.
+
+Every request and response is bounded and rechecked. Revocation before response transport produces a typed refusal; partial responses produce `severed_mid_response`, not a second contradictory frame.
+
+### The controller owns the route
+
+The worker names only an owner route ID and JSON body. The controller owns:
+
+- exact HTTPS destination or isolated subscription CLI;
+- credential injection and fixed headers;
+- allowed models and output-token ceilings;
+- request/response byte limits and request budget;
+- project, agent, expiry, and control-epoch admission.
+
+Routes can use API credentials or isolated `claude.exe`/`codex.exe` subscription CLIs. The worker never receives the credential or chooses a URL.
+
+### Journal before dispatch; never replay uncertainty
+
+Every request is appended to `model-egress/ledger.jsonl` **before** network transmission. A last admission check occurs immediately before send.
+
+Stopping a broker stops the worker from receiving a result, but it does not recall an in-flight HTTP request. `settle_in_flight` waits for controller-side outcomes to append. If the provider outcome remains unknown, the operation stays `unresolved`, counts against the route's budget, and can be settled only by a trusted operator through `reconcile` using provider-side evidence. Reconciliation never resends and does not automatically return the budget slot.
+
+### Exhibit 7.6 — Unresolved model egress
+
+```json
+{
+  "operation_id": "model_op_synthetic_07",
+  "route": "owner-approved-analysis-route",
+  "destination": "https://models.example/v1/respond",
+  "actor": "reviewer-beta",
+  "task": "TSK-2026-ACT-007",
+  "project_id": "proj_synthetic",
+  "begun_at": "2026-10-31T19:00:00Z",
+  "request_sha256": "4a9c8e12f03b7d651928374655647382910abcdef1234567890abcdef1234567",
+  "latest_outcome": null,
+  "disposition": "unresolved; never resent; operator reconciliation required"
+}
+```
+
+An approved model route does not prove semantic confidentiality of the staged projection. It proves destination, credential, budget, and continuity authority. Content still needs Semantic Switch to transform native values before provider-exposed qBlock and later computation, with native rows and the private crosswalk retained locally as Article 03 establishes.
+
+

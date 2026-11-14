@@ -1,0 +1,43 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "Squad Typed Lease Declarations",
+  "type": "object",
+  "additionalProperties": false,
+  "minProperties": 2,
+  "maxProperties": 2,
+  "required": ["namespace", "resource_id"],
+  "properties": {
+    "namespace": { "$ref": "#/definitions/Namespace" },
+    "resource_id": { "type": "string", "minLength": 1, "maxLength": 256 }
+  },
+  "definitions": {
+    "Namespace": {
+      "type": "string",
+      "enum": ["File", "Session", "Window", "Account", "Focus", "Browser"]
+    },
+    "Prefix": {
+      "type": "string",
+      "enum": ["file://", "session://", "window://", "account://", "focus://", "browser://"]
+    },
+    "TypedScope": {
+      "type": "object",
+      "additionalProperties": false,
+      "minProperties": 2,
+      "maxProperties": 2,
+      "required": ["namespace", "resource_id"],
+      "properties": {
+        "namespace": { "$ref": "#/definitions/Namespace" },
+        "resource_id": { "type": "string", "minLength": 1, "maxLength": 256 }
+      },
+      "description": "Public declaration of TypedScope with bounded resource_id. The derived 64-bit FNV-1a hash is computed internally and is not caller-supplied."
+    }
+  },
+  "namespace_prefix_map": {
+    "File": "file://",
+    "Session": "session://",
+    "Window": "window://",
+    "Account": "account://",
+    "Focus": "focus://",
+    "Browser": "browser://"
+  }
+}

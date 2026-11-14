@@ -1,0 +1,249 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>§05 Part 4/4: Expiry Is Not Fencing (The Twelve Execution Claims) | Blayne Aina</title>
+  <meta name="description" content="Sections: The Twelve Execution Claims, The Article 05 Claim Card, The Clock Is Not the Fence, Frequently Asked Questions, Continue the Series, Primary 2026 Sources, Publication Metadata">
+  <meta name="author" content="Blayne Aina">
+  <meta name="robots" content="index, follow, max-snippet:-1, max-image-preview:large, max-video-preview:-1">
+  <link rel="canonical" href="https://blayneaina.com/05-expiry-is-not-fencing-typed-leases-and-kernel-write-exclusion/part-4/">
+  <link rel="icon" href="/favicon.ico" sizes="any">
+  <link rel="icon" href="/favicon.svg" type="image/svg+xml">
+
+  <!-- OpenGraph / Social -->
+  <meta property="og:type" content="article">
+  <meta property="og:title" content="§05 Part 4/4: Expiry Is Not Fencing (The Twelve Execution Claims)">
+  <meta property="og:description" content="Sections: The Twelve Execution Claims, The Article 05 Claim Card, The Clock Is Not the Fence, Frequently Asked Questions, Continue the Series, Primary 2026 Sources, Publication Metadata">
+  <meta property="og:url" content="https://blayneaina.com/05-expiry-is-not-fencing-typed-leases-and-kernel-write-exclusion/part-4/">
+  <meta property="og:site_name" content="Blayne Aina — The Route to Trusting AI">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="§05 Part 4/4: Expiry Is Not Fencing (The Twelve Execution Claims)">
+  <meta name="twitter:description" content="Sections: The Twelve Execution Claims, The Article 05 Claim Card, The Clock Is Not the Fence, Frequently Asked Questions, Continue the Series, Primary 2026 Sources, Publication Metadata">
+  
+  <link rel="stylesheet" href="/style.css?v=20261109-s-tier">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@500;700&family=Instrument+Serif:ital@0;1&family=Inter:wght@400;500;600;700;800&family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,500;0,6..72,600;1,6..72,400&family=JetBrains+Mono:wght@400;500&family=Plus+Jakarta+Sans:wght@600;700;800&display=swap" rel="stylesheet">
+</head>
+<body>
+  <div class="reading-progress-bar" id="progressBar"></div>
+
+  <header class="site-header compact-ai-header"><div class="header-inner compact-ai-nav"><a href="/" class="brand"><strong>BLAYNE AINA</strong></a> | <a href="/ai-brief/">1-Page Master Brief (§01–§09)</a> | <a href="/articles/">All 9 Articles &amp; Briefs</a> | <a href="/research-assurance/">Assurance</a> | <a href="/refusal-proof/">Proof</a> | <a href="/llms.txt">llms.txt</a> | <a href="mailto:me@blayneaina.com">me@blayneaina.com</a></div></header>
+  <div class="layout-container presentation-layout">
+    <main class="content-area">
+      <article class="prose-wrapper presentation-wrapper">
+<header class="article-header compact-article-header"><h1 class="article-title">§05 Part 4/4: Expiry Is Not Fencing (The Twelve Execution Claims)</h1><p class="article-subtitle">Sections: The Twelve Execution Claims, The Article 05 Claim Card, The Clock Is Not the Fence, Frequently Asked Questions, Continue the Series, Primary 2026 Sources, Publication Metadata</p></header>
+
+        
+        
+
+        <div class="article-body">
+          
+      <p class="part-compact-nav"><strong>§05 PART 4/4</strong> (10,956 chars · Sections: The Twelve Execution Claims; The Article 05 Claim Card; The Clock Is Not the Fence; Frequently Asked Questions; Continue the Series; Primary 2026 Sources; Publication Metadata) — <a href="/05-expiry-is-not-fencing-typed-leases-and-kernel-write-exclusion/part-3/">← Part 3</a> · <a href="/06-rollback-is-not-erasure-dual-tier-vaults-and-ungated-quarantine/part-1/">§06 Part 1 →</a> · <a href="/05/brief/">1-Call Brief</a> · <a href="/05-expiry-is-not-fencing-typed-leases-and-kernel-write-exclusion/">Full §05</a> · <a href="/05/part-4.txt">Raw .txt</a> · All: <a href="/05-expiry-is-not-fencing-typed-leases-and-kernel-write-exclusion/part-1/">P1</a> <a href="/05-expiry-is-not-fencing-typed-leases-and-kernel-write-exclusion/part-2/">P2</a> <a href="/05-expiry-is-not-fencing-typed-leases-and-kernel-write-exclusion/part-3/">P3</a> <a href="/05-expiry-is-not-fencing-typed-leases-and-kernel-write-exclusion/part-4/">P4</a></p>
+    
+<h2>The Twelve Execution Claims</h2>
+<table>
+<thead>
+<tr>
+<th>ID</th>
+<th>Bounded claim</th>
+<th>Evidence and ceiling</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><code>05-C01</code></td>
+<td>Six typed lease namespaces and hierarchical conflict rules govern ownership; FNV-1a is only a routing key</td>
+<td>Implemented and author-verified for all lease requests; full canonical identity decides authority</td>
+</tr>
+<tr>
+<td><code>05-C02</code></td>
+<td>Filesystem scopes reject ambiguous paths and resolve opened object identity through handles</td>
+<td>Implemented and author-verified on local NTFS/ReFS targets</td>
+</tr>
+<tr>
+<td><code>05-C03</code></td>
+<td>Workspace-wide monotonic generations use two-phase persistence and refuse rollback</td>
+<td>Implemented and author-verified; missing state never resets to zero</td>
+</tr>
+<tr>
+<td><code>05-C04</code></td>
+<td>A 30-second cross-process mutex serializes lease and write transitions</td>
+<td>Implemented and author-verified for local controller and worker transitions; it is never stolen by age</td>
+</tr>
+<tr>
+<td><code>05-C05</code></td>
+<td>Dead-holder re-granting requires same owner/task and proof of death, then mints a new generation</td>
+<td>Implemented and author-verified; unknown or reused PIDs fail closed</td>
+</tr>
+<tr>
+<td><code>05-C06</code></td>
+<td>Heartbeats clamp to 15 minutes and cannot resurrect expired tenancies; holder transfer is all-or-restored</td>
+<td>Implemented and author-verified for current lifecycle paths</td>
+</tr>
+<tr>
+<td><code>05-C07</code></td>
+<td>Long-lived servers deny later incompatible write/delete opens with <code>FILE_SHARE_READ</code></td>
+<td>Implemented and author-verified; pre-existing handles/mappings are not retroactively revoked and CLI leases are advisory</td>
+</tr>
+<tr>
+<td><code>05-C08</code></td>
+<td>Parent directories are pinned by handle and re-resolved during replacement</td>
+<td>Implemented and author-verified for parent redirection, not volume unmount or privileged host-admin behavior</td>
+</tr>
+<tr>
+<td><code>05-C09</code></td>
+<td>Five-role overlapping replacement uses native POSIX handle rename with continuous write-open exclusion</td>
+<td>Implemented and author-verified on supported Windows filesystems; delete/rename residuals remain separately disclosed</td>
+</tr>
+<tr>
+<td><code>05-C10</code></td>
+<td>Surviving <code>W</code> handles prove positive preimage displacement</td>
+<td>Implemented and author-verified for intact-link, nondeleted, different-path cases; delete-and-recreate can remain indistinguishable</td>
+</tr>
+<tr>
+<td><code>05-C11</code></td>
+<td>Publication failures classify into six structured reconciliation records with exact next actions</td>
+<td>Implemented and author-verified; no automatic rollback or clean success is invented</td>
+</tr>
+<tr>
+<td><code>05-C12</code></td>
+<td>Server liveness is PID-reuse-resistant and image handoff preserves exclusion</td>
+<td>Implemented and author-verified through sharing-violation records and shared handle adoption</td>
+</tr>
+</tbody></table>
+<h2>The Article 05 Claim Card</h2>
+<pre><code class="language-text">Mechanism:
+  AINA Typed Leases, Monotonic Generation Fencing, and Guarded Replacement
+  (typed scopes, room.generation.v2, transition mutex, lifecycle guards,
+   G/W/T/H/G&#39; handles, parent pin, liveness, SQLite fences, and release quarantine)
+
+Failure it governs:
+  Stale workers resurrecting after lease expiry;
+  uncooperative local write/delete/rename opens;
+  rolled-back generation stores and successor-tenancy confusion;
+  parent junction swaps and destination reparse redirection;
+  displaced preimages and divergent post-release content.
+
+Positive path:
+  current task and tenancy
+  → workspace-wide generation and control epoch
+  → exact server-held scope and preimage observation
+  → five-role guarded replacement with parent pin
+  → identity + content + resolved-path + displacement verification
+  → fresh destination observation
+  → structured release or quarantine.
+
+Refusal / reconciliation path:
+  stale_lease_generation, lease_expired, lease_task_mismatch
+  generation_store_missing, generation_checkpoint_mismatch
+  ERROR_SHARING_VIOLATION (32), destination_parent_redirected
+  GuardLost, NameRedirected, IdentityChanged, ContentDiverged,
+  PreimageDisplaced, Unverifiable
+  record_version_changed, result_grant_tenancy_required
+  content_mismatch and released_with_ungated_content.
+
+Evidence status:
+  Implemented and Author-Verified on the declared Windows reference embodiment.
+  2026 research is primary-source context, not endorsement or independent validation.
+  No universal external exactly-once or total-effect-coverage claim is made.
+
+Verifier and artifacts:
+  .generations-initialized and generations.json
+  lease tenancy records and pre-write state
+  .lease-transition.mutex
+  G/W/T/H/G&#39; handle identities and content hashes
+  parent object identity and resolved paths
+  six structured PublishFault records
+  server liveness records and transfer_holder
+  SQLite readback and result_grant tenancy
+  Amber post_edit and quarantine_ungated.
+
+Scope and claim ceiling:
+  Win32 NTFS/ReFS reference mechanisms, not POSIX-equivalent guarantees.
+  Later incompatible opens are denied; pre-existing handles/mappings are not revoked.
+  Delete/rename intervals are bounded and reconciled, not claimed eliminated.
+  Third-party delete-and-recreate can remain indistinguishable from ordinary replace.
+  External effects require destination-specific guarantees and observation.
+  No privileged host-admin or universal external exactly-once claim.
+
+Next stage in the machine:
+  Article 05 enforces current ownership at the mutation window.
+  Article 06 proves rollback is not erasure: Primary and Amber recovery,
+  pre-write baseline verification, and ungated-content quarantine.
+
+Commercial doorway:
+  Shared-Resource Lease &amp; Kernel Fencing Challenge — bring one shared file
+  or SQLite row exposed to multiple workers; receive a stale-generation replay,
+  guarded replacement demonstration, and recovery/quarantine evidence map
+  (Article 09 · me@blayneaina.com).
+</code></pre>
+<h2>The Clock Is Not the Fence</h2>
+<p>A lease expires because coordination needs a way forward. That does not mean the old worker has become harmless. Authority must change form at the resource: a new generation, a new holder, a new epoch, and a kernel-enforced exclusion that survives the replacement.</p>
+<p>The architecture does not stop at that success condition. It also preserves what happened when the world did not cooperate: which guard was lost, which name redirected, which object changed, which content diverged, which preimage moved, and which checks could not run. Failure becomes reconciliation evidence rather than a vague error or a fabricated rollback.</p>
+<p>That is the difference between a lease timer and execution fencing.</p>
+<blockquote>
+<p><strong>Expiry lets ownership move. Generation decides whether an act is current. Kernel exclusion decides whether an uncooperative writer can open the file. Verification decides whether the published object actually earned success.</strong></p>
+</blockquote>
+<p>Article 06 takes up the next non-equivalence: a verified replacement still needs recovery. Rollback restores a prior state; it does not erase what happened, and ungated mutations must never be hidden inside a clean baseline.</p>
+<h2>Frequently Asked Questions</h2>
+<h3>Why is lease expiry not fencing?</h3>
+<p>Expiry allows ownership to move after a holder stops responding, but it does not erase a stale worker&#39;s process, cached authority, delayed request, or physical ability to write. The resource must reject the stale generation at execution.</p>
+<h3>Is FNV-1a part of the security proof?</h3>
+<p>No. FNV-1a is only a deterministic routing key for lease filenames. Authority decisions compare the complete canonical namespace and resource identity, current generation, task, control epoch, and execution handle.</p>
+<h3>Why are five handle roles necessary?</h3>
+<p>The long-term guard denies delete, but Windows requires delete sharing for rename-over. <code>G</code>, <code>W</code>, <code>T</code>, <code>H</code>, and <code>G&#39;</code> hand off exclusion in overlapping stages so no interval permits a write open, while <code>P</code> pins the parent and verification proves the published object.</p>
+<h3>Does the kernel gate revoke handles or mappings opened earlier?</h3>
+<p>No. Share modes govern later incompatible opens. They do not retroactively revoke pre-existing handles, memory-mapped sections, or privileged host-admin behavior. Those routes require separate inventory and controls.</p>
+<h3>What does preimage displacement detection prove?</h3>
+<p>It proves that the original object kept all links, was not deleted, and now resolves to a different ordinary path. That means it moved before the rename and an uncaptured object was replaced. Delete-and-recreate can remain indistinguishable, so the article does not claim universal recovery.</p>
+<h3>Does this guarantee exactly-once external effects?</h3>
+<p>No. It proves current ownership and verified replacement on the governed Windows file route, plus version-fenced SQLite mutations. External services and non-idempotent APIs need their own conditional-write, observation, and reconciliation guarantees.</p>
+<h2>Continue the Series</h2>
+<ul>
+<li><strong>Series index:</strong> <a href="https://blayneaina.com/">From Proposal to Consequence: The AINA Transition-Governance Series</a></li>
+<li><strong>Previous:</strong> <a href="https://blayneaina.com/04-the-room-why-git-and-chat-are-not-coordination-planes/">Article 04 — The Room: Why Git and Chat Are Not Coordination Planes</a></li>
+<li><strong>Next:</strong> <a href="https://blayneaina.com/06-rollback-is-not-erasure-dual-tier-vaults-and-ungated-quarantine/">Article 06 — Rollback Is Not Erasure: Dual-Tier Vaults and Ungated Quarantine</a></li>
+<li><strong>Deployment and independent review:</strong> <a href="https://blayneaina.com/09-bring-one-real-boundary-work-with-blayne/">Article 09 — Bring One Real Boundary</a></li>
+</ul>
+<hr>
+<h2>Primary 2026 Sources</h2>
+<ul>
+<li><a href="https://arxiv.org/abs/2609.37475">Shu — <em>Boundary-State Control for Tool-Using Language-Model Agents: Commit-Time Consistency under State Drift</em>, <code>arXiv:2609.37475</code></a></li>
+<li><a href="https://arxiv.org/abs/2606.15376">Lyu et al. — <em>CoAgent: Concurrency Control for Multi-Agent Systems</em>, <code>arXiv:2606.15376</code></a></li>
+<li><a href="https://redisson.org/glossary/java-fencedlock.html">Redisson FencedLock Documentation</a></li>
+<li><a href="https://learn.microsoft.com/en-us/windows/win32/fileio/creating-and-opening-files">Microsoft <code>CreateFileW</code> and File-Sharing Documentation</a></li>
+<li><a href="https://learn.microsoft.com/en-us/windows-hardware/drivers/ddi/ntifs/ns-ntifs-_file_rename_information">Microsoft <code>FILE_RENAME_INFORMATION_EX</code></a></li>
+<li><a href="https://learn.microsoft.com/en-us/windows/win32/api/fileapi/nf-fileapi-getfinalpathnamebyhandlew">Microsoft <code>GetFinalPathNameByHandleW</code></a></li>
+</ul>
+<hr>
+<h2>Publication Metadata</h2>
+<p><strong>Title tag:</strong> Expiry Is Not Fencing: Typed Leases and Kernel Write Exclusion<br><strong>Meta description:</strong> Why wall-clock lease expiry cannot stop stale AI writes: typed scopes, monotonic generations, five-role Win32 handle exchange, preimage forensics, and release quarantine.<br><strong>Series navigation:</strong> <a href="https://blayneaina.com/">Series index</a> · Article 05 of <em>From Proposal to Consequence: The AINA Transition-Governance Series</em>.<br><strong>Previous installment:</strong> <a href="https://blayneaina.com/04-the-room-why-git-and-chat-are-not-coordination-planes/">Article 04 — The Room: Why Git and Chat Are Not Coordination Planes</a>.<br><strong>Next installment:</strong> <a href="https://blayneaina.com/06-rollback-is-not-erasure-dual-tier-vaults-and-ungated-quarantine/">Article 06 — Rollback Is Not Erasure: Dual-Tier Vaults and Ungated Quarantine</a>.</p>
+
+
+      <p class="part-compact-nav"><strong>END OF §05 PART 4/4</strong> — Next Article: <a href="/06-rollback-is-not-erasure-dual-tier-vaults-and-ungated-quarantine/part-1/"><code>https://blayneaina.com/06-rollback-is-not-erasure-dual-tier-vaults-and-ungated-quarantine/part-1/</code></a> · <a href="/05/brief/">§05 1-Call Brief</a> · <a href="/05.md">Raw .md</a></p>
+    
+        </div>
+
+        
+        
+        
+        
+
+        
+
+        
+      </article>
+    </main>
+
+  </div>
+
+  <footer class="site-footer compact-ai-footer"><p><strong>blayneaina.com</strong> — <a href="https://blayneaina.com/ai-brief/">Master Brief (https://blayneaina.com/ai-brief/)</a> · <a href="https://blayneaina.com/ai-brief.txt">Plain-Text Brief (https://blayneaina.com/ai-brief.txt)</a> · <a href="https://blayneaina.com/articles/">All 9 Articles &amp; Briefs (https://blayneaina.com/articles/)</a> · <a href="https://blayneaina.com/llms.txt">llms.txt</a> · <a href="mailto:me@blayneaina.com">me@blayneaina.com</a></p></footer>
+
+
+
+
+
+  <script src="/script.js?v=20261109-s-tier"></script>
+</body>
+</html>

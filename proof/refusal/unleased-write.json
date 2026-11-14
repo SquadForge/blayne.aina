@@ -1,0 +1,44 @@
+{
+  "schema": "aina.refusal.unleased-write.v1",
+  "case_id": "native_write_without_lease_refused",
+  "evidence_strength": "complete_digest_chain",
+  "execution": {
+    "artifact": "conformance-output.json",
+    "candidate_binary": "squad.exe",
+    "candidate_sha256": "94d26802c3744182a6cb93ac4e47250c6140b6ff92e0902a7c415ab13e59f4b5",
+    "recorded_pass": true,
+    "snapshot_id": "snap_20261101_083638_0222585e"
+  },
+  "protected_target": {
+    "label": "ungated.txt",
+    "fixture": "fixtures/ungated.txt",
+    "bytes": 3
+  },
+  "hostile_proposal": {
+    "tool": "squad_edit",
+    "operation_id": "conf-ungated-write",
+    "expected_generation": 1,
+    "expected_sha256": "2d27fbdf4e8ca207afbfa388ca9172fbcc6c70e534af2476b3b704f87debadcf",
+    "content": "v2\n",
+    "lease_state": "released"
+  },
+  "refusal_receipt": {
+    "disposition": "REFUSED",
+    "reason_code": "exact_file_lease_required",
+    "observed": "squad error: agent 'package-mcp-smoke' does not hold an active File lock on the protected target; acquire this task scope before editing",
+    "unchanged_assertion": true,
+    "amber_quarantine": null,
+    "quarantine_note": "The mutation was refused before candidate destination bytes were produced."
+  },
+  "pre_attempt": {
+    "evidence": "gated seed and release baseline receipt",
+    "bytes": 3,
+    "sha256": "2d27fbdf4e8ca207afbfa388ca9172fbcc6c70e534af2476b3b704f87debadcf"
+  },
+  "post_refusal": {
+    "observed_at": "2026-11-01T15:36:38.282010+00:00",
+    "bytes": 3,
+    "sha256": "2d27fbdf4e8ca207afbfa388ca9172fbcc6c70e534af2476b3b704f87debadcf"
+  },
+  "destination_unchanged": true
+}

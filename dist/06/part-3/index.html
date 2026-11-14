@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>§06 Part 3/3: Rollback Is Not Erasure (The Article 06 Claim Card) | Blayne Aina</title>
+  <meta name="description" content="Sections: The Article 06 Claim Card, The Baseline Is Only Half the Recovery Story, Frequently Asked Questions, Continue the Series, Primary 2026 Sources, Publication Metadata">
+  <meta name="author" content="Blayne Aina">
+  <meta name="robots" content="index, follow, max-snippet:-1, max-image-preview:large, max-video-preview:-1">
+  <link rel="canonical" href="https://blayneaina.com/06-rollback-is-not-erasure-dual-tier-vaults-and-ungated-quarantine/part-3/">
+  <link rel="icon" href="/favicon.ico" sizes="any">
+  <link rel="icon" href="/favicon.svg" type="image/svg+xml">
+
+  <!-- OpenGraph / Social -->
+  <meta property="og:type" content="article">
+  <meta property="og:title" content="§06 Part 3/3: Rollback Is Not Erasure (The Article 06 Claim Card)">
+  <meta property="og:description" content="Sections: The Article 06 Claim Card, The Baseline Is Only Half the Recovery Story, Frequently Asked Questions, Continue the Series, Primary 2026 Sources, Publication Metadata">
+  <meta property="og:url" content="https://blayneaina.com/06-rollback-is-not-erasure-dual-tier-vaults-and-ungated-quarantine/part-3/">
+  <meta property="og:site_name" content="Blayne Aina — The Route to Trusting AI">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="§06 Part 3/3: Rollback Is Not Erasure (The Article 06 Claim Card)">
+  <meta name="twitter:description" content="Sections: The Article 06 Claim Card, The Baseline Is Only Half the Recovery Story, Frequently Asked Questions, Continue the Series, Primary 2026 Sources, Publication Metadata">
+  
+  <link rel="stylesheet" href="/style.css?v=20261109-s-tier">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@500;700&family=Instrument+Serif:ital@0;1&family=Inter:wght@400;500;600;700;800&family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,500;0,6..72,600;1,6..72,400&family=JetBrains+Mono:wght@400;500&family=Plus+Jakarta+Sans:wght@600;700;800&display=swap" rel="stylesheet">
+</head>
+<body>
+  <div class="reading-progress-bar" id="progressBar"></div>
+
+  <header class="site-header compact-ai-header"><div class="header-inner compact-ai-nav"><a href="/" class="brand"><strong>BLAYNE AINA</strong></a> | <a href="/ai-brief/">1-Page Master Brief (§01–§09)</a> | <a href="/articles/">All 9 Articles &amp; Briefs</a> | <a href="/research-assurance/">Assurance</a> | <a href="/refusal-proof/">Proof</a> | <a href="/llms.txt">llms.txt</a> | <a href="mailto:me@blayneaina.com">me@blayneaina.com</a></div></header>
+  <div class="layout-container presentation-layout">
+    <main class="content-area">
+      <article class="prose-wrapper presentation-wrapper">
+<header class="article-header compact-article-header"><h1 class="article-title">§06 Part 3/3: Rollback Is Not Erasure (The Article 06 Claim Card)</h1><p class="article-subtitle">Sections: The Article 06 Claim Card, The Baseline Is Only Half the Recovery Story, Frequently Asked Questions, Continue the Series, Primary 2026 Sources, Publication Metadata</p></header>
+
+        
+        
+
+        <div class="article-body">
+          
+      <p class="part-compact-nav"><strong>§06 PART 3/3</strong> (8,197 chars · Sections: The Article 06 Claim Card; The Baseline Is Only Half the Recovery Story; Frequently Asked Questions; Continue the Series; Primary 2026 Sources; Publication Metadata) — <a href="/06-rollback-is-not-erasure-dual-tier-vaults-and-ungated-quarantine/part-2/">← Part 2</a> · <a href="/07-defeating-approval-laundering-act-pinning-and-successor-grants/part-1/">§07 Part 1 →</a> · <a href="/06/brief/">1-Call Brief</a> · <a href="/06-rollback-is-not-erasure-dual-tier-vaults-and-ungated-quarantine/">Full §06</a> · <a href="/06/part-3.txt">Raw .txt</a> · All: <a href="/06-rollback-is-not-erasure-dual-tier-vaults-and-ungated-quarantine/part-1/">P1</a> <a href="/06-rollback-is-not-erasure-dual-tier-vaults-and-ungated-quarantine/part-2/">P2</a> <a href="/06-rollback-is-not-erasure-dual-tier-vaults-and-ungated-quarantine/part-3/">P3</a></p>
+    
+<h2>The Article 06 Claim Card</h2>
+<pre><code class="language-text">Mechanism:
+  AINA Dual-Tier Recovery and Forensic Quarantine
+  (Primary certified baselines, Amber content-addressed objects,
+   fail-closed checkout, version replay, per-edit snapshots,
+   bypass sentinel, release verification, and governed restore)
+
+Failure it governs:
+  Single-slot undo destroying the original baseline;
+  uncertified files impersonating recovery images;
+  out-of-band writes laundered into legitimate post-edit state;
+  silent rollback destroying evidence and obscuring downstream consequences.
+
+Positive path:
+  lease + kernel handle
+  → Primary create_new + sidecar + full readback
+  → Amber raw-byte archive + exact readback
+  → vault.jsonl durable binding and full replay
+  → gated edits accumulate Amber states
+  → release content verification
+  → clean post-edit release or quarantine_ungated
+  → governed restore with current authority and displaced-state preservation.
+
+Refusal / quarantine path:
+  primary_readback_mismatch, vault_capture_receipt_unconfirmed
+  primary_scope_identity_mismatch, primary_capture_binding_missing
+  manager::release + oshandle::release at failed checkout
+  bypass_detected heuristic signal
+  content_mismatch and released_with_ungated_content
+  refused_intervening_change and rescue_effect_unconfirmed.
+
+Evidence status:
+  Implemented and Author-Verified on declared Windows recovery paths.
+  2026 research supplies independent architectural context, not endorsement.
+  No independent-validation, total-history, or total-bypass-detection claim.
+
+Verifier and artifacts:
+  Primary version and .sha256 sidecar
+  meta.json and version_binding replay
+  Amber .obj and amber.jsonl
+  checkout/edit_snapshot/post_edit/quarantine_ungated/native_snapshot records
+  bypass_detected and released_with_ungated_content signals
+  rescue_prepared and rescue_outcome records with exact readback.
+
+Scope and claim ceiling:
+  Raw-byte integrity does not prevent privileged deletion of the store.
+  Timestamp scanning is heuristic, not comprehensive kernel observation.
+  Restoration is a new governed mutation, not historical erasure.
+  Rescue in-place writes are not crash-atomic; preparation enables reconciliation.
+  Local rollback cannot recall downstream reliance, disclosure, or propagation.
+  No universal history, external-effect erasure, or independent-validation claim.
+
+Next stage in the machine:
+  Article 06 certifies recovery and preserves ungated evidence.
+  Article 07 pins the controller-fixed act, fences the destination mutation,
+  and proves original-session or non-fabricating successor receipt.
+
+Commercial doorway:
+  Forensic Baseline &amp; Out-of-Band Mutation Quarantine Challenge — bring one
+  shared file exposed to out-of-band edits; receive a certified checkout,
+  Amber state-history demonstration, release-quarantine replay, and recovery
+  ceiling map (Article 09 · me@blayneaina.com).
+</code></pre>
+<h2>The Baseline Is Only Half the Recovery Story</h2>
+<p>A trusted recovery image matters. So does the record of why it was needed.</p>
+<p>The dual-tier architecture preserves both. Primary certifies the state to restore. Amber preserves every state the system passed through, including the state nobody authorized. Checkout failure revokes tenancy rather than letting execution proceed without a recovery path. Release mismatch becomes a signal rather than a silent overwrite. Restoration creates another governed transition rather than deleting the past.</p>
+<p>That is how a system can recover operationally without falsifying its own history.</p>
+<blockquote>
+<p><strong>Rollback restores a state. Erasure would destroy evidence. AINA preserves the baseline, the divergence, and the obligation to reconcile them.</strong></p>
+</blockquote>
+<p>Article 07 moves to the act and its return: whether the controller fixed the exact mutation before the worker launched, whether the destination accepted it under current tenancy, and whether the original session—or an explicitly non-fabricating successor—received the result.</p>
+<h2>Frequently Asked Questions</h2>
+<h3>Why is rollback not erasure?</h3>
+<p>Rollback changes current bytes to a prior state. It does not remove the fact that an action occurred, erase downstream reliance, or eliminate the need to investigate it. A governed recovery preserves both the restored baseline and the complete forensic history.</p>
+<h3>What makes a Primary version a certified baseline?</h3>
+<p>The saved bytes must match the original readback, the adjacent sidecar must match their SHA-256, the full capture-ledger replay must bind that exact version to the same canonical source, digest, and size, and any caller pin must match. Unbound files are not trusted recovery images.</p>
+<h3>Why keep two vaults instead of one backup?</h3>
+<p>Primary preserves the clean pre-checkout operational baseline. Amber accumulates per-edit, post-edit, native snapshot, and quarantine objects. Separating them prevents repeated edits or ungated writes from overwriting the baseline and laundering provenance.</p>
+<h3>Does <code>bypass_detected</code> prove every out-of-band write was seen?</h3>
+<p>No. It is an mtime and ledger-based heuristic. Timestamp manipulation, pre-existing handles, memory mappings, and unindexed paths can evade it. Article 05 supplies kernel exclusion for later incompatible opens; the sentinel adds forensic visibility.</p>
+<h3>What happens when release content does not match the last gated state?</h3>
+<p>The divergent bytes are archived to Amber as <code>quarantine_ungated</code>, the Room receives <code>released_with_ungated_content</code>, and the receipt reports <code>content_mismatch: true</code>. The bytes remain on disk for inspection instead of being silently restored or deleted.</p>
+<h3>Can recovery undo external API calls or disclosures?</h3>
+<p>No. Recovery restores local file state. It cannot recall webhooks, third-party syncs, queries, disclosures, or another agent&#39;s subsequent reasoning. Those require destination-specific reconciliation driven by the quarantine evidence.</p>
+<h2>Continue the Series</h2>
+<ul>
+<li><strong>Series index:</strong> <a href="https://blayneaina.com/">From Proposal to Consequence: The AINA Transition-Governance Series</a></li>
+<li><strong>Previous:</strong> <a href="https://blayneaina.com/05-expiry-is-not-fencing-typed-leases-and-kernel-write-exclusion/">Article 05 — Expiry Is Not Fencing: Typed Leases and Kernel Write Exclusion</a></li>
+<li><strong>Next:</strong> <a href="https://blayneaina.com/07-defeating-approval-laundering-act-pinning-and-successor-grants/">Article 07 — Defeating Approval Laundering: Act Pinning and Successor Grants</a></li>
+<li><strong>Deployment and independent review:</strong> <a href="https://blayneaina.com/09-bring-one-real-boundary-work-with-blayne/">Article 09 — Bring One Real Boundary</a></li>
+</ul>
+<hr>
+<h2>Primary 2026 Sources</h2>
+<ul>
+<li><a href="https://arxiv.org/abs/2609.37475">Shu — <em>Boundary-State Control for Tool-Using Language-Model Agents</em>, <code>arXiv:2609.37475</code></a></li>
+<li><a href="https://arxiv.org/abs/2609.29808">Pino — <em>Hard Stop: Kernel-Level Preemption and Containment for Rogue Agentic Execution</em>, <code>arXiv:2609.29808</code></a></li>
+<li><a href="https://arxiv.org/abs/2609.30266">Qin et al. — <em>LLM Agents Can Easily Tamper With Their Own Traces</em>, <code>arXiv:2609.30266</code></a></li>
+<li><a href="https://arxiv.org/abs/2609.01931">Bindschaedler, Botha, and Siebenbrunner — <em>Agent Flight Recorder</em>, <code>arXiv:2609.01931</code></a></li>
+<li><a href="https://arxiv.org/abs/2609.35659">Ghosh — <em>Tracekit: Tamper-Evident Intent-Reasoning-Action Auditing for AI Agents</em>, <code>arXiv:2609.35659</code></a></li>
+</ul>
+<hr>
+<h2>Publication Metadata</h2>
+<p><strong>Title tag:</strong> Rollback Is Not Erasure: Dual-Tier Vaults and Ungated Quarantine<br><strong>Meta description:</strong> Why single-tier undo fails autonomous agents: certified Primary baselines, content-addressed Amber forensics, fail-closed checkout, bypass detection, and ungated quarantine.<br><strong>Series navigation:</strong> <a href="https://blayneaina.com/">Series index</a> · Article 06 of <em>From Proposal to Consequence: The AINA Transition-Governance Series</em>.<br><strong>Previous installment:</strong> <a href="https://blayneaina.com/05-expiry-is-not-fencing-typed-leases-and-kernel-write-exclusion/">Article 05 — Expiry Is Not Fencing: Typed Leases and Kernel Write Exclusion</a>.<br><strong>Next installment:</strong> <a href="https://blayneaina.com/07-defeating-approval-laundering-act-pinning-and-successor-grants/">Article 07 — Defeating Approval Laundering: Act Pinning and Successor Grants</a>.</p>
+
+
+      <p class="part-compact-nav"><strong>END OF §06 PART 3/3</strong> — Next Article: <a href="/07-defeating-approval-laundering-act-pinning-and-successor-grants/part-1/"><code>https://blayneaina.com/07-defeating-approval-laundering-act-pinning-and-successor-grants/part-1/</code></a> · <a href="/06/brief/">§06 1-Call Brief</a> · <a href="/06.md">Raw .md</a></p>
+    
+        </div>
+
+        
+        
+        
+        
+
+        
+
+        
+      </article>
+    </main>
+
+  </div>
+
+  <footer class="site-footer compact-ai-footer"><p><strong>blayneaina.com</strong> — <a href="https://blayneaina.com/ai-brief/">Master Brief (https://blayneaina.com/ai-brief/)</a> · <a href="https://blayneaina.com/ai-brief.txt">Plain-Text Brief (https://blayneaina.com/ai-brief.txt)</a> · <a href="https://blayneaina.com/articles/">All 9 Articles &amp; Briefs (https://blayneaina.com/articles/)</a> · <a href="https://blayneaina.com/llms.txt">llms.txt</a> · <a href="mailto:me@blayneaina.com">me@blayneaina.com</a></p></footer>
+
+
+
+
+
+  <script src="/script.js?v=20261109-s-tier"></script>
+</body>
+</html>

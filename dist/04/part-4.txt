@@ -1,0 +1,154 @@
+# §04 Part 4/5 — The Room Coordination Plane
+Canonical: https://blayneaina.com/04-the-room-why-git-and-chat-are-not-coordination-planes/part-4/ | Raw Article: https://blayneaina.com/04.md | Next Part: https://blayneaina.com/04/part-5.txt
+
+## 9. Subsystem 8: Task Lineage and Privileged Acceptance
+
+A Room reply says the worker answered. Acceptance asks whether the actual artifacts satisfy the task.
+
+### Delegation cannot outlive or widen its ancestry
+
+Task scopes exclude controller state, recovery storage, shipped binaries, skill mirrors, and authoritative Room ledgers. `validate_ancestry` walks at most 16 parent links and rejects cycles.
+
+Every ancestor must remain open or claimed, preserve owner and recipient eligibility, match authority epoch and any revision, retain the same governing source, and keep the child's scope within the parent. `coordination_only` cannot widen into mutation. A parent whose authority changes invalidates the descendant chain.
+
+### Seven acceptance kinds, evaluated by the engine
+
+`done_task` evaluates the task's declared checks rather than trusting completion prose.
+
+| Kind | What the privileged evaluator actually measures |
+|---|---|
+| `sha256` | Reads the in-scope file and compares its live SHA-256 with the expected digest |
+| `file_exists` | Uses `Path::try_exists()`; an OS or permission error is `unconfirmed`, not success |
+| `file_absent` | Uses the same observation law: an error fails closed instead of becoming absence |
+| `command` | Executes an absolute, owner-allowlisted binary with no shell or PATH lookup, optional exact argument tail, bounded timeout, and expected exit code—outside `with_transition` |
+| `evidence_origins` | Requires 1–16 distinct, lineage-collapsed first-hand origins behind the named requirement, plus any owner-wide minimum |
+| `destination` | Checks folded ledger status and a fresh read-only `effect_present` observation for one operation or every task operation |
+| `worker_receipt` | Validates Basic, StrictReturn, or SuccessorReturn evidence from immutable submissions, not a worker-authored receipt path |
+
+The three receipt profiles are intentionally different:
+
+- **Basic** requires at least `min` task submissions with one terminal outcome and no pending, recording-pending, or worker-unread results.
+- **StrictReturn** requires one applied submission with the exact worker, target, expected fields, and version delta `+1`, then proves that the original worker received the result and returned a correlated Room reply. `proposal_id` is optional; `outcome` and `min` are forbidden.
+- **SuccessorReturn** requires all eight pins: `proposals: "successor"`, worker, proposal ID and digest, whole-record digest, whole-outcome digest, and outcome. It proves fresh acknowledgment of a historical result while explicitly keeping `satisfies_original_return: false` and `resolves_original_obligation: false`.
+
+A successor acknowledgment never fabricates the original session's return.
+
+### Completion revalidates authority and live evidence
+
+Long-running command checks run before the short transition. Inside `with_transition`, completion then:
+
+1. re-reads the task and requires it to remain claimed;
+2. compares all 14 authority keys: `owner`, `scope`, `active_scope_pin`, `file_scope_pin`, `project_id`, `project_root_pin`, `authority_epoch`, `authority_revision`, `source`, `delegation`, `lock`, `acceptance`, `requirements`, and `evidence_manifest`;
+3. rechecks dependencies, ancestry, project scope, and settled worker contributions;
+4. re-evaluates every non-command check against current files, evidence, and destinations;
+5. refuses completion on changed acceptance or `content_mismatch` quarantine;
+6. releases the scope lock through the structured release path and appends `task_done`.
+
+Requirement- or source-bound tasks cannot close with an empty acceptance array unless a trusted operator records an explicit override and reason. Acceptance is configured evidence, not a ceremonial green check.
+
+### Exhibit 4 — Successful artifact acceptance
+
+This synthetic result combines file, evidence, destination, and receipt measurements. Every predicate is independently true; none borrows the others' assurance.
+
+```json
+{
+  "task": "TSK-2026-ROOM-004",
+  "acceptance_pass": true,
+  "acceptance_results": [
+    {
+      "kind": "sha256",
+      "pass": true,
+      "detail": {
+        "path": "project:/artifacts/renewal-result.json",
+        "expected": "4a9c8e12f03b7d651928374655647382910abcdef1234567890abcdef1234567",
+        "actual": "4a9c8e12f03b7d651928374655647382910abcdef1234567890abcdef1234567"
+      }
+    },
+    {
+      "kind": "evidence_origins",
+      "pass": true,
+      "detail": { "req": "R1", "min": 2, "distinct_origins": 2, "basis": "task_acceptance" }
+    },
+    {
+      "kind": "destination",
+      "pass": true,
+      "detail": { "operation_id": "op_synthetic_004", "status": "resolved", "effect_present": true }
+    },
+    {
+      "kind": "worker_receipt",
+      "pass": true,
+      "detail": { "profile": "strict", "proposals": "task", "worker": "reviewer-beta", "proof": "original-session-return-verified" }
+    }
+  ]
+}
+```
+
+### Exhibit 5 — `file_absent` cannot turn an observation error into absence
+
+```json
+{
+  "kind": "file_absent",
+  "pass": false,
+  "detail": {
+    "path": "project:/protected/unreadable-result.json",
+    "error": "Access is denied.",
+    "error_kind": "PermissionDenied",
+    "observation": "unconfirmed"
+  }
+}
+```
+
+`!path.exists()` would be the wrong proof here. `try_exists()` preserves the difference between absent and unknowable.
+
+## 10. Subsystem 9: Five Runtime Invariants Constrain Event Law
+
+Pre-action gates decide whether an act may proceed. The runtime invariant engine continuously checks the event stream for structural violations and records dedicated `invariant_violation` nodes through the journal and Room graph.
+
+| Invariant | State carrier and rule | Severity and boundary |
+|---|---|---|
+| `exactly_once` | A bounded 10,000-entry FIFO `IdempotencyRegistry` rejects a repeated confirmed idempotency key | `Reject`; deduplicates registered events, not every external effect |
+| `well_formed` | A lifecycle tracker per `(agent_id, parent_id)` enforces valid `Begin → Effect → Resolve` transitions | `Reject`; an effect or resolution cannot invent its own lifecycle |
+| `exclusive` | A lease set over `TypedScope(namespace, resource_id)` rejects conflicting live holders | `Reject`; file scopes conflict hierarchically, non-file scopes by exact identity |
+| `causal` | A resolved-ID set checks whether each `parent_id` is already resolved | `Flag`; unresolved causal matter is surfaced, not silently accepted as complete |
+| `resolution` | An unresolved-intention map detects begins that exceed the caller's TTL before resolution | `IndoubtEffect`; the effect remains uncertain rather than being declared success or failure |
+
+Reject violations are recorded without committing the triggering envelope. Flag violations are buffered in the same checked append path. The graph therefore preserves both rejected operations and suspicious causal conditions without laundering them into valid effects.
+
+The 10,000-entry FIFO also defines a **bounded replay-detection window**. An evicted key no longer receives the registry's duplicate protection; eviction does not create a fresh execution grant or a permanent replay-proof history. Deployment acceptance must state the registry's retention and reconstruction horizon rather than treating it as unlimited.
+
+**Exactly-once event resolution is not exactly-once external effect.** A destination can accept an effect while its ordinary receipt fails, an external service can perform a non-idempotent side effect, and a process can crash between mutation and observation. Articles 06–08 carry that burden through recovery records, readback, held completion, and break-glass reconciliation.
+
+### Exhibit 6 — An in-doubt TTL record
+
+```json
+{
+  "event_id": "evt_0123456789abcdef_deadbeef",
+  "agent_id": "reviewer-beta",
+  "began_at": "",
+  "elapsed_secs": 317
+}
+```
+
+This is not a failure receipt and not a success receipt. It is a bounded indication that an intention remained unresolved beyond the declared TTL and requires reconciliation.
+
+## 11. The 2026 Coordination Evidence Landscape
+
+The 2026 literature and protocol specifications reinforce the same architectural distinction: state management, native session identity, revalidation, and measured completion are separate control surfaces. Each source has a bounded claim.
+
+| 2026 primary source | What it actually establishes | How the Room composes with it |
+|---|---|---|
+| Liu et al., [*Multi-agent Collaboration with State Management (STORM)*](https://arxiv.org/abs/2605.20563), May 2026 preprint | Worktree isolation defers conflicts to post-hoc merge; STORM mediates shared-workspace state at write time and outperforms the baseline by 18.7 points on Commit0-Lite and 1.4 on PaperBench, with comparable or better cost efficiency. | Strong evidence for live state mediation. Git remains the source-history plane; the Room handles current observation, admission, and ownership. |
+| Sarkar, [*Before the Pull Request: Mining Multi-Agent Coordination*](https://arxiv.org/abs/2606.19616), June 2026 preprint | A shared coordination substrate reduced redundant work from 78% to 0% while useful throughput more than tripled, converged without silently dropped writes, and exposed lock starvation, rediscovery, and race-to-close hidden from PR history. | Coordination artifacts must preserve claims and collisions before the PR. The Room additionally gates their authority and acceptance rather than merely mining them afterward. |
+| Nechepurenko and Shuvalov, [*Coordination as an Architectural Layer for LLM-Based Multi-Agent Systems*](https://arxiv.org/abs/2605.03310), May 2026 preprint | An information-controlled prediction-market study reports distinguishable coordination signatures and a cost-quality Pareto frontier. The authors call it a methodology-validating first instantiation, not a general cross-model claim; pairwise tests do not survive correction. | Coordination belongs in architecture, not only prompts. The Room does not borrow a universal failure-rate claim from this bounded study. |
+| [Model Context Protocol `2026-07-28`](https://modelcontextprotocol.io/specification/2026-07-28) | Defines stateless, self-contained requests and per-request capability negotiation, with optional tasks and context features. | Stateless transport does not supply native conversational standing. The Room binds actor, registration, native conversation, and current view explicitly. |
+| [Agent Client Protocol documentation](https://agentclientprotocol.com), 2026 | Standardizes editor–agent communication and native session lifecycle across local JSON-RPC/stdio and remote transports. | Native sessions are the delivery boundary. The Room's Session Factory and proof ladder distinguish dispatch, body visibility, wrong body, reply, and process exit. |
+| Wang, Wang, and Wu, [*The Unreliable Progress Bar*](https://arxiv.org/abs/2609.08589), September 2026 preprint | Reporting reliability varies by task stage: most tested models lose accuracy mid-task and recover at completion, while newer models become conservative at the finish line. The authors advise against controlling flow from state reports alone. | `done` requires privileged artifact and destination acceptance, not a model's progress bar. |
+| Lyu et al., [*From Version Conflicts to Decision Conflicts*](https://arxiv.org/abs/2609.08015), September 2026 preprint | ATR rechecks only decision-affecting conditions, matched every specified outcome across 210,000 controlled executions, evaluated 0.6 versus 6.0 conditions per change, and reports a large latency reduction. The authors limit this to controlled feasibility. | The Room rechecks current authority at turn entry, dispatch, worker claim, completion, and destination—not merely whether bytes changed. |
+| Khan, [*S-Bus: Automatic Read-Set Reconstruction for Multi-Agent LLM State Coordination*](https://arxiv.org/abs/2605.17076), May 2026 preprint, revised v2 | Observable-Read Isolation reconstructs read sets from observed GET traffic, with formal checks and zero Type-I corruptions across 884,110 commit attempts. It also documents topology-dependent limits and agent over-reporting. | The Room measures confirmed read coverage and causal ancestry rather than assuming an agent observed the state it cites. |
+| [SQLite WAL documentation](https://www.sqlite.org/wal.html) and [Microsoft Win32 documentation](https://learn.microsoft.com/en-us/windows/win32/api/), current 2026 references | WAL durability modes govern when transactions reach stable storage; `GetFileInformationByHandleEx`, Job Object termination, and accounting provide kernel object identity and process-count observations. | These are implementation primitives, not complete coordination semantics. The Room composes them into object pinning, journal reconciliation, and durable stop proof. |
+
+A final concession matters: a conventional deployment can implement the same invariants with different names. The Room's claim is not exclusive ownership of coordination theory. Its claim is a concrete, inspectable composition of the required predicates in one continuous machine.
+
+**Evidence availability and performance boundary:** the implementation and acceptance artifacts are `CONTROLLED` for qualified, method-scoped technical review, with adverse findings permitted. They are not unrestricted public downloads or independent validation. The architecture does not claim a universal latency or throughput envelope: recursive causal queries, journal folds, live revalidation, recipient evidence checks, native-session proof, and stop confirmation must be measured against the actual Room topology, adapters, and workload.
+
+

@@ -1,0 +1,59 @@
+# §09 Part 8/8 — Bring One Real Boundary: Peer Review & R&D Evaluation
+Canonical: https://blayneaina.com/09-bring-one-real-boundary-work-with-blayne/part-8/ | Raw Article: https://blayneaina.com/09.md
+
+## Frequently Asked Questions
+
+### What should I bring to an initial challenge?
+
+Bring one bounded transition, its decision owner, an authorized synthetic/redacted/existing sample, handling constraints, and the positive and negative outcomes you need to evaluate. Do not send confidential production data or credentials with the first inquiry.
+
+### Does a challenge include production integration or CRM write-back?
+
+No. It covers the accepted existing implementation path and its evidence. Custom schemas, connectors, production ingestion, deployment, graph construction, and write-back require separately scoped paid work.
+
+### Does a client-controlled node mean the whole system is offline?
+
+Not automatically. There is no mandatory vendor-hosted AINA cloud, and local state can remain under client custody. External models, APIs, and destinations still require their declared network routes, credentials, terms, and evidence boundaries.
+
+### Why is entity resolution the commercial wedge?
+
+Duplicate contacts, companies, and products create a concrete, costly, evidence-rich problem. Semantic Switch lets external computation operate on structure-preserving fictional records while native values remain local; qBlock, Fracture, Forge, exact restoration, and Shield then create a defensible identity substrate. The pipeline does not guarantee matching accuracy or authorize graph-driven outreach and mutation.
+
+### Does a paid pilot buy independent validation?
+
+No. Commercial work is paid and privately scoped, but payment cannot buy praise, certification, an evidence-status upgrade, or outcome control. Independent evaluation uses a separate method-scoped research route and permits adverse findings.
+
+### Do the regulatory mappings establish compliance?
+
+No. They identify technical evidence that may support an organization's obligations. Use-case classification, jurisdiction, management systems, legal duties, DPIAs, SOC examinations, and conformity assessments remain separate organizational and professional work.
+
+## Continue the Series
+
+- **Series index:** [From Proposal to Consequence: The AINA Transition-Governance Series](/)
+- **Previous:** [Article 08 — The Sovereign Kill Switch: Break-Glass Epochs and the Conformance Gate](/08-sovereign-kill-switch-break-glass-epochs-and-conformance-gate/)
+- **Start at the doctrine:** [Article 01 — An AI Output Is Not an Act](/01-an-ai-output-is-not-an-act/)
+- **Independent evaluation:** use the `[RESEARCH]` route (`mailto:me@blayneaina.com?subject=[RESEARCH]%20Independent%20Technical%20Evaluation`); adverse findings remain publishable and payment is never required.
+
+---
+
+## Primary Framework and Regulatory References
+
+- [NIST AI Risk Management Framework Core — GOVERN, MAP, MEASURE, MANAGE](https://airc.nist.gov/airmf-resources/airmf/5-sec-core/)
+- [NIST NCCoE — Software and AI Agent Identity and Authorization](https://pages.nist.gov/nccoe-ai-identity/)
+- [ISO/IEC 42001:2023 — AI management systems](https://www.iso.org/standard/42001)
+- [EU AI Act — consolidated Regulation (EU) 2024/1689](https://eur-lex.europa.eu/eli/reg/2024/1689/2026-07-27/eng)
+- [UK Data (Use and Access) Act 2025, Section 80 — automated decision-making](https://www.legislation.gov.uk/ukpga/2025/18/section/80)
+- [Federal Reserve SR 26-2 — Revised Guidance on Model Risk Management](https://www.federalreserve.gov/supervisionreg/srletters/SR2602.htm)
+- [Federal Reserve — Supervisory Guidance on Model Risk Management, including scope note 3](https://www.federalreserve.gov/frrs/guidance/supervisory-guidance-on-model-risk-management.htm)
+- [AICPA & CIMA — System and Organization Controls suite](https://www.aicpa-cima.com/resources/landing/system-and-organization-controls-soc-suite-of-services)
+- [European Data Protection Board — Data protection impact assessment](https://www.edpb.europa.eu/topics/accountability-and-compliance-tools/data-protection-impact-assessment_en)
+
+---
+
+## Publication Metadata
+
+**Title tag:** Bring One Real Boundary: Technical Peer Review, Challenge Tracks & R&D Evaluation | Blayne Aina
+**Meta description:** Evaluate the AINA architecture and reference runtime through three bounded technical challenge tracks, explicit acceptance contracts, independent peer review, and R&D grant due diligence.
+**Series navigation:** [Series index](/) · Evaluation, peer-review, and deployment doorway of *From Proposal to Consequence: The AINA Transition-Governance Series*.  
+**Previous installment:** [Article 08 — The Sovereign Kill Switch: Break-Glass Epochs and the Conformance Gate](/08-sovereign-kill-switch-break-glass-epochs-and-conformance-gate/).  
+**Series index:** [From Proposal to Consequence](/).

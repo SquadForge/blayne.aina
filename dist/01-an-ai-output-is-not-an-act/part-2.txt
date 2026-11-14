@@ -1,0 +1,53 @@
+# §01 Part 2/6 — An AI Output Is Not an Act
+Canonical: https://blayneaina.com/01-an-ai-output-is-not-an-act/part-2/ | Raw Article: https://blayneaina.com/01.md | Next Part: https://blayneaina.com/01/part-3.txt
+
+## The Unified Trust Machine
+
+Across this nine-part series, we examine one continuous machine from three complementary angles:
+
+1. **Four Levels of Trust** explain why each subsystem exists in the sequence: **Epistemic → Constitutional → Coordination → Execution**.
+2. **Five Transitions of Authority** trace how a candidate action moves through time: **Protected Reality → Recognized Act → Standing → Bounded Execution Authority → Observed Effect → Terminal Evidence**.
+3. **The Five-Center Standing Conjunction** defines the falsifiable pre-release predicate equation evaluated before a transition may acquire operative force:
+
+> **OperativeStanding(a) = RecognizedAct(a) ∧ EligibleActor(a) ∧ LawfulEncounter(a) ∧ ExecutionReady(a) ∧ ReleaseDispositionBound(a)**
+
+| Predicate responsibility | Governing question |
+|---|---|
+| `RecognizedAct(a)` | Can the proposal be represented under a bounded act grammar with exact evidence and operands? |
+| `EligibleActor(a)` | Is this actor and session eligible for this act, scope, task, and authority epoch? |
+| `LawfulEncounter(a)` | Was the evidence world encountered, sealed, served, and projected under the declared rules? |
+| `ExecutionReady(a)` | Are the exact target, pre-state, execution path, and current tenancy valid now? |
+| `ReleaseDispositionBound(a)` | Has the exact release disposition been committed, including how uncertainty and receipts will close? |
+
+These are functional predicate responsibilities, not a requirement that every deployment run five microservices or a claim that this is the only possible decomposition. A mature stack that enforces the same predicates over the same canonical transition identity defeats the same defect without adopting AINA’s names. If any one predicate fails, no confidence score, vote, credential, or green check mark can compensate. Standing still does not prove worldly truth, policy legitimacy, or moral correctness.
+
+| Level of trust | Transition of authority | Constitutional center and handle | Principal machinery in `squad-connector/src` | Series installment |
+|---|---|---|---|---|
+| **0. Stage Zero — Protected Reality** | Precondition: seal the world before reasoning begins | **Stage Zero** (`doc_source` + `evidence/view.rs`) | Content-decided format dispatch, zero-network LPAC + Job Object parser confinement, lossy omissions as addressable nodes, JCS `ViewManifest` and `view_digest`, egress-gated `cap_` captures versus labeled `AgentSupplied` excerpts. | [**Article 02**](https://blayneaina.com/02-zero-trust-document-ingestion-and-server-cut-evidence/) |
+| **1. Epistemic Trust** | What may the system know, cite, and compare? | **Perceptual Closure — upstream `LawfulEncounter(a)`** | First-hand `srv_` receipts, complete current-view served coverage, Room-issued `ev_` handles, drift refusal, bounded absence proofs, and automatic reassessment. | [**Article 02**](https://blayneaina.com/02-zero-trust-document-ingestion-and-server-cut-evidence/) |
+| **2. Constitutional Trust** | **Transitions 1 and 2:** generated matter becomes a recognized act and earns standing | **EISA — `RecognizedAct(a)`** | Duplicate-key-refusing strict parser, record-relative RFC 6901 pointers (`MAX_POINTER_DEPTH = 8`), seven opcodes across four topological layers, 17 evidence tags, 12 deterministic comparators, submission-complete counterevidence checks, Union-Find partition connectivity, and `squad.eisa.submission/1` committed as `eisa_` in the Room graph. | [**Article 03**](https://blayneaina.com/03-eisa-four-gate-verdict-machine-and-entity-resolution/) |
+| **3. Coordination Trust** | **Transition 3:** standing becomes bounded execution authority | **Actor ABI — `EligibleActor(a)` plus lawful encounter** | Hardware-pinned project territories (`VolumeSerialNumber:FileId`), thread-bound `SessionGuard` and host `_meta.threadId`, five wake checks, six typed lease namespaces, and two-phase monotonic `room.generation.v2`. | [**Article 04**](https://blayneaina.com/04-the-room-why-git-and-chat-are-not-coordination-planes/) and [**Article 05**](https://blayneaina.com/05-expiry-is-not-fencing-typed-leases-and-kernel-write-exclusion/) |
+| **4. Execution Trust — Release** | **Transition 4:** execution produces an independently observed effect | **Machine Force — `ExecutionReady(a)`** | Five-role Win32 guarded replacement (`G`, `W`, `T`, `H`, `G'`), Primary/Amber raw-byte recovery and quarantine, pre-resume child token and handle-table inspection, controller-fixed `RequestedAct`, and `with_transition`-serialized SQLite `IMMEDIATE` mutations. | [**Article 05**](https://blayneaina.com/05-expiry-is-not-fencing-typed-leases-and-kernel-write-exclusion/), [**Article 06**](https://blayneaina.com/06-rollback-is-not-erasure-dual-tier-vaults-and-ungated-quarantine/), and [**Article 07**](https://blayneaina.com/07-defeating-approval-laundering-act-pinning-and-successor-grants/) |
+| **4. Execution Trust — Closure** | **Transition 5:** the transition closes with terminal evidence | **Terminal Binding — `ReleaseDispositionBound(a)`** | Strict original-session first receipt versus non-fabricating `Successor` result grants, durable `effect_unconfirmed` holds, five runtime invariants, local-console break-glass `control_epoch`, and the 45-case candidate-binary conformance gate. | [**Article 07**](https://blayneaina.com/07-defeating-approval-laundering-act-pinning-and-successor-grants/) and [**Article 08**](https://blayneaina.com/08-sovereign-kill-switch-break-glass-epochs-and-conformance-gate/) |
+
+### The seven-stage consequence lifecycle
+
+The same machine can be followed as one transition through seven events:
+
+1. **Protected Reality** — source revisions, parser views, active governance, and evidence coordinates are sealed.
+2. **Proposal** — a model, human, remote machine, sensor, or attacker-shaped source submits matter with recorded origin and requested consequence.
+3. **Recognition** — the proposal compiles into a canonical, versioned act or fails as a typed fault.
+4. **Admission** — standing is evaluated against the sealed evidence world, current actor and task authority, target, execution profile, and trusted time.
+5. **Execution** — a bounded act is consumed at the authoritative ordering point, with current pre-state and authority re-derived immediately before mutation.
+6. **Independent Observation** — the destination is read back or measured, rather than trusting the executor’s prose.
+7. **Terminal Closure** — the result is classified and preserved as confirmed, unconfirmed, divergent, refused, withheld, or another typed terminal state.
+
+Post-effect observations can close or invalidate a transition. They cannot travel backward in time to prove that release was lawful.
+
+### The output channel can be the actuator
+
+The title is an authority rule, not a claim that communication cannot be consequential. Display, disclosure, transmission, publication, or rendering may itself be the governed effect. In that case, the output channel is the actuator and must be interposed **before the first byte, token, pixel, audio frame, or packet escapes**, not after a complete response has already escaped.
+
+This is **Perceptual Closure**: a correct internal state can become false in practice if a dashboard, summary, API projection, or generated explanation hides its actual status.
+
+

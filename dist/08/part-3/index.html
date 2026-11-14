@@ -1,0 +1,377 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>§08 Part 3/4: The Sovereign Kill Switch (5. The Candidate-Binary Publication Gate) | Blayne Aina</title>
+  <meta name="description" content="Sections: 5. The Candidate-Binary Publication Gate, 6. What the Gate Proves—and What It Cannot, The Break-Glass &amp; Conformance Qualification Challenge">
+  <meta name="author" content="Blayne Aina">
+  <meta name="robots" content="index, follow, max-snippet:-1, max-image-preview:large, max-video-preview:-1">
+  <link rel="canonical" href="https://blayneaina.com/08-sovereign-kill-switch-break-glass-epochs-and-conformance-gate/part-3/">
+  <link rel="icon" href="/favicon.ico" sizes="any">
+  <link rel="icon" href="/favicon.svg" type="image/svg+xml">
+
+  <!-- OpenGraph / Social -->
+  <meta property="og:type" content="article">
+  <meta property="og:title" content="§08 Part 3/4: The Sovereign Kill Switch (5. The Candidate-Binary Publication Gate)">
+  <meta property="og:description" content="Sections: 5. The Candidate-Binary Publication Gate, 6. What the Gate Proves—and What It Cannot, The Break-Glass &amp; Conformance Qualification Challenge">
+  <meta property="og:url" content="https://blayneaina.com/08-sovereign-kill-switch-break-glass-epochs-and-conformance-gate/part-3/">
+  <meta property="og:site_name" content="Blayne Aina — The Route to Trusting AI">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="§08 Part 3/4: The Sovereign Kill Switch (5. The Candidate-Binary Publication Gate)">
+  <meta name="twitter:description" content="Sections: 5. The Candidate-Binary Publication Gate, 6. What the Gate Proves—and What It Cannot, The Break-Glass &amp; Conformance Qualification Challenge">
+  
+  <link rel="stylesheet" href="/style.css?v=20261109-s-tier">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@500;700&family=Instrument+Serif:ital@0;1&family=Inter:wght@400;500;600;700;800&family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,500;0,6..72,600;1,6..72,400&family=JetBrains+Mono:wght@400;500&family=Plus+Jakarta+Sans:wght@600;700;800&display=swap" rel="stylesheet">
+</head>
+<body>
+  <div class="reading-progress-bar" id="progressBar"></div>
+
+  <header class="site-header compact-ai-header"><div class="header-inner compact-ai-nav"><a href="/" class="brand"><strong>BLAYNE AINA</strong></a> | <a href="/ai-brief/">1-Page Master Brief (§01–§09)</a> | <a href="/articles/">All 9 Articles &amp; Briefs</a> | <a href="/research-assurance/">Assurance</a> | <a href="/refusal-proof/">Proof</a> | <a href="/llms.txt">llms.txt</a> | <a href="mailto:me@blayneaina.com">me@blayneaina.com</a></div></header>
+  <div class="layout-container presentation-layout">
+    <main class="content-area">
+      <article class="prose-wrapper presentation-wrapper">
+<header class="article-header compact-article-header"><h1 class="article-title">§08 Part 3/4: The Sovereign Kill Switch (5. The Candidate-Binary Publication Gate)</h1><p class="article-subtitle">Sections: 5. The Candidate-Binary Publication Gate, 6. What the Gate Proves—and What It Cannot, The Break-Glass &amp; Conformance Qualification Challenge</p></header>
+
+        
+        
+
+        <div class="article-body">
+          
+      <p class="part-compact-nav"><strong>§08 PART 3/4</strong> (13,472 chars · Sections: 5. The Candidate-Binary Publication Gate; 6. What the Gate Proves—and What It Cannot; The Break-Glass &amp; Conformance Qualification Challenge) — <a href="/08-sovereign-kill-switch-break-glass-epochs-and-conformance-gate/part-2/">← Part 2</a> · <a href="/08-sovereign-kill-switch-break-glass-epochs-and-conformance-gate/part-4/">Part 4 →</a> · <a href="/08/brief/">1-Call Brief</a> · <a href="/08-sovereign-kill-switch-break-glass-epochs-and-conformance-gate/">Full §08</a> · <a href="/08/part-3.txt">Raw .txt</a> · All: <a href="/08-sovereign-kill-switch-break-glass-epochs-and-conformance-gate/part-1/">P1</a> <a href="/08-sovereign-kill-switch-break-glass-epochs-and-conformance-gate/part-2/">P2</a> <a href="/08-sovereign-kill-switch-break-glass-epochs-and-conformance-gate/part-3/">P3</a> <a href="/08-sovereign-kill-switch-break-glass-epochs-and-conformance-gate/part-4/">P4</a></p>
+    
+<h2>5. The Candidate-Binary Publication Gate</h2>
+<p>Containment architecture is only as credible as the binary that implements it. A green build proves compilation. It does not prove that the release artifact refuses stale generations, impersonation, cross-project reads, altered proposals, damaged recovery objects, or evidence tampering.</p>
+<p>Stage 2b of the package pipeline therefore runs the <strong>newly compiled candidate&#39;s own</strong> <code>conformance</code> verb. The old publishing driver does not lend it a previously compiled test battery: the harness and the boundary implementation ship in the same candidate image.</p>
+<h3>Exhibit 8.8 — Candidate qualification sequence</h3>
+<pre><code class="language-text">Cargo builds isolated candidate images
+  → candidate surface checks bind harness SHA-256 and target SHA-256
+  → candidate and Room companion report the same current source digest
+  → spawn candidate conformance with CREATE_NO_WINDOW
+       stdin null; stdout/stderr piped and drained
+       owned ConformanceChild with cancellation on drop
+       30-minute outer timeout; 90-second MCP-session deadline
+       build-lease heartbeat during the run
+  → require successful exit, valid JSON report, and ok == true
+  → re-check current source and publisher/candidate compiled identity
+  → copy, verify installed surfaces, update checksums, compare post-copy hashes
+  → write package result and release the build lease
+
+any failure before promotion: no installed image changed by the candidate
+publication never automatically replays deferred Room wakes
+</code></pre>
+<p>The outer loop polls every 100 ms. The owned-child wrapper requests cancellation on timeout, heartbeat loss, or another early return. On Windows, cancellation targets the exact child PID and its descendants, not a process name; the direct child handle remains alive during cleanup. Pipe readers are drained so inherited pipe handles cannot turn a bounded test into an unbounded join. <code>CREATE_NO_WINDOW</code> suppresses a new console window; the conformance child is <strong>not</strong> represented as a dedicated Job Object.</p>
+<p>The two clocks have different scopes. The <strong>30-minute outer timeout</strong> bounds the candidate run. The <strong>90-second deadline</strong> belongs to an interactive MCP session used inside the battery and can be extended for multi-step work; it is not a separate 90-second ceiling imposed on each of the 45 cases.</p>
+<p>The default battery contains <strong>25 governance/execution cases and 20 evidence cases</strong>. Each case drives the binary through isolated throwaway state. For the governance battery, refusal is usually the pass condition: an agent willing to follow instructions is not evidence that the boundary enforces refusal. The evidence battery includes positive fidelity proofs as well as negative tamper and access cases.</p>
+<h3>The complete 45-case inventory</h3>
+<table>
+<thead>
+<tr>
+<th align="right">#</th>
+<th>Emitted case ID</th>
+<th>What must hold</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="right">1</td>
+<td><code>impersonation_refused</code></td>
+<td>A bound session cannot act as another owner.</td>
+</tr>
+<tr>
+<td align="right">2</td>
+<td><code>altered_proposal_conflict</code></td>
+<td>Reusing an operation ID with a different payload is refused.</td>
+</tr>
+<tr>
+<td align="right">3</td>
+<td><code>stale_generation_refused</code></td>
+<td>An edit fencing an old ownership generation is rejected.</td>
+</tr>
+<tr>
+<td align="right">4</td>
+<td><code>concurrent_edit_conflict</code></td>
+<td>A scope actively held by another agent cannot be acquired.</td>
+</tr>
+<tr>
+<td align="right">5</td>
+<td><code>interrupted_call_blocks_target</code></td>
+<td>An unresolved prepared operation holds its target for reconciliation.</td>
+</tr>
+<tr>
+<td align="right">6</td>
+<td><code>damaged_recovery_refused</code></td>
+<td>Mismatched or damaged recovery bytes never reach the target; an intact image restores and reads back.</td>
+</tr>
+<tr>
+<td align="right">7</td>
+<td><code>acceptance_failed_keeps_task_open</code></td>
+<td>Completion is refused when the acceptance check fails against the actual artifact.</td>
+</tr>
+<tr>
+<td align="right">8</td>
+<td><code>reader_roster_denied</code></td>
+<td>A recipient outside the owner&#39;s graph-reader roster receives no delivery and reads nothing.</td>
+</tr>
+<tr>
+<td align="right">9</td>
+<td><code>cross_project_read_refused</code></td>
+<td>One project reads its own file but cannot read another open project&#39;s file or receive its content.</td>
+</tr>
+<tr>
+<td align="right">10</td>
+<td><code>destination_call_outside_task_scope_refused</code></td>
+<td>A direct record change outside the claimed row task is refused and the row remains unchanged.</td>
+</tr>
+<tr>
+<td align="right">11</td>
+<td><code>junction_and_spelling_redirect_refused</code></td>
+<td>Junction redirection outside the project and parent-traversal spellings are refused without changing the outside file.</td>
+</tr>
+<tr>
+<td align="right">12</td>
+<td><code>native_write_without_lease_refused</code></td>
+<td>A native write without an active lease never reaches the file.</td>
+</tr>
+<tr>
+<td align="right">13</td>
+<td><code>doc_source_drift_refused</code></td>
+<td>Registered documents serve only exact content; drift refuses reads and task bindings.</td>
+</tr>
+<tr>
+<td align="right">14</td>
+<td><code>cooldown_deferred_work_retained</code></td>
+<td>Typed damper deferral retains the exact sealed second-send job; retries cannot poison retained work.</td>
+</tr>
+<tr>
+<td align="right">15</td>
+<td><code>tier_ceiling_refused</code></td>
+<td>A <code>safe_read</code> session cannot invoke a mutating tool.</td>
+</tr>
+<tr>
+<td align="right">16</td>
+<td><code>post_cancellation_refused</code></td>
+<td>After the stop is pulled, no new controlled action executes.</td>
+</tr>
+<tr>
+<td align="right">17</td>
+<td><code>stopped_authority_cannot_revive</code></td>
+<td>A project stop spares other projects, refuses its project, and keeps pre-stop leases dead after clearance while fresh tenancy can write.</td>
+</tr>
+<tr>
+<td align="right">18</td>
+<td><code>room_control_operator_required</code></td>
+<td>An ordinary Room participant cannot perform a Room control act.</td>
+</tr>
+<tr>
+<td align="right">19</td>
+<td><code>room_recreate_roster_refused</code></td>
+<td>Room recreation cannot silently replace the roster; deliberate replacement needs operator standing and the roster survives both paths.</td>
+</tr>
+<tr>
+<td align="right">20</td>
+<td><code>exec_start_takeover_refused</code></td>
+<td>Another agent cannot restart—and thereby take over—a paused execution.</td>
+</tr>
+<tr>
+<td align="right">21</td>
+<td><code>planning_wake_target_bound</code></td>
+<td>No named target means no wake; naming another lane is refused as a wake request rather than treated as impersonation.</td>
+</tr>
+<tr>
+<td align="right">22</td>
+<td><code>profile_credential_owner_surface</code></td>
+<td>Credential storage and fleet diagnostics require operator standing, profile views bind to the caller, and a worker can still query its own requirements.</td>
+</tr>
+<tr>
+<td align="right">23</td>
+<td><code>session_lane_bound</code></td>
+<td>Driving another agent&#39;s IDE lane is refused while naming one&#39;s own lane remains permitted.</td>
+</tr>
+<tr>
+<td align="right">24</td>
+<td><code>prompt_redaction_holds</code></td>
+<td>A planned Room wake prompt redacts every universal credential shape without dropping the prompt or leaking a secret body.</td>
+</tr>
+<tr>
+<td align="right">25</td>
+<td><code>tool_result_redaction_holds</code></td>
+<td>Credential-shaped Room content is redacted across receipts, feeds, and echoed errors while the feed remains valid JSON and available.</td>
+</tr>
+<tr>
+<td align="right">26</td>
+<td><code>evidence_jcs_rfc8785_vectors</code></td>
+<td>Canonical serializations match the RFC 8785 object and number vectors.</td>
+</tr>
+<tr>
+<td align="right">27</td>
+<td><code>evidence_corpus_through_mcp</code></td>
+<td>Every corpus document produces its expected extraction, omissions, stories, nodes, values, formulas, visibility, or typed failure through the parser worker.</td>
+</tr>
+<tr>
+<td align="right">28</td>
+<td><code>evidence_governing_pdf_six_pages</code></td>
+<td>The governing PDF yields six nonempty pages, complete-for-profile extraction, expected text, and complete bounded delivery.</td>
+</tr>
+<tr>
+<td align="right">29</td>
+<td><code>evidence_repeated_text_resolves_each_node</code></td>
+<td>Repeated text is ambiguous until occurrence is named; each resulting handle resolves to its own node.</td>
+</tr>
+<tr>
+<td align="right">30</td>
+<td><code>evidence_drift_refused</code></td>
+<td>Altered source bytes refuse both reading and handle resolution as <code>drifted</code>.</td>
+</tr>
+<tr>
+<td align="right">31</td>
+<td><code>evidence_tampered_view_refused</code></td>
+<td>A tampered committed view is refused with <code>view_digest_mismatch</code>.</td>
+</tr>
+<tr>
+<td align="right">32</td>
+<td><code>evidence_old_view_survives_extraction_change</code></td>
+<td>A new extraction identity creates a new view while the old handle still resolves its original view.</td>
+</tr>
+<tr>
+<td align="right">33</td>
+<td><code>evidence_bad_selector_refused</code></td>
+<td>Bad selectors, paths, raw hashes, unknown handles, and reserved extensions receive typed refusals.</td>
+</tr>
+<tr>
+<td align="right">34</td>
+<td><code>evidence_unauthorized_dereference_refused</code></td>
+<td>A caller outside the Room owner roster cannot dereference evidence.</td>
+</tr>
+<tr>
+<td align="right">35</td>
+<td><code>evidence_truncation_in_delivery_status</code></td>
+<td>Bounded delivery explicitly reports chunked or truncated status with counts.</td>
+</tr>
+<tr>
+<td align="right">36</td>
+<td><code>evidence_excerpt_stays_distinct</code></td>
+<td>An agent-supplied excerpt remains <code>agent_supplied</code> and cannot assume the requirement role.</td>
+</tr>
+<tr>
+<td align="right">37</td>
+<td><code>evidence_echo_lineage_preserved</code></td>
+<td>Echo citations remain echoes grounded in their first-hand origin rather than becoming independent evidence.</td>
+</tr>
+<tr>
+<td align="right">38</td>
+<td><code>evidence_distinct_origins_through_three_hops</code></td>
+<td>Three records through echoes count as one origin; a second first-hand reader makes two.</td>
+</tr>
+<tr>
+<td align="right">39</td>
+<td><code>evidence_false_predicate_fails_receipt</code></td>
+<td>A false typed predicate fails evaluation while the finding remains recorded as failed matter.</td>
+</tr>
+<tr>
+<td align="right">40</td>
+<td><code>evidence_absence_requires_complete_inventory</code></td>
+<td>Absence is refused until every unknown-coverage marker is acknowledged.</td>
+</tr>
+<tr>
+<td align="right">41</td>
+<td><code>evidence_correspondence_keeps_old_handle</code></td>
+<td>Adopting correspondence issues a new handle without retargeting the old handle&#39;s view.</td>
+</tr>
+<tr>
+<td align="right">42</td>
+<td><code>evidence_reassessment_flags</code></td>
+<td>Source and requirement revisions flag dependents until reassessment is answered.</td>
+</tr>
+<tr>
+<td align="right">43</td>
+<td><code>evidence_staged_visibility_reveal</code></td>
+<td>A <code>collaborative_pass</code> finding remains withheld until reveal, and the reveal states its limit.</td>
+</tr>
+<tr>
+<td align="right">44</td>
+<td><code>evidence_origin_gate</code></td>
+<td>Task completion is refused until a requirement rests on the required number of distinct origins.</td>
+</tr>
+<tr>
+<td align="right">45</td>
+<td><code>evidence_capture_provenance_chain</code></td>
+<td>A capture records every redirect hop, status, location, and security headers, with each hop egress-authorized.</td>
+</tr>
+</tbody></table>
+<p>The corpus case expands into 37 synthetic document fixtures; the JCS case expands into the RFC&#39;s individual vectors. They still count as one case each in the 45-case publication battery.</p>
+<h2>6. What the Gate Proves—and What It Cannot</h2>
+<p>The release gate closes an important bootstrapping hole. The candidate carries its own inventory and enforcement code, the surface receipt binds the expected harness and target image hashes, and the source digest is checked before and after a potentially long run. Losing the package build lease stops the path to promotion. Post-copy checks then compare the installed artifacts and their checksums rather than assuming a copy succeeded faithfully.</p>
+<p>The report is simple: each case records its ID, expectation, observation, and Boolean pass; <code>ok</code> is true only when no case failed. A nonzero candidate exit, malformed report, failed case, timeout, or heartbeat failure refuses publication.</p>
+<h3>Exhibit 8.9 — Publication summary shape</h3>
+<pre><code class="language-json">{
+  &quot;ok&quot;: true,
+  &quot;total&quot;: 45,
+  &quot;failed&quot;: 0,
+  &quot;note&quot;: &quot;boundary battery against the shipped binary in isolated throwaway state; refusals are the pass condition&quot;
+}
+</code></pre>
+<p>That shape is not a claim of universal assurance. The 45 cases are an <strong>author-controlled, end-to-end release-qualification gate against the candidate binary</strong>. They are not independent third-party certification, a formal proof of the whole system, exhaustive topology coverage, or evidence that no defect exists outside the exercised vectors.</p>
+<p>The same honesty applies to containment. A latch and epoch cannot un-send a webhook, reverse a committed third-party database transaction, or erase data already disclosed. Local control files also cannot survive a hostile administrator deleting the underlying volume. AINA governs declared boundaries and preserves uncertainty; it does not claim physical irreversibility or universal host control.</p>
+<table>
+<thead>
+<tr>
+<th>Primitive or test mechanism</th>
+<th>What it establishes</th>
+<th>What AINA adds—and refuses to infer</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>Rust <code>IsTerminal</code> / console handles</td>
+<td>Whether standard handles belong to a terminal</td>
+<td>Combines terminal detection with no MCP session, explicit operator identity, and OS confinement; terminal presence alone is not human identity.</td>
+</tr>
+<tr>
+<td><code>CreateHardLinkW</code> / <code>std::fs::hard_link</code></td>
+<td>Atomic publication of a directory entry</td>
+<td>Uses it for complete scoped latches after flush; machine latches use direct final-path creation. Filesystem publication does not prove worker quiescence.</td>
+</tr>
+<tr>
+<td><code>TerminateJobObject</code> plus Job accounting</td>
+<td>A termination request and separately queried Job state</td>
+<td>Requires a fresh active-process count of zero, retains two-phase stop evidence, and exposes uncovered servers instead of assuming full coverage.</td>
+</tr>
+<tr>
+<td>Candidate-controlled conformance report</td>
+<td>The candidate&#39;s observed results for its embedded inventory</td>
+<td>Binds image/source identities, bounds the child, requires every case to pass, and still labels the result author-controlled release qualification.</td>
+</tr>
+</tbody></table>
+<p><strong>Evidence availability and performance boundary:</strong> latch, WAL, epoch, Job-census, stop-outbox, recovery, candidate-surface, and package records are <code>CONTROLLED</code> for qualified, method-scoped technical review, with adverse findings permitted. They are not unrestricted public downloads or independent validation. The one-second observer is a polling cadence, not a universal worst-case stop-latency guarantee; the 30-minute and 90-second conformance clocks are test bounds, not production recovery-time or recovery-point objectives. Actual containment and publication latency must be measured for the host, worker count, filesystem, destination mix, and release topology.</p>
+<h2>The Break-Glass &amp; Conformance Qualification Challenge</h2>
+<p>The <strong>Break-Glass &amp; Conformance Qualification Challenge</strong> uses one AI workflow that needs emergency containment or release qualification. It demonstrates a scoped stop with stale-authority refusal, explicit handling of unconfirmed cleanup, an unresolved-operation recovery plan, a stop-versus-recovery race, and a candidate-gate coverage review.</p>
+<p>The challenge excludes independent certification, universal external-effect reversal, universal host control, and an unmeasured production recovery objective. Deployment and paid pilots are separately scoped; independent evaluation remains outside the commercial ladder through <a href="https://blayneaina.com/09-bring-one-real-boundary-work-with-blayne/">Article 09</a>.</p>
+
+
+      <p class="part-compact-nav"><strong>END OF §08 PART 3/4</strong> — Next: <a href="/08-sovereign-kill-switch-break-glass-epochs-and-conformance-gate/part-4/"><code>https://blayneaina.com/08-sovereign-kill-switch-break-glass-epochs-and-conformance-gate/part-4/</code></a> · <a href="/08/brief/">§08 1-Call Brief</a> · <a href="/08.md">Raw .md</a></p>
+    
+        </div>
+
+        
+        
+        
+        
+
+        
+
+        
+      </article>
+    </main>
+
+  </div>
+
+  <footer class="site-footer compact-ai-footer"><p><strong>blayneaina.com</strong> — <a href="https://blayneaina.com/ai-brief/">Master Brief (https://blayneaina.com/ai-brief/)</a> · <a href="https://blayneaina.com/ai-brief.txt">Plain-Text Brief (https://blayneaina.com/ai-brief.txt)</a> · <a href="https://blayneaina.com/articles/">All 9 Articles &amp; Briefs (https://blayneaina.com/articles/)</a> · <a href="https://blayneaina.com/llms.txt">llms.txt</a> · <a href="mailto:me@blayneaina.com">me@blayneaina.com</a></p></footer>
+
+
+
+
+
+  <script src="/script.js?v=20261109-s-tier"></script>
+</body>
+</html>

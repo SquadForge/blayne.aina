@@ -1,0 +1,64 @@
+# §09 Part 5/8 — Bring One Real Boundary: Peer Review & R&D Evaluation
+Canonical: https://blayneaina.com/09-bring-one-real-boundary-work-with-blayne/part-5/ | Raw Article: https://blayneaina.com/09.md | Next Part: https://blayneaina.com/09/part-6.txt
+
+## 8. Regulatory and Standards Crosswalk—Not Certification
+
+A deployment can produce technical evidence for a governance program without becoming compliant by acquisition. The use case, jurisdiction, organization, processing, and assessment route still have to be established by the responsible owners and their advisers.
+
+Two explicit boundary notes govern how this crosswalk is read:
+
+1. **Author-developed benchmarks vs. NIST NCCoE standards:** The `R1`–`R3` operation-continuity method and `P01`–`P10` failure catalog referenced across this series are **author-developed evaluation artifacts created inside AINA**; they are not NIST-issued test suites. They are mapped as engineering comparison points alongside the NIST NCCoE February 2026 concept paper (*Accelerating the Adoption of Software and AI Agent Identity and Authorization*) and emerging standards work (`Transaction Tokens`, `OAuth identity chaining`, `SSF/CAEP`, `AuthZEN`, and `SCITT`).
+2. **Adjacent banking guidance (`SR 26-2` Scope Note 3):** The Federal Reserve, FDIC, and OCC interagency guidance on model risk management (`SR 26-2`, April 17, 2026) is primarily relevant to banking organizations with $30 billion or more in assets, and **Scope Note 3 explicitly excludes generative and agentic AI models** from its traditional quantitative scope. It appears below as adjacent governance context for financial institutions designing internal transition controls—not as a prescriptive agentic standard or banking certification.
+
+<details open>
+<summary><strong>Exhibit 9.7 — Engineering crosswalk and residual organizational duties (click to collapse/expand)</strong></summary>
+
+| Framework or instrument | Technical evidence AINA can contribute | What remains outside the software artifact |
+|---|---|---|
+| **NIST AI Risk Management Framework 1.0 (`AI 100-1`, with ongoing revision context)** | MAP: sealed cases, source bindings, declared limits. MEASURE: acceptance predicates and candidate conformance. MANAGE: refusals, quarantine, recovery, and break-glass. | GOVERN and the voluntary framework as a whole: organizational accountability, risk decisions, policies, review procedures, and authority to act. NIST AI RMF 1.0 is voluntary (and undergoing revision for generative/agentic systems); this is not certification. |
+| **NIST NCCoE agent identity concept paper (Feb 2026) & adjacent standards** | AINA's author-developed `R1`–`R3` continuity method and `P01`–`P10` failure catalog evaluate operation continuity, scope limits, and accepted-population accounting. Transaction Tokens, OAuth identity chaining, SSF/CAEP, AuthZEN, and SCITT serve as architectural comparison points. | `R1`–`R3` and `P01`–`P10` are AINA internal methods; NIST did not commission, approve, or endorse the method or runs. Draft and final specifications have different maturities; no complete standards-stack claim follows. |
+| **ISO/IEC 42001:2023** | Implementation records, acceptance results, limitations, change evidence, and operating procedures can contribute evidence to an AI management system. | ISO/IEC 42001 specifies requirements for establishing, operating, and continually improving an organization's management system. AINA does not establish or certify that system. |
+| **EU AI Act, Articles 11, 12, and 43** | Source/version bindings, technical documentation inputs, event and decision logs, validation results, and limitations may support Article 11 documentation and Article 12 record-keeping for an applicable high-risk system. | Use-case classification, provider/deployer duties, jurisdiction, and the Article 43 conformity-assessment route are separate. Logs are not “turnkey compliance.” |
+| **UK Data (Use and Access) Act 2025, Section 80** | Decision explanations, evidence links, intervention and escalation routes, and contestable records can support safeguards under UK GDPR Articles 22A–22D. | The controller must determine meaningful human involvement, significant decisions, restrictions, and safeguards. Article 22C includes information, representations, human intervention, and contest rights; technical receipts alone do not satisfy them. |
+| **Federal Reserve SR 26-2 and interagency MRM guidance (adjacent context)** | Transition evidence, acceptance results, inventory, monitoring, and independent-review boundaries can inform an institution's chosen internal controls for agentic workflows. | Expected to be most relevant to banking organizations over $30B, and **Scope Note 3 excludes generative and agentic AI models**. Does not set enforceable standards for agentic AI; the institution determines appropriate governance. AINA claims no banking certification. |
+| **AICPA SOC 2** | Access boundaries, change records, availability/recovery evidence, and processing-integrity receipts may support an agreed examination scope. | A SOC 2 report requires a CPA examination of service-organization controls and, where relevant, operation over an examination period. Application receipts are not a SOC 2 report. |
+| **Data protection impact assessment (DPIA)** | Data-flow maps, minimization choices, local-custody boundaries, retention rules, access records, and residual-disclosure documentation supply assessment inputs. | The controller determines whether processing is likely to create high risk and completes the DPIA before such processing. Integrity checks and fictionalization do not decide necessity or eliminate risk. |
+
+</details>
+
+This crosswalk is a deployment worksheet, not legal advice, statutory certification, agency endorsement, or a substitute for independent assessment. “Lawful” in the AINA/EISA technical sense means admissible under declared machine governance; it does not mean legal, moral, or institutionally legitimate.
+
+## 9. Engagement Routes—and a Firewall Around Independent Review
+
+Different readers need different next steps. All begin with a written, bounded request to `me@blayneaina.com`.
+
+- **`[RESEARCH]`** — request method-scoped independent technical peer review, submit adversarial `EISA` / `RequestedAct` test vectors, or propose formal-verification collaboration outside the commercial ladder.
+- **`[GRANT / R&D]`** — conduct technical due diligence for non-dilutive AI safety / security grants, federal R&D programs (ARIA, UK AISI, NIST, DARPA, NSF), or university STTR partnerships.
+- **`[CHALLENGE]`** — evaluate one existing technical path (Track 1, 2, or 3) against one bounded transition under a predeclared acceptance contract.
+- **`[PILOT]`** — commission a privately scoped enterprise pilot, client-controlled Portable Deployment Node, vertical entity-resolution package, or implementation handoff.
+- **`[DISTRIBUTION]`** — discuss OEM, systems-integrator, vertical-channel, licensing, or deployment partnerships.
+- **`[INVESTMENT]`** — discuss strategic R&D capital, operating runway, vertical environments, and the resources required to expand formal verification and cross-platform delivery.
+
+The initial request should identify the technical track and evaluation or engagement type, participants and decision owner, bounded question, sample source and handling constraints, timetable, and the authority or resources relevant to the proposal.
+
+### Exhibit 9.8 — Commercial work and independent review are separate
+
+```text
+COMMERCIAL ENGAGEMENT
+  paid and privately scoped
+  → accepted deliverables, access, preparation, implementation, and support
+  → confidential by default; optional redacted case record by advance agreement
+  → positive, negative, refused, or unresolved technical result reported faithfully
+  → payment buys no praise, evidence upgrade, endorsement, or outcome control
+
+INDEPENDENT EVALUATION
+  method-scoped access appropriate to the claim
+  → adequate ability to test, reproduce, narrow, or contradict the claim
+  → no payment, investment, partnership, publication right, or favorable conclusion required
+  → reviewer retains freedom to publish adverse findings
+  → controlled access does not imply unrestricted source, data, or artifact rights
+```
+
+Independent evaluation is not a reward for buying a pilot, and a commercial engagement is not represented as independent validation. That firewall is part of the offer.
+
+

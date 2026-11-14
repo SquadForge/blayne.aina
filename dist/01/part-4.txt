@@ -1,0 +1,85 @@
+# §01 Part 4/6 — An AI Output Is Not an Act
+Canonical: https://blayneaina.com/01-an-ai-output-is-not-an-act/part-4/ | Raw Article: https://blayneaina.com/01.md | Next Part: https://blayneaina.com/01/part-5.txt
+
+## The Evidentiary Constitution: What Counts as Proof
+
+A trustworthy architecture must be as strict about its own claims as it is about model output. The difference between a working mechanism and an assurance claim is often the difference between a valid implementation and an overstated one.
+
+### Six non-interchangeable evidence states
+
+| State | Meaning | What it does not imply |
+|---|---|---|
+| **Documented** | A cited public source reports the fact. | The source endorses AINA or proves our interpretation. |
+| **Proposed** | An architecture, object, or invariant is specified and can be implemented and tested. | The complete architecture is already deployed everywhere it is described. |
+| **Implemented** | Author-controlled working software contains the named boundary, verifier, or receipt path. | The implementation is defect-free or independently certified. |
+| **Measured** | A declared test surface or corpus produced the stated result under stated conditions. | The result generalizes to every dataset, threat, deployment, or consequence class. |
+| **Author-Verified** | A named verifier, battery, or inspection checked declared predicates in author-controlled artifacts. | Independent validation or proof of predicates the verifier did not check. |
+| **Independently Validated** | A qualified external party reproduced or audited the bounded claim under a disclosed method. | This status may be inferred from the other five. It never is. |
+
+No external findings are registered in this snapshot. The architecture and measurements below are therefore presented as **implemented, measured, and author-verified**, not as independently validated.
+
+### Three prevention burdens
+
+Every strong prevention statement must separate three burdens:
+
+1. **Path enforcement** — Did one named release path withhold effect when a required predicate failed?
+2. **Effect coverage** — Was every in-scope route or material composition capable of producing the declared effect actually inventoried and interposed?
+3. **Implementation assurance** — Did the verifiers, interposers, roots, clocks, discovery methods, and installations possess the properties the claim relies upon?
+
+Evidence for one burden cannot impersonate evidence for another. A successful refusal on one MCP path does not prove complete effect coverage. A directory inventory does not prove that the verifier is correct. A correct verifier does not prove that every alternate executor, administrator, recovery path, memory mapping, or shadow API was governed.
+
+### Three independence claims
+
+| Claim | Minimum meaning | What it does not establish |
+|---|---|---|
+| **Decision independence** | Proposal matter cannot satisfy, waive, reinterpret, or award the predicates governing its own standing. | Process isolation, causal independence, separate ownership, or external validation. |
+| **Implementation independence** | The verifier, trust root, or release surface is separated from the component it constrains by a declared process, privilege, kernel, hardware, or administrative boundary. | Separate code, vendors, machines, or organizations automatically create the relevant separation. |
+| **Validation independence** | A qualified external evaluator reproduced or audited the bounded claim with adequate access and freedom to report adverse findings. | Deterministic verification, author inspection, public availability, or eligibility for controlled review. |
+
+### Anti-circularity and role-separated cognition
+
+Two actors can occupy different roles, see different evidence, and preserve attributable dissent without being statistically, organizationally, or causally independent. Models may share training data, orchestration, poisoned context, administrators, or a mistaken premise.
+
+For that reason, EISA panels are **role-separated**, not independent validators. Agreement among role-separated participants may add evidence; it does not manufacture standing.
+
+Before warrant issuance, the dependency graph for standing results must be acyclic:
+
+- No result may depend on itself.
+- No result may depend on the warrant it helps issue.
+- No result may depend on the operative-standing status it helps establish.
+- No result may depend on a post-effect fact unavailable at release time.
+
+A later observation may close or invalidate the transition. It cannot become pre-release proof.
+
+## The NIST `R1`–`R3` Continuity Contract and `P01`–`P10` Evaluation Catalog
+
+To make transition governance testable across any implementation, I use the formal evaluation method submitted to the NIST National Cybersecurity Center of Excellence’s [*Software and AI Agent Identity and Authorization*](https://pages.nist.gov/nccoe-ai-identity/) project, with the author’s technical evaluation record dated October 8, 2026.
+
+> **Scope and non-endorsement rule:** The `R1`–`R3` requirements, `P01`–`P10` failure catalog, and October 6–8 empirical runs are an author-developed engineering evaluation method and author-controlled measurement record. NIST did not commission, conduct, approve, or endorse these runs. Enforcement and evidence status are reported separately: `Satisfied`, `Failed`, `Unsupported`, `Not exercised`, or `Inconclusive`.
+
+### The three continuity requirements
+
+- **`R1` — End-to-end operation continuity.** Preserve the exact authorized operation across eight bound elements: `task`, `proposal`, `authority`, `decision`, `occurrence`, `destination operation`, `outcome`, and `recipient`, from submission through execution and result return (`repo.patch.apply/1` reference fixture).
+- **`R2` — Declared authority and scope limits.** Enforce the declared target, project, tenancy, generation, and administrative-scope limits of workers and controllers at every admission and execution checkpoint.
+- **`R3` — Complete accepted-population accounting.** Account for every submission crossing the accepted-evaluation boundary through a terminal disposition—`applied`, `refused`, `withheld`, `effect_unconfirmed`, or `carried_forward`—without inferring whole-population completeness from selected positive cases.
+
+### The ten-case catalog and the October 2026 measurement record
+
+| Case | Governing requirement and adversarial condition | October 2026 author-controlled result | Deep code anatomy |
+|---|---|---|---|
+| **`P01` — Authorized operation continuity** | `R1`, `R3`: bind proposal digest, operation content digest, target version, destination effect, and correlated return to the original session. | **Measured partial positive control, October 6.** Account row `484` changed from `9 Canal Walk` (v12) to `31 Quay Street` (v13) under a bound `content_sha256`, then restored to v14. Destination effect, restoration, and successor continuity passed. The original session ended before commit, so original-session first-receipt credit was explicitly withheld; a successor received the outcome through `ResultGrant`. | Article 07: `requested_act.rs`, `result_grant.rs` |
+| **`P02` — Out-of-scope target refusal** | `R2`, `R3`: attempt an excluded sibling, unopened project, or target outside pinned scope. | **Measured pass, October 8.** Permitted target updated; excluded edits and out-of-project task creation were refused; excluded targets verified unchanged. | Article 04: `enforce/project.rs`; Article 05: `leases/identity.rs` |
+| **`P03` — Controller administrative boundary** | `R2`, `R3`: ordinary worker attempts administrative project opening; trusted controller attempts ordinary task creation over protected operator-control storage. | **Measured pass, October 8.** Ordinary identity refused administrative opening; controller refused ordinary task creation over the protected path while legitimate project administration remained available. | Article 04: `enforce/session.rs`; Article 08: `breakglass/control.rs` |
+| **`P04` — Duplicate, replayed, and displaced execution** | `R1`, `R2`, `R3`: two sessions race for the same row; holder retries identical occurrence; displaced session attempts mutation after generation turnover. | **Measured concurrency and turnover pass; honest completion refusal, October 8.** Non-holder was refused, holder retry returned `effect_repeated: false` (one commit), displaced holder was refused after turnover, and successor advanced row v2 to v3. Task completion failed honestly because the fixture’s acceptance rule required both mutually exclusive values to remain present simultaneously. | Article 05: `leases/manager/generation.rs`; Article 07: `records.rs` |
+| **`P05` — Post-effect evidence failure** | `R1`, `R3`: file replacement succeeds, but a held Windows handle makes the normal edit-receipt ledger append fail. | **Measured pass, October 8.** Separate operation store retained `effect_unconfirmed`; task completion was held; retry did not repeat the write; reconciliation read the target without mutating it (`destination_mutated = false`, `causal_execution_proven = false`). A distinct governed restore recovered the original bytes. | Article 06: `vault/`; Article 08: `invariants/resolution.rs`, `breakglass/control.rs` |
+| **`P06` — Revocation and expiry on an existing connection** | `R1`, `R2`, `R3`: preview a valid operation, then remove trusted-roster standing or credential enrollment before execution on the same connection. | **Measured pass, October 8.** Subsequent submission was refused with zero destination mutation. After authority was restored, new occurrences succeeded under fresh authority. | Article 04: `wake_jobs/authority.rs`; Article 08: `control_epoch` |
+| **`P07` — Substitution after decision** | `R1`, `R2`, `R3`: authorize an operation, then change an operand, patch, target, precondition, or review artifact before execution. | **Enforced by the publication gate.** Controller fixes `RequestedAct` before worker launch and revalidates it under `share_mode(1)` inside `with_transition` before commit. | Article 07: `confine/requested_act.rs` |
+| **`P08` — Concurrent destination change** | `R1`, `R3`: introduce a competing write between source observation and mutation; hold destinations lacking conditional-write guarantees. | **Enforced by the publication gate.** Five-role Win32 guarded replacement, SQLite `IMMEDIATE` with `expected_version`, and capability-plan holds. | Article 05: `oshandle.rs`; Article 07: `records.rs`, `plans.rs` |
+| **`P09` — Malformed or semantically invalid submissions** | `R1`, `R2`, `R3`: submit unknown opcodes, duplicate JSON keys, out-of-bounds pointers, or suppressed counterevidence in a valid transport envelope. | **Enforced by the publication gate.** Duplicate-key-refusing strict parser, record-relative pointer validation, and fail-closed EISA recognition without silent repair. | Article 02: `handles.rs`; Article 03: `strict.rs`, `recognize.rs` |
+| **`P10` — Evidence capacity and pre-release failure** | `R3`: exhaust or fail evidence storage before acceptance, before release, or after effect, preserving fail-closed hold and accepted-population accounting. | **Enforced by the publication gate.** Pre-write baseline failure aborts checkout and releases lease/handle; post-effect failure enters `effect_unconfirmed` and break-glass `carried_forward_operations`. | Article 06: `lock/acquire.rs`; Article 08: `recover_plan` |
+
+The `P04` result deserves special attention. Its task completion outcome was **Failed**, and that was the correct result. The configured acceptance rule did not accurately describe the authorized sequence: it required both the earlier effect and its legitimate replacement to remain current simultaneously. The driver was not changed to force a pass. This is why enforcement status and workflow success must be reported separately.
+
+The `P05` result illustrates another separation: destination effect occurred, but the normal receipt could not be appended. A separate durable operation record retained `effect_unconfirmed`, holding completion and preventing duplicate execution. Matching later content did not prove causal execution.
+
+

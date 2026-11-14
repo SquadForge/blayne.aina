@@ -1,0 +1,86 @@
+# Blayne Aina — AINA Transition-Governance Architecture & Verification Corpus (blayneaina.com)
+
+> Canonical orientation, architectural summary, technical briefs, and complete URL directory for automated inspection, technical peer reviewers, and R&D grant evaluators.
+> Contact: Blayne Aina (Principal Systems Architect & Creator of AINA, Denver, CO, USA; USMC Veteran) — me@blayneaina.com
+
+## 1. Two-Sentence Architecture Summary
+AINA is a deterministic authority-enforcement architecture that treats probabilistic AI outputs as untrusted proposals. It independently validates evidence, authorization, execution identity, and permitted state transitions at the boundary where external effects are committed, producing independently verifiable evidence when an attempted operation is refused.
+
+## 2. Compact Briefs & Direct Raw Corpus Routes
+1. **Single-Request Complete Master Brief Covering All 9 Articles (§01–§09) + Proofs + TCB + Provisionals + PRJ Packages:**
+   - HTML: https://blayneaina.com/ai-brief/
+   - Plain Text (<=48 lines): https://blayneaina.com/ai-brief.txt
+2. **Per-Article Technical Briefs (Every Article <=44 Rendered Lines):**
+   - Briefs: https://blayneaina.com/01/brief/ through https://blayneaina.com/09/brief/ (or .txt: /01/brief.txt .. /09/brief.txt)
+   - Raw Verbatim Markdown: https://blayneaina.com/01.md through https://blayneaina.com/09.md
+3. **3-Step Complete Series Digests:** Digest 1 (§01–§03): https://blayneaina.com/articles/digest-1/ | Digest 2 (§04–§06): https://blayneaina.com/articles/digest-2/ | Digest 3 (§07–§09): https://blayneaina.com/articles/digest-3/
+4. **Master Directory, Assurance & Proof Packs:**
+   - Articles Index: https://blayneaina.com/articles/
+   - Research & Assurance Binder: https://blayneaina.com/research-assurance/
+   - Offline Refusal Proof Pack: https://blayneaina.com/refusal-proof/
+   - Semantic Switch Proof Pack: https://blayneaina.com/semantic-switch-proof/
+   - GitHub Repo: https://github.com/SquadForge/blayne.aina
+
+## 3. Complete 9-Article Series, 1-Call Briefs & Lossless Part URLs
+### §01 — An AI Output Is Not an Act: The Lawful-Act Defect and Machine Standing
+- 1-Call Brief: https://blayneaina.com/01/brief/ (Plain Text: https://blayneaina.com/01/brief.txt)
+- Full Single-Page URL: https://blayneaina.com/01-an-ai-output-is-not-an-act/ (Short: https://blayneaina.com/01/ | Raw MD: https://blayneaina.com/01.md)
+- Problem: Valid JSON, credentials, confidence, and a green tool result can make an AI proposal look authorized when it is not.
+- What It Proves: Machine standing binds the exact act, actor, evidence, target, execution, time, and terminal disposition before consequence.
+- Lossless Part URLs (6 Parts): https://blayneaina.com/01-an-ai-output-is-not-an-act/part-1/ (.txt: https://blayneaina.com/01/part-1.txt) | https://blayneaina.com/01-an-ai-output-is-not-an-act/part-2/ (.txt: https://blayneaina.com/01/part-2.txt) | https://blayneaina.com/01-an-ai-output-is-not-an-act/part-3/ (.txt: https://blayneaina.com/01/part-3.txt) | https://blayneaina.com/01-an-ai-output-is-not-an-act/part-4/ (.txt: https://blayneaina.com/01/part-4.txt) | https://blayneaina.com/01-an-ai-output-is-not-an-act/part-5/ (.txt: https://blayneaina.com/01/part-5.txt) | https://blayneaina.com/01-an-ai-output-is-not-an-act/part-6/ (.txt: https://blayneaina.com/01/part-6.txt)
+
+### §02 — Zero-Trust Document Ingestion and Server-Cut Evidence
+- 1-Call Brief: https://blayneaina.com/02/brief/ (Plain Text: https://blayneaina.com/02/brief.txt)
+- Full Single-Page URL: https://blayneaina.com/02-zero-trust-document-ingestion-and-server-cut-evidence/ (Short: https://blayneaina.com/02/ | Raw MD: https://blayneaina.com/02.md)
+- Problem: Hostile documents can attack the parser, while models can fabricate citations and make unknown coverage disappear.
+- What It Proves: LPAC parser confinement, immutable views, explicit omissions, and server-cut srv_ and ev_ receipts establish served evidence.
+- Lossless Part URLs (4 Parts): https://blayneaina.com/02-zero-trust-document-ingestion-and-server-cut-evidence/part-1/ (.txt: https://blayneaina.com/02/part-1.txt) | https://blayneaina.com/02-zero-trust-document-ingestion-and-server-cut-evidence/part-2/ (.txt: https://blayneaina.com/02/part-2.txt) | https://blayneaina.com/02-zero-trust-document-ingestion-and-server-cut-evidence/part-3/ (.txt: https://blayneaina.com/02/part-3.txt) | https://blayneaina.com/02-zero-trust-document-ingestion-and-server-cut-evidence/part-4/ (.txt: https://blayneaina.com/02/part-4.txt)
+
+### §03 — EISA Four-Gate Verdict Machine & Strict AST Parser
+- 1-Call Brief: https://blayneaina.com/03/brief/ (Plain Text: https://blayneaina.com/03/brief.txt)
+- Full Single-Page URL: https://blayneaina.com/03-eisa-four-gate-verdict-machine-and-entity-resolution/ (Short: https://blayneaina.com/03/ | Raw MD: https://blayneaina.com/03.md)
+- Problem: Entity resolution needs rich comparison structure, but raw contacts, companies, and products should not be sent to external AI providers.
+- What It Proves: The production EISA Four-Gate machine validates bounded acts over sealed evidence; Semantic Switch is an experimental alpha structure-preservation research module.
+- Lossless Part URLs (6 Parts): https://blayneaina.com/03-eisa-four-gate-verdict-machine-and-entity-resolution/part-1/ (.txt: https://blayneaina.com/03/part-1.txt) | https://blayneaina.com/03-eisa-four-gate-verdict-machine-and-entity-resolution/part-2/ (.txt: https://blayneaina.com/03/part-2.txt) | https://blayneaina.com/03-eisa-four-gate-verdict-machine-and-entity-resolution/part-3/ (.txt: https://blayneaina.com/03/part-3.txt) | https://blayneaina.com/03-eisa-four-gate-verdict-machine-and-entity-resolution/part-4/ (.txt: https://blayneaina.com/03/part-4.txt) | https://blayneaina.com/03-eisa-four-gate-verdict-machine-and-entity-resolution/part-5/ (.txt: https://blayneaina.com/03/part-5.txt) | https://blayneaina.com/03-eisa-four-gate-verdict-machine-and-entity-resolution/part-6/ (.txt: https://blayneaina.com/03/part-6.txt)
+
+### §04 — The Room: Why Git and Chat Are Not Coordination Planes
+- 1-Call Brief: https://blayneaina.com/04/brief/ (Plain Text: https://blayneaina.com/04/brief.txt)
+- Full Single-Page URL: https://blayneaina.com/04-the-room-why-git-and-chat-are-not-coordination-planes/ (Short: https://blayneaina.com/04/ | Raw MD: https://blayneaina.com/04.md)
+- Problem: Git history and chat transcripts cannot establish who may act, receive, stop, or complete work now.
+- What It Proves: The Room revalidates territory, causal observation, sealed wakes, native replies, cancellation, and privileged acceptance.
+- Lossless Part URLs (5 Parts): https://blayneaina.com/04-the-room-why-git-and-chat-are-not-coordination-planes/part-1/ (.txt: https://blayneaina.com/04/part-1.txt) | https://blayneaina.com/04-the-room-why-git-and-chat-are-not-coordination-planes/part-2/ (.txt: https://blayneaina.com/04/part-2.txt) | https://blayneaina.com/04-the-room-why-git-and-chat-are-not-coordination-planes/part-3/ (.txt: https://blayneaina.com/04/part-3.txt) | https://blayneaina.com/04-the-room-why-git-and-chat-are-not-coordination-planes/part-4/ (.txt: https://blayneaina.com/04/part-4.txt) | https://blayneaina.com/04-the-room-why-git-and-chat-are-not-coordination-planes/part-5/ (.txt: https://blayneaina.com/04/part-5.txt)
+
+### §05 — Expiry Is Not Fencing: Typed Leases and Kernel Write Exclusion
+- 1-Call Brief: https://blayneaina.com/05/brief/ (Plain Text: https://blayneaina.com/05/brief.txt)
+- Full Single-Page URL: https://blayneaina.com/05-expiry-is-not-fencing-typed-leases-and-kernel-write-exclusion/ (Short: https://blayneaina.com/05/ | Raw MD: https://blayneaina.com/05.md)
+- Problem: An expired lease does not physically stop a stale worker or an uncooperative local writer from changing a resource.
+- What It Proves: Monotonic generations, current tenancy, typed scopes, and overlapping Win32 handle exclusion fence the write itself.
+- Lossless Part URLs (4 Parts): https://blayneaina.com/05-expiry-is-not-fencing-typed-leases-and-kernel-write-exclusion/part-1/ (.txt: https://blayneaina.com/05/part-1.txt) | https://blayneaina.com/05-expiry-is-not-fencing-typed-leases-and-kernel-write-exclusion/part-2/ (.txt: https://blayneaina.com/05/part-2.txt) | https://blayneaina.com/05-expiry-is-not-fencing-typed-leases-and-kernel-write-exclusion/part-3/ (.txt: https://blayneaina.com/05/part-3.txt) | https://blayneaina.com/05-expiry-is-not-fencing-typed-leases-and-kernel-write-exclusion/part-4/ (.txt: https://blayneaina.com/05/part-4.txt)
+
+### §06 — Rollback Is Not Erasure: Dual-Tier Vaults and Ungated Quarantine
+- 1-Call Brief: https://blayneaina.com/06/brief/ (Plain Text: https://blayneaina.com/06/brief.txt)
+- Full Single-Page URL: https://blayneaina.com/06-rollback-is-not-erasure-dual-tier-vaults-and-ungated-quarantine/ (Short: https://blayneaina.com/06/ | Raw MD: https://blayneaina.com/06.md)
+- Problem: A single undo snapshot can destroy intermediate states and launder unauthorized writes into a clean baseline.
+- What It Proves: Primary certifies operational recovery while Amber preserves every intermediate and ungated state for forensics.
+- Lossless Part URLs (3 Parts): https://blayneaina.com/06-rollback-is-not-erasure-dual-tier-vaults-and-ungated-quarantine/part-1/ (.txt: https://blayneaina.com/06/part-1.txt) | https://blayneaina.com/06-rollback-is-not-erasure-dual-tier-vaults-and-ungated-quarantine/part-2/ (.txt: https://blayneaina.com/06/part-2.txt) | https://blayneaina.com/06-rollback-is-not-erasure-dual-tier-vaults-and-ungated-quarantine/part-3/ (.txt: https://blayneaina.com/06/part-3.txt)
+
+### §07 — Defeating Approval Laundering: Act Pinning and Successor Grants
+- 1-Call Brief: https://blayneaina.com/07/brief/ (Plain Text: https://blayneaina.com/07/brief.txt)
+- Full Single-Page URL: https://blayneaina.com/07-defeating-approval-laundering-act-pinning-and-successor-grants/ (Short: https://blayneaina.com/07/ | Raw MD: https://blayneaina.com/07.md)
+- Problem: Approval for action A can become a different action A′ at execution, and a crash can separate commit from receipt.
+- What It Proves: Pre-resume confinement, controller-fixed RequestedAct, fenced SQLite, and non-fabricating successor grants preserve act and return continuity.
+- Lossless Part URLs (3 Parts): https://blayneaina.com/07-defeating-approval-laundering-act-pinning-and-successor-grants/part-1/ (.txt: https://blayneaina.com/07/part-1.txt) | https://blayneaina.com/07-defeating-approval-laundering-act-pinning-and-successor-grants/part-2/ (.txt: https://blayneaina.com/07/part-2.txt) | https://blayneaina.com/07-defeating-approval-laundering-act-pinning-and-successor-grants/part-3/ (.txt: https://blayneaina.com/07/part-3.txt)
+
+### §08 — The Sovereign Kill Switch: Break-Glass Epochs and the Conformance Gate
+- 1-Call Brief: https://blayneaina.com/08/brief/ (Plain Text: https://blayneaina.com/08/brief.txt)
+- Full Single-Page URL: https://blayneaina.com/08-sovereign-kill-switch-break-glass-epochs-and-conformance-gate/ (Short: https://blayneaina.com/08/ | Raw MD: https://blayneaina.com/08.md)
+- Problem: A kill switch the agent can clear is not a boundary, and a green build does not prove the release enforces refusals.
+- What It Proves: Latch-first containment, scoped epochs, observed Job termination, in-doubt recovery, and the 45-case candidate gate close the loop.
+- Lossless Part URLs (4 Parts): https://blayneaina.com/08-sovereign-kill-switch-break-glass-epochs-and-conformance-gate/part-1/ (.txt: https://blayneaina.com/08/part-1.txt) | https://blayneaina.com/08-sovereign-kill-switch-break-glass-epochs-and-conformance-gate/part-2/ (.txt: https://blayneaina.com/08/part-2.txt) | https://blayneaina.com/08-sovereign-kill-switch-break-glass-epochs-and-conformance-gate/part-3/ (.txt: https://blayneaina.com/08/part-3.txt) | https://blayneaina.com/08-sovereign-kill-switch-break-glass-epochs-and-conformance-gate/part-4/ (.txt: https://blayneaina.com/08/part-4.txt)
+
+### §09 — Bring One Real Boundary: Technical Peer Review, Challenge Tracks & R&D Evaluation
+- 1-Call Brief: https://blayneaina.com/09/brief/ (Plain Text: https://blayneaina.com/09/brief.txt)
+- Full Single-Page URL: https://blayneaina.com/09-bring-one-real-boundary-work-with-blayne/ (Short: https://blayneaina.com/09/ | Raw MD: https://blayneaina.com/09.md)
+- Problem: Writing code by hand is no longer the bottleneck. The bottleneck is formalizing the trust boundary, decomposing work across parallel AI agents without context collapse, catching plausible-but-wrong outputs, and proving that invalid transitions fail closed.
+- What It Proves: AINA is both a deterministic execution-governance runtime (squad.exe) and Exhibit A of a repeatable 9-IDE multi-agent engineering methodology grounded in 11+ years of production systems delivery.
+- Lossless Part URLs (8 Parts): https://blayneaina.com/09-bring-one-real-boundary-work-with-blayne/part-1/ (.txt: https://blayneaina.com/09/part-1.txt) | https://blayneaina.com/09-bring-one-real-boundary-work-with-blayne/part-2/ (.txt: https://blayneaina.com/09/part-2.txt) | https://blayneaina.com/09-bring-one-real-boundary-work-with-blayne/part-3/ (.txt: https://blayneaina.com/09/part-3.txt) | https://blayneaina.com/09-bring-one-real-boundary-work-with-blayne/part-4/ (.txt: https://blayneaina.com/09/part-4.txt) | https://blayneaina.com/09-bring-one-real-boundary-work-with-blayne/part-5/ (.txt: https://blayneaina.com/09/part-5.txt) | https://blayneaina.com/09-bring-one-real-boundary-work-with-blayne/part-6/ (.txt: https://blayneaina.com/09/part-6.txt) | https://blayneaina.com/09-bring-one-real-boundary-work-with-blayne/part-7/ (.txt: https://blayneaina.com/09/part-7.txt) | https://blayneaina.com/09-bring-one-real-boundary-work-with-blayne/part-8/ (.txt: https://blayneaina.com/09/part-8.txt)

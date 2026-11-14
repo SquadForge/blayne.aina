@@ -1,0 +1,377 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "EISA Act Envelope (EISA_ACT_V1)",
+  "description": "Closed, finite-state ten-key EISA transition envelope (§03). Enforces integer-only domains (zero IEEE-754 floats), closed 7-opcode stage-and-operand bindings, 15 non-inferential evidence tags, 47 registered fault codes, RFC 6901 8-token pointer depth, and explicit string, array, and byte-size ceilings.",
+  "type": "object",
+  "additionalProperties": false,
+  "minProperties": 10,
+  "maxProperties": 10,
+  "required": ["version", "stage", "actor", "opcode", "operands", "evidenceRefs", "confidence", "boundedReason", "sourceEvent", "artifactHash"],
+  "x_profile_bounds": {
+    "MAX_SUBMISSION_BYTES": 1048576,
+    "MAX_ACTS": 256,
+    "MAX_REASON_CHARS": 1024,
+    "MAX_ID_CHARS": 64,
+    "MAX_POINTER_BYTES": 256,
+    "MAX_POINTER_DEPTH": 8,
+    "MAX_VALUE_CHARS": 1024,
+    "MAX_REFS": 16,
+    "MAX_LIST": 1000,
+    "MAX_CHAIN": 4,
+    "MAX_CASE_BYTES": 4194304,
+    "MAX_CASE_RECORDS": 1000,
+    "MIN_PHONE_DIGITS": 7
+  },
+  "x_enforcement_layers": {
+    "layer_1_pre_parse_and_serialization": "Enforced prior to AST/DOM allocation by the stream reader, custom serde_json visitor (§03.1), and verify_refusal_proof.py pre-parse gate: MAX_SUBMISSION_BYTES (1,048,576 bytes), MAX_ACTS (1..256 acts per submission array), single-stage submission homogeneity, duplicate JSON object key rejection (visit_map), non-finite number rejection (visit_f64), and trailing matter rejection.",
+    "layer_2_draft07_schema_validation": "Enforced directly by standard JSON Schema Draft-07 validators and verify_refusal_proof.py: closed 10-key envelope (additionalProperties: false), closed 7-opcode enum (BindEvidenceTag, RequestHumanReview, RejectUnlawfulAct, AssertLayoutRelation, AssertDuplicatePair, AssertTransitiveClosure, ProposePartition), allOf opcode-to-stage-to-operands binding, 15-tag BindEvidenceTag enum, 47-fault RejectUnlawfulAct enum, integer-only confidence basis points (0..10000), MAX_POINTER_DEPTH (1..8 RFC 6901 tokens via regex) and MAX_POINTER_BYTES (2..256 chars), MAX_REASON_CHARS (1024), MAX_ID_CHARS (64), MAX_REFS (16), MAX_LIST (1000), and MAX_CHAIN (2..4).",
+    "layer_3_runtime_four_gate_recognizer": "Enforced by the stateful EISA Four-Gate Verdict Machine (§03.4-03.5) over sealed eisacase_<32hex> substrates: MAX_CASE_BYTES (4,194,304 bytes), MAX_CASE_RECORDS (1,000 records), MAX_VALUE_CHARS (1,024 chars), MIN_PHONE_DIGITS (7 digits), downward acyclic Layer 0->3 DAG dependency resolution, submission-complete counterevidence check (counterevidence_suppressed), simple-path graph walk (AssertTransitiveClosure), and Disjoint-Set Union-Find exact connected partition cover (ProposePartition)."
+  },
+  "definitions": {
+    "ActOrRecordId": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 64,
+      "pattern": "^[A-Za-z][A-Za-z0-9_-]{0,63}$"
+    },
+    "EvidenceHandle": {
+      "type": "string",
+      "minLength": 35,
+      "maxLength": 35,
+      "pattern": "^ev_[0-9a-f]{32}$"
+    },
+    "DirectEvidenceTag": {
+      "description": "The 15 non-inferential evidence tags from the 17-tag Evidence Alphabet (§03.3). The 2 inferential tags (TRANSITIVE_CLOSURE_APPLIED, TRANSITIVE_CHAIN_DEPTH_1) are reserved for AssertTransitiveClosure and refused in BindEvidenceTag.",
+      "type": "string",
+      "enum": [
+        "PHONE_STRONG",
+        "PHONE_ONE_DIGIT_VARIANCE",
+        "PHONE_MULTI_DIGIT_VARIANCE",
+        "PHONE_COUNTRY_CODE_VARIATION",
+        "INTERNATIONAL_PHONE_VARIATION",
+        "EMAIL_LOCAL_MATCH",
+        "DOMAIN_ROOT_MATCH",
+        "DOMAIN_COUNTRY_TLD_VARIATION",
+        "DOMAIN_ROOT_MISMATCH",
+        "NAME_STRONG",
+        "NAME_SIMILARITY",
+        "COMPANY_ROOT_MATCH",
+        "COMPANY_REGIONAL_VARIATION",
+        "REGIONAL_SUBSIDIARY_PATTERN",
+        "REGIONAL_VARIATION"
+      ]
+    },
+    "RegisteredFaultCode": {
+      "description": "The 47 registered per-act fault codes across 5 families (§03.3).",
+      "type": "string",
+      "enum": [
+        "act_not_object",
+        "unknown_field",
+        "missing_field",
+        "field_type",
+        "unknown_version",
+        "unknown_stage",
+        "stage_not_admitted",
+        "unknown_opcode",
+        "unknown_symbol",
+        "tag_class_mismatch",
+        "bound_exceeded",
+        "act_id_invalid",
+        "act_id_repeated",
+        "actor_mismatch",
+        "case_mismatch",
+        "evidence_ref_refused",
+        "pointer_foreign_artifact",
+        "pointer_malformed",
+        "record_unknown",
+        "member_repeated",
+        "field_absent",
+        "value_null",
+        "value_empty",
+        "value_not_string",
+        "value_shape_mismatch",
+        "observation_contradicted",
+        "pair_mismatch",
+        "dependency_missing",
+        "dependency_kind",
+        "dependency_faulted",
+        "dependency_cycle",
+        "support_missing",
+        "counterevidence_suppressed",
+        "chain_broken",
+        "chain_depth_exceeded",
+        "partition_member_unknown",
+        "partition_member_repeated",
+        "partition_member_missing",
+        "partition_unsupported_group",
+        "partition_contradicts_support",
+        "partition_repeated",
+        "submission_mixed_decision",
+        "layout_fact_absent",
+        "layout_scope_mismatch",
+        "layout_kind_mismatch",
+        "layout_citation_mismatch",
+        "relation_indeterminate"
+      ]
+    },
+    "RecordCoordinate": {
+      "type": "object",
+      "additionalProperties": false,
+      "minProperties": 3,
+      "maxProperties": 3,
+      "required": ["artifact", "recordId", "pointer"],
+      "properties": {
+        "artifact": { "const": "records" },
+        "recordId": { "$ref": "#/definitions/ActOrRecordId" },
+        "pointer": {
+          "description": "Record-relative RFC 6901 JSON Pointer (§03.1): leading '/', 2..256 bytes, 1..8 pointer tokens (MAX_POINTER_DEPTH = 8), no empty whole-record pointer, no control characters, and only '~0' or '~1' escapes.",
+          "type": "string",
+          "minLength": 2,
+          "maxLength": 256,
+          "pattern": "^(?:/(?:[^/~\\u0000-\\u001f]|~[01])*){1,8}$"
+        }
+      }
+    },
+    "BindEvidenceTagOperands": {
+      "title": "BindEvidenceTagOperands (Layer 0, Fracture)",
+      "type": "object",
+      "additionalProperties": false,
+      "minProperties": 3,
+      "maxProperties": 3,
+      "required": ["id", "tag", "coordinates"],
+      "properties": {
+        "id": { "$ref": "#/definitions/ActOrRecordId" },
+        "tag": { "$ref": "#/definitions/DirectEvidenceTag" },
+        "coordinates": {
+          "type": "array",
+          "minItems": 2,
+          "maxItems": 2,
+          "items": { "$ref": "#/definitions/RecordCoordinate" }
+        }
+      }
+    },
+    "RequestHumanReviewOperands": {
+      "title": "RequestHumanReviewOperands (Layer 0, Fracture)",
+      "type": "object",
+      "additionalProperties": false,
+      "minProperties": 3,
+      "maxProperties": 3,
+      "required": ["id", "reason", "members"],
+      "properties": {
+        "id": { "$ref": "#/definitions/ActOrRecordId" },
+        "reason": {
+          "type": "string",
+          "enum": ["INSUFFICIENT_EVIDENCE", "CONFLICTING_EVIDENCE", "SOURCE_DEFECT", "OUT_OF_PROFILE"]
+        },
+        "members": {
+          "type": "array",
+          "minItems": 1,
+          "maxItems": 1000,
+          "items": { "$ref": "#/definitions/ActOrRecordId" }
+        }
+      }
+    },
+    "RejectUnlawfulActOperands": {
+      "title": "RejectUnlawfulActOperands (Layer 0, Fracture)",
+      "type": "object",
+      "additionalProperties": false,
+      "minProperties": 3,
+      "maxProperties": 3,
+      "required": ["id", "rejected", "fault"],
+      "properties": {
+        "id": { "$ref": "#/definitions/ActOrRecordId" },
+        "rejected": { "type": "string", "minLength": 64, "maxLength": 64, "pattern": "^[0-9a-f]{64}$" },
+        "fault": { "$ref": "#/definitions/RegisteredFaultCode" }
+      }
+    },
+    "AssertLayoutRelationOperands": {
+      "title": "AssertLayoutRelationOperands (Layer 0, Forge)",
+      "type": "object",
+      "additionalProperties": false,
+      "minProperties": 5,
+      "maxProperties": 5,
+      "required": ["id", "relation", "connector", "from", "to"],
+      "properties": {
+        "id": { "$ref": "#/definitions/ActOrRecordId" },
+        "relation": { "const": "CONNECTS" },
+        "connector": { "$ref": "#/definitions/EvidenceHandle" },
+        "from": { "$ref": "#/definitions/EvidenceHandle" },
+        "to": { "$ref": "#/definitions/EvidenceHandle" }
+      }
+    },
+    "AssertDuplicatePairOperands": {
+      "title": "AssertDuplicatePairOperands (Layer 1, Fracture)",
+      "type": "object",
+      "additionalProperties": false,
+      "minProperties": 4,
+      "maxProperties": 4,
+      "required": ["id", "pair", "support", "counter"],
+      "properties": {
+        "id": { "$ref": "#/definitions/ActOrRecordId" },
+        "pair": {
+          "type": "array",
+          "minItems": 2,
+          "maxItems": 2,
+          "items": { "$ref": "#/definitions/ActOrRecordId" }
+        },
+        "support": {
+          "type": "array",
+          "minItems": 1,
+          "maxItems": 1000,
+          "items": { "$ref": "#/definitions/ActOrRecordId" }
+        },
+        "counter": {
+          "type": "array",
+          "minItems": 0,
+          "maxItems": 1000,
+          "items": { "$ref": "#/definitions/ActOrRecordId" }
+        }
+      }
+    },
+    "AssertTransitiveClosureOperands": {
+      "title": "AssertTransitiveClosureOperands (Layer 2, Fracture)",
+      "type": "object",
+      "additionalProperties": false,
+      "minProperties": 3,
+      "maxProperties": 3,
+      "required": ["id", "pair", "chain"],
+      "properties": {
+        "id": { "$ref": "#/definitions/ActOrRecordId" },
+        "pair": {
+          "type": "array",
+          "minItems": 2,
+          "maxItems": 2,
+          "items": { "$ref": "#/definitions/ActOrRecordId" }
+        },
+        "chain": {
+          "type": "array",
+          "minItems": 2,
+          "maxItems": 4,
+          "items": { "$ref": "#/definitions/ActOrRecordId" }
+        }
+      }
+    },
+    "ProposePartitionOperands": {
+      "title": "ProposePartitionOperands (Layer 3, Fracture)",
+      "type": "object",
+      "additionalProperties": false,
+      "minProperties": 3,
+      "maxProperties": 3,
+      "required": ["id", "groups", "support"],
+      "properties": {
+        "id": { "$ref": "#/definitions/ActOrRecordId" },
+        "groups": {
+          "type": "array",
+          "minItems": 1,
+          "maxItems": 1000,
+          "items": {
+            "type": "array",
+            "minItems": 1,
+            "maxItems": 1000,
+            "items": { "$ref": "#/definitions/ActOrRecordId" }
+          }
+        },
+        "support": {
+          "type": "array",
+          "minItems": 0,
+          "maxItems": 1000,
+          "items": { "$ref": "#/definitions/ActOrRecordId" }
+        }
+      }
+    }
+  },
+  "properties": {
+    "version": { "const": "EISA_ACT_V1" },
+    "stage": { "type": "string", "enum": ["Fracture", "Forge"] },
+    "actor": { "type": "string", "minLength": 1, "maxLength": 64, "pattern": "^[^\\u0000-\\u001f]+$" },
+    "opcode": {
+      "type": "string",
+      "enum": [
+        "BindEvidenceTag",
+        "RequestHumanReview",
+        "RejectUnlawfulAct",
+        "AssertLayoutRelation",
+        "AssertDuplicatePair",
+        "AssertTransitiveClosure",
+        "ProposePartition"
+      ]
+    },
+    "operands": {
+      "description": "Closed per-opcode operand schemas corresponding to the 7 EISA opcodes across Layers 0-3.",
+      "oneOf": [
+        { "$ref": "#/definitions/BindEvidenceTagOperands" },
+        { "$ref": "#/definitions/RequestHumanReviewOperands" },
+        { "$ref": "#/definitions/RejectUnlawfulActOperands" },
+        { "$ref": "#/definitions/AssertLayoutRelationOperands" },
+        { "$ref": "#/definitions/AssertDuplicatePairOperands" },
+        { "$ref": "#/definitions/AssertTransitiveClosureOperands" },
+        { "$ref": "#/definitions/ProposePartitionOperands" }
+      ]
+    },
+    "evidenceRefs": {
+      "type": "array",
+      "minItems": 0,
+      "maxItems": 16,
+      "items": { "$ref": "#/definitions/EvidenceHandle" }
+    },
+    "confidence": {
+      "description": "Audit-only non-authorizing telemetry score in integer basis points (0 <= bps <= 10000) or empty object/null. Zero IEEE-754 floating-point values are permitted; ignored by all Four-Gate admission predicates and excluded from consensusIdentity.",
+      "oneOf": [
+        { "type": "null" },
+        { "type": "object", "additionalProperties": false, "maxProperties": 0 },
+        {
+          "type": "object",
+          "additionalProperties": false,
+          "minProperties": 1,
+          "maxProperties": 1,
+          "required": ["bps"],
+          "properties": {
+            "bps": { "type": "integer", "minimum": 0, "maximum": 10000 }
+          }
+        }
+      ]
+    },
+    "boundedReason": {
+      "description": "Audit-only string of at most 1,024 characters with control characters other than newline refused (§03.1).",
+      "type": "string",
+      "maxLength": 1024,
+      "pattern": "^[^\\u0000-\\u0009\\u000b-\\u001f]*$"
+    },
+    "sourceEvent": {
+      "type": ["string", "null"],
+      "maxLength": 32,
+      "pattern": "^(|evt_[0-9a-f]{16}_[0-9a-f]{8})$"
+    },
+    "artifactHash": { "type": "string", "minLength": 64, "maxLength": 64, "pattern": "^[0-9a-f]{64}$" }
+  },
+  "allOf": [
+    {
+      "if": { "properties": { "opcode": { "const": "BindEvidenceTag" } }, "required": ["opcode"] },
+      "then": { "properties": { "stage": { "const": "Fracture" }, "operands": { "$ref": "#/definitions/BindEvidenceTagOperands" } } }
+    },
+    {
+      "if": { "properties": { "opcode": { "const": "RequestHumanReview" } }, "required": ["opcode"] },
+      "then": { "properties": { "stage": { "const": "Fracture" }, "operands": { "$ref": "#/definitions/RequestHumanReviewOperands" } } }
+    },
+    {
+      "if": { "properties": { "opcode": { "const": "RejectUnlawfulAct" } }, "required": ["opcode"] },
+      "then": { "properties": { "stage": { "const": "Fracture" }, "operands": { "$ref": "#/definitions/RejectUnlawfulActOperands" } } }
+    },
+    {
+      "if": { "properties": { "opcode": { "const": "AssertLayoutRelation" } }, "required": ["opcode"] },
+      "then": { "properties": { "stage": { "const": "Forge" }, "operands": { "$ref": "#/definitions/AssertLayoutRelationOperands" }, "evidenceRefs": { "minItems": 3, "maxItems": 3 } } }
+    },
+    {
+      "if": { "properties": { "opcode": { "const": "AssertDuplicatePair" } }, "required": ["opcode"] },
+      "then": { "properties": { "stage": { "const": "Fracture" }, "operands": { "$ref": "#/definitions/AssertDuplicatePairOperands" } } }
+    },
+    {
+      "if": { "properties": { "opcode": { "const": "AssertTransitiveClosure" } }, "required": ["opcode"] },
+      "then": { "properties": { "stage": { "const": "Fracture" }, "operands": { "$ref": "#/definitions/AssertTransitiveClosureOperands" } } }
+    },
+    {
+      "if": { "properties": { "opcode": { "const": "ProposePartition" } }, "required": ["opcode"] },
+      "then": { "properties": { "stage": { "const": "Fracture" }, "operands": { "$ref": "#/definitions/ProposePartitionOperands" } } }
+    }
+  ]
+}

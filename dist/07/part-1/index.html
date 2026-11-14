@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>§07 Part 1/3: Defeating Approval Laundering (Introduction &amp; Overview) | Blayne Aina</title>
+  <meta name="description" content="Sections: Introduction &amp; Overview, One Approved Mutation, Three Places to Fail, 1. Pre-Resume Kernel Verification, 2. Controller-Brokered Model Egress">
+  <meta name="author" content="Blayne Aina">
+  <meta name="robots" content="index, follow, max-snippet:-1, max-image-preview:large, max-video-preview:-1">
+  <link rel="canonical" href="https://blayneaina.com/07-defeating-approval-laundering-act-pinning-and-successor-grants/part-1/">
+  <link rel="icon" href="/favicon.ico" sizes="any">
+  <link rel="icon" href="/favicon.svg" type="image/svg+xml">
+
+  <!-- OpenGraph / Social -->
+  <meta property="og:type" content="article">
+  <meta property="og:title" content="§07 Part 1/3: Defeating Approval Laundering (Introduction &amp; Overview)">
+  <meta property="og:description" content="Sections: Introduction &amp; Overview, One Approved Mutation, Three Places to Fail, 1. Pre-Resume Kernel Verification, 2. Controller-Brokered Model Egress">
+  <meta property="og:url" content="https://blayneaina.com/07-defeating-approval-laundering-act-pinning-and-successor-grants/part-1/">
+  <meta property="og:site_name" content="Blayne Aina — The Route to Trusting AI">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="§07 Part 1/3: Defeating Approval Laundering (Introduction &amp; Overview)">
+  <meta name="twitter:description" content="Sections: Introduction &amp; Overview, One Approved Mutation, Three Places to Fail, 1. Pre-Resume Kernel Verification, 2. Controller-Brokered Model Egress">
+  
+  <link rel="stylesheet" href="/style.css?v=20261109-s-tier">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@500;700&family=Instrument+Serif:ital@0;1&family=Inter:wght@400;500;600;700;800&family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,500;0,6..72,600;1,6..72,400&family=JetBrains+Mono:wght@400;500&family=Plus+Jakarta+Sans:wght@600;700;800&display=swap" rel="stylesheet">
+</head>
+<body>
+  <div class="reading-progress-bar" id="progressBar"></div>
+
+  <header class="site-header compact-ai-header"><div class="header-inner compact-ai-nav"><a href="/" class="brand"><strong>BLAYNE AINA</strong></a> | <a href="/ai-brief/">1-Page Master Brief (§01–§09)</a> | <a href="/articles/">All 9 Articles &amp; Briefs</a> | <a href="/research-assurance/">Assurance</a> | <a href="/refusal-proof/">Proof</a> | <a href="/llms.txt">llms.txt</a> | <a href="mailto:me@blayneaina.com">me@blayneaina.com</a></div></header>
+  <div class="layout-container presentation-layout">
+    <main class="content-area">
+      <article class="prose-wrapper presentation-wrapper">
+<header class="article-header compact-article-header"><h1 class="article-title">§07 Part 1/3: Defeating Approval Laundering (Introduction &amp; Overview)</h1><p class="article-subtitle">Sections: Introduction &amp; Overview, One Approved Mutation, Three Places to Fail, 1. Pre-Resume Kernel Verification, 2. Controller-Brokered Model Egress</p></header>
+
+        
+        
+
+        <div class="article-body">
+          
+      <p class="part-compact-nav"><strong>§07 PART 1/3</strong> (10,100 chars · Sections: Introduction &amp; Overview; One Approved Mutation, Three Places to Fail; 1. Pre-Resume Kernel Verification; 2. Controller-Brokered Model Egress) — <a href="/07-defeating-approval-laundering-act-pinning-and-successor-grants/part-2/">Part 2 →</a> · <a href="/07/brief/">1-Call Brief</a> · <a href="/07-defeating-approval-laundering-act-pinning-and-successor-grants/">Full §07</a> · <a href="/07/part-1.txt">Raw .txt</a> · All: <a href="/07-defeating-approval-laundering-act-pinning-and-successor-grants/part-1/">P1</a> <a href="/07-defeating-approval-laundering-act-pinning-and-successor-grants/part-2/">P2</a> <a href="/07-defeating-approval-laundering-act-pinning-and-successor-grants/part-3/">P3</a></p>
+    
+<h1>Defeating Approval Laundering: Act Pinning and Successor Grants</h1>
+<p><em>Approval must bind the exact act before the worker environment exists, authority must be re-derived at commit, and recovery must not fabricate the original session&#39;s receipt.</em></p>
+<p><strong>By Blayne Aina · Principal Systems Architect and creator of AINA · October 31, 2026</strong></p>
+<hr>
+<p>Hashing a worker&#39;s proposal after it arrives is too late.</p>
+<p>A human or policy may approve action (A), but the worker can still execute (A&#39;): a different row, target, payload, route, or time. A safe execution boundary cannot trust that the proposal and its effect remain identical unless the trusted controller fixes the act before the worker environment exists and revalidates that exact object at the destination&#39;s ordering point.</p>
+<p>Three coupled failures follow:</p>
+<ol>
+<li><strong>Launch substitution:</strong> a worker begins life with an unclassified handle, an inherited capability, or a native unconfined route.</li>
+<li><strong>Approval laundering:</strong> a valid general approval becomes a different mutation at execution.</li>
+<li><strong>Crash-straddling:</strong> the destination commits, the worker dies before first receipt, and a successor either repeats the effect or invents original-session completion.</li>
+</ol>
+<p>Article 06 preserved recovery evidence. Article 07 binds the execution itself: pre-resume kernel inspection, controller-brokered model egress, <code>RequestedAct</code>, fenced SQLite execution, multi-destination holds, and non-fabricating successor grants.</p>
+<blockquote>
+<p><strong>The controller fixes the act. The destination rechecks it. History may be read by a successor, but the original return is never invented.</strong></p>
+</blockquote>
+<h2>One Approved Mutation, Three Places to Fail</h2>
+<p>Suppose a policy approves raising one customer&#39;s credit limit from 10,000 to 25,000.</p>
+<p>The trusted controller first projects exactly that row and prepares the change. A prompt-injected worker then tries to substitute a different customer and a higher limit. At the same time, an unrelated writer increments the approved row&#39;s version, and the worker&#39;s host dies immediately after the database commits.</p>
+<p>The machine handles each failure separately:</p>
+<ul>
+<li><strong>Before launch:</strong> the suspended worker&#39;s package SID, LPAC attribute, capabilities, Job membership, and current handle inventory are verified. A sentinel match or unclassified handle terminates the Job before instruction 0.</li>
+<li><strong>Before execution:</strong> the controller has already fixed the exact row, key, fields, and expected version in <code>RequestedAct</code>. The substitute customer is not a permissible interpretation of that act.</li>
+<li><strong>At the destination:</strong> SQLite takes its write reservation, the row is reread, recovery is captured, and current task, source, tenancy, act, and approval are revalidated. The other writer&#39;s version increment makes the conditional update fail instead of overwriting new state.</li>
+<li><strong>After commit:</strong> a fresh result-only successor may read the historical outcome if its tenancy, grant, wake, source, and Room-return proofs all hold. It does not repeat the write and does not claim the dead worker received the result.</li>
+</ul>
+<p>Approval is therefore not one event at the prompt. It is a chain of proof that survives substitution, concurrency, and crash—without being confused with the original session&#39;s receipt.</p>
+<h2>1. Pre-Resume Kernel Verification</h2>
+<p>A confined process must be inspected before instruction 0. Once the worker runs, every later control is negotiating with an already-active environment.</p>
+<h3>Exhibit 7.1 — Pre-resume kernel audit</h3>
+<pre><code class="language-text">Derive exclusive AppContainer profile or per-launch host SID
+→ CreateProcessW(CREATE_SUSPENDED) inside owned Job Object
+→ Query raw token: package SID + WIN://NOALLAPPPKG + exact capabilities
+→ PssCaptureSnapshot + PssWalkSnapshot handle table
+→ DuplicateHandle + CompareObjectHandles against owned references
+→ reject any sentinel match or unclassified object
+     ├─ PASS → ResumeThread exactly once
+     └─ FAIL → terminate suspended Job; no worker instruction executes
+</code></pre>
+<aside class="context-callout" aria-label="Linux and POSIX kernel counterparts">
+  <h2>Linux / POSIX Kernel Counterparts</h2>
+  <p><code>CreateProcessW(CREATE_SUSPENDED)</code> + <code>PssCaptureSnapshot</code> + PEB inspection maps on Linux to <code>clone3()</code> / <code>pidfd_open()</code> stopped-start spawning with <code>/proc/&lt;pid&gt;/fd</code>, <code>/proc/&lt;pid&gt;/cmdline</code>, and <code>/proc/&lt;pid&gt;/maps</code> verification prior to <code>execve</code> / signal continuation.</p>
+</aside><h3>Exclusive identity and anti-reuse</h3>
+<p><code>container_sid</code> calls <code>CreateAppContainerProfile</code> for a fresh per-launch profile. <code>E_ALREADY_EXISTS_HR = 0x8007_00B7</code> becomes <code>confinement_identity_reused</code>; an existing profile cannot be borrowed with its old ACLs, files, or residual state.</p>
+<p>Brokered hosts that cannot run inside an AppContainer receive an application-defined Resource Manager SID in <code>S-1-9</code>. Its first sub-authority is ASCII <code>&quot;SQAD&quot;</code> (<code>0x5351_4144</code>), followed by four 32-bit words carrying 128 SHA-256 bits derived from the launch&#39;s container name. It names no local user, group, or domain account, so host permissions come only from explicit launch grants.</p>
+<h3>Raw LPAC attribute verification</h3>
+<p><code>verify_worker_token</code> queries the suspended process token directly:</p>
+<ul>
+<li><code>TokenAppContainerSid</code> must equal the owned package SID;</li>
+<li><code>TokenSecurityAttributes</code> must contain <code>WIN://NOALLAPPPKG</code>;</li>
+<li>the attribute must be integer kind <code>2</code>, count <code>1</code>, not disabled (<code>flags &amp; 0x10 == 0</code>), and nonzero.</li>
+</ul>
+<p>The controller does not rely on a platform LPAC query that may be unavailable. It parses the raw table with buffer bounds and UTF-16 decoding, then compares the actual restriction to the requested one.</p>
+<h3>Handle-table object identity, not numeric equality</h3>
+<p>Windows handle values are process-local indices. They do not prove which kernel object they name, and two different values can name the same object.</p>
+<p><code>PssCaptureSnapshot</code> and <code>PssWalkSnapshot</code> enumerate the suspended child&#39;s current handle table. The controller duplicates candidate handles and calls <code>CompareObjectHandles</code> against owned references for expected stdio, Job, and other provenance objects. A deliberately excluded sentinel proves whether anything outside the launch list was inherited. Unknown objects, missing expected matches, sentinel matches, incomplete inventory, or token mismatch refuse the resume.</p>
+<p>PSS proves the <strong>current handle inventory at capture time</strong>, not historical inheritance. The architecture therefore combines the explicit launch <code>HANDLE_LIST</code>, current inventory, and object comparison rather than inventing an inheritance proof.</p>
+<h3>The native spawn gate</h3>
+<p><code>require_native_spawn_allowed</code> refuses a native launch or existing-session attachment whenever owner policy or staged grants mandate confinement. Expired or revoked grants do not create an unconfined fallback. Project-mandated work runs only under its staged project identity.</p>
+<p>This is the anti-fallback rule: if the worker cannot launch under the required boundary, it does not launch.</p>
+<h2>2. Controller-Brokered Model Egress</h2>
+<p>Confined workers have no general network capability. Model access is a separate controller-owned transition, not an ambient HTTP client.</p>
+<h3>Authenticated local channels</h3>
+<p>For LPAC workers, the controller exposes a per-worker <code>AF_UNIX</code> endpoint with a restrictive ACL. It verifies the held worker with <code>IsProcessInJob</code>, <code>verify_worker_token</code>, exact capabilities, and a 32-byte launch nonce. It does not pretend that AF_UNIX supplies a portable peer-process identity; the held process is the evidence.</p>
+<p>Brokered hosts use a first-instance Named Pipe with <code>PIPE_REJECT_REMOTE_CLIENTS</code>. <code>QueryFullProcessImageNameW</code> must resolve to the exact staged bridge executable.</p>
+<p>Every request and response is bounded and rechecked. Revocation before response transport produces a typed refusal; partial responses produce <code>severed_mid_response</code>, not a second contradictory frame.</p>
+<h3>The controller owns the route</h3>
+<p>The worker names only an owner route ID and JSON body. The controller owns:</p>
+<ul>
+<li>exact HTTPS destination or isolated subscription CLI;</li>
+<li>credential injection and fixed headers;</li>
+<li>allowed models and output-token ceilings;</li>
+<li>request/response byte limits and request budget;</li>
+<li>project, agent, expiry, and control-epoch admission.</li>
+</ul>
+<p>Routes can use API credentials or isolated <code>claude.exe</code>/<code>codex.exe</code> subscription CLIs. The worker never receives the credential or chooses a URL.</p>
+<h3>Journal before dispatch; never replay uncertainty</h3>
+<p>Every request is appended to <code>model-egress/ledger.jsonl</code> <strong>before</strong> network transmission. A last admission check occurs immediately before send.</p>
+<p>Stopping a broker stops the worker from receiving a result, but it does not recall an in-flight HTTP request. <code>settle_in_flight</code> waits for controller-side outcomes to append. If the provider outcome remains unknown, the operation stays <code>unresolved</code>, counts against the route&#39;s budget, and can be settled only by a trusted operator through <code>reconcile</code> using provider-side evidence. Reconciliation never resends and does not automatically return the budget slot.</p>
+<h3>Exhibit 7.6 — Unresolved model egress</h3>
+<pre><code class="language-json">{
+  &quot;operation_id&quot;: &quot;model_op_synthetic_07&quot;,
+  &quot;route&quot;: &quot;owner-approved-analysis-route&quot;,
+  &quot;destination&quot;: &quot;https://models.example/v1/respond&quot;,
+  &quot;actor&quot;: &quot;reviewer-beta&quot;,
+  &quot;task&quot;: &quot;TSK-2026-ACT-007&quot;,
+  &quot;project_id&quot;: &quot;proj_synthetic&quot;,
+  &quot;begun_at&quot;: &quot;2026-10-31T19:00:00Z&quot;,
+  &quot;request_sha256&quot;: &quot;4a9c8e12f03b7d651928374655647382910abcdef1234567890abcdef1234567&quot;,
+  &quot;latest_outcome&quot;: null,
+  &quot;disposition&quot;: &quot;unresolved; never resent; operator reconciliation required&quot;
+}
+</code></pre>
+<p>An approved model route does not prove semantic confidentiality of the staged projection. It proves destination, credential, budget, and continuity authority. Content still needs Semantic Switch to transform native values before provider-exposed qBlock and later computation, with native rows and the private crosswalk retained locally as Article 03 establishes.</p>
+
+
+      <p class="part-compact-nav"><strong>END OF §07 PART 1/3</strong> — Next: <a href="/07-defeating-approval-laundering-act-pinning-and-successor-grants/part-2/"><code>https://blayneaina.com/07-defeating-approval-laundering-act-pinning-and-successor-grants/part-2/</code></a> · <a href="/07/brief/">§07 1-Call Brief</a> · <a href="/07.md">Raw .md</a></p>
+    
+        </div>
+
+        
+        
+        
+        
+
+        
+
+        
+      </article>
+    </main>
+
+  </div>
+
+  <footer class="site-footer compact-ai-footer"><p><strong>blayneaina.com</strong> — <a href="https://blayneaina.com/ai-brief/">Master Brief (https://blayneaina.com/ai-brief/)</a> · <a href="https://blayneaina.com/ai-brief.txt">Plain-Text Brief (https://blayneaina.com/ai-brief.txt)</a> · <a href="https://blayneaina.com/articles/">All 9 Articles &amp; Briefs (https://blayneaina.com/articles/)</a> · <a href="https://blayneaina.com/llms.txt">llms.txt</a> · <a href="mailto:me@blayneaina.com">me@blayneaina.com</a></p></footer>
+
+
+
+
+
+  <script src="/script.js?v=20261109-s-tier"></script>
+</body>
+</html>

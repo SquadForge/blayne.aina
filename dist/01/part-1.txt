@@ -1,0 +1,126 @@
+# §01 Part 1/6 — An AI Output Is Not an Act
+Canonical: https://blayneaina.com/01-an-ai-output-is-not-an-act/part-1/ | Raw Article: https://blayneaina.com/01.md | Next Part: https://blayneaina.com/01/part-2.txt
+
+# An AI Output Is Not an Act: The Lawful-Act Defect and Machine Standing
+
+*Most AI safety work improves what models say. Enterprise consequence requires proof of what the resulting transition is allowed to do.*
+
+**By Blayne Aina · Principal Systems Architect and creator of AINA · October 31, 2026**
+
+---
+
+An AI output is not an act. It is a proposal.
+
+Between that proposal and a customer record changing, a file being replaced, a database committing, or information leaving a protected boundary, a system must prove that **this exact transition may acquire this exact consequence now**. Valid JSON does not prove it. A credential does not prove it. A model’s confidence does not prove it. A green check mark after execution does not prove it either.
+
+The route to trusting AI is not to make probability sovereign. It is to let models propose while deterministic systems decide standing, bind execution, and preserve terminal evidence.
+
+This is the missing execution layer for enterprise AI.
+
+## The Green Check Mark That Proved the Wrong Thing
+
+Consider an enterprise customer-record agent evaluating two accounts. It returns:
+
+```json
+{
+  "action": "merge_customer_records",
+  "source": "C-18422",
+  "target": "C-98104",
+  "confidence": 0.94
+}
+```
+
+The object is valid JSON. Its fields satisfy the schema. The tool is registered. The caller is authenticated and authorized to invoke the merge endpoint. The confidence score exceeds the company’s threshold. The database commits. The API returns `200 OK`. The dashboard turns green.
+
+What did the machine actually establish?
+
+It established that a sequence of characters attributed to a model could be parsed, that the requested operation had an expected shape, and that the surrounding service had enough privilege to perform it. It did **not** establish that the two records describe the same human or organization, that the shared phone number is current, that the conflicting email addresses were investigated, that the selected address is supported by source evidence, that the target did not drift between evaluation and commit, or that this model had standing to make an identity decision.
+
+The system executed the wrong act perfectly. Nothing crashed. No attacker was required.
+
+The same defect appears without an identity mistake. A worker whose lease has expired can resume and overwrite a successor’s file because the clock changed ownership without physically revoking the old writer. A destination can commit an effect before the ordinary receipt append fails, inviting a blind retry unless the system preserves the operation as **in-doubt** rather than guessing failure or success.
+
+I call the underlying defect the **Lawful-Act Defect**: locally valid facts adding themselves into authority without a decision-independent boundary determining whether they refer to the same transition and satisfy every condition for its consequence.
+
+The constitutional response is **machine standing**. Standing is not a reputation, alignment score, certification, or continuing property of an agent. It is a status of one exact proposed transition under current evidence, governance, target, execution, and time conditions.
+
+> **Models generate proposals. Systems create acts. Only a decision-independent consequence boundary may decide whether a proposal has machine standing to acquire operative force.**
+
+## A 60-Second Map of the Argument
+
+| Local fact that may be true | What it cannot prove by itself |
+|---|---|
+| The JSON is valid and matches the schema. | The proposal is supported, correctly targeted, or authorized for consequence. |
+| The caller is authenticated and has a permitted role. | This exact transition has standing under current conditions. |
+| The model is confident, or several models agree. | The evidence is valid, complete, or independently verified. |
+| The policy engine returned `allow`. | The evidence world, target pre-state, execution path, and terminal disposition are valid. |
+| The tool returned `200 OK` or exit code zero. | The intended effect occurred once and closed correctly. |
+| A durable outcome exists in a ledger. | The original worker session received the result or discharged its return obligation. |
+| Surviving artifacts verify cryptographically. | Every artifact survives, every effect path is covered, or an external party validated the system. |
+
+The remainder of this article shows how to turn that critique into a working architecture: a continuous machine that carries a proposal from protected reality through recognition, standing, bounded execution, independent observation, and terminal closure.
+
+## The Complete Path in One View
+
+Remember only two constitutional terms: the **Lawful-Act Defect** is the failure, and **machine standing** is the transition-specific authority that defeats it. Every other name in the series is a mechanism used to establish or test that standing.
+
+```text
+1  PROTECTED REALITY       exact sources, governance, and evidence coordinates sealed
+             │
+2  PROPOSAL                model or other origin submits one requested consequence
+             │
+3  RECOGNITION             proposal becomes a bounded act—or a typed refusal
+             │
+4  ADMISSION               current actor, evidence, target, time, and release path checked
+             │
+5  EXECUTION               controller-fixed act revalidated at the ordering point
+             │
+6  INDEPENDENT OBSERVATION destination read back or measured
+             │
+7  TERMINAL CLOSURE        confirmed, refused, withheld, divergent, or unconfirmed
+
+Positive path: sealed evidence → recognized act → current standing
+             → fenced effect → observed result → honest receipt
+
+Refusal path:  stale actor, changed payload, invalid evidence, or superseded target
+             → release withheld → no mutation → typed evidence preserved
+```
+
+One transition identity must survive the entire path. A valid fact at one stage cannot compensate for a failed condition at another.
+
+## Two 2026 Failure Classes: Forged Origin and Approval Laundering
+
+The necessity of governing the transition rather than trusting the wrapper became especially clear in August and September 2026.
+
+### 1. CoreBreak: execution without model origin
+
+The August 2026 CoreBreak disclosures concerned different products, prerequisites, and execution paths. They should not be flattened into one vulnerability. But they exposed the same architectural omission: the dispatch layer received matter shaped like a tool call without proving that an eligible model event had originated it.
+
+| Affected infrastructure | Exact prerequisite and defect | Vendor remedy and remaining standing gap |
+|---|---|---|
+| **Amazon Bedrock AgentCore `InvokeHarness`** | An authenticated caller could place a tool-use content block into the final message of a managed request. The event loop could dispatch the configured tool without model mediation. ([AWS Security Bulletin `2026-073-AWS`](https://aws.amazon.com/security/security-bulletins/2026-073-aws/), `CVE-2026-18830`, `CWE-1287`) | AWS added server-side validation rejecting caller-supplied tool-use blocks before the event loop. That restores origin binding, but it does not prove that the resulting target, evidence, scope, or terminal disposition is lawful. |
+| **Google ADK for Python** | In affected resumable and confirmation flows, caller-controlled session history could counterfeit function calls or confirmation conditions without verifying registration, confirmation requirements, or the session-recorded arguments. (`CVE-2026-18236`, patched in `v2.5.0` via commits [`c03f3337`](https://github.com/google/adk-python/commit/c03f333769feaeaa9fe8910fbe95cb9f2d513f54) and [`283e92ef`](https://github.com/google/adk-python/commit/283e92efc2297246ff6f70ceb220b9b299aa2d67)) | Google rejected caller-authored function-call histories and bound confirmation to the tool and arguments recorded in the session. That does not fence concurrent destination state or preserve receipt continuity across a crash. |
+| **Vercel AI SDK harnesses** | Untrusted code already executing inside a Linux sandbox could satisfy a permissive process-path relay check and invoke host-exposed tools without a bridge-observed model event. ([GitHub Advisory `GHSA-qw9h-448j-6rph`](https://github.com/vercel/ai/security/advisories/GHSA-qw9h-448j-6rph), `CVE-2026-64650` and `CVE-2026-64651`, fixed in `@ai-sdk/harness-codex` `v1.0.29`) | Vercel removed the process-path fallback and now requires an exact, short-lived, one-time authorization matching the tool name and input observed in a model event. That still does not verify pre-resume confinement or destination pre-state. |
+
+No stronger system prompt can govern a path that bypasses the model. No refusal classifier can inspect a decision the model was never asked to make.
+
+But origin binding alone is not standing. A genuine model event can still propose the wrong target, cite unserved evidence, exceed actor authority, arrive after lease expiry, or leave an unconfirmed effect.
+
+### 2. Approval laundering: execution diverging from approval
+
+A second failure class appears even when the model runs and a human or policy approves an action \(A\): the harness executes a materially different action \(A'\).
+
+In September 2026, Yang Wang’s [*Approval Laundering: Systematizing Approval–Execution Binding Failures in AI Coding-Agent Harnesses*](https://arxiv.org/abs/2609.38983) and Jinqian Zhang et al.’s [*Agent Approval Laundering: Transitive Effects Beyond the Approved Invocation*](https://arxiv.org/abs/2609.28586) documented six classes of divergence:
+
+1. **Scope laundering** — approval covers a narrow path while execution reaches a broader resource.
+2. **Argument laundering** — a file, payload, environment value, or staged operand changes after approval.
+3. **Temporal laundering** — a stale approval is consumed after authority or target state changes.
+4. **Tool laundering** — an approved operation is routed through an alias or fallback with different effects.
+5. **Delegation laundering** — ambient credentials or permissions flow to sub-agents or lifecycle hooks that were never evaluated.
+6. **Semantic or transitive laundering** — a benign-looking surface command triggers unrecorded network or filesystem mutations.
+
+Wang’s study is especially useful because it does not pretend that one approval token solves every class. The prototype eliminated the seeded delegation and temporal cases while leaving scope and argument laundering unresolved. A receipt or hash is not complete effect coverage.
+
+CoreBreak proves that **shape is not origin**. Approval laundering proves that **origin plus approval is not execution fidelity**. The response must bind the exact transition from sealed evidence and recognized act, through current authority and target pre-state, to a controller-fixed `RequestedAct` revalidated inside the destination transaction.
+
+

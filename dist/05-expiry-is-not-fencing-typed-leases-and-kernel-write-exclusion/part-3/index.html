@@ -1,0 +1,216 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>§05 Part 3/4: Expiry Is Not Fencing (8. Fencing Continues Into Every Execution Surface) | Blayne Aina</title>
+  <meta name="description" content="Sections: 8. Fencing Continues Into Every Execution Surface, 9. Release Verification and Quarantine, Platform and Route Matrix, 10. The 2026 Fencing Evidence Landscape, The Adversarial Stale-Writer Challenge">
+  <meta name="author" content="Blayne Aina">
+  <meta name="robots" content="index, follow, max-snippet:-1, max-image-preview:large, max-video-preview:-1">
+  <link rel="canonical" href="https://blayneaina.com/05-expiry-is-not-fencing-typed-leases-and-kernel-write-exclusion/part-3/">
+  <link rel="icon" href="/favicon.ico" sizes="any">
+  <link rel="icon" href="/favicon.svg" type="image/svg+xml">
+
+  <!-- OpenGraph / Social -->
+  <meta property="og:type" content="article">
+  <meta property="og:title" content="§05 Part 3/4: Expiry Is Not Fencing (8. Fencing Continues Into Every Execution Surface)">
+  <meta property="og:description" content="Sections: 8. Fencing Continues Into Every Execution Surface, 9. Release Verification and Quarantine, Platform and Route Matrix, 10. The 2026 Fencing Evidence Landscape, The Adversarial Stale-Writer Challenge">
+  <meta property="og:url" content="https://blayneaina.com/05-expiry-is-not-fencing-typed-leases-and-kernel-write-exclusion/part-3/">
+  <meta property="og:site_name" content="Blayne Aina — The Route to Trusting AI">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="§05 Part 3/4: Expiry Is Not Fencing (8. Fencing Continues Into Every Execution Surface)">
+  <meta name="twitter:description" content="Sections: 8. Fencing Continues Into Every Execution Surface, 9. Release Verification and Quarantine, Platform and Route Matrix, 10. The 2026 Fencing Evidence Landscape, The Adversarial Stale-Writer Challenge">
+  
+  <link rel="stylesheet" href="/style.css?v=20261109-s-tier">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@500;700&family=Instrument+Serif:ital@0;1&family=Inter:wght@400;500;600;700;800&family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,500;0,6..72,600;1,6..72,400&family=JetBrains+Mono:wght@400;500&family=Plus+Jakarta+Sans:wght@600;700;800&display=swap" rel="stylesheet">
+</head>
+<body>
+  <div class="reading-progress-bar" id="progressBar"></div>
+
+  <header class="site-header compact-ai-header"><div class="header-inner compact-ai-nav"><a href="/" class="brand"><strong>BLAYNE AINA</strong></a> | <a href="/ai-brief/">1-Page Master Brief (§01–§09)</a> | <a href="/articles/">All 9 Articles &amp; Briefs</a> | <a href="/research-assurance/">Assurance</a> | <a href="/refusal-proof/">Proof</a> | <a href="/llms.txt">llms.txt</a> | <a href="mailto:me@blayneaina.com">me@blayneaina.com</a></div></header>
+  <div class="layout-container presentation-layout">
+    <main class="content-area">
+      <article class="prose-wrapper presentation-wrapper">
+<header class="article-header compact-article-header"><h1 class="article-title">§05 Part 3/4: Expiry Is Not Fencing (8. Fencing Continues Into Every Execution Surface)</h1><p class="article-subtitle">Sections: 8. Fencing Continues Into Every Execution Surface, 9. Release Verification and Quarantine, Platform and Route Matrix, 10. The 2026 Fencing Evidence Landscape, The Adversarial Stale-Writer Challenge</p></header>
+
+        
+        
+
+        <div class="article-body">
+          
+      <p class="part-compact-nav"><strong>§05 PART 3/4</strong> (12,213 chars · Sections: 8. Fencing Continues Into Every Execution Surface; 9. Release Verification and Quarantine; Platform and Route Matrix; 10. The 2026 Fencing Evidence Landscape; The Adversarial Stale-Writer Challenge) — <a href="/05-expiry-is-not-fencing-typed-leases-and-kernel-write-exclusion/part-2/">← Part 2</a> · <a href="/05-expiry-is-not-fencing-typed-leases-and-kernel-write-exclusion/part-4/">Part 4 →</a> · <a href="/05/brief/">1-Call Brief</a> · <a href="/05-expiry-is-not-fencing-typed-leases-and-kernel-write-exclusion/">Full §05</a> · <a href="/05/part-3.txt">Raw .txt</a> · All: <a href="/05-expiry-is-not-fencing-typed-leases-and-kernel-write-exclusion/part-1/">P1</a> <a href="/05-expiry-is-not-fencing-typed-leases-and-kernel-write-exclusion/part-2/">P2</a> <a href="/05-expiry-is-not-fencing-typed-leases-and-kernel-write-exclusion/part-3/">P3</a> <a href="/05-expiry-is-not-fencing-typed-leases-and-kernel-write-exclusion/part-4/">P4</a></p>
+    
+<h2>8. Fencing Continues Into Every Execution Surface</h2>
+<p>Generation checks would be decorative if they stopped at the lease manager. They are wired into file replacement, SQLite, worker acts, and successor result delivery.</p>
+<h3>File write funnel</h3>
+<p><code>require_write_binding</code> requires an exact file lease, expected generation equal to <code>lease.generation</code>, matching task, valid tenancy and control epoch, and a server execution handle. Parent-scope ownership alone cannot authorize an exact mutation. A governing source cannot also be the destination; that requires a separately governed revision task.</p>
+<p>The precondition compares bytes observed through <code>W</code> with the planned preimage. A mismatch at execution is <code>preimage_hash_mismatch</code>, not permission to proceed on stale content.</p>
+<h3>Fenced SQLite mutation</h3>
+<p>Protected row changes serialize through <code>with_transition</code> and open SQLite with <code>TransactionBehavior::Immediate</code>. Before update, the engine:</p>
+<ul>
+<li>rereads the current row and requires <code>now_version == expected</code>;</li>
+<li>captures recovery state;</li>
+<li>revalidates target identity, <code>RequestedAct</code>, and approval;</li>
+<li>executes a conditional <code>UPDATE ... WHERE key = ? AND version = ?</code>;</li>
+<li>requires exactly one changed row;</li>
+<li>reads the row back and verifies the new version and values before commit.</li>
+</ul>
+<p>A competing change becomes <code>record_version_changed</code> and returns the operation for review instead of applying it. The observed post-commit destination is checked again before the receipt finishes.</p>
+<h3><code>RequestedAct</code> and result grants</h3>
+<p>For strict worker staging, <code>RequestedAct</code> derives the typed key and prepared version from exact projected bytes and binds the row task&#39;s current generation and control epoch. The worker cannot substitute a different row or revive an older generation.</p>
+<p><code>result_grant.rs</code> applies the same current-tenancy rule to the receiving task. Its scope must still have a nonzero current generation and matching control epoch. Otherwise result-only tools remain withheld. A successor can receive a historical result only under fresh receiving authority; the original return is not fabricated.</p>
+<p>Break-glass adds the final lineage check: advancing the control epoch revokes leases minted under older epochs even when their wall-clock TTL has not expired.</p>
+<h2>9. Release Verification and Quarantine</h2>
+<p>Release is another evidence boundary, not a lockfile deletion with good intentions.</p>
+<p><code>release_content_check</code> compares on-disk bytes with:</p>
+<ul>
+<li><code>post_sha256</code> from the last gated write under the lease, when one exists; or</li>
+<li>the lease&#39;s captured pre-write FNV-1a and byte count when no gated write occurred. That FNV-plus-length comparison is a <strong>non-cryptographic drift check</strong>, useful for noticing ordinary change, not for proving integrity against a malicious writer capable of engineering a collision. It is distinct from the SHA-256 comparisons used for gated-write and guarded-publication verification.</li>
+</ul>
+<p>If content matches, release archives the post-edit state to Amber. If it diverges, release archives the divergent bytes as <strong><code>quarantine_ungated</code></strong>, emits <code>released_with_ungated_content</code>, and returns <code>content_mismatch: true</code>.</p>
+<p>It never silently restores the baseline or deletes the foreign bytes. Out-of-band content is preserved for forensic review rather than being laundered into trusted history.</p>
+<h3>The out-of-band owner lock kill-switch</h3>
+<p>Breaking another agent&#39;s live, unexpired lease is refused by default. Force release is permitted only when an owner has written <code>.squad/control/lock-release.json</code> out of band, naming the authorized owners, scopes, setter, reason, and optional expiry. No MCP tool can create that authorization. The force break records <code>lock_force_released_under_owner_authorization</code> in the integrity graph.</p>
+<h3>Exhibit 5 — Release quarantine instead of baseline laundering</h3>
+<pre><code class="language-json">{
+  &quot;released&quot;: &quot;project:/artifacts/renewal-result.json&quot;,
+  &quot;owner&quot;: &quot;reviewer-beta&quot;,
+  &quot;was_held&quot;: true,
+  &quot;amber_kind&quot;: &quot;quarantine_ungated&quot;,
+  &quot;content_mismatch&quot;: true,
+  &quot;content_check&quot;: {
+    &quot;status&quot;: &quot;mismatch&quot;,
+    &quot;baseline_source&quot;: &quot;gated_write_post_sha256&quot;,
+    &quot;expected_sha256&quot;: &quot;4a9c8e12f03b7d651928374655647382910abcdef1234567890abcdef1234567&quot;,
+    &quot;actual_sha256&quot;: &quot;c0ffee99887766554433221100ffeeddccbbaa99887766554433221100ffeedd&quot;
+  },
+  &quot;warning&quot;: &quot;Divergent bytes preserved in Amber and released_with_ungated_content recorded; baseline was not silently restored&quot;
+}
+</code></pre>
+<h2>Platform and Route Matrix</h2>
+<table>
+<thead>
+<tr>
+<th>Route or condition</th>
+<th>Enforcement and claim ceiling</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>Windows long-lived MCP server</td>
+<td>Kernel handle exclusion is enforced across tenancy and all five replacement roles</td>
+</tr>
+<tr>
+<td>Windows short-lived CLI</td>
+<td>Lease is advisory because process exit drops handles; protected execution requires a server-held handle</td>
+</tr>
+<tr>
+<td>Non-Windows</td>
+<td>No equivalent Win32 share-mode, parent-pin, native-rename, or liveness claims; no false equivalence is asserted</td>
+</tr>
+<tr>
+<td>Handles or memory mappings opened before acquisition</td>
+<td>Not retroactively revoked; the gate governs later incompatible opens, not every pre-existing capability</td>
+</tr>
+<tr>
+<td>Guarded replacement intervals</td>
+<td>Write opens are continuously denied; delete/rename residuals are detected and reconciled as described, not claimed eliminated</td>
+</tr>
+<tr>
+<td>SQLite destination</td>
+<td><code>IMMEDIATE</code> transaction and version fence govern the row; this is not the Win32 file-handle path</td>
+</tr>
+<tr>
+<td>External SaaS or non-idempotent API</td>
+<td>Requires destination-specific conditional-write, observation, and reconciliation guarantees; the local file gate does not prove external exactly-once effect</td>
+</tr>
+<tr>
+<td>Privileged host administrator or volume unmount</td>
+<td>Outside the application&#39;s prevention claim; remaining exposure is named rather than hidden</td>
+</tr>
+</tbody></table>
+<p>The architecture is therefore strong without becoming unfalsifiable. It names the route it governs, the kernel primitives that enforce it, the interval it cannot close, and the evidence that remains when verification fails.</p>
+<p>Consider a writer that opened <code>GENERIC_WRITE</code> or a memory-mapped section <strong>before</strong> <code>G</code> was acquired. The new guard cannot retroactively revoke that capability, and the mapping may outlive the original handle. Release-time content comparison and <code>quarantine_ungated</code> can preserve evidence of the resulting drift, but they cannot turn that into retroactive prevention. A deployment must inventory and exclude pre-existing write capabilities before claiming exclusive mediation of the resource.</p>
+<p>Compatibility must be demonstrated for the exact Windows and filesystem profile in scope: destination present or absent, open readers, conflicting writers, reparse redirection, parent substitution, failure at every handoff, and crash recovery. NTFS/ReFS support is not inferred merely because the native rename API exists.</p>
+<h2>10. The 2026 Fencing Evidence Landscape</h2>
+<p>The research supports monotonic execution fencing and exposes the same limitation that matters here: a mechanism proves only the effect classes its boundary actually covers.</p>
+<table>
+<thead>
+<tr>
+<th>2026 primary source</th>
+<th>What it establishes</th>
+<th>How this architecture composes with it</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>Shu, <a href="https://arxiv.org/abs/2609.37475"><em>Boundary-State Control for Tool-Using Language-Model Agents</em></a>, September 2026 preprint</td>
+<td>BSC-R binds a single-use authorization to the exact action and semantic authorization state. It rejects all ten represented changed/replayed classes across 10,302 frozen proposals, prevents 1,200 represented non-replay invalid effects in CONTINUITY, handles 160 replay lifecycles, and withholds 200 ambiguous cases. In the broader external suite, it commits 25% of invalid effects.</td>
+<td>This is direct evidence for exact-act and generation binding at commit. It is equally strong evidence for path and effect coverage ceilings: no fencing claim should exceed the contexts actually governed.</td>
+</tr>
+<tr>
+<td>Lyu et al., <a href="https://arxiv.org/abs/2606.15376"><em>CoAgent: Concurrency Control for Multi-Agent Systems</em></a>, June 2026 preprint</td>
+<td>MTPO fixes a serialization order, serves order-filtered reads, and repairs dependent plans while preserving serializable outcomes. CoAgent stays within 5% of serial correctness at a 1.4× speedup and improves a bash-only target from 45/71 to 63/71 passes at 0.80× time.</td>
+<td>Multi-agent concurrency requires authoritative ordering and current-state evaluation, not prompt cooperation. AINA&#39;s transition mutex and workspace high-water sequence supply that ordering for the local reference embodiment.</td>
+</tr>
+<tr>
+<td><a href="https://redisson.org/glossary/java-fencedlock.html">Redisson FencedLock documentation</a>, current 2026 reference</td>
+<td>Defines a fencing token as a monotonically increasing value issued on each lock acquisition and presented to the resource so stale holders can be rejected.</td>
+<td>This is the basic distributed-system model behind generation fencing. The Room adds two-phase counter persistence, kernel share-mode exclusion, and per-route verification rather than treating the token as self-enforcing.</td>
+</tr>
+<tr>
+<td>Microsoft <a href="https://learn.microsoft.com/en-us/windows/win32/fileio/creating-and-opening-files"><code>CreateFileW</code> and file-sharing documentation</a>, current 2026 reference</td>
+<td>Desired access and sharing modes determine which later opens are compatible; <code>FILE_SHARE_DELETE</code> is required for rename/delete semantics.</td>
+<td>Explains why the long-term <code>FILE_SHARE_READ</code> guard must hand off through <code>W</code>, <code>T</code>, and <code>H</code> rather than closing and reopening around the rename.</td>
+</tr>
+<tr>
+<td>Microsoft <a href="https://learn.microsoft.com/en-us/windows-hardware/drivers/ddi/ntifs/ns-ntifs-_file_rename_information"><code>FILE_RENAME_INFORMATION_EX</code></a>, current 2026 reference</td>
+<td>Defines POSIX rename and replacement flags and relative rename behavior.</td>
+<td>Grounds the native handle-relative atomic replacement with POSIX semantics; it is a primitive, not a complete proof of continuous exclusion.</td>
+</tr>
+<tr>
+<td>Microsoft <a href="https://learn.microsoft.com/en-us/windows/win32/api/fileapi/nf-fileapi-getfinalpathnamebyhandlew"><code>GetFinalPathNameByHandleW</code></a>, current 2026 reference</td>
+<td>Resolves the canonical target of an opened file object through reparse indirection.</td>
+<td>Grounds parent and published-object identity verification, catching cases where identity and content match but the leased name points elsewhere.</td>
+</tr>
+</tbody></table>
+<p>The functional-equivalence concession still applies. A conventional stack using leases, fencing tokens, compare-and-swap, MVCC, durable logs, and destination-specific conditional writes can defeat the same defect if it binds the same exact transition through the same predicates. AINA&#39;s value is the inspectable composition and its refusal/evidence grammar, not a claim that alternative coordination theory cannot work.</p>
+<p><strong>Evidence availability and performance boundary:</strong> the implementation and replacement records are <code>CONTROLLED</code> for qualified, method-scoped technical review, with adverse findings permitted. They are not unrestricted public downloads or independent validation. Handle timing, lock contention, rename latency, and recovery cost must be measured for the exact Windows filesystem, antivirus/storage stack, destination state, and worker count; this article does not claim a universal performance envelope.</p>
+<h2>The Adversarial Stale-Writer Challenge</h2>
+<p>The <strong>Shared-Resource Lease &amp; Kernel Fencing Challenge</strong> uses a deliberately hostile sequence, not just a happy-path replacement:</p>
+<ol>
+<li>Worker A acquires generation 14 and stalls.</li>
+<li>Worker B acquires generation 15 and completes a guarded replacement.</li>
+<li>Worker A resumes and attempts both a stale-generation write and a direct incompatible file open.</li>
+<li>The executor returns <code>stale_lease_generation</code>; the kernel returns <code>ERROR_SHARING_VIOLATION</code>.</li>
+<li>A separate parent-redirection or preimage-displacement attempt produces typed reconciliation evidence and, where applicable, <code>quarantine_ungated</code> rather than an invented clean rollback.</li>
+</ol>
+<p>The challenge excludes retroactive revocation of pre-existing handles and mappings, universal OS/filesystem coverage, total effect coverage, and independent validation. Deployment and paid pilots are separately scoped; independent evaluation remains outside the commercial ladder through <a href="https://blayneaina.com/09-bring-one-real-boundary-work-with-blayne/">Article 09</a>.</p>
+
+
+      <p class="part-compact-nav"><strong>END OF §05 PART 3/4</strong> — Next: <a href="/05-expiry-is-not-fencing-typed-leases-and-kernel-write-exclusion/part-4/"><code>https://blayneaina.com/05-expiry-is-not-fencing-typed-leases-and-kernel-write-exclusion/part-4/</code></a> · <a href="/05/brief/">§05 1-Call Brief</a> · <a href="/05.md">Raw .md</a></p>
+    
+        </div>
+
+        
+        
+        
+        
+
+        
+
+        
+      </article>
+    </main>
+
+  </div>
+
+  <footer class="site-footer compact-ai-footer"><p><strong>blayneaina.com</strong> — <a href="https://blayneaina.com/ai-brief/">Master Brief (https://blayneaina.com/ai-brief/)</a> · <a href="https://blayneaina.com/ai-brief.txt">Plain-Text Brief (https://blayneaina.com/ai-brief.txt)</a> · <a href="https://blayneaina.com/articles/">All 9 Articles &amp; Briefs (https://blayneaina.com/articles/)</a> · <a href="https://blayneaina.com/llms.txt">llms.txt</a> · <a href="mailto:me@blayneaina.com">me@blayneaina.com</a></p></footer>
+
+
+
+
+
+  <script src="/script.js?v=20261109-s-tier"></script>
+</body>
+</html>

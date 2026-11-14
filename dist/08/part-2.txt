@@ -1,0 +1,133 @@
+# §08 Part 2/4 — The Sovereign Kill Switch
+Canonical: https://blayneaina.com/08-sovereign-kill-switch-break-glass-epochs-and-conformance-gate/part-2/ | Raw Article: https://blayneaina.com/08.md | Next Part: https://blayneaina.com/08/part-3.txt
+
+## 3. Control Epochs Revoke Authority, Not Just Processes
+
+A latch closes new-effect gates immediately. Control epochs handle a different problem: authority that was minted before the stop must not remain usable after the relevant boundary advances.
+
+`epoch.json` stores a global issue sequence plus a revision map for `machine`, `agent:<name>`, and `project:<root>` scopes. Leases, sealed wake jobs, and successor-grant receiving tenancies carry the issue sequence under which they were created.
+
+The rule is not simply “lease epoch must equal the latest global number.” That would incorrectly revoke unrelated work after every scoped stop. Instead:
+
+> An authority is revoked when a **matching** machine, agent, or project scope has a later revision than the authority's issue epoch.
+
+A future issue sequence is also rejected as an unknown lineage. A scoped stop therefore kills matching old authority without waiting for its TTL, while unrelated scopes retain their authority. Recovery advances the selected scope again so pre-recovery authority cannot revive.
+
+### Exhibit 8.4 — Scoped revocation map
+
+| Artifact | Carried lineage | Recheck at the boundary |
+|---|---|---|
+| Resource lease | `Lease.control_epoch` | `validate_tenancy` checks expiry, current generation, and matching scope revision |
+| Room wake job | sealed `control_epoch` | Dispatch re-derives task/Room/project standing and refuses revoked lineage |
+| Result-grant receiving tenancy | `Recipient.control_epoch` | Current exact lease, generation, and scope epoch must still match |
+| Destination mutation | current lease and `RequestedAct` authority | Commit refuses stale tenancy or changed authority |
+
+### WAL before snapshot
+
+`advance_epoch` runs under the short control-record transaction and, during engage/recovery, the lease transition guard. It:
+
+1. Reads the current epoch and per-scope revisions.
+2. Computes `next = prior + 1`, refusing integer exhaustion.
+3. Appends an `epoch_advance` record to `breakglass.wal.jsonl` and flushes it.
+4. Atomically rewrites `epoch.json` with the new sequence and scope map.
+5. Reads the epoch back and refuses an unconfirmed result.
+
+The write-ahead log (WAL) is the durable intent sequence. On subsequent reads, a WAL high-water mark ahead of the snapshot means the snapshot cannot be trusted as current; gates fail closed rather than rolling authority back. A discontinuous or corrupt WAL is never skipped.
+
+Owner recovery may reconcile an interrupted snapshot from a valid WAL lineage. Before replacing the old image, it preserves the prior bytes under `recovery-evidence/epoch-<sha256>.bin` with create-new, flush, and readback verification. It also refuses reconstruction if any live lease claims an epoch newer than the recoverable journal. Ordinary gates never “repair” uncertainty into fresh authority.
+
+### Exhibit 8.5 — Sanitized epoch-advance record
+
+```json
+{
+  "kind": "epoch_advance",
+  "prior_epoch": 8,
+  "new_epoch": 9,
+  "scope": "agent:example-worker",
+  "scope_epochs": {
+    "machine": 6,
+    "agent:example-worker": 9,
+    "project:/srv/unrelated": 8
+  },
+  "cause": "engage",
+  "by": "safety-monitor",
+  "reason": "demonstration: revoke this agent without stopping unrelated work",
+  "pid": 24018,
+  "ts": "2026-10-31T20:10:01Z"
+}
+```
+
+The global sequence is 9; only authority covered by the later `agent:example-worker` revision is revoked. The unrelated project is not collateral damage.
+
+## 4. Managed Drain and In-Doubt Recovery
+
+Immediate engage is not the only controlled-stop mode. `drain` supports a bounded window in which already **durably prepared** effects may finish. It requires the same owner console and an already-engaged machine latch, so new effects are refused before the drain begins. The deadline must be between 1 and 3,600 seconds. While the deadline is valid, the gate is `DRAINING`; after it expires, the state is contained as `FROZEN_SAFE`.
+
+Drain is therefore not a grace period for new work. It is a bounded completion window for effects whose preparation was already durable.
+
+### Recovery starts with a census, not amnesia
+
+A crash can strand an operation between “dispatched” and “outcome observed.” Clearing a latch cannot establish which side of that boundary the destination reached.
+
+`recover_plan` re-proves the owner surface, requires a reason, fixes the exact scope and latch names, and queries three independent operation registries:
+
+- `unresolved_file_operations()` for protected file writes without an established outcome;
+- `destinations::unresolved_operations()` for nonterminal destination mutations;
+- `model_egress::unresolved()` for brokered model requests whose provider-side outcome is unsettled.
+
+The results become `carried_forward_operations` in a durable WAL `recovery_intent`. A registry-read error is preserved as an error entry rather than silently omitted. These operations remain individually blocking and must be reconciled under fresh authority. Recovery neither retries them blindly nor marks them complete.
+
+### Exhibit 8.6 — Recovery intent preserves uncertainty
+
+```json
+{
+  "kind": "recovery_intent",
+  "by": "operator",
+  "reason": "demonstration: containment investigated; resume without replaying uncertainty",
+  "scope": "machine",
+  "latches": [
+    "latch_demo7f2a.json"
+  ],
+  "carried_forward_operations": [
+    {
+      "kind": "destination_operation",
+      "operation": {
+        "operation_id": "op_demo_sqlite_01",
+        "status": "in_doubt"
+      }
+    },
+    {
+      "kind": "model_request",
+      "operation": {
+        "operation_id": "req_demo_01",
+        "route": "owner-approved-analysis",
+        "latest_outcome": null
+      }
+    }
+  ],
+  "ts": "2026-10-31T20:20:00Z"
+}
+```
+
+The runtime invariant engine also has a separate `find_indoubt(now, ttl)` query for intentions older than a declared window. That age-based detector complements the operation census; it does not replace destination-specific reconciliation.
+
+### Stop beats recovery on a race
+
+`recover_apply` proves the console gate again. For machine recovery it writes `RECOVERY_PENDING`, then advances the selected epoch under the lease transition guard. Only after that new lineage exists does it move the **pre-planned latch names** into `breakglass.cleared/epoch-{new_epoch}/`.
+
+It then rereads the active latch directory. If another engage arrived during recovery, that latch was not in the original plan and survives. A remaining machine-covering latch produces `FROZEN_SAFE`; the receipt reports `recovered: false`. There is no false all-clear window.
+
+### Exhibit 8.7 — Racing stop leaves `FROZEN_SAFE`
+
+```json
+{
+  "state": "FROZEN_SAFE",
+  "by": "operator",
+  "reason": "an engage raced this recovery; the machine is still latched",
+  "since": "2026-10-31T20:20:02Z"
+}
+```
+
+If the closing WAL receipt cannot be written after recovery has already occurred, the receipt carries a warning rather than pretending recovery failed and inviting a repeated transition. Evidence failure does not rewrite the physical outcome.
+
+

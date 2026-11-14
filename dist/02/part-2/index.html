@@ -1,0 +1,271 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>§02 Part 2/4: Zero-Trust Document Ingestion (3. The Parser Jail: Prove Confinement Before Resume) | Blayne Aina</title>
+  <meta name="description" content="Sections: 3. The Parser Jail: Prove Confinement Before Resume, 4. Extraction Is Not Complete If the Gaps Disappear, 5. Immutable Views: Identity Includes the Reader">
+  <meta name="author" content="Blayne Aina">
+  <meta name="robots" content="index, follow, max-snippet:-1, max-image-preview:large, max-video-preview:-1">
+  <link rel="canonical" href="https://blayneaina.com/02-zero-trust-document-ingestion-and-server-cut-evidence/part-2/">
+  <link rel="icon" href="/favicon.ico" sizes="any">
+  <link rel="icon" href="/favicon.svg" type="image/svg+xml">
+
+  <!-- OpenGraph / Social -->
+  <meta property="og:type" content="article">
+  <meta property="og:title" content="§02 Part 2/4: Zero-Trust Document Ingestion (3. The Parser Jail: Prove Confinement Before Resume)">
+  <meta property="og:description" content="Sections: 3. The Parser Jail: Prove Confinement Before Resume, 4. Extraction Is Not Complete If the Gaps Disappear, 5. Immutable Views: Identity Includes the Reader">
+  <meta property="og:url" content="https://blayneaina.com/02-zero-trust-document-ingestion-and-server-cut-evidence/part-2/">
+  <meta property="og:site_name" content="Blayne Aina — The Route to Trusting AI">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="§02 Part 2/4: Zero-Trust Document Ingestion (3. The Parser Jail: Prove Confinement Before Resume)">
+  <meta name="twitter:description" content="Sections: 3. The Parser Jail: Prove Confinement Before Resume, 4. Extraction Is Not Complete If the Gaps Disappear, 5. Immutable Views: Identity Includes the Reader">
+  
+  <link rel="stylesheet" href="/style.css?v=20261109-s-tier">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@500;700&family=Instrument+Serif:ital@0;1&family=Inter:wght@400;500;600;700;800&family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,500;0,6..72,600;1,6..72,400&family=JetBrains+Mono:wght@400;500&family=Plus+Jakarta+Sans:wght@600;700;800&display=swap" rel="stylesheet">
+</head>
+<body>
+  <div class="reading-progress-bar" id="progressBar"></div>
+
+  <header class="site-header compact-ai-header"><div class="header-inner compact-ai-nav"><a href="/" class="brand"><strong>BLAYNE AINA</strong></a> | <a href="/ai-brief/">1-Page Master Brief (§01–§09)</a> | <a href="/articles/">All 9 Articles &amp; Briefs</a> | <a href="/research-assurance/">Assurance</a> | <a href="/refusal-proof/">Proof</a> | <a href="/llms.txt">llms.txt</a> | <a href="mailto:me@blayneaina.com">me@blayneaina.com</a></div></header>
+  <div class="layout-container presentation-layout">
+    <main class="content-area">
+      <article class="prose-wrapper presentation-wrapper">
+<header class="article-header compact-article-header"><h1 class="article-title">§02 Part 2/4: Zero-Trust Document Ingestion (3. The Parser Jail: Prove Confinement Before Resume)</h1><p class="article-subtitle">Sections: 3. The Parser Jail: Prove Confinement Before Resume, 4. Extraction Is Not Complete If the Gaps Disappear, 5. Immutable Views: Identity Includes the Reader</p></header>
+
+        
+        
+
+        <div class="article-body">
+          
+      <p class="part-compact-nav"><strong>§02 PART 2/4</strong> (12,736 chars · Sections: 3. The Parser Jail: Prove Confinement Before Resume; 4. Extraction Is Not Complete If the Gaps Disappear; 5. Immutable Views: Identity Includes the Reader) — <a href="/02-zero-trust-document-ingestion-and-server-cut-evidence/part-1/">← Part 1</a> · <a href="/02-zero-trust-document-ingestion-and-server-cut-evidence/part-3/">Part 3 →</a> · <a href="/02/brief/">1-Call Brief</a> · <a href="/02-zero-trust-document-ingestion-and-server-cut-evidence/">Full §02</a> · <a href="/02/part-2.txt">Raw .txt</a> · All: <a href="/02-zero-trust-document-ingestion-and-server-cut-evidence/part-1/">P1</a> <a href="/02-zero-trust-document-ingestion-and-server-cut-evidence/part-2/">P2</a> <a href="/02-zero-trust-document-ingestion-and-server-cut-evidence/part-3/">P3</a> <a href="/02-zero-trust-document-ingestion-and-server-cut-evidence/part-4/">P4</a></p>
+    
+<h2>3. The Parser Jail: Prove Confinement Before Resume</h2>
+<p>A sandbox named in a configuration file is not a sandbox observed in a child token. AINA&#39;s document worker is built around pre-resume verification.</p>
+<h3>Private staging</h3>
+<p>Each parse receives an ephemeral scratch tree with three distinct grants:</p>
+<ul>
+<li><code>bin/</code>: a private read-execute copy of <code>squad-doc-extract.exe</code>, so the jail need not read the installation directory.</li>
+<li><code>input/</code>: read-only <code>source.bin</code> and a bounded <code>doc_source.worker/1</code> request containing the expected input digest and extraction limits.</li>
+<li><code>work/</code>: the only writable grant, including a jail-local temporary directory and a <code>result.json</code> opened with <code>create_new(true)</code>.</li>
+</ul>
+<p>The child recomputes the input digest before parsing. The supervisor bounds the result at 256 MiB, checks the response schema and input digest, and validates the returned extraction structure. Child output remains untrusted data even though the child was confined.</p>
+<h3>Six-step launch contract</h3>
+<ol>
+<li><strong>Exclusive AppContainer identity.</strong> A fresh per-parse profile is created. An already-existing profile is a <code>confinement_identity_reused</code> failure, not an invitation to share a jail.</li>
+<li><strong>LPAC policy.</strong> <code>PROCESS_CREATION_ALL_APPLICATION_PACKAGES_OPT_OUT</code> removes the implicit <code>ALL APPLICATION PACKAGES</code> access that would otherwise widen filesystem and registry reads.</li>
+<li><strong>Minimal capabilities.</strong> The document-media profile grants exactly <code>lpacCom</code>. Network, registry-read, and credential capabilities are not granted.</li>
+<li><strong>Suspended creation and token inspection.</strong> The process starts suspended. Before <code>ResumeThread</code>, the supervisor verifies that the token is AppContainer, carries the fresh package SID, has the non-zero <code>WIN://NOALLAPPPKG</code> attribute, and contains exactly the expected capability set. A mismatch kills the child before its initial thread executes.</li>
+<li><strong>Job Object backstop.</strong> While suspended, the child enters a kill-on-close Job Object with <code>ActiveProcessLimit = 1</code>, a 2 GiB job-memory ceiling, and a 25% hard CPU-rate cap. EcoQoS reduces scheduling priority; internal runtime thread pools are capped at two. The job is registered with break-glass observation so sovereign revocation covers in-flight parsers.</li>
+<li><strong>Audited teardown.</strong> The supervisor records <code>scratch_removed</code> and <code>profile_deleted</code> in the worker receipt. Cleanup failure is disclosed rather than rewritten into success.</li>
+</ol>
+<pre><code class="language-text">verified Captured bytes
+→ read-only input grant + expected digest
+→ CREATE_SUSPENDED
+→ AppContainer SID + LPAC attribute + exact capabilities verified
+→ Job Object process/memory/CPU limits assigned
+→ ResumeThread exactly once
+→ content identification + budgeted extraction + warning capture
+→ digest-bound result.json
+→ supervisor schema and structural validation
+→ worker Receipt + scratch/profile teardown disclosure
+</code></pre>
+<p>Parser panics become <code>parser_fault</code>. A panic isolated to one embedded child fails that child while preserving the parent and sibling reads; a top-level panic invalidates the extraction. On non-Windows, the untrusted-document path refuses with <code>parser_worker_unavailable</code> rather than pretending that an ordinary subprocess is equivalent to LPAC plus a Job Object.</p>
+<p>This is the Windows reference embodiment&#39;s claim ceiling: bounded process, capability, network, memory, CPU, and filesystem exposure on the governed parser path—not proof that every parser is bug-free or that a privileged host administrator cannot attack the machine.</p>
+<h2>4. Extraction Is Not Complete If the Gaps Disappear</h2>
+<p>A parser that returns a string has answered only one question: what text did this adapter emit? It has not established whether the document contained more text, whether a library recovered by discarding structure, or whether the caller later received everything extracted.</p>
+<p>AINA keeps five status dimensions separate.</p>
+<table>
+<thead>
+<tr>
+<th>Dimension</th>
+<th>Values</th>
+<th>Question answered</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><code>Integrity</code></td>
+<td><code>verified</code>, <code>failed</code></td>
+<td>Did the captured bytes match the registered identity and integrity checks?</td>
+</tr>
+<tr>
+<td><code>Inventory</code></td>
+<td><code>complete_for_profile</code>, <code>partial</code>, <code>unknown</code></td>
+<td>Could the adapter enumerate the document&#39;s parts and establish a denominator?</td>
+</tr>
+<tr>
+<td><code>Extraction</code></td>
+<td><code>complete_for_profile</code>, <code>partial</code>, <code>unsupported</code>, <code>failed</code></td>
+<td>Was every in-profile, text-bearing part recovered without lossy omission?</td>
+</tr>
+<tr>
+<td><code>Admission</code></td>
+<td><code>allowed</code>, <code>blocked</code></td>
+<td>Is this source currently readable by this actor under project and Room policy?</td>
+</tr>
+<tr>
+<td><code>Delivery</code></td>
+<td><code>complete</code>, <code>truncated</code>, <code>chunked</code></td>
+<td>Did this response serve everything requested, or only a bounded window?</td>
+</tr>
+</tbody></table>
+<p>The immutable document report carries integrity, inventory, and extraction. Admission and delivery are facts about a particular serving. A fully extracted document shown through a 60-character window remains fully extracted <strong>and</strong> incompletely delivered. Those facts must not collapse into one green status.</p>
+<h3>The 35-reason omission ledger</h3>
+<p>The current <code>Reason</code> alphabet has 35 variants: <strong>12 non-lossy profile exclusions and 23 lossy reasons</strong>. <code>nesting_limit</code> belongs to the non-lossy set in the current implementation; it is not counted twice.</p>
+<table>
+<thead>
+<tr>
+<th>Classification</th>
+<th>Exact variants</th>
+<th>Consequence</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><strong>Profile-excluded, non-lossy (12)</strong></td>
+<td><code>binary_part</code>, <code>structure_only</code>, <code>embedded_font_program</code>, <code>image_content</code>, <code>media_content</code>, <code>deleted_revision</code>, <code>external_relationship</code>, <code>macro_content</code>, <code>derived_alternative</code>, <code>nesting_limit</code>, <code>structure_unavailable</code>, <code>markup_not_rendered</code></td>
+<td>Recorded for transparency without, by itself, forcing partial extraction or blocking absence evaluation</td>
+</tr>
+<tr>
+<td><strong>Lossy (23)</strong></td>
+<td><code>ocr_not_enabled</code>, <code>ocr_unavailable</code>, <code>unsupported_format</code>, <code>unsupported_part</code>, <code>unsupported_compression</code>, <code>unmapped_glyphs</code>, <code>font_encoding_unavailable</code>, <code>undecodable_text</code>, <code>stream_decode_failed</code>, <code>content_stream_invalid</code>, <code>object_missing</code>, <code>malformed</code>, <code>sheet_read_failed</code>, <code>formula_unavailable</code>, <code>encrypted</code>, <code>encrypted_entry</code>, <code>duplicate_entry_name</code>, <code>duplicate_member_name</code>, <code>multi_disk_archive</code>, <code>budget_exceeded</code>, <code>library_warning</code>, <code>parser_fault</code></td>
+<td>Forces partial/failed/unsupported handling and creates unknown coverage that an absence claim must acknowledge when in scope</td>
+</tr>
+</tbody></table>
+<p>Non-lossy does not mean irrelevant. It means the omission is expected under the declared extraction profile. A deleted revision excluded by <code>text/v1</code> may still matter enormously to a human reviewer; the profile must therefore be visible beside the claim.</p>
+<h3>Parser warnings become evidence</h3>
+<p>The confined child installs a <code>log::Log</code> interceptor at warning level. It preserves up to 1,000 observations, truncates each message at 2,000 characters, and counts overflow. Every warning becomes an observation. Except for one explicitly content-neutral PDF trailer normalization, every warning also becomes a lossy <code>library_warning</code> omission at document scope.</p>
+<p>A library&#39;s lenient recovery can therefore never silently upgrade itself to <code>complete_for_profile</code>.</p>
+<p>The omission collector has its own memory defense: at most 2,000 distinct omission tuples are retained, and additional occurrences are counted into a terminal budget-overflow record. Identical adapter omissions aggregate by location, reason, scope, and story. The coverage ledger cannot be allowed to become the denial-of-service vector it exists to report.</p>
+<h3>Gaps are addressable nodes</h3>
+<p>When the view is committed, omissions become <code>omission/1</code>, <code>omission/2</code>, and so on. A whole-document failure is <code>failure</code>; inventory status is <code>inventory</code>; each nested source is <code>child:&lt;locator&gt;</code>. These nodes carry no extracted text, but they can be outlined, cited, reviewed, and included in absence analysis.</p>
+<p>That is the difference between “the model said nothing was there” and “the system can identify exactly where its knowledge stops.”</p>
+<h3>Exhibit 1 — A synthetic <code>ViewManifest</code> with an addressable omission</h3>
+<p>The following is structurally faithful to <code>squad.evidence.view/1</code>, with synthetic identities and hashes. The view digest is computed over the manifest&#39;s JCS bytes; it is not a mutable field inside the manifest.</p>
+<pre><code class="language-json">{
+  &quot;schema&quot;: &quot;squad.evidence.view/1&quot;,
+  &quot;report_schema&quot;: &quot;doc_source.report/2&quot;,
+  &quot;source&quot;: {
+    &quot;revision&quot;: &quot;doc_20261030_142011_a1b2c3d4&quot;,
+    &quot;sha256&quot;: &quot;58b2e91f4c03d8a7126590ef4312ab98c7654321fedcba09876543210fedcba9&quot;,
+    &quot;bytes&quot;: 12345,
+    &quot;name&quot;: &quot;renewal.pdf&quot;,
+    &quot;canonical_path&quot;: &quot;project:/evidence/renewal.pdf&quot;,
+    &quot;registered_at&quot;: &quot;2026-10-31T14:20:11Z&quot;
+  },
+  &quot;origin&quot;: &quot;room_captured&quot;,
+  &quot;parser&quot;: {
+    &quot;name&quot;: &quot;squad-doc-source&quot;,
+    &quot;profile&quot;: &quot;text/v1&quot;,
+    &quot;digest&quot;: &quot;4b9c210e8f1a77d4c0592a1e38f47c1190ab2d3e4f5061728394a5b6c7d8e9f0&quot;,
+    &quot;features&quot;: &quot;synthetic-parser-feature-profile&quot;
+  },
+  &quot;config&quot;: {
+    &quot;limits&quot;: {
+      &quot;max_child_bytes&quot;: 33554432,
+      &quot;max_item_decompressed&quot;: 67108864,
+      &quot;max_total_decompressed&quot;: 268435456,
+      &quot;max_parts&quot;: 20000,
+      &quot;max_nesting&quot;: 3,
+      &quot;max_xml_depth&quot;: 256,
+      &quot;max_pdf_objects&quot;: 500000,
+      &quot;max_form_depth&quot;: 8,
+      &quot;max_cells&quot;: 2000000,
+      &quot;max_elements&quot;: 250000,
+      &quot;max_output_chars&quot;: 33554432,
+      &quot;max_wall_ms&quot;: 60000,
+      &quot;max_image_pixels&quot;: 16000000,
+      &quot;max_total_pixels&quot;: 64000000
+    },
+    &quot;limits_sha256&quot;: &quot;84e01b92c7d34f56a1230987654321fedcba9876543210abcdef0123456789ab&quot;
+  },
+  &quot;format&quot;: &quot;pdf&quot;,
+  &quot;status&quot;: {
+    &quot;integrity&quot;: &quot;verified&quot;,
+    &quot;inventory&quot;: &quot;complete_for_profile&quot;,
+    &quot;extraction&quot;: &quot;partial&quot;
+  },
+  &quot;inventory_total&quot;: 2,
+  &quot;inventory&quot;: [],
+  &quot;stories&quot;: [
+    {
+      &quot;id&quot;: &quot;page:1&quot;,
+      &quot;kind&quot;: &quot;page&quot;,
+      &quot;locator&quot;: { &quot;kind&quot;: &quot;page&quot;, &quot;page&quot;: 1 },
+      &quot;primary&quot;: true,
+      &quot;method&quot;: &quot;pdf_text_operators&quot;,
+      &quot;text&quot;: &quot;Section 4.2 Renewal Cap: Annual uplift shall not exceed 3.0%.&quot;
+    }
+  ],
+  &quot;elements&quot;: [
+    {
+      &quot;id&quot;: &quot;page:1!BT:0&quot;,
+      &quot;story&quot;: &quot;page:1&quot;,
+      &quot;kind&quot;: &quot;text_object&quot;,
+      &quot;span&quot;: { &quot;start&quot;: 0, &quot;end&quot;: 61 },
+      &quot;locator&quot;: { &quot;kind&quot;: &quot;page_element&quot;, &quot;page&quot;: 1, &quot;element&quot;: &quot;BT&quot;, &quot;ordinal&quot;: 0 }
+    }
+  ],
+  &quot;omissions&quot;: [
+    {
+      &quot;id&quot;: &quot;omission/1&quot;,
+      &quot;omission&quot;: {
+        &quot;location&quot;: &quot;page:2/image:1&quot;,
+        &quot;stage&quot;: &quot;extract&quot;,
+        &quot;reason&quot;: &quot;ocr_not_enabled&quot;,
+        &quot;scope&quot;: &quot;page&quot;,
+        &quot;detail&quot;: &quot;page 2 contains a raster scan and local OCR is disabled&quot;,
+        &quot;count&quot;: 1
+      }
+    }
+  ],
+  &quot;children&quot;: [],
+  &quot;observations&quot;: []
+}
+</code></pre>
+<p>The extracted cap is citable. So is the fact that page 2 was not OCRed. Neither fact may impersonate the other.</p>
+<h2>5. Immutable Views: Identity Includes the Reader</h2>
+<p>Two systems can read identical bytes and produce different evidence because their parsers, profiles, feature sets, or limits differ. AINA therefore binds a view to all of them:</p>
+<pre><code class="language-text">source revision + source SHA-256
++ parser name + parser source/build digest + text/v1 profile + feature profile
++ exact 14-field limits + limits_sha256
++ report schema + view schema
++ stories + elements + omissions + children + observations
+= canonical ViewManifest
+</code></pre>
+<p>RFC 8785 JSON Canonicalization Scheme (JCS) gives the manifest one deterministic serialization. Object keys are sorted as UTF-16 code-unit sequences, insignificant whitespace disappears, non-finite numbers are refused, integers beyond exact IEEE-754 range are not rounded, and nesting is capped at 128. String content is escaped but <strong>not Unicode-normalized or whitespace-rewritten</strong>.</p>
+<p>The SHA-256 of those canonical bytes is the 64-hex view digest.</p>
+<h3>Commit children first, then seal the parent</h3>
+<p>Attachments, archive members, and embedded workbooks are sources in their own right. Their revisions compose the parent revision, an encoded member locator, and the child SHA-256. Their views commit first; the parent&#39;s <code>child:&lt;locator&gt;</code> nodes then name the resulting child digests or failures. Child text is never promoted into the parent as though it had been read in the parent&#39;s own story.</p>
+<p>The commit runs inside the Room&#39;s cross-process <code>with_transition</code> serialization. A <code>begin</code> provenance node records the attempted view, the canonical artifact is stored by digest, and a <code>complete</code> node plus index closes the commit. Repeating the same manifest in the same Room resolves to the existing view rather than rewriting it.</p>
+<p>Loading is equally strict. The resolver checks the artifact&#39;s recorded digest, hashes the served bytes, re-canonicalizes the parsed value, and compares canonical form. One altered byte or non-canonical repair yields <code>view_digest_mismatch</code>.</p>
+<p>A new parser or configuration creates a new view. It does not retarget old citations. Historical identity survives; current authority must be re-established.</p>
+
+
+      <p class="part-compact-nav"><strong>END OF §02 PART 2/4</strong> — Next: <a href="/02-zero-trust-document-ingestion-and-server-cut-evidence/part-3/"><code>https://blayneaina.com/02-zero-trust-document-ingestion-and-server-cut-evidence/part-3/</code></a> · <a href="/02/brief/">§02 1-Call Brief</a> · <a href="/02.md">Raw .md</a></p>
+    
+        </div>
+
+        
+        
+        
+        
+
+        
+
+        
+      </article>
+    </main>
+
+  </div>
+
+  <footer class="site-footer compact-ai-footer"><p><strong>blayneaina.com</strong> — <a href="https://blayneaina.com/ai-brief/">Master Brief (https://blayneaina.com/ai-brief/)</a> · <a href="https://blayneaina.com/ai-brief.txt">Plain-Text Brief (https://blayneaina.com/ai-brief.txt)</a> · <a href="https://blayneaina.com/articles/">All 9 Articles &amp; Briefs (https://blayneaina.com/articles/)</a> · <a href="https://blayneaina.com/llms.txt">llms.txt</a> · <a href="mailto:me@blayneaina.com">me@blayneaina.com</a></p></footer>
+
+
+
+
+
+  <script src="/script.js?v=20261109-s-tier"></script>
+</body>
+</html>

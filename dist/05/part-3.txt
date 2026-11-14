@@ -1,0 +1,119 @@
+# §05 Part 3/4 — Expiry Is Not Fencing
+Canonical: https://blayneaina.com/05-expiry-is-not-fencing-typed-leases-and-kernel-write-exclusion/part-3/ | Raw Article: https://blayneaina.com/05.md | Next Part: https://blayneaina.com/05/part-4.txt
+
+## 8. Fencing Continues Into Every Execution Surface
+
+Generation checks would be decorative if they stopped at the lease manager. They are wired into file replacement, SQLite, worker acts, and successor result delivery.
+
+### File write funnel
+
+`require_write_binding` requires an exact file lease, expected generation equal to `lease.generation`, matching task, valid tenancy and control epoch, and a server execution handle. Parent-scope ownership alone cannot authorize an exact mutation. A governing source cannot also be the destination; that requires a separately governed revision task.
+
+The precondition compares bytes observed through `W` with the planned preimage. A mismatch at execution is `preimage_hash_mismatch`, not permission to proceed on stale content.
+
+### Fenced SQLite mutation
+
+Protected row changes serialize through `with_transition` and open SQLite with `TransactionBehavior::Immediate`. Before update, the engine:
+
+- rereads the current row and requires `now_version == expected`;
+- captures recovery state;
+- revalidates target identity, `RequestedAct`, and approval;
+- executes a conditional `UPDATE ... WHERE key = ? AND version = ?`;
+- requires exactly one changed row;
+- reads the row back and verifies the new version and values before commit.
+
+A competing change becomes `record_version_changed` and returns the operation for review instead of applying it. The observed post-commit destination is checked again before the receipt finishes.
+
+### `RequestedAct` and result grants
+
+For strict worker staging, `RequestedAct` derives the typed key and prepared version from exact projected bytes and binds the row task's current generation and control epoch. The worker cannot substitute a different row or revive an older generation.
+
+`result_grant.rs` applies the same current-tenancy rule to the receiving task. Its scope must still have a nonzero current generation and matching control epoch. Otherwise result-only tools remain withheld. A successor can receive a historical result only under fresh receiving authority; the original return is not fabricated.
+
+Break-glass adds the final lineage check: advancing the control epoch revokes leases minted under older epochs even when their wall-clock TTL has not expired.
+
+## 9. Release Verification and Quarantine
+
+Release is another evidence boundary, not a lockfile deletion with good intentions.
+
+`release_content_check` compares on-disk bytes with:
+
+- `post_sha256` from the last gated write under the lease, when one exists; or
+- the lease's captured pre-write FNV-1a and byte count when no gated write occurred. That FNV-plus-length comparison is a **non-cryptographic drift check**, useful for noticing ordinary change, not for proving integrity against a malicious writer capable of engineering a collision. It is distinct from the SHA-256 comparisons used for gated-write and guarded-publication verification.
+
+If content matches, release archives the post-edit state to Amber. If it diverges, release archives the divergent bytes as **`quarantine_ungated`**, emits `released_with_ungated_content`, and returns `content_mismatch: true`.
+
+It never silently restores the baseline or deletes the foreign bytes. Out-of-band content is preserved for forensic review rather than being laundered into trusted history.
+
+### The out-of-band owner lock kill-switch
+
+Breaking another agent's live, unexpired lease is refused by default. Force release is permitted only when an owner has written `.squad/control/lock-release.json` out of band, naming the authorized owners, scopes, setter, reason, and optional expiry. No MCP tool can create that authorization. The force break records `lock_force_released_under_owner_authorization` in the integrity graph.
+
+### Exhibit 5 — Release quarantine instead of baseline laundering
+
+```json
+{
+  "released": "project:/artifacts/renewal-result.json",
+  "owner": "reviewer-beta",
+  "was_held": true,
+  "amber_kind": "quarantine_ungated",
+  "content_mismatch": true,
+  "content_check": {
+    "status": "mismatch",
+    "baseline_source": "gated_write_post_sha256",
+    "expected_sha256": "4a9c8e12f03b7d651928374655647382910abcdef1234567890abcdef1234567",
+    "actual_sha256": "c0ffee99887766554433221100ffeeddccbbaa99887766554433221100ffeedd"
+  },
+  "warning": "Divergent bytes preserved in Amber and released_with_ungated_content recorded; baseline was not silently restored"
+}
+```
+
+## Platform and Route Matrix
+
+| Route or condition | Enforcement and claim ceiling |
+|---|---|
+| Windows long-lived MCP server | Kernel handle exclusion is enforced across tenancy and all five replacement roles |
+| Windows short-lived CLI | Lease is advisory because process exit drops handles; protected execution requires a server-held handle |
+| Non-Windows | No equivalent Win32 share-mode, parent-pin, native-rename, or liveness claims; no false equivalence is asserted |
+| Handles or memory mappings opened before acquisition | Not retroactively revoked; the gate governs later incompatible opens, not every pre-existing capability |
+| Guarded replacement intervals | Write opens are continuously denied; delete/rename residuals are detected and reconciled as described, not claimed eliminated |
+| SQLite destination | `IMMEDIATE` transaction and version fence govern the row; this is not the Win32 file-handle path |
+| External SaaS or non-idempotent API | Requires destination-specific conditional-write, observation, and reconciliation guarantees; the local file gate does not prove external exactly-once effect |
+| Privileged host administrator or volume unmount | Outside the application's prevention claim; remaining exposure is named rather than hidden |
+
+The architecture is therefore strong without becoming unfalsifiable. It names the route it governs, the kernel primitives that enforce it, the interval it cannot close, and the evidence that remains when verification fails.
+
+Consider a writer that opened `GENERIC_WRITE` or a memory-mapped section **before** `G` was acquired. The new guard cannot retroactively revoke that capability, and the mapping may outlive the original handle. Release-time content comparison and `quarantine_ungated` can preserve evidence of the resulting drift, but they cannot turn that into retroactive prevention. A deployment must inventory and exclude pre-existing write capabilities before claiming exclusive mediation of the resource.
+
+Compatibility must be demonstrated for the exact Windows and filesystem profile in scope: destination present or absent, open readers, conflicting writers, reparse redirection, parent substitution, failure at every handoff, and crash recovery. NTFS/ReFS support is not inferred merely because the native rename API exists.
+
+## 10. The 2026 Fencing Evidence Landscape
+
+The research supports monotonic execution fencing and exposes the same limitation that matters here: a mechanism proves only the effect classes its boundary actually covers.
+
+| 2026 primary source | What it establishes | How this architecture composes with it |
+|---|---|---|
+| Shu, [*Boundary-State Control for Tool-Using Language-Model Agents*](https://arxiv.org/abs/2609.37475), September 2026 preprint | BSC-R binds a single-use authorization to the exact action and semantic authorization state. It rejects all ten represented changed/replayed classes across 10,302 frozen proposals, prevents 1,200 represented non-replay invalid effects in CONTINUITY, handles 160 replay lifecycles, and withholds 200 ambiguous cases. In the broader external suite, it commits 25% of invalid effects. | This is direct evidence for exact-act and generation binding at commit. It is equally strong evidence for path and effect coverage ceilings: no fencing claim should exceed the contexts actually governed. |
+| Lyu et al., [*CoAgent: Concurrency Control for Multi-Agent Systems*](https://arxiv.org/abs/2606.15376), June 2026 preprint | MTPO fixes a serialization order, serves order-filtered reads, and repairs dependent plans while preserving serializable outcomes. CoAgent stays within 5% of serial correctness at a 1.4× speedup and improves a bash-only target from 45/71 to 63/71 passes at 0.80× time. | Multi-agent concurrency requires authoritative ordering and current-state evaluation, not prompt cooperation. AINA's transition mutex and workspace high-water sequence supply that ordering for the local reference embodiment. |
+| [Redisson FencedLock documentation](https://redisson.org/glossary/java-fencedlock.html), current 2026 reference | Defines a fencing token as a monotonically increasing value issued on each lock acquisition and presented to the resource so stale holders can be rejected. | This is the basic distributed-system model behind generation fencing. The Room adds two-phase counter persistence, kernel share-mode exclusion, and per-route verification rather than treating the token as self-enforcing. |
+| Microsoft [`CreateFileW` and file-sharing documentation](https://learn.microsoft.com/en-us/windows/win32/fileio/creating-and-opening-files), current 2026 reference | Desired access and sharing modes determine which later opens are compatible; `FILE_SHARE_DELETE` is required for rename/delete semantics. | Explains why the long-term `FILE_SHARE_READ` guard must hand off through `W`, `T`, and `H` rather than closing and reopening around the rename. |
+| Microsoft [`FILE_RENAME_INFORMATION_EX`](https://learn.microsoft.com/en-us/windows-hardware/drivers/ddi/ntifs/ns-ntifs-_file_rename_information), current 2026 reference | Defines POSIX rename and replacement flags and relative rename behavior. | Grounds the native handle-relative atomic replacement with POSIX semantics; it is a primitive, not a complete proof of continuous exclusion. |
+| Microsoft [`GetFinalPathNameByHandleW`](https://learn.microsoft.com/en-us/windows/win32/api/fileapi/nf-fileapi-getfinalpathnamebyhandlew), current 2026 reference | Resolves the canonical target of an opened file object through reparse indirection. | Grounds parent and published-object identity verification, catching cases where identity and content match but the leased name points elsewhere. |
+
+The functional-equivalence concession still applies. A conventional stack using leases, fencing tokens, compare-and-swap, MVCC, durable logs, and destination-specific conditional writes can defeat the same defect if it binds the same exact transition through the same predicates. AINA's value is the inspectable composition and its refusal/evidence grammar, not a claim that alternative coordination theory cannot work.
+
+**Evidence availability and performance boundary:** the implementation and replacement records are `CONTROLLED` for qualified, method-scoped technical review, with adverse findings permitted. They are not unrestricted public downloads or independent validation. Handle timing, lock contention, rename latency, and recovery cost must be measured for the exact Windows filesystem, antivirus/storage stack, destination state, and worker count; this article does not claim a universal performance envelope.
+
+## The Adversarial Stale-Writer Challenge
+
+The **Shared-Resource Lease & Kernel Fencing Challenge** uses a deliberately hostile sequence, not just a happy-path replacement:
+
+1. Worker A acquires generation 14 and stalls.
+2. Worker B acquires generation 15 and completes a guarded replacement.
+3. Worker A resumes and attempts both a stale-generation write and a direct incompatible file open.
+4. The executor returns `stale_lease_generation`; the kernel returns `ERROR_SHARING_VIOLATION`.
+5. A separate parent-redirection or preimage-displacement attempt produces typed reconciliation evidence and, where applicable, `quarantine_ungated` rather than an invented clean rollback.
+
+The challenge excludes retroactive revocation of pre-existing handles and mappings, universal OS/filesystem coverage, total effect coverage, and independent validation. Deployment and paid pilots are separately scoped; independent evaluation remains outside the commercial ladder through [Article 09](https://blayneaina.com/09-bring-one-real-boundary-work-with-blayne/).
+
+

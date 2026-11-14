@@ -1,0 +1,198 @@
+# §05 Part 2/4 — Expiry Is Not Fencing
+Canonical: https://blayneaina.com/05-expiry-is-not-fencing-typed-leases-and-kernel-write-exclusion/part-2/ | Raw Article: https://blayneaina.com/05.md | Next Part: https://blayneaina.com/05/part-3.txt
+
+## 5. The Five-Role Overlapping Handle Exchange
+
+Windows refuses to rename over an existing destination when any open handle withholds `FILE_SHARE_DELETE`. The long-term guard therefore cannot simply remain open across replacement. Closing it naively would create a write-open race.
+
+The solution is an overlapping exchange of five named file roles. `G`, `W`, `T`, `H`, and `G'` are role names, not invented lease types, and they are not the only live handles: the parent pin `P`, authorization guards, and process records have their own jobs.
+
+```text
+HANDLE ROLE & ACCESS / SHARING TIMELINE DURING replace_guarded:
+
+Role G — long-term guard
+  READ | share READ
+  Held across the lease lifetime; denies later write/delete opens
+  ===========================================> Close G
+                                             │
+Role W — window guard                         │ opened while G remains open
+  READ | share READ | DELETE                  │
+  Pins and hashes the exact preimage          │
+  ------------------------------------------->│ Close W after rename
+                                             │
+Role P — parent directory pin                 │
+  TRAVERSE | READ_ATTR | SYNC                 │
+  share READ | WRITE; no DELETE sharing       │
+  Proves the parent object identity           │
+  ------------------------------------------->│ Close P after rename
+                                             │
+INTERVAL 1: G closes; W and P remain          │
+  Write opens denied; delete/rename possible  │
+                                             ▼
+Role T — staged file                          │
+  READ | DELETE | share READ | WRITE_THROUGH  │
+  Staged bytes must equal planned_sha256      │
+  NtSetInformationFile(FileRenameInformationEx)├─ Rename → Drop T
+                                             │
+Role H — handoff guard                        │ opened on new file while T is open
+  READ | share READ | DELETE                  │
+  Bridges publication without a write-open gap│
+  ------------------------------------------->│ Close H after G' verifies
+                                             │
+INTERVAL 2: T closes; H remains               │
+  Write opens denied; delete/rename possible  │
+                                             ▼
+Role G' — new long-term guard                 │
+  READ | share READ                           │
+  Verifies object identity, full content hash,│
+  resolved path, and preimage displacement    │
+  ===========================================> Active tenancy
+```
+
+### Role G: the long-term exclusion
+
+At acquisition, a long-lived server holds the exact file with read access and `FILE_SHARE_READ`. Later incompatible write/delete/rename opens fail. A short-lived CLI process cannot retain that handle after exit, so its lease is explicitly advisory: `short_lived_process_cannot_hold_a_handle`. Protected execution requires a server-held resource handle.
+
+### Role W: pin and hash the preimage
+
+While `G` is still held, `W` opens with `READ | DELETE` sharing. It identifies the same object as `G`, records its link count, and hashes the source bytes through the handle. The authorization precondition receives that observation, not a second path-based read.
+
+Because `W` shares `DELETE`, it permits the upcoming rename while continuing to deny writes.
+
+### Role P: pin the parent directory
+
+The parent opens with `FILE_FLAG_BACKUP_SEMANTICS`, traversal/read-attribute/synchronize access, and `READ | WRITE` sharing without `DELETE`. External processes cannot delete or rename the containing directory while `P` is held; ordinary child reads and writes are not globally blocked.
+
+`opened_file_scope(&P)` must equal the leased parent. A junction swap produces `destination_parent_redirected`; an unresolvable parent produces `destination_parent_unverifiable`, not a pass.
+
+### Role T: stage and rename the new object
+
+The staged file opens with `READ | DELETE` access, `FILE_SHARE_READ`, and `FILE_FLAG_WRITE_THROUGH`. Its complete bytes must hash to `planned_sha256` before authority runs.
+
+Authorization executes while `G` still denies write. Then `G` closes, and `T` renames immediately by handle.
+
+The rename does not use a path-level convenience call. It invokes native `ntdll::NtSetInformationFile` with:
+
+- `FILE_RENAME_INFORMATION_EX` class **65**;
+- `FILE_RENAME_FLAG_POSIX_SEMANTICS` (`0x2`);
+- `FILE_RENAME_FLAG_REPLACE_IF_EXISTS` (`0x1`) when replacement is allowed;
+- `RootDirectory = parent_pin.as_raw_handle()`;
+- one verified relative UTF-16 leaf name.
+
+Negative status maps through `RtlNtStatusToDosError` and fails closed.
+
+### Role H: bridge publication to the next guard
+
+While `T` still holds the published object, `H` opens the new destination with `READ | DELETE` sharing. When `T` closes, `H` continues denying writes and bridges to `G'`.
+
+### Role G': verify before success
+
+`G'` opens while `H` remains, with `FILE_SHARE_READ`. Success requires all of the following:
+
+1. `H` and `G'` identify the same object that `T` published by volume serial and file index.
+2. The complete content through `G'` hashes to `planned_sha256`.
+3. `opened_file_scope(&G')` resolves to the exact leased scope.
+4. The surviving `W` handle has not produced positive evidence that the captured preimage moved elsewhere first.
+
+Only then does the new long-term guard become active.
+
+## 6. Two Residual Intervals—and the Evidence They Produce
+
+The handle exchange closes write-open gaps. It does not make every delete or rename impossible. During Interval 1, only `W` and `P` remain; during Interval 2, only `H` remains. Those handles share `DELETE`, so a third party can rename or delete the destination but cannot open it for writing.
+
+These intervals are explicit architecture, not something the article should hide:
+
+- Interval 2's object substitution is detected by `G'` identity verification.
+- A reparse redirect is detected by comparing `G'`'s resolved path with the leased scope.
+- A moved preimage is detected through `W`.
+- A third-party delete-and-recreate can remain indistinguishable from ordinary replacement. The bytes published **at the leased path** are still verified; the architecture does not claim to recover every uncaptured third-party object.
+
+**Verification is not a power-loss atomicity proof.** If power fails after the rename but before `G'` is established, the destination may have changed while no success record exists. Restart must compare the surviving destination, `T`, `W`, and vault-backed preimages, then classify the result through the reconciliation path rather than assuming either a clean publish or an automatic rollback. Filesystem and directory-metadata durability are separate deployment claims, not something this handle sequence proves by itself. Article 06 owns that recovery boundary.
+
+### Preimage displacement forensics
+
+`W` follows the original file object rather than its name. After the rename, `preimage_displacement` requires positive evidence of all three conditions:
+
+1. `links_after == links_before`—the object kept every link;
+2. `deleted == false`—it was not deleted;
+3. `opened_file_scope(w)` resolves to an ordinary path different from the leased scope and outside NTFS `$Extend\$Deleted`.
+
+When those hold, the original preimage was moved before the rename, and the object superseded at the leased name was never captured. That is `destination_preimage_displaced`, not a clean publish.
+
+A link-count reduction, pending deletion, deleted-files path, or unreadable state is not claimed as displacement. This distinction prevents false certainty from ambiguous evidence.
+
+### Exhibit 3 — Successful guarded replacement verification
+
+```json
+{
+  "leased_scope": "project:/artifacts/renewal-result.json",
+  "planned_sha256": "4a9c8e12f03b7d651928374655647382910abcdef1234567890abcdef1234567",
+  "published_identity": "volume-64:file-index-128",
+  "guard_identity_matches_published": true,
+  "guard_content_matches_planned": true,
+  "guard_resolved_path_matches_scope": true,
+  "preimage_displaced_to": null,
+  "new_long_term_guard": "G'",
+  "verification": "complete"
+}
+```
+
+This is a complete verification result, not merely a successful rename return.
+
+### Six typed reconciliation faults
+
+Verification failures do not trigger an imagined automatic rollback. They produce structured evidence and operational next actions.
+
+| Fault | What broke | `reconcile_by` action |
+|---|---|---|
+| `GuardLost` | The destination guard could not be acquired or reacquired | If the rename completed, hash the path to distinguish published bytes from preimage; if it failed, re-establish the lease before any further write |
+| `NameRedirected` | `G'` resolves somewhere other than the leased path | Resolve the name, locate the published bytes at the resolved target, and trust neither location by name alone |
+| `IdentityChanged` | The object at the leased name is not the object `T` published | Treat the current bytes as foreign and restore the verified vault preimage |
+| `ContentDiverged` | The guarded object does not contain `planned_sha256` | Restore the vault preimage instead of retrying blindly |
+| `PreimageDisplaced` | The captured preimage survived intact at another path | Verify the displaced object and the uncaptured replacement's ownership before deciding whether planned bytes remain |
+| `Unverifiable` | Identity, content, or path checks could not run | Establish state by hashing and comparing against planned and preimage digests; do not claim either success or a definite change |
+
+Every reconciliation record carries the fault kind, `rename_completed`, planned and preimage digests, whether the destination existed, optional `preimage_displaced_to`, and `reconcile_by`. It also records an integrity signal and annotates `os_lock` so a later operation does not inherit false enforcement.
+
+### Exhibit 4 — `destination_preimage_displaced`
+
+```json
+{
+  "path": "project:/artifacts/renewal-result.json",
+  "scope": "file://project:/artifacts/renewal-result.json",
+  "error": "the captured preimage was moved before the rename, so an uncaptured object was replaced",
+  "fault": "destination_preimage_displaced",
+  "rename_completed": true,
+  "planned_sha256": "4a9c8e12f03b7d651928374655647382910abcdef1234567890abcdef1234567",
+  "preimage_sha256": "58b2e91f4c03d8a7126590ef4312ab98c7654321fedcba09876543210fedcba9",
+  "destination_existed_before": true,
+  "preimage_displaced_to": "project:/artifacts/renewal-result.previous",
+  "reconcile_by": "Verify the displaced preimage and the uncaptured replacement's ownership before deciding whether planned_sha256 stays at the leased path",
+  "pid": 4104,
+  "ts": "2026-10-31T18:00:00Z"
+}
+```
+
+The rename completed. The verification did not produce success. That distinction is preserved instead of being flattened into a generic lock error.
+
+## 7. Server Liveness and Zero-Downtime Image Handoff
+
+A fencing system cannot depend on a PID alone. PID reuse would let a dead holder appear alive.
+
+`enter_server_mode` publishes `.squad/servers/<pid>.json` with build, session, and protocol identity, then holds the record itself with `FILE_SHARE_READ`. Another process testing liveness attempts to open that record for write. A sharing violation proves the owner still holds it; process death closes the handle and releases the violation regardless of exit status.
+
+This gives a kernel-backed liveness signal immune to PID reuse. `holder_alive` additionally compares the recorded start time, so a new process with the same PID does not inherit the old identity.
+
+### Adopting leases without an exclusion gap
+
+When a new engine image is fully published, the running server hands the native connection to a successor:
+
+1. Generate a one-time handoff secret and pass it only to the child.
+2. The child authenticates with `squad/lease_adopt` before serving ordinary requests.
+3. For every held scope, the child takes its own deny-write handle **while the parent still holds its handle**. Concurrent read-sharing opens coexist.
+4. `transfer_holder` re-points the tenancy records to the child's PID, start time, and session under `with_transition`.
+5. Only after every handle and record moves does the parent withdraw and close.
+
+At no point does the target lose write-denying kernel exclusion. A failed adoption stops the child and leaves the parent serving with its original handles and records.
+
+

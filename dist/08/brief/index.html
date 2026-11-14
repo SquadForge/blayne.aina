@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>§08 One-Call Technical Brief: The Sovereign Kill Switch | Blayne Aina</title>
+  <meta name="description" content="4 lossless parts summarized from 01–09 source markdown · For full prose see /08.md">
+  <meta name="author" content="Blayne Aina">
+  <meta name="robots" content="index, follow, max-snippet:-1, max-image-preview:large, max-video-preview:-1">
+  <link rel="canonical" href="https://blayneaina.com/08/brief/">
+  <link rel="icon" href="/favicon.ico" sizes="any">
+  <link rel="icon" href="/favicon.svg" type="image/svg+xml">
+
+  <!-- OpenGraph / Social -->
+  <meta property="og:type" content="article">
+  <meta property="og:title" content="§08 One-Call Technical Brief: The Sovereign Kill Switch">
+  <meta property="og:description" content="4 lossless parts summarized from 01–09 source markdown · For full prose see /08.md">
+  <meta property="og:url" content="https://blayneaina.com/08/brief/">
+  <meta property="og:site_name" content="Blayne Aina — The Route to Trusting AI">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="§08 One-Call Technical Brief: The Sovereign Kill Switch">
+  <meta name="twitter:description" content="4 lossless parts summarized from 01–09 source markdown · For full prose see /08.md">
+  
+  <link rel="stylesheet" href="/style.css?v=20261109-s-tier">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@500;700&family=Instrument+Serif:ital@0;1&family=Inter:wght@400;500;600;700;800&family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,500;0,6..72,600;1,6..72,400&family=JetBrains+Mono:wght@400;500&family=Plus+Jakarta+Sans:wght@600;700;800&display=swap" rel="stylesheet">
+</head>
+<body>
+  <div class="reading-progress-bar" id="progressBar"></div>
+
+  <header class="site-header compact-ai-header"><div class="header-inner compact-ai-nav"><a href="/" class="brand"><strong>BLAYNE AINA</strong></a> | <a href="/ai-brief/">1-Page Master Brief (§01–§09)</a> | <a href="/articles/">All 9 Articles &amp; Briefs</a> | <a href="/research-assurance/">Assurance</a> | <a href="/refusal-proof/">Proof</a> | <a href="/llms.txt">llms.txt</a> | <a href="mailto:me@blayneaina.com">me@blayneaina.com</a></div></header>
+  <div class="layout-container presentation-layout">
+    <main class="content-area">
+      <article class="prose-wrapper presentation-wrapper">
+<header class="article-header compact-article-header"><h1 class="article-title">§08 One-Call Technical Brief: The Sovereign Kill Switch</h1><p class="article-subtitle">4 lossless parts summarized from 01–09 source markdown · For full prose see /08.md</p></header>
+
+        
+        
+
+        <div class="article-body">
+          <p><strong>Canonical URLs:</strong> <a href="https://blayneaina.com/08-sovereign-kill-switch-break-glass-epochs-and-conformance-gate/">Full §08</a> · <a href="https://blayneaina.com/08.md">Raw Markdown</a> · <a href="https://blayneaina.com/08/brief.txt">Plain-Text Brief</a> · <a href="/07/brief/">← §07 Brief</a> · <a href="/09/brief/">§09 Brief →</a> · <a href="/ai-brief/">All §01–§09 Master Brief</a> · <a href="/articles/">All Articles</a> · <a href="/08.md">Raw Markdown</a>
+<strong>Executive Synthesis:</strong> <strong>Problem:</strong> A kill switch the agent can clear is not a boundary, and a green build does not prove the release enforces refusals. — <strong>Proves:</strong> Latch-first containment, scoped epochs, observed Job termination, in-doubt recovery, and the 45-case candidate gate close the loop. — <strong>Evaluation Scope:</strong> Use the Break-Glass &amp; Conformance Qualification Challenge on one containment or release requirement.
+<strong>Lossless Parts (4 total, 100% unabridged):</strong> <a href="/08-sovereign-kill-switch-break-glass-epochs-and-conformance-gate/part-1/">Part 1/4</a> (<a href="/08/part-1.txt">.txt</a>) · <a href="/08-sovereign-kill-switch-break-glass-epochs-and-conformance-gate/part-2/">Part 2/4</a> (<a href="/08/part-2.txt">.txt</a>) · <a href="/08-sovereign-kill-switch-break-glass-epochs-and-conformance-gate/part-3/">Part 3/4</a> (<a href="/08/part-3.txt">.txt</a>) · <a href="/08-sovereign-kill-switch-break-glass-epochs-and-conformance-gate/part-4/">Part 4/4</a> (<a href="/08/part-4.txt">.txt</a>)</p>
+<ul>
+<li><strong>Introduction &amp; Thesis [Part 1/4]:</strong> # The Sovereign Kill Switch: Break-Glass Epochs and the Conformance Gate <em>Any admitted caller can stop the machine. Only the local interactive-console owner surface can recover it—and uncertainty survives recovery.</em> **By Blayne Aina · Principal Systems Architect and creator of…</li>
+<li><strong>One Stop, Three Races, No Invented All-Clear [Part 1/4]:</strong> Suppose a safety monitor engages a <strong>machine stop</strong> after an autonomous worker begins behaving anomalously. Three races now matter, and none can be resolved by a dashboard toggle: A <strong>project-scoped stop</strong> follows the same latch and recovery discipline without revoking unrelated… — <em>Key Rules/Claims:</em> <strong>Containment races cleanup.</strong> The latch reaches durable storage before AINA attempts to terminate owned runs or cancel queued wakes. One worker termination remains unconfirmed; the latch still closes new effects.</li>
+<li><strong>1. Asymmetric Containment [Part 1/4]:</strong> <em>Subtopics:</em> Exhibit 8.1 — Stop versus recovery authority — The emergency interface deliberately gives stop and recovery different authority. Any admitted caller may invoke <code>engage</code> because refusal to stop is the more dangerous default. A nonempty reason is mandatory. — <em>Key Rules/Claims:</em> <strong>No MCP session.</strong> If <code>session::current()</code> exists, recovery is refused. A model-connected tool session cannot satisfy the owner surface. | <strong>Explicit operator identity.</strong> The caller must supply <code>--by operator</code>; a worker or agent name is insufficient.</li>
+<li><strong>2. Latch-First Containment [Part 1/4]:</strong> <em>Subtopics:</em> Exhibit 8.2 — Publication before cleanup; Exhibit 8.3 — Sanitized scoped latch record; Owned Jobs must be observed stopped; “Latched” is not the same as “fully reconciled” — An emergency stop must not depend on a database, a live server, a lease sweep, a successful process kill, or a final audit write. Those steps can fail precisely when containment is needed. The distinction matters. — <em>Spec/Table:</em> <strong><code>KILLING</code></strong>: An affected owned Job is not yet observed quiescent, a Job census failed, or a live server does not implement the current break-glass observation protocol. | <strong><code>RECONCILING</code></strong>: Quiescence and protocol coverage are established, but an unresolved file, destination, or model operation remains—or its registry cannot be read.</li>
+<li><strong>3. Control Epochs Revoke Authority, Not Just Processes [Part 2/4]:</strong> <em>Subtopics:</em> Exhibit 8.4 — Scoped revocation map; WAL before snapshot; Exhibit 8.5 — Sanitized epoch-advance record — A latch closes new-effect gates immediately. Control epochs handle a different problem: authority that was minted before the stop must not remain usable after the relevant boundary advances. — <em>Spec/Table:</em> <strong>Resource lease</strong>; Carried lineage: <code>Lease.control_epoch</code>; Recheck at the boundary: <code>validate_tenancy</code> checks expiry, current generation, and matching scope revision | <strong>Room wake job</strong>; Carried lineage: sealed <code>control_epoch</code>; Recheck at the boundary: Dispatch re-derives task/Room/project standing and refuses revoked lineage | <strong>Result-grant receiving tenancy</strong>; Carried lineage: <code>Recipient.control_epoch</code>; Recheck… — <em>Key Rules/Claims:</em> Reads the current epoch and per-scope revisions. | Computes <code>next = prior + 1</code>, refusing integer exhaustion. | Appends an <code>epoch_advance</code> record to <code>breakglass.wal.jsonl</code> and flushes it. | Atomically rewrites <code>epoch.json</code> with the new sequence and scope map. | Reads the epoch back and refuses an unconfirmed result.</li>
+<li><strong>4. Managed Drain and In-Doubt Recovery [Part 2/4]:</strong> <em>Subtopics:</em> Recovery starts with a census, not amnesia; Exhibit 8.6 — Recovery intent preserves uncertainty; Stop beats recovery on a race; Exhibit 8.7 — Racing stop leaves <code>FROZEN_SAFE</code> — Immediate engage is not the only controlled-stop mode. <code>drain</code> supports a bounded window in which already <strong>durably prepared</strong> effects may finish. It requires the same owner console and an already-engaged machine latch, so new effects are refused before the drain begins. — <em>Key Rules/Claims:</em> <code>unresolved_file_operations()</code> for protected file writes without an established outcome; | <code>destinations::unresolved_operations()</code> for nonterminal destination mutations; | <code>model_egress::unresolved()</code> for brokered model requests whose provider-side outcome is unsettled.</li>
+<li><strong>5. The Candidate-Binary Publication Gate [Part 3/4]:</strong> <em>Subtopics:</em> Exhibit 8.8 — Candidate qualification sequence; The complete 45-case inventory — Containment architecture is only as credible as the binary that implements it. A green build proves compilation. It does not prove that the release artifact refuses stale generations, impersonation, cross-project reads, altered proposals, damaged recovery objects, or evidence… — <em>Spec/Table:</em> <strong>1</strong>; Emitted case ID: <code>impersonation_refused</code>; What must hold: A bound session cannot act as another owner. | <strong>2</strong>; Emitted case ID: <code>altered_proposal_conflict</code>; What must hold: Reusing an operation ID with a different payload is refused. | <strong>3</strong>; Emitted case ID: <code>stale_generation_refused</code>; What must hold: An edit fencing an old ownership generation is rejected.</li>
+<li><strong>6. What the Gate Proves—and What It Cannot [Part 3/4]:</strong> <em>Subtopics:</em> Exhibit 8.9 — Publication summary shape — The release gate closes an important bootstrapping hole. The candidate carries its own inventory and enforcement code, the surface receipt binds the expected harness and target image hashes, and the source digest is checked before and after a potentially long run. — <em>Spec/Table:</em> <strong>Rust <code>IsTerminal</code> / console handles</strong>; What it establishes: Whether standard handles belong to a terminal; What AINA adds—and refuses to infer: Combines terminal detection with no MCP session, explicit operator identity, and OS confinement; terminal presence alone is not human identity.</li>
+<li><strong>The Break-Glass &amp; Conformance Qualification Challenge [Part 3/4]:</strong> The <strong>Break-Glass &amp; Conformance Qualification Challenge</strong> uses one AI workflow that needs emergency containment or release qualification. It demonstrates a scoped stop with stale-authority refusal, explicit handling of unconfirmed cleanup, an unresolved-operation recovery plan,…</li>
+<li><strong>The Fourteen Containment and Assurance Claims [Part 4/4]:</strong> <em>Spec/Table:</em> <strong><code>08-C01</code></strong>; Claim: Any admitted caller can engage a validated stop with a mandatory reason; Evidence and ceiling: Implemented and author-verified for machine, agent, and canonical project scopes | <strong><code>08-C02</code></strong>; Claim: The active latch is persisted before secondary cleanup; scoped latches use staging and hard-link publication; Evidence and ceiling: Implemented and author-verified; machine latches use direct…</li>
+<li><strong>The Article 08 Claim Card [Part 4/4]:</strong> <em>Key Rules/Claims:</em> Mechanism: | AINA Sovereign Containment and Candidate-Binary Assurance | (latch-first break-glass, scoped control epochs, owned-Job observation, | in-doubt recovery, interactive owner recovery, 45-case publication gate) | Failure it governs: | Agents or scripts clearing their own emergency stop; | stale authority surviving after a matching stop; | successful termination calls mistaken for observed quiescence; | uncertain operations erased or blindly replayed during recovery; | stop/recovery races and unqualified release-binary promotion.</li>
+<li><strong>A Stop Is a Transition, Not a Button [Part 4/4]:</strong> Trustworthy emergency control is not a red icon that calls <code>kill()</code>. It is a sequence with asymmetric authority: the latch appears before fallible cleanup; new effects close immediately; old scoped authority is refused; owned Jobs are observed quiescent; uncertain operations…</li>
+<li><strong>Frequently Asked Questions [Part 4/4]:</strong> <em>Subtopics:</em> Why can any admitted caller engage the stop?; Can an agent clear its own emergency stop through MCP or a script?; Does advancing <code>control_epoch</code> revoke every lease on the host?; Does recovery resolve operations whose outcomes are unknown?; What happens if another stop arrives during recovery?; Do the 45 passing cases certify the system independently? — Stopping is the safe direction. Requiring elevated recovery authority before containment would create a dangerous delay. Engage still requires admission, a nonempty reason, and a valid machine, agent, or project scope. No.</li>
+<li><strong>Continue the Series [Part 4/4]:</strong> <em>Key Rules/Claims:</em> <strong>Series index:</strong> <a href="https://blayneaina.com/">From Proposal to Consequence: The AINA Transition-Governance Series</a> | <strong>Previous:</strong> <a href="https://blayneaina.com/07-defeating-approval-laundering-act-pinning-and-successor-grants/">Article 07 — Defeating Approval Laundering: Act Pinning and Successor Grants</a> | <strong>Next:</strong> [Article…</li>
+<li><strong>Primary Platform References [Part 4/4]:</strong> <em>Key Rules/Claims:</em> <a href="https://learn.microsoft.com/en-us/windows/console/getconsolemode">Microsoft <code>GetConsoleMode</code> — console input and screen-buffer mode inspection</a> | <a href="https://doc.rust-lang.org/std/io/trait.IsTerminal.html">Rust <code>std::io::IsTerminal</code> — terminal/TTY detection and platform behavior</a> | [Microsoft <code>CreateHardLinkW</code> — NTFS…</li>
+<li><strong>Publication Metadata [Part 4/4]:</strong> <strong>Title tag:</strong> The Sovereign Kill Switch: Break-Glass Epochs and the Conformance Gate <strong>Meta description:</strong> Asymmetric emergency containment, scoped control-epoch revocation, in-doubt recovery, managed Job termination, and the 45-case candidate-binary publication gate.</li>
+</ul>
+
+        </div>
+
+        
+        
+        
+        
+
+        
+
+        
+      </article>
+    </main>
+
+  </div>
+
+  <footer class="site-footer compact-ai-footer"><p><strong>blayneaina.com</strong> — <a href="https://blayneaina.com/ai-brief/">Master Brief (https://blayneaina.com/ai-brief/)</a> · <a href="https://blayneaina.com/ai-brief.txt">Plain-Text Brief (https://blayneaina.com/ai-brief.txt)</a> · <a href="https://blayneaina.com/articles/">All 9 Articles &amp; Briefs (https://blayneaina.com/articles/)</a> · <a href="https://blayneaina.com/llms.txt">llms.txt</a> · <a href="mailto:me@blayneaina.com">me@blayneaina.com</a></p></footer>
+
+
+
+
+
+  <script src="/script.js?v=20261109-s-tier"></script>
+</body>
+</html>

@@ -1,0 +1,183 @@
+# §02 Part 1/4 — Zero-Trust Document Ingestion
+Canonical: https://blayneaina.com/02-zero-trust-document-ingestion-and-server-cut-evidence/part-1/ | Raw Article: https://blayneaina.com/02.md | Next Part: https://blayneaina.com/02/part-2.txt
+
+# Zero-Trust Document Ingestion and Server-Cut Evidence
+
+*Hostile bytes need a parser jail. Enterprise judgments need a server-computed evidence chain. Neither a RAG chunk nor a model-written citation can supply one.*
+
+**By Blayne Aina · Principal Systems Architect and creator of AINA · October 31, 2026**
+
+---
+
+An AI document reader has two ways to lose.
+
+The file can attack the host. A malformed PDF stream, a cyclic object graph, a decompression bomb, or a pathological workbook can turn an innocent `read_document` call into a resource-exhaustion event inside the most privileged process in the system.
+
+The model can attack the evidence. It can quote a sentence that was never served, cite a page that does not contain the claim, treat an un-OCRed scan as empty, confuse an agent-supplied excerpt with a captured original, or transform three repetitions of one observation into apparent consensus.
+
+A trustworthy pipeline must confine the parser **and** make the citation coordinates server-computed facts.
+
+This is the epistemic boundary of the AINA transition-governance machine. Article 01 established that an AI output is a proposal, not an act. This installment builds the world in which that proposal can be judged: exact source bytes, confined extraction, explicit omissions, immutable views, served-content receipts, server-cut citations, bounded findings, and origin-preserving lineage.
+
+> **Before EISA can recognize an act, the system must establish what may be known, cited, and compared—and what remains unknown.**
+
+## The Evidence World Is a Governed Artifact
+
+A conventional retrieval pipeline often looks like this:
+
+```text
+path → loader → text chunks → embeddings → model context → answer with citations
+```
+
+That pipeline can be useful for search. It does not establish an execution-grade evidence world. A chunk does not prove which source revision produced it. A flattened string does not reveal what the parser dropped. A model-written page number does not prove that the model received the quoted passage. A second agent repeating the first agent's summary does not create a second observation.
+
+Consider a renewal agent that answers, “Annual increases are capped at 3.0%, and there is no change-of-control clause.” The first conclusion needs an exact served passage. The second needs proof that every place that could contain the clause was actually examined—including the scanned page that produced no text. Those are different evidence burdens, and a fluent answer satisfies neither by default.
+
+AINA replaces the chain with a governed sequence:
+
+```text
+SOURCE BYTES
+  registered identity · single-open bounded capture · SHA-256
+                         │
+                         ▼
+CONFINED PARSER
+  content-decided format · LPAC · Job Object · budgets · typed refusals
+                         │
+                         ▼
+CANONICAL EVIDENCE VIEW
+  ViewManifest · parser/limits identity · extraction status · omission nodes
+                         │
+                         ▼
+SERVED CONTENT — srv_ receipt
+  recipient/session · exact view and intervals · complete/chunked/truncated delivery
+                         │
+                         ▼
+SERVER-CUT EVIDENCE — ev_ handle
+  receipt verified · quote found and disambiguated · server-computed selector
+                         │
+                         ▼
+BOUNDED FINDINGS
+  typed predicates · acknowledged absence gaps · reassessment · origin lineage
+```
+
+The `srv_` receipt proves what the Room served. The `ev_` handle proves what the server issued from that serving. Neither proves that the underlying source is true or that the model's interpretation is correct.
+
+Every arrow changes the evidentiary state. None is allowed to borrow the assurance of a later stage.
+
+| Local fact | What it cannot prove by itself |
+|---|---|
+| The path ends in `.pdf`, or the response declares a PDF media type. | The bytes are a PDF, or the correct parser was selected. |
+| The parser returned text without crashing. | Every text-bearing part was recovered, or every warning was benign. |
+| The extraction is complete for its declared profile. | The source is complete, true, visually understood, or free of excluded content. |
+| The model supplied a quote and page number. | The exact quote occurred in content served to that caller. |
+| The citation resolves cryptographically. | The underlying document is authentic, current, or worldly true. |
+| Several agents cite the same conclusion. | Their claims rest on distinct first-hand observations or independent sources. |
+
+The constitutional rule is simple: **unknown coverage must remain visible as unknown coverage**. It cannot disappear into a clean answer.
+
+## 1. Registration: Bind Identity to the Bytes Actually Read
+
+The evidence chain begins before parsing. `doc_source` registration resolves the caller through the Room's actor rules, requires an owner-opened project, canonicalizes the target through the same file-identity machinery used by governed writes, and refuses controller-state and recovery-storage roots. The protected-root test runs at registration **and again at read time**. A historical registry entry cannot turn control storage into a shared document, and a document registration does not outlive its project admission.
+
+### Single-open capture
+
+On Windows, `source::capture_optional` opens the file once with `share_mode(1)`, equivalent to `FILE_SHARE_READ`. While that handle remains open, other processes cannot open the same file for write or delete sharing. The reader takes at most **64 MiB plus one byte**, refuses anything above the 64 MiB ceiling, and computes SHA-256 over the buffer actually read.
+
+This ordering matters:
+
+```text
+open once with FILE_SHARE_READ
+→ read a bounded buffer
+→ hash that buffer
+→ verify that buffer against the registered digest
+→ hand those same bytes to the confined parser
+```
+
+The size limit is enforced by the read itself, not by a preceding `stat`. The digest is not computed over one open and then attached to bytes read through another. Downstream extraction receives a `Captured` buffer, not a path it can reopen.
+
+That eliminates the intra-read time-of-check/time-of-use window. It does not magically freeze the file forever. For a task whose governing source must remain stable across execution, `TaskSourcePin` opens the canonical file again with `FILE_SHARE_READ`, verifies the opened handle's kernel identity and exact bytes, requires the governing reading proof, and holds the handle for the task's execution window.
+
+Two reading policies also remain distinct:
+
+- The extraction profile recorded in the parser identity is **`text/v1`**.
+- The task's governing-source reading policy is **`complete_text_v1`**, backed by the required source-reading coverage proof.
+
+They are related, but they are not interchangeable labels.
+
+### Amber retention is a separate observation
+
+Registration archives the source into the content-addressed Amber recovery tier and refuses to complete if that archive fails. This retention is deliberately described with a precision boundary: `source::capture` performs the single-open read-and-hash capture; `vault::archive_only` performs a **separate filesystem observation** during registration.
+
+The archive is not claimed to share the capture's file descriptor. Hiding that distinction would make the architecture sound stronger by making its evidence less honest.
+
+### Drift is not a new version of the old citation
+
+Every ordinary resolve rechecks the registered source. If the live bytes no longer match the registered digest, the committed view is not silently served as though it were current. The refusal is `drifted`; capture and verification paths use `doc_source_drifted` where that stable operator code applies.
+
+A reader must explicitly register the new revision. A separately authorized historical-inspection path may serve the old view, but its delivery record marks `historical: true`. History is labeled history.
+
+This produces three useful non-equivalences:
+
+```text
+same path                    ≠ same source revision
+same source revision         ≠ same parser or extraction configuration
+old citation still resolving ≠ old citation is currently authoritative
+```
+
+## 2. Content Decides the Format—Inside the Jail
+
+Format identification is itself parsing. A ZIP central directory must be inspected before the system can know whether a package is a DOCX, an XLSX, or an ordinary archive. That means identification cannot safely occur in the controller while only the resulting parser is confined.
+
+AINA performs identification and extraction in the restricted worker. Byte signatures and container structure take priority; extensions break defined ties. The current `Kind` enum has **22 variants**, but that is not a claim of universal file support: `Unknown` is deliberately unsupported, `Image(format)` is a parameterized family, and `EncryptedOffice` has a typed refusal rather than a text reader.
+
+| `Kind` variant | Content or structural identity | Extraction or typed outcome |
+|---|---|---|
+| `Pdf` | `%PDF-` signature | Structural PDF extraction, layout, annotations, and admitted local OCR paths |
+| `Json` | `.json` or `.jsonld` tie-break after higher-priority signatures | UTF-8 JSON document with bounded RFC 6901 source locators |
+| `Doc` | OLE2 plus `WordDocument` and a valid binary Word probe | Binary Word FIB and piece-table reconstruction |
+| `Docx` | ZIP package with Word document structure or an allowed OOXML extension tie-break | Body, tables, headers, footers, notes, comments, and revision accounting |
+| `Ppt` | OLE2 plus `PowerPoint Document` and a valid binary PowerPoint probe | Binary presentation record-tree text |
+| `Pptx` | ZIP package with PowerPoint presentation structure or an allowed extension tie-break | Slides, notes, comments, and relationships |
+| `Rtf` | `{\rtf` signature or `.rtf` | Bounded RTF control-word and encoding state machine |
+| `Xlsx` | ZIP package with `xl/workbook.xml` or an allowed extension tie-break | Workbook, cell, cached-value, formula, and comment extraction |
+| `Xlsb` | ZIP package with `xl/workbook.bin` | Binary workbook extraction |
+| `Xls` | OLE2 `Workbook`/`Book` probe, or `.xls`/`.xla`/`.xlt` fallback | BIFF workbook extraction |
+| `Ods` | ODF `mimetype` for a spreadsheet | OpenDocument spreadsheet extraction |
+| `Odt` | ODF `mimetype` for text | OpenDocument text extraction |
+| `Odp` | ODF `mimetype` for a presentation | OpenDocument presentation extraction |
+| `Eml` | `.eml` or bounded RFC 5322-style header recognition | MIME tree, headers, body, and recursive child sources |
+| `Msg` | OLE2 property streams plus root-property probe | MAPI properties, body, and attachments |
+| `Zip` | ZIP signature without a more specific package identity | Bounded archive inventory and child extraction |
+| `Html` | Decodable HTML, an HTML extension tie-break, or declared legacy HTML bytes | DOM-derived reading text plus preserved markup story |
+| `Text` | Successful strict text decoding without HTML identity | Normalized text stories and line elements |
+| `EncryptedOffice` | OLE2 `EncryptedPackage` | `encrypted` / `doc_source_extraction_failed`, never fake empty text |
+| `Ole2` | Other OLE2 compound storage | Embedded-object extraction or a named refusal |
+| `Image(format)` | Valid image signature and header | Header inventory and admitted OCR behavior under the selected profile |
+| `Unknown` | No supported identity | `unsupported_format`, never an empty successful document |
+
+This is allowlisted recognition, not extension trust and not a promise to parse every file on earth.
+
+### Fourteen budgets govern expansion
+
+The outer operating-system jail is the backstop. Inside it, a 14-field `Limits` object admits expensive work before expansion and charges actual output. Callers may ratchet limits downward; zero and values above the ceiling are rejected. The exact limits are serialized with RFC 8785 JCS and hashed into `limits_sha256`, so changing a budget changes extraction identity.
+
+| Limit | Default ceiling | Failure it bounds |
+|---|---:|---|
+| `max_child_bytes` | 32 MiB | Oversized attachment, archive member, or embedded child |
+| `max_item_decompressed` | 64 MiB | Single-stream or single-member expansion |
+| `max_total_decompressed` | 256 MiB | Cumulative decompression across the document and children |
+| `max_parts` | 20,000 | Container-entry, mail-part, and page floods |
+| `max_nesting` | 3 | Recursive child-source descent |
+| `max_xml_depth` | 256 | Deep or amplifying XML structure |
+| `max_pdf_objects` | 500,000 | PDF object-graph amplification |
+| `max_form_depth` | 8 | Recursive PDF Form XObjects |
+| `max_cells` | 2,000,000 | Spreadsheet cell explosion |
+| `max_elements` | 250,000 | Addressable-element flood; later text may still be extracted without receiving nodes |
+| `max_output_chars` | 32 MiB | Extracted character-volume exhaustion |
+| `max_wall_ms` | 60,000 ms | Parser CPU/time overrun, with a 15-second outer kill allowance |
+| `max_image_pixels` | 16,000,000 | Single-image pixel expansion, admitted before decode |
+| `max_total_pixels` | 64,000,000 | Aggregate pixel expansion across pages and children |
+
+Budget refusal is evidence. It becomes a typed `budget_exceeded` condition rather than a partial answer with the exhaustion removed from the story.
+
+

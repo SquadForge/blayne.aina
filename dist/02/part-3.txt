@@ -1,0 +1,240 @@
+# §02 Part 3/4 — Zero-Trust Document Ingestion
+Canonical: https://blayneaina.com/02-zero-trust-document-ingestion-and-server-cut-evidence/part-3/ | Raw Article: https://blayneaina.com/02.md | Next Part: https://blayneaina.com/02/part-4.txt
+
+## 6. Server-Cut Evidence: `srv_` Before `ev_`
+
+A server-cut citation is not a model emitting a prettier reference format. It is a two-event protocol.
+
+### Event 1: the Room serves content and issues `srv_`
+
+The `squad.evidence.receipt/1` record binds:
+
+- the Room, source revision, and view digest;
+- the recipient and recipient session;
+- the serving tool;
+- each node and optional character interval served;
+- delivery counts and `complete`, `truncated`, or `chunked` status;
+- admission, optional via-handle or wake identity, time, and nonce.
+
+The receipt identifier is `srv_` plus the first 32 hexadecimal digits of the receipt's canonical SHA-256.
+
+`read`, `resolve`, and `wake_delivery` are content-serving tools. `outline` is different: it serves structure and coverage metadata. An outline receipt can ground a textless `omission/N`, `failure`, `inventory`, or `child:<locator>` node. It cannot ground a quotation from a text block the caller was never served.
+
+### Event 2: the Room computes the citation and issues `ev_`
+
+The caller submits a receipt plus an exact quote, or a node it was served. For a quote, the caller may supply a node hint or a one-based occurrence when text repeats. The caller does **not** supply authoritative character offsets.
+
+The server then:
+
+1. verifies that the receipt belongs to the caller;
+2. loads and reverifies the canonical view;
+3. rechecks source admission and drift;
+4. searches only the content covered by that receipt;
+5. refuses zero matches with `quote_not_found` and unresolved repetition with `quote_ambiguous`;
+6. computes Unicode-scalar coordinates;
+7. selects the innermost covering element with `View::narrowest`, falling back to the story;
+8. checks that the selected range was actually served;
+9. issues a content-addressed `ev_` handle whose issuance record includes the canonical `EvidenceRef`, basis, Room, issuee, and first-hand lineage.
+
+```text
+agent:  receipt + exact quote (+ optional occurrence)
+server: served? → current? → unique? → narrowest node? → selector in bounds?
+agent:  receives ev_ handle; receives no authority to invent its coordinates
+```
+
+### Exhibit 2 — A valid synthetic citation issuance
+
+```json
+{
+  "handle": "ev_6c8f1029384756ab12cd34ef56789012",
+  "issuance": {
+    "schema": "squad.evidence.handle/1",
+    "envelope": {
+      "version": 1,
+      "source_revision": "doc_20261030_142011_a1b2c3d4",
+      "view_digest": "a1b2c3d4e5f60718293a4b5c6d7e8f901a2b3c4d5e6f708192a3b4c5d6e7f809",
+      "node_id": "page:1!BT:0",
+      "selector": {
+        "kind": "bounded_subrange",
+        "unit": "unicode_scalar",
+        "start": 25,
+        "end": 61
+      },
+      "source_native_locator": {
+        "kind": "page_element",
+        "page": 1,
+        "element": "BT",
+        "ordinal": 0
+      },
+      "role": "supporting",
+      "visibility": "all",
+      "origin": "room_captured"
+    },
+    "envelope_digest": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "room": "architecture-demo",
+    "issued_to": "analyst-alpha",
+    "issued_at": "2026-10-31T14:20:15Z",
+    "basis": {
+      "kind": "receipt",
+      "receipt": "srv_91d2e3f4a5b6c7d80123456789abcdef"
+    },
+    "lineage": {
+      "first_hand": true,
+      "origin": "analyst-alpha"
+    },
+    "nonce": "synthetic-nonce-001"
+  }
+}
+```
+
+The handle proves which exact passage was issued to which actor on which view and receipt basis. It does not prove that the contract is authentic, that 3.0% is commercially reasonable, or that page 2 agrees.
+
+### Refusal is part of the citation grammar
+
+Paths and URLs are refused with `not_a_path`. Raw hashes, hand-built offsets, and similar manufactured references are refused with `agent_manufactured_ref`. Unknown well-formed handles yield `ev_unknown`. Foreign-receipt use is `access_denied`; content outside the receipt is `not_served` or `quote_not_found`. Reserved locator kinds and offset units fail by name rather than being loosely accepted.
+
+### Exhibit 3 — `quote_ambiguous`
+
+The actual refusal is an error string; it is shown here as a JSON string with synthetic occurrence data abbreviated for publication.
+
+```json
+"quote_ambiguous: the quotation occurs 3 times in the served content; name one with occurrence: [{\"occurrence\":1,\"node\":\"page:1!BT:0\"},{\"occurrence\":2,\"node\":\"page:3!BT:1\"},{\"occurrence\":3,\"node\":\"page:7!BT:2\"}]"
+```
+
+The server does not choose the most convenient occurrence. The caller must disambiguate.
+
+### Exhibit 4 — `drifted`
+
+```json
+"drifted: project:/evidence/renewal.pdf no longer holds the registered bytes (registered 58b2e91f4c03d8a7126590ef4312ab98c7654321fedcba09876543210fedcba9, current c0ffee99887766554433221100ffeeddccbbaa99887766554433221100ffeedd); the committed view is not served in its place — re-register, or request authorized historical inspection"
+```
+
+The old view remains intact. Its current evidentiary role does not.
+
+## 7. Network Capture: Authorize Every Hop, Not Just the First URL
+
+Documents also arrive through retrieval. A fetch tool that authorizes only the initial URL can be redirected into a loopback service, private network, or cloud metadata endpoint. The safe rule is not “validate the first destination”; it is **authorize the destination before every request**.
+
+AINA's capture client disables automatic redirects with `redirect::Policy::none()`. It follows redirects manually, up to ten, and calls `authorize_url` on each current URL before sending. Every hop records its URL, status, optional content type and `Location`, and declared security headers.
+
+The final body is capped at 8 MiB. A body cut by that ceiling becomes a `snippet` with `truncated: true`, not a complete response. The exact bytes are stored as a Room artifact, hashed, and parsed through the same confined worker. Every fetch is a new `cap_` capture; re-fetching a URL never overwrites the earlier observation.
+
+### Captured, supplied, and governing are different roles
+
+| Origin and root | What the Room observed | May anchor a governing requirement? |
+|---|---|---|
+| `room_captured` + `doc_…` | Registered bytes captured from admitted project territory | Yes, after first-hand serving and the other requirement checks |
+| `room_captured` + `cap_…` | A response body fetched through the Room's egress-gated path | No; research capture is not a registered governing document |
+| `agent_supplied` + `cap_…` | Text an agent pasted with a claimed, unverified origin | No; citing it cites the supplier, not the claimed source |
+
+An agent-supplied excerpt is not inherently false. It is explicitly labeled evidence of what the agent supplied. It cannot be laundered into a Room observation merely because its bytes match a real document.
+
+The same boundary applies to web research: egress authorization and immutable capture establish provenance, not truth and not permission for retrieved instructions to govern the system.
+
+## 8. Findings: Claims the Server Can Re-Evaluate
+
+A citation establishes a passage. A finding states something checkable about it.
+
+The evaluator supports five typed assertions:
+
+- **`equals`** — exact text or typed-value equality.
+- **`in_range`** — a typed numeric value against minimum/maximum bounds, with an optional unit check when the view knows the unit.
+- **`matches_regex_bounded`** — a pattern capped at 512 characters, compiled with 1 MiB size limits and nesting depth 32.
+- **`exists`** — the selected text or structural node exists.
+- **`formula_equals`** — exact comparison against a spreadsheet formula node, including the formula associated with a cached-value cell.
+
+The interpreter remains separate from the machine-checked assertion. A model may offer a bounded interpretation, but the server re-evaluates the predicate against the committed view.
+
+A false predicate is not deleted to make the ledger look clean. The `fnd_` finding and failed `evl_` evaluation are persisted, and only then does the call return `predicate_false`. Failed claims remain failed matter.
+
+### Absence is a coverage claim before it is a search claim
+
+“No change-of-control clause exists in this contract” is much stronger than “the phrase did not occur in the chunks I saw.” It requires an inventory of what was examined and an explicit account of what remains unknown.
+
+For an absence claim, the server derives required unknown-coverage markers:
+
+- `failure` for failed or unsupported extraction;
+- `inventory` when enumeration is partial or unknown;
+- every in-scope lossy `omission/N`;
+- every `child:<locator>` for whole-document scope, because child text is not merged into the parent's searched stories.
+
+The caller supplies `acknowledged_gaps` as the relevant **node IDs**. These are not authoritative character offsets and are not a second set of fabricated evidence references. The server checks that every required marker is acknowledged and that every acknowledged marker exists in the view. Outline receipts can be used to cite and inspect those textless markers.
+
+Only then does the evaluator search for the phrase or bounded pattern. A successful negative result means, precisely:
+
+> The phrase is absent from the content this view examined; acknowledged gaps remain unknown, not absent.
+
+### Exhibit 5 — `absence_unsupported`
+
+```json
+"absence_unsupported: the claimed scope has unknown coverage; an absence claim must acknowledge each marker at its narrowest known location: omission/1"
+```
+
+The server refuses to let a missing OCR pass become proof that page 2 contains nothing.
+
+## 9. Revision, Reassessment, and Correspondence Without Retargeting
+
+Evidence is allowed to change. History is not allowed to move underneath its citations.
+
+When a new view is committed for a source, dependent findings, evaluations, and requirements receive deterministic `rsa_` reassessment flags. Requirement amendments form `reqrev_` revision chains; task evidence manifests (`man_`) pin the admitted source and optional view context. A task or handoff cannot silently complete over evidence now marked for reassessment.
+
+Cross-version correspondence is a separate, explicit operation:
+
+1. `correspond` proposes candidate locations in a later view.
+2. The candidate search has four stages, with a separate same-kind rule for textless structural nodes: `same_node_same_text`, `same_node_same_kind`, `exact_text`, `normalized_text`, then the weak `same_node_changed_text` fallback.
+3. The reviewer must actually be served the candidate in the later view.
+4. `adopt-correspondence` records `coa_`, creates a **new** `ev_` handle, and adds a `corresponds_to` relation.
+5. The old handle remains bound to its old view. A requirement-role handle adopted through correspondence becomes supporting evidence in the new view rather than silently carrying governing authority forward.
+
+```text
+old view + old ev_ handle ───────────────→ remains historically pinned
+       │                                         │
+       ├─ new view committed ─→ rsa_ reassessment flags on dependents
+       │                                         │
+       └─ cor_ proposal → candidate served in new view
+                                      ↓
+                         coa_ adoption + new ev_ handle
+                                      ↓
+                         corresponds_to relation; no retargeting
+```
+
+This is the difference between provenance and path mutation. The system can say how two observations correspond without pretending they are the same observation.
+
+## 10. Echo Collapse: Count First-Hand Origins, Not Repetitions
+
+Multi-agent systems are particularly good at making repetition look like corroboration. Agent A reads a passage. Agent B cites A's finding. Agent C cites B's summary. The graph now contains three records and still contains only one first-hand observer.
+
+`lineage::origins` walks citations for the target view and node. A first-hand citer contributes its actor identity as an origin. An echo contributes the origin it rests on. The output records `first_hand_citers`, `echo_citations`, and the collapsed `distinct_origins` set.
+
+### Exhibit 6 — Three citation records, one first-hand origin
+
+```json
+{
+  "room": "architecture-demo",
+  "view_digest": "a1b2c3d4e5f60718293a4b5c6d7e8f901a2b3c4d5e6f708192a3b4c5d6e7f809",
+  "node": "page:1!BT:0",
+  "citations": 3,
+  "records_by_kind": { "finding": 3 },
+  "first_hand_citers": ["analyst-alpha"],
+  "echo_citations": [
+    {
+      "citer": "reviewer-beta",
+      "rests_on": "analyst-alpha",
+      "record": "fnd_11111111111111111111111111111111"
+    },
+    {
+      "citer": "reviewer-gamma",
+      "rests_on": "analyst-alpha",
+      "record": "fnd_22222222222222222222222222222222"
+    }
+  ],
+  "distinct_origins": ["analyst-alpha"],
+  "distinct_origin_count": 1
+}
+```
+
+If beta later receives the passage directly and cites it first-hand, the count becomes two. That is a precise operational metric for an owner-declared evidence-origin requirement.
+
+It is not proof of statistical, organizational, or causal independence. Two first-hand readers can share a flawed parser, training data, administrative control, or source document. **Distinct first-hand observation is not the same thing as independent validation.** Article 01's three independence claims still apply.
+
+

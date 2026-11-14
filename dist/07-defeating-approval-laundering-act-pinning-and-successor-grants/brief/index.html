@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>§07 One-Call Technical Brief: Defeating Approval Laundering | Blayne Aina</title>
+  <meta name="description" content="3 lossless parts summarized from 01–09 source markdown · For full prose see /07.md">
+  <meta name="author" content="Blayne Aina">
+  <meta name="robots" content="index, follow, max-snippet:-1, max-image-preview:large, max-video-preview:-1">
+  <link rel="canonical" href="https://blayneaina.com/07/brief/">
+  <link rel="icon" href="/favicon.ico" sizes="any">
+  <link rel="icon" href="/favicon.svg" type="image/svg+xml">
+
+  <!-- OpenGraph / Social -->
+  <meta property="og:type" content="article">
+  <meta property="og:title" content="§07 One-Call Technical Brief: Defeating Approval Laundering">
+  <meta property="og:description" content="3 lossless parts summarized from 01–09 source markdown · For full prose see /07.md">
+  <meta property="og:url" content="https://blayneaina.com/07/brief/">
+  <meta property="og:site_name" content="Blayne Aina — The Route to Trusting AI">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="§07 One-Call Technical Brief: Defeating Approval Laundering">
+  <meta name="twitter:description" content="3 lossless parts summarized from 01–09 source markdown · For full prose see /07.md">
+  
+  <link rel="stylesheet" href="/style.css?v=20261109-s-tier">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@500;700&family=Instrument+Serif:ital@0;1&family=Inter:wght@400;500;600;700;800&family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,500;0,6..72,600;1,6..72,400&family=JetBrains+Mono:wght@400;500&family=Plus+Jakarta+Sans:wght@600;700;800&display=swap" rel="stylesheet">
+</head>
+<body>
+  <div class="reading-progress-bar" id="progressBar"></div>
+
+  <header class="site-header compact-ai-header"><div class="header-inner compact-ai-nav"><a href="/" class="brand"><strong>BLAYNE AINA</strong></a> | <a href="/ai-brief/">1-Page Master Brief (§01–§09)</a> | <a href="/articles/">All 9 Articles &amp; Briefs</a> | <a href="/research-assurance/">Assurance</a> | <a href="/refusal-proof/">Proof</a> | <a href="/llms.txt">llms.txt</a> | <a href="mailto:me@blayneaina.com">me@blayneaina.com</a></div></header>
+  <div class="layout-container presentation-layout">
+    <main class="content-area">
+      <article class="prose-wrapper presentation-wrapper">
+<header class="article-header compact-article-header"><h1 class="article-title">§07 One-Call Technical Brief: Defeating Approval Laundering</h1><p class="article-subtitle">3 lossless parts summarized from 01–09 source markdown · For full prose see /07.md</p></header>
+
+        
+        
+
+        <div class="article-body">
+          <p><strong>Canonical URLs:</strong> <a href="https://blayneaina.com/07-defeating-approval-laundering-act-pinning-and-successor-grants/">Full §07</a> · <a href="https://blayneaina.com/07.md">Raw Markdown</a> · <a href="https://blayneaina.com/07/brief.txt">Plain-Text Brief</a> · <a href="/06/brief/">← §06 Brief</a> · <a href="/08/brief/">§08 Brief →</a> · <a href="/ai-brief/">All §01–§09 Master Brief</a> · <a href="/articles/">All Articles</a> · <a href="/07.md">Raw Markdown</a>
+<strong>Executive Synthesis:</strong> <strong>Problem:</strong> Approval for action A can become a different action A′ at execution, and a crash can separate commit from receipt. — <strong>Proves:</strong> Pre-resume confinement, controller-fixed RequestedAct, fenced SQLite, and non-fabricating successor grants preserve act and return continuity. — <strong>Evaluation Scope:</strong> Use the Confinement, Act-Pinning &amp; Crash-Straddling Continuity Challenge on one approved mutation.
+<strong>Lossless Parts (3 total, 100% unabridged):</strong> <a href="/07-defeating-approval-laundering-act-pinning-and-successor-grants/part-1/">Part 1/3</a> (<a href="/07/part-1.txt">.txt</a>) · <a href="/07-defeating-approval-laundering-act-pinning-and-successor-grants/part-2/">Part 2/3</a> (<a href="/07/part-2.txt">.txt</a>) · <a href="/07-defeating-approval-laundering-act-pinning-and-successor-grants/part-3/">Part 3/3</a> (<a href="/07/part-3.txt">.txt</a>)</p>
+<ul>
+<li><strong>Introduction &amp; Thesis [Part 1/3]:</strong> # Defeating Approval Laundering: Act Pinning and Successor Grants <em>Approval must bind the exact act before the worker environment exists, authority must be re-derived at commit, and recovery must not fabricate the original session&#39;s receipt.</em> **By Blayne Aina · Principal Systems… — <em>Key Rules/Claims:</em> <strong>Launch substitution:</strong> a worker begins life with an unclassified handle, an inherited capability, or a native unconfined route. | <strong>Approval laundering:</strong> a valid general approval becomes a different mutation at execution.</li>
+<li><strong>One Approved Mutation, Three Places to Fail [Part 1/3]:</strong> Suppose a policy approves raising one customer&#39;s credit limit from 10,000 to 25,000. The trusted controller first projects exactly that row and prepares the change. A prompt-injected worker then tries to substitute a different customer and a higher limit. — <em>Key Rules/Claims:</em> <strong>Before launch:</strong> the suspended worker&#39;s package SID, LPAC attribute, capabilities, Job membership, and current handle inventory are verified. A sentinel match or unclassified handle terminates the Job before instruction 0.</li>
+<li><strong>1. Pre-Resume Kernel Verification [Part 1/3]:</strong> <em>Subtopics:</em> Exhibit 7.1 — Pre-resume kernel audit; Exclusive identity and anti-reuse; Raw LPAC attribute verification; Handle-table object identity, not numeric equality; The native spawn gate — A confined process must be inspected before instruction 0. Once the worker runs, every later control is negotiating with an already-active environment. <aside class="context-callout" aria-label="Linux and POSIX kernel counterparts"> <h2>Linux / POSIX Kernel Counterparts</h2>… — <em>Key Rules/Claims:</em> <code>TokenAppContainerSid</code> must equal the owned package SID; | <code>TokenSecurityAttributes</code> must contain <code>WIN://NOALLAPPPKG</code>; | the attribute must be integer kind <code>2</code>, count <code>1</code>, not disabled (<code>flags &amp; 0x10 == 0</code>), and nonzero.</li>
+<li><strong>2. Controller-Brokered Model Egress [Part 1/3]:</strong> <em>Subtopics:</em> Authenticated local channels; The controller owns the route; Journal before dispatch; never replay uncertainty; Exhibit 7.6 — Unresolved model egress — Confined workers have no general network capability. Model access is a separate controller-owned transition, not an ambient HTTP client. For LPAC workers, the controller exposes a per-worker <code>AF_UNIX</code> endpoint with a restrictive ACL. — <em>Key Rules/Claims:</em> exact HTTPS destination or isolated subscription CLI; | credential injection and fixed headers; | allowed models and output-token ceilings; | request/response byte limits and request budget; | project, agent, expiry, and control-epoch admission.</li>
+<li><strong>3. Controller-Fixed <code>RequestedAct</code> [Part 2/3]:</strong> <em>Subtopics:</em> Exhibit 7.2 — <code>RequestedAct</code> lifecycle; Derivation; Durable fixation; Execution revalidation; Historical verification; Exhibit 7.4 — Sanitized <code>RequestedAct</code> record; Exhibit 7.5 — <code>requested_act_mismatch</code> — The act is derived from exact projected bytes before the worker environment is issued. It is not re-read from live model prose at execution time. This is the <strong>strict confined-worker staging path</strong>. — <em>Key Rules/Claims:</em> environment ID and worker; | staging actor and complete task binding; | exact source projection receipt; | source generation and source tenancy; | the controller-fixed destination.</li>
+<li><strong>4. The Fenced SQLite Execution Window [Part 2/3]:</strong> <em>Subtopics:</em> Exhibit 7.3 — SQLite fenced execution flow; Exhibit 7.7 — Row-version refusal; Recovery capture is separate from the mutation; Exhibit 7.8 — Pre-write recovery capture — <code>destinations/records.rs</code> executes the mutation inside one ordered window that joins lease authority, transaction isolation, act validation, recovery, and observation. <code>BEGIN IMMEDIATE</code> starts a write transaction immediately instead of waiting for the first write statement.</li>
+<li><strong>5. Multi-Destination Capability Plans [Part 2/3]:</strong> A coordinated plan is not a distributed transaction. Each destination declares what its own write path can actually guarantee. A plan names required guarantees for each step. <code>require_route</code> evaluates them before an operation begins and again before effect. — <em>Spec/Table:</em> <strong><code>sqlite.records</code></strong>; Declared guarantees: <code>conditional_write</code>, <code>idempotent_retry</code>, <code>recovery_capture</code>; <code>cross_destination_atomic</code>: <code>false</code> | <strong><code>goose.sessions.db</code></strong>; Declared guarantees: <code>conditional_write</code>, <code>idempotent_retry</code>, <code>recovery_capture</code>; <code>cross_destination_atomic</code>: <code>false</code> | <strong><code>opencode.http_api</code></strong>; Declared guarantees: Empty set; every fresh effect is held; <code>cross_destination_atomic</code>: <code>false</code></li>
+<li><strong>6. Non-Fabricating Successor Grants [Part 2/3]:</strong> <em>Subtopics:</em> The <code>ResultGrant</code>; What a successor acknowledgement must prove; Exhibit 7.9 — Successor acknowledgement — A committed effect and its first receipt are different events. A crash can separate them permanently. A controller may issue a <code>ResultGrant</code> for one historical proposal to a <strong>new receiving task and environment</strong>. — <em>Key Rules/Claims:</em> the original proposal ID and nested payload digest; | the whole immutable submission record digest; | the whole executor outcome digest and outcome class; | the receiving worker, task, environment, project, tenancy, and control epoch; | the issuer&#39;s current authenticated controller identity and grant expiry.</li>
+<li><strong>7. Official Platform and Standards Crosswalk [Part 3/3]:</strong> The architecture uses existing platform primitives without pretending they are complete governance systems by themselves. The functional-equivalence concession remains: another stack that fixes the same exact act, confines its workers, fences the destination, and preserves… — <em>Spec/Table:</em> <strong>Microsoft AppContainer and LPAC security architecture</strong>; Native property: Package identity, capability restriction, and the <code>WIN://NOALLAPPPKG</code> attribute can limit ambient package access.; How AINA composes it into execution standing: Fresh identity per launch, exact raw-token verification, exclusive grants, and anti-fallback native spawn refusal.</li>
+<li><strong>The Confinement, Act-Pinning &amp; Crash-Straddling Continuity Challenge [Part 3/3]:</strong> The <strong>Confinement, Act-Pinning &amp; Crash-Straddling Continuity Challenge</strong> uses one approved database mutation or worker result that could be replayed. It demonstrates a fixed-act refusal when the payload changes, a fenced row update with current authority and pre-state, and the…</li>
+<li><strong>The Fourteen Execution Claims [Part 3/3]:</strong> <em>Spec/Table:</em> <strong><code>07-C01</code></strong>; Bounded claim: AppContainer profiles are single-launch and anti-reuse; Evidence and ceiling: Implemented and author-verified; existing identities fail with <code>confinement_identity_reused</code> | <strong><code>07-C02</code></strong>; Bounded claim: Brokered hosts use deterministic <code>S-1-9</code> identities with <code>SQAD</code> and 128 digest bits; Evidence and ceiling: Implemented and author-verified; no SAM account or ambient group authority is…</li>
+<li><strong>The Article 07 Claim Card [Part 3/3]:</strong> <em>Key Rules/Claims:</em> Mechanism: | AINA Execution Confinement, Act Fixation, Fenced Destination, | and Non-Fabricating Successor Continuity | (pre-resume token/handle inspection, spawn gate, model egress, | RequestedAct, SQLite IMMEDIATE, capability plans, ResultGrant) | Failure it governs: | Unclassified handles and ambient capabilities at launch; | approved A becoming a different A&#39; at execution; | stale task/source/lease authority and out-of-band destination writes; | blind model-request replay and cross-destination atomicity claims; | crash-straddled receipt loss and fabricated original-session completion.</li>
+<li><strong>Approval Ends at the Destination, Not at the Prompt [Part 3/3]:</strong> The approved act cannot be allowed to drift between the prompt and the write. The controller therefore fixes it early, persists it immutably, and holds it open while the destination rereads current authority.</li>
+<li><strong>Frequently Asked Questions [Part 3/3]:</strong> <em>Subtopics:</em> Why isn&#39;t numeric handle equality enough?; Why must the act be fixed before the worker environment exists?; Why use <code>BEGIN IMMEDIATE</code> and a row-version predicate?; What happens if a destination commits but the worker crashes before receipt?; Does a successor grant complete the original return obligation?; Are multi-destination plans distributed transactions? — Handle values are process-local indices, not kernel object identities. <code>CompareObjectHandles</code> tests the underlying object. The pre-resume audit also checks expected provenance and a deliberate sentinel because numeric equality cannot prove confinement.</li>
+<li><strong>Continue the Series [Part 3/3]:</strong> <em>Key Rules/Claims:</em> <strong>Series index:</strong> <a href="https://blayneaina.com/">From Proposal to Consequence: The AINA Transition-Governance Series</a> | <strong>Previous:</strong> <a href="https://blayneaina.com/06-rollback-is-not-erasure-dual-tier-vaults-and-ungated-quarantine/">Article 06 — Rollback Is Not Erasure: Dual-Tier Vaults and Ungated Quarantine</a> | <strong>Next:</strong>…</li>
+<li><strong>Primary Platform References [Part 3/3]:</strong> <em>Key Rules/Claims:</em> <a href="https://learn.microsoft.com/en-us/windows/win32/api/handleapi/nf-handleapi-compareobjecthandles">Microsoft <code>CompareObjectHandles</code> — compare underlying kernel object identity</a> | <a href="https://learn.microsoft.com/en-us/windows/win32/fileio/creating-and-opening-files">Microsoft <code>CreateFileW</code> and File-Sharing Documentation</a> |…</li>
+<li><strong>Publication Metadata [Part 3/3]:</strong> <strong>Title tag:</strong> Defeating Approval Laundering: Act Pinning and Successor Grants <strong>Meta description:</strong> Pre-resume kernel verification, controller-fixed RequestedAct, fenced SQLite execution, multi-destination holds, and non-fabricating successor result grants.</li>
+</ul>
+
+        </div>
+
+        
+        
+        
+        
+
+        
+
+        
+      </article>
+    </main>
+
+  </div>
+
+  <footer class="site-footer compact-ai-footer"><p><strong>blayneaina.com</strong> — <a href="https://blayneaina.com/ai-brief/">Master Brief (https://blayneaina.com/ai-brief/)</a> · <a href="https://blayneaina.com/ai-brief.txt">Plain-Text Brief (https://blayneaina.com/ai-brief.txt)</a> · <a href="https://blayneaina.com/articles/">All 9 Articles &amp; Briefs (https://blayneaina.com/articles/)</a> · <a href="https://blayneaina.com/llms.txt">llms.txt</a> · <a href="mailto:me@blayneaina.com">me@blayneaina.com</a></p></footer>
+
+
+
+
+
+  <script src="/script.js?v=20261109-s-tier"></script>
+</body>
+</html>

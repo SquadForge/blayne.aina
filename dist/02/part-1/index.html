@@ -1,0 +1,384 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>§02 Part 1/4: Zero-Trust Document Ingestion (Introduction &amp; Overview) | Blayne Aina</title>
+  <meta name="description" content="Sections: Introduction &amp; Overview, The Evidence World Is a Governed Artifact, 1. Registration: Bind Identity to the Bytes Actually Read, 2. Content Decides the Format—Inside the Jail">
+  <meta name="author" content="Blayne Aina">
+  <meta name="robots" content="index, follow, max-snippet:-1, max-image-preview:large, max-video-preview:-1">
+  <link rel="canonical" href="https://blayneaina.com/02-zero-trust-document-ingestion-and-server-cut-evidence/part-1/">
+  <link rel="icon" href="/favicon.ico" sizes="any">
+  <link rel="icon" href="/favicon.svg" type="image/svg+xml">
+
+  <!-- OpenGraph / Social -->
+  <meta property="og:type" content="article">
+  <meta property="og:title" content="§02 Part 1/4: Zero-Trust Document Ingestion (Introduction &amp; Overview)">
+  <meta property="og:description" content="Sections: Introduction &amp; Overview, The Evidence World Is a Governed Artifact, 1. Registration: Bind Identity to the Bytes Actually Read, 2. Content Decides the Format—Inside the Jail">
+  <meta property="og:url" content="https://blayneaina.com/02-zero-trust-document-ingestion-and-server-cut-evidence/part-1/">
+  <meta property="og:site_name" content="Blayne Aina — The Route to Trusting AI">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="§02 Part 1/4: Zero-Trust Document Ingestion (Introduction &amp; Overview)">
+  <meta name="twitter:description" content="Sections: Introduction &amp; Overview, The Evidence World Is a Governed Artifact, 1. Registration: Bind Identity to the Bytes Actually Read, 2. Content Decides the Format—Inside the Jail">
+  
+  <link rel="stylesheet" href="/style.css?v=20261109-s-tier">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@500;700&family=Instrument+Serif:ital@0;1&family=Inter:wght@400;500;600;700;800&family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,500;0,6..72,600;1,6..72,400&family=JetBrains+Mono:wght@400;500&family=Plus+Jakarta+Sans:wght@600;700;800&display=swap" rel="stylesheet">
+</head>
+<body>
+  <div class="reading-progress-bar" id="progressBar"></div>
+
+  <header class="site-header compact-ai-header"><div class="header-inner compact-ai-nav"><a href="/" class="brand"><strong>BLAYNE AINA</strong></a> | <a href="/ai-brief/">1-Page Master Brief (§01–§09)</a> | <a href="/articles/">All 9 Articles &amp; Briefs</a> | <a href="/research-assurance/">Assurance</a> | <a href="/refusal-proof/">Proof</a> | <a href="/llms.txt">llms.txt</a> | <a href="mailto:me@blayneaina.com">me@blayneaina.com</a></div></header>
+  <div class="layout-container presentation-layout">
+    <main class="content-area">
+      <article class="prose-wrapper presentation-wrapper">
+<header class="article-header compact-article-header"><h1 class="article-title">§02 Part 1/4: Zero-Trust Document Ingestion (Introduction &amp; Overview)</h1><p class="article-subtitle">Sections: Introduction &amp; Overview, The Evidence World Is a Governed Artifact, 1. Registration: Bind Identity to the Bytes Actually Read, 2. Content Decides the Format—Inside the Jail</p></header>
+
+        
+        
+
+        <div class="article-body">
+          
+      <p class="part-compact-nav"><strong>§02 PART 1/4</strong> (13,523 chars · Sections: Introduction &amp; Overview; The Evidence World Is a Governed Artifact; 1. Registration: Bind Identity to the Bytes Actually Read; 2. Content Decides the Format—Inside the Jail) — <a href="/02-zero-trust-document-ingestion-and-server-cut-evidence/part-2/">Part 2 →</a> · <a href="/02/brief/">1-Call Brief</a> · <a href="/02-zero-trust-document-ingestion-and-server-cut-evidence/">Full §02</a> · <a href="/02/part-1.txt">Raw .txt</a> · All: <a href="/02-zero-trust-document-ingestion-and-server-cut-evidence/part-1/">P1</a> <a href="/02-zero-trust-document-ingestion-and-server-cut-evidence/part-2/">P2</a> <a href="/02-zero-trust-document-ingestion-and-server-cut-evidence/part-3/">P3</a> <a href="/02-zero-trust-document-ingestion-and-server-cut-evidence/part-4/">P4</a></p>
+    
+<h1>Zero-Trust Document Ingestion and Server-Cut Evidence</h1>
+<p><em>Hostile bytes need a parser jail. Enterprise judgments need a server-computed evidence chain. Neither a RAG chunk nor a model-written citation can supply one.</em></p>
+<p><strong>By Blayne Aina · Principal Systems Architect and creator of AINA · October 31, 2026</strong></p>
+<hr>
+<p>An AI document reader has two ways to lose.</p>
+<p>The file can attack the host. A malformed PDF stream, a cyclic object graph, a decompression bomb, or a pathological workbook can turn an innocent <code>read_document</code> call into a resource-exhaustion event inside the most privileged process in the system.</p>
+<p>The model can attack the evidence. It can quote a sentence that was never served, cite a page that does not contain the claim, treat an un-OCRed scan as empty, confuse an agent-supplied excerpt with a captured original, or transform three repetitions of one observation into apparent consensus.</p>
+<p>A trustworthy pipeline must confine the parser <strong>and</strong> make the citation coordinates server-computed facts.</p>
+<p>This is the epistemic boundary of the AINA transition-governance machine. Article 01 established that an AI output is a proposal, not an act. This installment builds the world in which that proposal can be judged: exact source bytes, confined extraction, explicit omissions, immutable views, served-content receipts, server-cut citations, bounded findings, and origin-preserving lineage.</p>
+<blockquote>
+<p><strong>Before EISA can recognize an act, the system must establish what may be known, cited, and compared—and what remains unknown.</strong></p>
+</blockquote>
+<h2>The Evidence World Is a Governed Artifact</h2>
+<p>A conventional retrieval pipeline often looks like this:</p>
+<pre><code class="language-text">path → loader → text chunks → embeddings → model context → answer with citations
+</code></pre>
+<p>That pipeline can be useful for search. It does not establish an execution-grade evidence world. A chunk does not prove which source revision produced it. A flattened string does not reveal what the parser dropped. A model-written page number does not prove that the model received the quoted passage. A second agent repeating the first agent&#39;s summary does not create a second observation.</p>
+<p>Consider a renewal agent that answers, “Annual increases are capped at 3.0%, and there is no change-of-control clause.” The first conclusion needs an exact served passage. The second needs proof that every place that could contain the clause was actually examined—including the scanned page that produced no text. Those are different evidence burdens, and a fluent answer satisfies neither by default.</p>
+<p>AINA replaces the chain with a governed sequence:</p>
+<pre><code class="language-text">SOURCE BYTES
+  registered identity · single-open bounded capture · SHA-256
+                         │
+                         ▼
+CONFINED PARSER
+  content-decided format · LPAC · Job Object · budgets · typed refusals
+                         │
+                         ▼
+CANONICAL EVIDENCE VIEW
+  ViewManifest · parser/limits identity · extraction status · omission nodes
+                         │
+                         ▼
+SERVED CONTENT — srv_ receipt
+  recipient/session · exact view and intervals · complete/chunked/truncated delivery
+                         │
+                         ▼
+SERVER-CUT EVIDENCE — ev_ handle
+  receipt verified · quote found and disambiguated · server-computed selector
+                         │
+                         ▼
+BOUNDED FINDINGS
+  typed predicates · acknowledged absence gaps · reassessment · origin lineage
+</code></pre>
+<p>The <code>srv_</code> receipt proves what the Room served. The <code>ev_</code> handle proves what the server issued from that serving. Neither proves that the underlying source is true or that the model&#39;s interpretation is correct.</p>
+<p>Every arrow changes the evidentiary state. None is allowed to borrow the assurance of a later stage.</p>
+<table>
+<thead>
+<tr>
+<th>Local fact</th>
+<th>What it cannot prove by itself</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>The path ends in <code>.pdf</code>, or the response declares a PDF media type.</td>
+<td>The bytes are a PDF, or the correct parser was selected.</td>
+</tr>
+<tr>
+<td>The parser returned text without crashing.</td>
+<td>Every text-bearing part was recovered, or every warning was benign.</td>
+</tr>
+<tr>
+<td>The extraction is complete for its declared profile.</td>
+<td>The source is complete, true, visually understood, or free of excluded content.</td>
+</tr>
+<tr>
+<td>The model supplied a quote and page number.</td>
+<td>The exact quote occurred in content served to that caller.</td>
+</tr>
+<tr>
+<td>The citation resolves cryptographically.</td>
+<td>The underlying document is authentic, current, or worldly true.</td>
+</tr>
+<tr>
+<td>Several agents cite the same conclusion.</td>
+<td>Their claims rest on distinct first-hand observations or independent sources.</td>
+</tr>
+</tbody></table>
+<p>The constitutional rule is simple: <strong>unknown coverage must remain visible as unknown coverage</strong>. It cannot disappear into a clean answer.</p>
+<h2>1. Registration: Bind Identity to the Bytes Actually Read</h2>
+<p>The evidence chain begins before parsing. <code>doc_source</code> registration resolves the caller through the Room&#39;s actor rules, requires an owner-opened project, canonicalizes the target through the same file-identity machinery used by governed writes, and refuses controller-state and recovery-storage roots. The protected-root test runs at registration <strong>and again at read time</strong>. A historical registry entry cannot turn control storage into a shared document, and a document registration does not outlive its project admission.</p>
+<h3>Single-open capture</h3>
+<p>On Windows, <code>source::capture_optional</code> opens the file once with <code>share_mode(1)</code>, equivalent to <code>FILE_SHARE_READ</code>. While that handle remains open, other processes cannot open the same file for write or delete sharing. The reader takes at most <strong>64 MiB plus one byte</strong>, refuses anything above the 64 MiB ceiling, and computes SHA-256 over the buffer actually read.</p>
+<p>This ordering matters:</p>
+<pre><code class="language-text">open once with FILE_SHARE_READ
+→ read a bounded buffer
+→ hash that buffer
+→ verify that buffer against the registered digest
+→ hand those same bytes to the confined parser
+</code></pre>
+<p>The size limit is enforced by the read itself, not by a preceding <code>stat</code>. The digest is not computed over one open and then attached to bytes read through another. Downstream extraction receives a <code>Captured</code> buffer, not a path it can reopen.</p>
+<p>That eliminates the intra-read time-of-check/time-of-use window. It does not magically freeze the file forever. For a task whose governing source must remain stable across execution, <code>TaskSourcePin</code> opens the canonical file again with <code>FILE_SHARE_READ</code>, verifies the opened handle&#39;s kernel identity and exact bytes, requires the governing reading proof, and holds the handle for the task&#39;s execution window.</p>
+<p>Two reading policies also remain distinct:</p>
+<ul>
+<li>The extraction profile recorded in the parser identity is <strong><code>text/v1</code></strong>.</li>
+<li>The task&#39;s governing-source reading policy is <strong><code>complete_text_v1</code></strong>, backed by the required source-reading coverage proof.</li>
+</ul>
+<p>They are related, but they are not interchangeable labels.</p>
+<h3>Amber retention is a separate observation</h3>
+<p>Registration archives the source into the content-addressed Amber recovery tier and refuses to complete if that archive fails. This retention is deliberately described with a precision boundary: <code>source::capture</code> performs the single-open read-and-hash capture; <code>vault::archive_only</code> performs a <strong>separate filesystem observation</strong> during registration.</p>
+<p>The archive is not claimed to share the capture&#39;s file descriptor. Hiding that distinction would make the architecture sound stronger by making its evidence less honest.</p>
+<h3>Drift is not a new version of the old citation</h3>
+<p>Every ordinary resolve rechecks the registered source. If the live bytes no longer match the registered digest, the committed view is not silently served as though it were current. The refusal is <code>drifted</code>; capture and verification paths use <code>doc_source_drifted</code> where that stable operator code applies.</p>
+<p>A reader must explicitly register the new revision. A separately authorized historical-inspection path may serve the old view, but its delivery record marks <code>historical: true</code>. History is labeled history.</p>
+<p>This produces three useful non-equivalences:</p>
+<pre><code class="language-text">same path                    ≠ same source revision
+same source revision         ≠ same parser or extraction configuration
+old citation still resolving ≠ old citation is currently authoritative
+</code></pre>
+<h2>2. Content Decides the Format—Inside the Jail</h2>
+<p>Format identification is itself parsing. A ZIP central directory must be inspected before the system can know whether a package is a DOCX, an XLSX, or an ordinary archive. That means identification cannot safely occur in the controller while only the resulting parser is confined.</p>
+<p>AINA performs identification and extraction in the restricted worker. Byte signatures and container structure take priority; extensions break defined ties. The current <code>Kind</code> enum has <strong>22 variants</strong>, but that is not a claim of universal file support: <code>Unknown</code> is deliberately unsupported, <code>Image(format)</code> is a parameterized family, and <code>EncryptedOffice</code> has a typed refusal rather than a text reader.</p>
+<table>
+<thead>
+<tr>
+<th><code>Kind</code> variant</th>
+<th>Content or structural identity</th>
+<th>Extraction or typed outcome</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><code>Pdf</code></td>
+<td><code>%PDF-</code> signature</td>
+<td>Structural PDF extraction, layout, annotations, and admitted local OCR paths</td>
+</tr>
+<tr>
+<td><code>Json</code></td>
+<td><code>.json</code> or <code>.jsonld</code> tie-break after higher-priority signatures</td>
+<td>UTF-8 JSON document with bounded RFC 6901 source locators</td>
+</tr>
+<tr>
+<td><code>Doc</code></td>
+<td>OLE2 plus <code>WordDocument</code> and a valid binary Word probe</td>
+<td>Binary Word FIB and piece-table reconstruction</td>
+</tr>
+<tr>
+<td><code>Docx</code></td>
+<td>ZIP package with Word document structure or an allowed OOXML extension tie-break</td>
+<td>Body, tables, headers, footers, notes, comments, and revision accounting</td>
+</tr>
+<tr>
+<td><code>Ppt</code></td>
+<td>OLE2 plus <code>PowerPoint Document</code> and a valid binary PowerPoint probe</td>
+<td>Binary presentation record-tree text</td>
+</tr>
+<tr>
+<td><code>Pptx</code></td>
+<td>ZIP package with PowerPoint presentation structure or an allowed extension tie-break</td>
+<td>Slides, notes, comments, and relationships</td>
+</tr>
+<tr>
+<td><code>Rtf</code></td>
+<td><code>{\rtf</code> signature or <code>.rtf</code></td>
+<td>Bounded RTF control-word and encoding state machine</td>
+</tr>
+<tr>
+<td><code>Xlsx</code></td>
+<td>ZIP package with <code>xl/workbook.xml</code> or an allowed extension tie-break</td>
+<td>Workbook, cell, cached-value, formula, and comment extraction</td>
+</tr>
+<tr>
+<td><code>Xlsb</code></td>
+<td>ZIP package with <code>xl/workbook.bin</code></td>
+<td>Binary workbook extraction</td>
+</tr>
+<tr>
+<td><code>Xls</code></td>
+<td>OLE2 <code>Workbook</code>/<code>Book</code> probe, or <code>.xls</code>/<code>.xla</code>/<code>.xlt</code> fallback</td>
+<td>BIFF workbook extraction</td>
+</tr>
+<tr>
+<td><code>Ods</code></td>
+<td>ODF <code>mimetype</code> for a spreadsheet</td>
+<td>OpenDocument spreadsheet extraction</td>
+</tr>
+<tr>
+<td><code>Odt</code></td>
+<td>ODF <code>mimetype</code> for text</td>
+<td>OpenDocument text extraction</td>
+</tr>
+<tr>
+<td><code>Odp</code></td>
+<td>ODF <code>mimetype</code> for a presentation</td>
+<td>OpenDocument presentation extraction</td>
+</tr>
+<tr>
+<td><code>Eml</code></td>
+<td><code>.eml</code> or bounded RFC 5322-style header recognition</td>
+<td>MIME tree, headers, body, and recursive child sources</td>
+</tr>
+<tr>
+<td><code>Msg</code></td>
+<td>OLE2 property streams plus root-property probe</td>
+<td>MAPI properties, body, and attachments</td>
+</tr>
+<tr>
+<td><code>Zip</code></td>
+<td>ZIP signature without a more specific package identity</td>
+<td>Bounded archive inventory and child extraction</td>
+</tr>
+<tr>
+<td><code>Html</code></td>
+<td>Decodable HTML, an HTML extension tie-break, or declared legacy HTML bytes</td>
+<td>DOM-derived reading text plus preserved markup story</td>
+</tr>
+<tr>
+<td><code>Text</code></td>
+<td>Successful strict text decoding without HTML identity</td>
+<td>Normalized text stories and line elements</td>
+</tr>
+<tr>
+<td><code>EncryptedOffice</code></td>
+<td>OLE2 <code>EncryptedPackage</code></td>
+<td><code>encrypted</code> / <code>doc_source_extraction_failed</code>, never fake empty text</td>
+</tr>
+<tr>
+<td><code>Ole2</code></td>
+<td>Other OLE2 compound storage</td>
+<td>Embedded-object extraction or a named refusal</td>
+</tr>
+<tr>
+<td><code>Image(format)</code></td>
+<td>Valid image signature and header</td>
+<td>Header inventory and admitted OCR behavior under the selected profile</td>
+</tr>
+<tr>
+<td><code>Unknown</code></td>
+<td>No supported identity</td>
+<td><code>unsupported_format</code>, never an empty successful document</td>
+</tr>
+</tbody></table>
+<p>This is allowlisted recognition, not extension trust and not a promise to parse every file on earth.</p>
+<h3>Fourteen budgets govern expansion</h3>
+<p>The outer operating-system jail is the backstop. Inside it, a 14-field <code>Limits</code> object admits expensive work before expansion and charges actual output. Callers may ratchet limits downward; zero and values above the ceiling are rejected. The exact limits are serialized with RFC 8785 JCS and hashed into <code>limits_sha256</code>, so changing a budget changes extraction identity.</p>
+<table>
+<thead>
+<tr>
+<th>Limit</th>
+<th align="right">Default ceiling</th>
+<th>Failure it bounds</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><code>max_child_bytes</code></td>
+<td align="right">32 MiB</td>
+<td>Oversized attachment, archive member, or embedded child</td>
+</tr>
+<tr>
+<td><code>max_item_decompressed</code></td>
+<td align="right">64 MiB</td>
+<td>Single-stream or single-member expansion</td>
+</tr>
+<tr>
+<td><code>max_total_decompressed</code></td>
+<td align="right">256 MiB</td>
+<td>Cumulative decompression across the document and children</td>
+</tr>
+<tr>
+<td><code>max_parts</code></td>
+<td align="right">20,000</td>
+<td>Container-entry, mail-part, and page floods</td>
+</tr>
+<tr>
+<td><code>max_nesting</code></td>
+<td align="right">3</td>
+<td>Recursive child-source descent</td>
+</tr>
+<tr>
+<td><code>max_xml_depth</code></td>
+<td align="right">256</td>
+<td>Deep or amplifying XML structure</td>
+</tr>
+<tr>
+<td><code>max_pdf_objects</code></td>
+<td align="right">500,000</td>
+<td>PDF object-graph amplification</td>
+</tr>
+<tr>
+<td><code>max_form_depth</code></td>
+<td align="right">8</td>
+<td>Recursive PDF Form XObjects</td>
+</tr>
+<tr>
+<td><code>max_cells</code></td>
+<td align="right">2,000,000</td>
+<td>Spreadsheet cell explosion</td>
+</tr>
+<tr>
+<td><code>max_elements</code></td>
+<td align="right">250,000</td>
+<td>Addressable-element flood; later text may still be extracted without receiving nodes</td>
+</tr>
+<tr>
+<td><code>max_output_chars</code></td>
+<td align="right">32 MiB</td>
+<td>Extracted character-volume exhaustion</td>
+</tr>
+<tr>
+<td><code>max_wall_ms</code></td>
+<td align="right">60,000 ms</td>
+<td>Parser CPU/time overrun, with a 15-second outer kill allowance</td>
+</tr>
+<tr>
+<td><code>max_image_pixels</code></td>
+<td align="right">16,000,000</td>
+<td>Single-image pixel expansion, admitted before decode</td>
+</tr>
+<tr>
+<td><code>max_total_pixels</code></td>
+<td align="right">64,000,000</td>
+<td>Aggregate pixel expansion across pages and children</td>
+</tr>
+</tbody></table>
+<p>Budget refusal is evidence. It becomes a typed <code>budget_exceeded</code> condition rather than a partial answer with the exhaustion removed from the story.</p>
+
+
+      <p class="part-compact-nav"><strong>END OF §02 PART 1/4</strong> — Next: <a href="/02-zero-trust-document-ingestion-and-server-cut-evidence/part-2/"><code>https://blayneaina.com/02-zero-trust-document-ingestion-and-server-cut-evidence/part-2/</code></a> · <a href="/02/brief/">§02 1-Call Brief</a> · <a href="/02.md">Raw .md</a></p>
+    
+        </div>
+
+        
+        
+        
+        
+
+        
+
+        
+      </article>
+    </main>
+
+  </div>
+
+  <footer class="site-footer compact-ai-footer"><p><strong>blayneaina.com</strong> — <a href="https://blayneaina.com/ai-brief/">Master Brief (https://blayneaina.com/ai-brief/)</a> · <a href="https://blayneaina.com/ai-brief.txt">Plain-Text Brief (https://blayneaina.com/ai-brief.txt)</a> · <a href="https://blayneaina.com/articles/">All 9 Articles &amp; Briefs (https://blayneaina.com/articles/)</a> · <a href="https://blayneaina.com/llms.txt">llms.txt</a> · <a href="mailto:me@blayneaina.com">me@blayneaina.com</a></p></footer>
+
+
+
+
+
+  <script src="/script.js?v=20261109-s-tier"></script>
+</body>
+</html>

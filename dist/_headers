@@ -1,0 +1,69 @@
+/*
+  Cache-Control: no-cache, no-store, must-revalidate
+  CDN-Cache-Control: no-store
+  Cloudflare-CDN-Cache-Control: no-store
+  X-Content-Type-Options: nosniff
+  X-Frame-Options: SAMEORIGIN
+  Referrer-Policy: strict-origin-when-cross-origin
+  Permissions-Policy: document-domain=()
+
+/*.md
+  Content-Type: text/plain; charset=utf-8
+
+/ai-brief.txt
+  Content-Type: text/plain; charset=utf-8
+
+/*/brief.txt
+  Content-Type: text/plain; charset=utf-8
+
+/*/*.txt
+  Content-Type: text/plain; charset=utf-8
+
+/sitemap.xml
+  Content-Type: text/xml; charset=utf-8
+
+/sitemap.txt
+  Content-Type: text/plain; charset=utf-8
+
+/llms.txt
+  Content-Type: text/plain; charset=utf-8
+
+/llms-full.txt
+  Content-Type: text/plain; charset=utf-8
+
+/proof/README.md
+  Link: <https://blayneaina.com/refusal-proof/>; rel="canonical"
+  X-Robots-Tag: noindex, follow
+
+/proof/one_line_verify_commands.md
+  Link: <https://blayneaina.com/refusal-proof/>; rel="canonical"
+  X-Robots-Tag: noindex, follow
+
+/proof/verifier_stdout_transcript.txt
+  Link: <https://blayneaina.com/refusal-proof/>; rel="canonical"
+  X-Robots-Tag: noindex, follow
+
+/proof/semantic-switch/README.txt
+  Link: <https://blayneaina.com/semantic-switch-proof/>; rel="canonical"
+  X-Robots-Tag: noindex, follow
+
+/proof/conformance/*
+  X-Robots-Tag: noindex, noarchive
+
+/proof/refusal/*
+  X-Robots-Tag: noindex, noarchive
+
+/proof/schemas/*
+  X-Robots-Tag: noindex, noarchive
+
+/proof/semantic-switch/harness/*
+  X-Robots-Tag: noindex, noarchive
+
+/proof/*.py
+  X-Robots-Tag: noindex, noarchive
+
+/proof/*.zip
+  X-Robots-Tag: noindex, noarchive
+
+/proof/SHA256SUMS.txt
+  X-Robots-Tag: noindex, noarchive

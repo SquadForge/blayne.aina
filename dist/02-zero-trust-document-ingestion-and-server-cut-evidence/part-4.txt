@@ -1,0 +1,198 @@
+# §02 Part 4/4 — Zero-Trust Document Ingestion
+Canonical: https://blayneaina.com/02-zero-trust-document-ingestion-and-server-cut-evidence/part-4/ | Raw Article: https://blayneaina.com/02.md | Next Article Brief: https://blayneaina.com/03/brief.txt
+
+## 11. The 2026 Evidence Landscape: What External Work Establishes
+
+The 2026 literature and vulnerability record reinforce the need for explicit evidence boundaries. They do not validate AINA, and their measurements should not be stretched beyond their actual scope.
+
+| 2026 primary source | What it actually reports | Architectural consequence—and ceiling |
+|---|---|---|
+| Zhao, Pandey, and Misra, [*What the Author Wrote, What the Agent Reads*](https://arxiv.org/abs/2610.30026), October 2026 preprint | Across 76 real policy documents, formatting-blind ingestion reduced requirement-recovery micro-F1 from 0.690 to 0.150 for Docling and 0.075 for plain text; six answering models replicated the loss. Highlight and color drove the largest measured effects. | Ingestion can make agents confidently wrong by removing authorial cues. This supports explicit structural and omission accounting; it does not by itself prove that every omitted cue changes every decision. |
+| Wang et al., [*From Agent Traces to Trust*](https://arxiv.org/abs/2606.04990), June 2026 survey, revised October 2026 | Organizes evidence tracing and execution provenance into typed graphs and reports limited integration, incomplete-chain benchmarks, and little tamper-evident or attested trace reporting in the surveyed catalog. | Typed provenance must connect evidence and execution rather than treating a final answer as its own audit. A survey supplies a framework, not an AINA benchmark. |
+| Khajavi et al., [*CiteCheck*](https://arxiv.org/abs/2605.27700), May 2026 preprint, revised October 2026 | Evaluates corrupted and fabricated bibliographic references on a 982-citation physics benchmark, reporting 88.7 macro-F1 for its hybrid detector. | Plausible citation metadata requires verification. Bibliographic identity is a different problem from quotation-span grounding; CiteCheck is not evidence that server-cut spans work. |
+| Meng et al., [*Social Circuits behind Multi-agent Echo Chambers*](https://arxiv.org/abs/2609.34444), September 2026 preprint | Studies how messages reinforce shared errors and traces their effects through receiver activations; proposes circuit-guided message selection. | More agents can amplify rather than correct an early error. The work does not prove that every topology converges or that actor-origin counting solves model independence. |
+| Setiawan, [*Prompt-Based Abstention Fails Under Misleading Context*](https://arxiv.org/abs/2608.22228), August 2026 preprint | On three small frozen models (3.8B–8B), explicit abstention prompting still answered 41.6% of misleading questions; 63% of those answers echoed the planted wrong entity. | Prompted caution is not a deterministic coverage gate. The result is scoped to the tested models and conditions, not a universal frontier-model failure rate. |
+| Pai, [*PARSE*](https://arxiv.org/abs/2606.17467), June 2026 preprint, revised September 2026 | On 122 professional-domain tasks using real retrieved documents, PARSE reported 15.6% attack success versus a 25.4% baseline, with utility and significance limitations disclosed. | Retrieval sanitization and provenance-aware processing belong before judgment. PARSE is a sanitization result, not proof that cryptographic provenance tags neutralize prompt injection. |
+| [`CVE-2026-27026`](https://nvd.nist.gov/vuln/detail/CVE-2026-27026), February 2026 | Malformed `/FlateDecode` streams could cause long runtimes in `pypdf` before 6.7.1 through byte-by-byte decompression. | Per-item and aggregate budgets, wall clocks, and an outer Job Object are necessary backstops. The advisory does not need to be exaggerated into a different memory-corruption claim. |
+| [`CVE-2026-104120`](https://nvd.nist.gov/vuln/detail/CVE-2026-104120), October 2026 | `mcp-server-fetch` and `mcp-server-everything` through 2026.6.4 were affected by SSRF in `fetch_url` URL/path handling. | URL fetches require an egress boundary. AINA additionally authorizes every redirect hop on its capture path; the CVE description alone is not used to prove a particular redirect implementation. |
+| [`CVE-2026-51994`](https://nvd.nist.gov/vuln/detail/CVE-2026-51994), September 2026 | `mcp-remote` 0.1.32–0.1.38 was vulnerable to SSRF through the `resource_metadata` URL extracted from `WWW-Authenticate`. | Remote metadata is untrusted destination input. The capture-path proof does not automatically cover unrelated OAuth clients; every network route needs its own inventory and gate. |
+| IETF [`RFC 9943`](https://www.rfc-editor.org/rfc/rfc9943.html), June 2026, SCITT Architecture | Defines registration of signed statements and transparency receipts in an append-only Transparency Service. | Tamper-evident inclusion complements canonical evidence views. Inclusion proves log behavior, not that the registered statement is substantively true. |
+
+The composition matters. Sandboxing addresses parser blast radius. Canonical views address artifact identity. Server-cut citations address served-span provenance. Bounded absence addresses unknown coverage. Origin collapse addresses repetition. None can substitute for the others.
+
+## 12. The Twenty-Case Evidence Conformance Gate
+
+The epistemic subsystem has its own 20-case evidence battery inside the 45-case candidate-binary publication gate. These are author-controlled engineering checks, not external certification.
+
+| Case | Predicate exercised |
+|---|---|
+| `evidence_jcs_rfc8785_vectors` | Canonical serializations match the RFC's vectors |
+| `evidence_corpus_through_mcp` | Corpus documents read through the confined worker with expected nodes and outcomes |
+| `evidence_governing_pdf_six_pages` | The governing PDF yields its six text pages through `squad_doc_source read` |
+| `evidence_repeated_text_resolves_each_node` | Repeated text is ambiguous until occurrence selection, then each handle resolves to its own node |
+| `evidence_drift_refused` | Altered source bytes refuse reading and resolution |
+| `evidence_tampered_view_refused` | Altered committed views fail with `view_digest_mismatch` |
+| `evidence_old_view_survives_extraction_change` | New extraction identity creates a new view while the old handle remains on the old view |
+| `evidence_bad_selector_refused` | Bad selectors, paths, raw hashes, unknown handles, and reserved extensions fail by name |
+| `evidence_unauthorized_dereference_refused` | A caller outside the Room's owner roster cannot dereference |
+| `evidence_truncation_in_delivery_status` | Bounded delivery reports chunked/truncated counts |
+| `evidence_excerpt_stays_distinct` | Agent-supplied material retains its origin and cannot take requirement role |
+| `evidence_echo_lineage_preserved` | Echo citations remain echoes resting on a first-hand origin |
+| `evidence_distinct_origins_through_three_hops` | Three echo-linked records collapse to one origin; a second first-hand reader makes two |
+| `evidence_false_predicate_fails_receipt` | False predicates fail evaluation and remain as failed matter |
+| `evidence_absence_requires_complete_inventory` | Absence is refused until every unknown-coverage marker is acknowledged |
+| `evidence_correspondence_keeps_old_handle` | Correspondence adoption issues a new handle without retargeting the old one |
+| `evidence_reassessment_flags` | Source and requirement revisions flag dependents until answered |
+| `evidence_staged_visibility_reveal` | Collaborative-pass findings remain withheld until reveal, with delivery limits disclosed |
+| `evidence_origin_gate` | Completion refuses until a requirement has the declared distinct first-hand origins |
+| `evidence_capture_provenance_chain` | Every redirect hop is egress-authorized and records status, location, and security headers |
+
+The gate demonstrates named path behavior on the candidate binary. It does not prove universal format coverage, universal parser memory safety, complete network-route coverage, source truth, or independent assurance. Nor does it establish a throughput or latency profile for an enterprise corpus; resource cost must be measured against the actual document mix, limits, worker count, and delivery windows.
+
+**Evidence availability:** the implementation and conformance artifacts are `CONTROLLED` for qualified, method-scoped technical review, with adverse findings permitted. They are not represented as unrestricted public downloads or independent validation. The review route is `[RESEARCH]` through [Article 09](https://blayneaina.com/09-bring-one-real-boundary-work-with-blayne/).
+
+## Bring One Document Boundary
+
+The **Zero-Trust Evidence & Citation Audit Challenge** is the direct application of this layer. Bring one document-heavy AI workflow and one bounded evidence question. I will map its source-to-view-to-citation predicates, inspect the omission surface, and demonstrate fabricated-citation refusal against the existing implementation.
+
+The challenge excludes universal format coverage, source-truth guarantees, absence without acknowledged gaps, production write authority, and independent validation. Deployment and paid pilots are separately scoped; independent evaluation remains outside the commercial ladder through [Article 09](https://blayneaina.com/09-bring-one-real-boundary-work-with-blayne/).
+
+## The Article 02 Claim Card
+
+```text
+Mechanism:
+  AINA Epistemic Trust Layer
+  (doc_source, confined extraction, evidence views, receipts, handles,
+   findings, requirements, reassessment, correspondence, and lineage)
+
+Failure it governs:
+  Hostile document parsing inside the controller; stat/read/hash substitution;
+  silent extraction loss; fabricated or unserved citations; stale evidence;
+  unbounded absence claims; and multi-agent repetition masquerading as corroboration.
+
+Positive path:
+  Registered doc_ source
+  → single-open FILE_SHARE_READ capture and SHA-256
+  → LPAC + Job Object confined identification and budgeted extraction
+  → RFC 8785 ViewManifest and 64-hex view digest
+  → bounded served-content srv_ receipt
+  → server-computed EvidenceRef and ev_ handle
+  → typed finding / bounded absence / requirement revision
+  → EISA sealed case (Article 03).
+
+Refusal / unknown-coverage path:
+  doc_source_drifted or drifted
+  parser_worker_unavailable, budget_exceeded, parser_fault
+  not_a_path, agent_manufactured_ref, ev_unknown
+  access_denied, not_served, quote_not_found, quote_ambiguous
+  view_digest_mismatch, role_ineligible, absence_unsupported.
+
+Evidence status:
+  Implemented and Author-Verified on the declared Windows reference embodiment.
+  Twenty evidence cases form part of the 45-case candidate-binary publication gate.
+  Not Independently Validated. External 2026 papers and advisories do not endorse AINA.
+
+Verifier and artifacts:
+  Captured source digest; worker Receipt; doc_source.report/2;
+  squad.evidence.view/1 and view digest;
+  squad.evidence.receipt/1 (srv_);
+  squad.evidence.handle/1 (ev_);
+  fnd_, evl_, reqrev_, man_, rsa_, cor_, coa_ records;
+  evidence_conformance.rs:301-322.
+
+Scope and claim ceiling:
+  Confinement covers the governed Windows parser path, not every possible host process.
+  The Kind alphabet is bounded and includes typed unsupported/encrypted outcomes.
+  Complete-for-profile is not universal extraction or human comprehension.
+  A server-cut citation proves served-span provenance, not source truth.
+  Absence is bounded to examined content with acknowledged gaps.
+  Distinct first-hand actor origins are not statistical or organizational independence.
+  Egress authorization is proven on the capture path, not every network client.
+
+Next stage in the machine:
+  Article 02 seals the evidence world.
+  Article 03 compiles candidate judgments into EISA's closed act grammar
+  and adjudicates support, contradiction, partition, and layout relations.
+
+Commercial doorway:
+  Zero-Trust Evidence & Citation Audit Challenge — bring one document-heavy
+  AI workflow; receive a source-to-view-to-citation predicate map, an omission
+  surface review, and a live demonstration of fabricated-citation refusal
+  (Article 09 · me@blayneaina.com).
+```
+
+## Before EISA Judges the Act
+
+Return to the renewal contract.
+
+The conventional pipeline returned a clean answer: “Annual increases are capped at 3.0%, and there is no change-of-control clause.” Its citation looked plausible. Its confidence was high. Its evidence world was never established.
+
+The governed pipeline can tell a different story.
+
+The source revision was captured and hashed from one read. The parser ran with one capability, no network, bounded resources, and a token verified before resume. Page 1 produced a text-object node containing the 3.0% sentence. Page 2 produced an `ocr_not_enabled` omission, not silence. The analyst received a bounded content window and an `srv_` receipt. The Room found the exact sentence, computed its Unicode-scalar range, selected the innermost text object, and issued `ev_…`.
+
+The 3.0% assertion can now be checked. The change-of-control absence claim cannot pass until `omission/1` and every other unknown-coverage marker in scope are acknowledged. If another agent repeats the finding without reading the passage, lineage preserves the repetition as an echo. If the file changes, ordinary resolution refuses drift. If a new view is adopted, correspondence creates a new handle rather than moving the old one.
+
+Only now is there a stable object for constitutional judgment.
+
+> **Models may interpret evidence. They may not manufacture the evidence world, erase its gaps, or award themselves first-hand observation.**
+
+Article 03 begins at that boundary: candidate judgments become EISA acts, support and contradiction become deterministic relations, and entity-resolution panels decide what may acquire standing.
+
+## Frequently Asked Questions
+
+### What is a server-cut citation?
+
+A server-cut citation is an `ev_` handle issued by the Room from a caller-bound `srv_` served-content receipt. The caller supplies an exact quote or served node; the server verifies coverage, computes Unicode-scalar coordinates, selects the narrowest structural node, and binds the result to a canonical view.
+
+### Does LPAC confinement make document parsing safe?
+
+It makes the governed parser path substantially safer by restricting capabilities, network access, writable locations, process count, memory, and CPU, with token checks before resume. It does not prove that parser code is bug-free or that every host and administrative route is contained.
+
+### Does `complete_for_profile` mean the whole document was read?
+
+No. It means extraction completed without lossy omissions under the declared `text/v1` profile. Profile exclusions remain disclosed, delivery can still be truncated, and the result does not imply visual understanding or humanlike comprehension.
+
+### Can a server-cut citation prove that a source is true?
+
+No. It proves that a particular passage was served and bound to an exact source revision, parser configuration, view, node, and recipient. Authenticity, worldly truth, policy quality, and the interpretation of that passage remain separate claims.
+
+### How does bounded absence work?
+
+The server identifies unknown-coverage markers such as lossy omissions, incomplete inventory, failure, and child sources. The caller must acknowledge every required marker by node ID before the phrase or pattern search can support the bounded negative result. Acknowledged gaps remain unknown, not absent.
+
+### Do three agents citing one passage provide three independent origins?
+
+Not if two are echoes. Lineage counts first-hand actor observations and collapses derived citations to their origins. Even two first-hand actors are not automatically statistically, organizationally, or causally independent.
+
+## Continue the Series
+
+- **Series index:** [From Proposal to Consequence: The AINA Transition-Governance Series](https://blayneaina.com/)
+- **Previous:** [Article 01 — An AI Output Is Not an Act](https://blayneaina.com/01-an-ai-output-is-not-an-act/)
+- **Next:** [Article 03 — Semantic Switch and EISA: Protected Computation and Entity Resolution](https://blayneaina.com/03-eisa-four-gate-verdict-machine-and-entity-resolution/)
+- **Deployment and independent review:** [Article 09 — Bring One Real Boundary](https://blayneaina.com/09-bring-one-real-boundary-work-with-blayne/)
+
+---
+
+## Primary 2026 Sources
+
+- [Zhao, Pandey, and Misra — *What the Author Wrote, What the Agent Reads: Silent Cue Loss in Enterprise Document Ingestion*, `arXiv:2610.30026`](https://arxiv.org/abs/2610.30026)
+- [Wang et al. — *From Agent Traces to Trust: A Survey of Evidence Tracing and Execution Provenance in LLM Agents*, `arXiv:2606.04990`](https://arxiv.org/abs/2606.04990)
+- [Meng et al. — *Social Circuits behind Multi-agent Echo Chambers*, `arXiv:2609.34444`](https://arxiv.org/abs/2609.34444)
+- [Setiawan — *Prompt-Based Abstention Fails Under Misleading Context*, `arXiv:2608.22228`](https://arxiv.org/abs/2608.22228)
+- [Khajavi et al. — *CiteCheck*, `arXiv:2605.27700`](https://arxiv.org/abs/2605.27700)
+- [Pai — *PARSE: Provenance-Aware Retrieval Sanitization for Professional Domain LLM Agents*, `arXiv:2606.17467`](https://arxiv.org/abs/2606.17467)
+- [NVD — `CVE-2026-27026`, `pypdf` long-runtime denial of service](https://nvd.nist.gov/vuln/detail/CVE-2026-27026)
+- [NVD — `CVE-2026-104120`, MCP fetch-server SSRF](https://nvd.nist.gov/vuln/detail/CVE-2026-104120)
+- [NVD — `CVE-2026-51994`, `mcp-remote` resource-metadata SSRF](https://nvd.nist.gov/vuln/detail/CVE-2026-51994)
+- [IETF `RFC 9943` — SCITT Architecture, June 2026](https://www.rfc-editor.org/rfc/rfc9943.html)
+
+---
+
+## Publication Metadata
+
+**Title tag:** Zero-Trust Document Ingestion & Server-Cut Evidence (`srv_` → `ev_`)  
+**Meta description:** Why RAG chunks, file paths, and agent-written citations are not evidence: inside AINA's LPAC-confined parser, omission ledger, canonical views, and server-cut `srv_` and `ev_` handles.  
+**Series navigation:** [Series index](https://blayneaina.com/) · Article 02 of *From Proposal to Consequence: The AINA Transition-Governance Series*.  
+**Previous installment:** [Article 01 — An AI Output Is Not an Act](https://blayneaina.com/01-an-ai-output-is-not-an-act/).  
+**Next installment:** [Article 03 — Semantic Switch and EISA: Protected Computation and Entity Resolution](https://blayneaina.com/03-eisa-four-gate-verdict-machine-and-entity-resolution/).

@@ -1,0 +1,270 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>§02 Part 3/4: Zero-Trust Document Ingestion (6. Server-Cut Evidence: `srv_` Before `ev_`) | Blayne Aina</title>
+  <meta name="description" content="Sections: 6. Server-Cut Evidence: `srv_` Before `ev_`, 7. Network Capture: Authorize Every Hop, Not Just the First URL, 8. Findings: Claims the Server Can Re-Evaluate, 9. Revision, Reassessment, and Correspondence Without Retargeting, 10. Echo Collapse: Count First-Hand Origins, Not Repetitions">
+  <meta name="author" content="Blayne Aina">
+  <meta name="robots" content="index, follow, max-snippet:-1, max-image-preview:large, max-video-preview:-1">
+  <link rel="canonical" href="https://blayneaina.com/02-zero-trust-document-ingestion-and-server-cut-evidence/part-3/">
+  <link rel="icon" href="/favicon.ico" sizes="any">
+  <link rel="icon" href="/favicon.svg" type="image/svg+xml">
+
+  <!-- OpenGraph / Social -->
+  <meta property="og:type" content="article">
+  <meta property="og:title" content="§02 Part 3/4: Zero-Trust Document Ingestion (6. Server-Cut Evidence: `srv_` Before `ev_`)">
+  <meta property="og:description" content="Sections: 6. Server-Cut Evidence: `srv_` Before `ev_`, 7. Network Capture: Authorize Every Hop, Not Just the First URL, 8. Findings: Claims the Server Can Re-Evaluate, 9. Revision, Reassessment, and Correspondence Without Retargeting, 10. Echo Collapse: Count First-Hand Origins, Not Repetitions">
+  <meta property="og:url" content="https://blayneaina.com/02-zero-trust-document-ingestion-and-server-cut-evidence/part-3/">
+  <meta property="og:site_name" content="Blayne Aina — The Route to Trusting AI">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="§02 Part 3/4: Zero-Trust Document Ingestion (6. Server-Cut Evidence: `srv_` Before `ev_`)">
+  <meta name="twitter:description" content="Sections: 6. Server-Cut Evidence: `srv_` Before `ev_`, 7. Network Capture: Authorize Every Hop, Not Just the First URL, 8. Findings: Claims the Server Can Re-Evaluate, 9. Revision, Reassessment, and Correspondence Without Retargeting, 10. Echo Collapse: Count First-Hand Origins, Not Repetitions">
+  
+  <link rel="stylesheet" href="/style.css?v=20261109-s-tier">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@500;700&family=Instrument+Serif:ital@0;1&family=Inter:wght@400;500;600;700;800&family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,500;0,6..72,600;1,6..72,400&family=JetBrains+Mono:wght@400;500&family=Plus+Jakarta+Sans:wght@600;700;800&display=swap" rel="stylesheet">
+</head>
+<body>
+  <div class="reading-progress-bar" id="progressBar"></div>
+
+  <header class="site-header compact-ai-header"><div class="header-inner compact-ai-nav"><a href="/" class="brand"><strong>BLAYNE AINA</strong></a> | <a href="/ai-brief/">1-Page Master Brief (§01–§09)</a> | <a href="/articles/">All 9 Articles &amp; Briefs</a> | <a href="/research-assurance/">Assurance</a> | <a href="/refusal-proof/">Proof</a> | <a href="/llms.txt">llms.txt</a> | <a href="mailto:me@blayneaina.com">me@blayneaina.com</a></div></header>
+  <div class="layout-container presentation-layout">
+    <main class="content-area">
+      <article class="prose-wrapper presentation-wrapper">
+<header class="article-header compact-article-header"><h1 class="article-title">§02 Part 3/4: Zero-Trust Document Ingestion (6. Server-Cut Evidence: `srv_` Before `ev_`)</h1><p class="article-subtitle">Sections: 6. Server-Cut Evidence: `srv_` Before `ev_`, 7. Network Capture: Authorize Every Hop, Not Just the First URL, 8. Findings: Claims the Server Can Re-Evaluate, 9. Revision, Reassessment, and Correspondence Without Retargeting, 10. Echo Collapse: Count First-Hand Origins, Not Repetitions</p></header>
+
+        
+        
+
+        <div class="article-body">
+          
+      <p class="part-compact-nav"><strong>§02 PART 3/4</strong> (13,478 chars · Sections: 6. Server-Cut Evidence: `srv_` Before `ev_`; 7. Network Capture: Authorize Every Hop, Not Just the First URL; 8. Findings: Claims the Server Can Re-Evaluate; 9. Revision, Reassessment, and Correspondence Without Retargeting; 10. Echo Collapse: Count First-Hand Origins, Not Repetitions) — <a href="/02-zero-trust-document-ingestion-and-server-cut-evidence/part-2/">← Part 2</a> · <a href="/02-zero-trust-document-ingestion-and-server-cut-evidence/part-4/">Part 4 →</a> · <a href="/02/brief/">1-Call Brief</a> · <a href="/02-zero-trust-document-ingestion-and-server-cut-evidence/">Full §02</a> · <a href="/02/part-3.txt">Raw .txt</a> · All: <a href="/02-zero-trust-document-ingestion-and-server-cut-evidence/part-1/">P1</a> <a href="/02-zero-trust-document-ingestion-and-server-cut-evidence/part-2/">P2</a> <a href="/02-zero-trust-document-ingestion-and-server-cut-evidence/part-3/">P3</a> <a href="/02-zero-trust-document-ingestion-and-server-cut-evidence/part-4/">P4</a></p>
+    
+<h2>6. Server-Cut Evidence: <code>srv_</code> Before <code>ev_</code></h2>
+<p>A server-cut citation is not a model emitting a prettier reference format. It is a two-event protocol.</p>
+<h3>Event 1: the Room serves content and issues <code>srv_</code></h3>
+<p>The <code>squad.evidence.receipt/1</code> record binds:</p>
+<ul>
+<li>the Room, source revision, and view digest;</li>
+<li>the recipient and recipient session;</li>
+<li>the serving tool;</li>
+<li>each node and optional character interval served;</li>
+<li>delivery counts and <code>complete</code>, <code>truncated</code>, or <code>chunked</code> status;</li>
+<li>admission, optional via-handle or wake identity, time, and nonce.</li>
+</ul>
+<p>The receipt identifier is <code>srv_</code> plus the first 32 hexadecimal digits of the receipt&#39;s canonical SHA-256.</p>
+<p><code>read</code>, <code>resolve</code>, and <code>wake_delivery</code> are content-serving tools. <code>outline</code> is different: it serves structure and coverage metadata. An outline receipt can ground a textless <code>omission/N</code>, <code>failure</code>, <code>inventory</code>, or <code>child:&lt;locator&gt;</code> node. It cannot ground a quotation from a text block the caller was never served.</p>
+<h3>Event 2: the Room computes the citation and issues <code>ev_</code></h3>
+<p>The caller submits a receipt plus an exact quote, or a node it was served. For a quote, the caller may supply a node hint or a one-based occurrence when text repeats. The caller does <strong>not</strong> supply authoritative character offsets.</p>
+<p>The server then:</p>
+<ol>
+<li>verifies that the receipt belongs to the caller;</li>
+<li>loads and reverifies the canonical view;</li>
+<li>rechecks source admission and drift;</li>
+<li>searches only the content covered by that receipt;</li>
+<li>refuses zero matches with <code>quote_not_found</code> and unresolved repetition with <code>quote_ambiguous</code>;</li>
+<li>computes Unicode-scalar coordinates;</li>
+<li>selects the innermost covering element with <code>View::narrowest</code>, falling back to the story;</li>
+<li>checks that the selected range was actually served;</li>
+<li>issues a content-addressed <code>ev_</code> handle whose issuance record includes the canonical <code>EvidenceRef</code>, basis, Room, issuee, and first-hand lineage.</li>
+</ol>
+<pre><code class="language-text">agent:  receipt + exact quote (+ optional occurrence)
+server: served? → current? → unique? → narrowest node? → selector in bounds?
+agent:  receives ev_ handle; receives no authority to invent its coordinates
+</code></pre>
+<h3>Exhibit 2 — A valid synthetic citation issuance</h3>
+<pre><code class="language-json">{
+  &quot;handle&quot;: &quot;ev_6c8f1029384756ab12cd34ef56789012&quot;,
+  &quot;issuance&quot;: {
+    &quot;schema&quot;: &quot;squad.evidence.handle/1&quot;,
+    &quot;envelope&quot;: {
+      &quot;version&quot;: 1,
+      &quot;source_revision&quot;: &quot;doc_20261030_142011_a1b2c3d4&quot;,
+      &quot;view_digest&quot;: &quot;a1b2c3d4e5f60718293a4b5c6d7e8f901a2b3c4d5e6f708192a3b4c5d6e7f809&quot;,
+      &quot;node_id&quot;: &quot;page:1!BT:0&quot;,
+      &quot;selector&quot;: {
+        &quot;kind&quot;: &quot;bounded_subrange&quot;,
+        &quot;unit&quot;: &quot;unicode_scalar&quot;,
+        &quot;start&quot;: 25,
+        &quot;end&quot;: 61
+      },
+      &quot;source_native_locator&quot;: {
+        &quot;kind&quot;: &quot;page_element&quot;,
+        &quot;page&quot;: 1,
+        &quot;element&quot;: &quot;BT&quot;,
+        &quot;ordinal&quot;: 0
+      },
+      &quot;role&quot;: &quot;supporting&quot;,
+      &quot;visibility&quot;: &quot;all&quot;,
+      &quot;origin&quot;: &quot;room_captured&quot;
+    },
+    &quot;envelope_digest&quot;: &quot;e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855&quot;,
+    &quot;room&quot;: &quot;architecture-demo&quot;,
+    &quot;issued_to&quot;: &quot;analyst-alpha&quot;,
+    &quot;issued_at&quot;: &quot;2026-10-31T14:20:15Z&quot;,
+    &quot;basis&quot;: {
+      &quot;kind&quot;: &quot;receipt&quot;,
+      &quot;receipt&quot;: &quot;srv_91d2e3f4a5b6c7d80123456789abcdef&quot;
+    },
+    &quot;lineage&quot;: {
+      &quot;first_hand&quot;: true,
+      &quot;origin&quot;: &quot;analyst-alpha&quot;
+    },
+    &quot;nonce&quot;: &quot;synthetic-nonce-001&quot;
+  }
+}
+</code></pre>
+<p>The handle proves which exact passage was issued to which actor on which view and receipt basis. It does not prove that the contract is authentic, that 3.0% is commercially reasonable, or that page 2 agrees.</p>
+<h3>Refusal is part of the citation grammar</h3>
+<p>Paths and URLs are refused with <code>not_a_path</code>. Raw hashes, hand-built offsets, and similar manufactured references are refused with <code>agent_manufactured_ref</code>. Unknown well-formed handles yield <code>ev_unknown</code>. Foreign-receipt use is <code>access_denied</code>; content outside the receipt is <code>not_served</code> or <code>quote_not_found</code>. Reserved locator kinds and offset units fail by name rather than being loosely accepted.</p>
+<h3>Exhibit 3 — <code>quote_ambiguous</code></h3>
+<p>The actual refusal is an error string; it is shown here as a JSON string with synthetic occurrence data abbreviated for publication.</p>
+<pre><code class="language-json">&quot;quote_ambiguous: the quotation occurs 3 times in the served content; name one with occurrence: [{\&quot;occurrence\&quot;:1,\&quot;node\&quot;:\&quot;page:1!BT:0\&quot;},{\&quot;occurrence\&quot;:2,\&quot;node\&quot;:\&quot;page:3!BT:1\&quot;},{\&quot;occurrence\&quot;:3,\&quot;node\&quot;:\&quot;page:7!BT:2\&quot;}]&quot;
+</code></pre>
+<p>The server does not choose the most convenient occurrence. The caller must disambiguate.</p>
+<h3>Exhibit 4 — <code>drifted</code></h3>
+<pre><code class="language-json">&quot;drifted: project:/evidence/renewal.pdf no longer holds the registered bytes (registered 58b2e91f4c03d8a7126590ef4312ab98c7654321fedcba09876543210fedcba9, current c0ffee99887766554433221100ffeeddccbbaa99887766554433221100ffeedd); the committed view is not served in its place — re-register, or request authorized historical inspection&quot;
+</code></pre>
+<p>The old view remains intact. Its current evidentiary role does not.</p>
+<h2>7. Network Capture: Authorize Every Hop, Not Just the First URL</h2>
+<p>Documents also arrive through retrieval. A fetch tool that authorizes only the initial URL can be redirected into a loopback service, private network, or cloud metadata endpoint. The safe rule is not “validate the first destination”; it is <strong>authorize the destination before every request</strong>.</p>
+<p>AINA&#39;s capture client disables automatic redirects with <code>redirect::Policy::none()</code>. It follows redirects manually, up to ten, and calls <code>authorize_url</code> on each current URL before sending. Every hop records its URL, status, optional content type and <code>Location</code>, and declared security headers.</p>
+<p>The final body is capped at 8 MiB. A body cut by that ceiling becomes a <code>snippet</code> with <code>truncated: true</code>, not a complete response. The exact bytes are stored as a Room artifact, hashed, and parsed through the same confined worker. Every fetch is a new <code>cap_</code> capture; re-fetching a URL never overwrites the earlier observation.</p>
+<h3>Captured, supplied, and governing are different roles</h3>
+<table>
+<thead>
+<tr>
+<th>Origin and root</th>
+<th>What the Room observed</th>
+<th>May anchor a governing requirement?</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><code>room_captured</code> + <code>doc_…</code></td>
+<td>Registered bytes captured from admitted project territory</td>
+<td>Yes, after first-hand serving and the other requirement checks</td>
+</tr>
+<tr>
+<td><code>room_captured</code> + <code>cap_…</code></td>
+<td>A response body fetched through the Room&#39;s egress-gated path</td>
+<td>No; research capture is not a registered governing document</td>
+</tr>
+<tr>
+<td><code>agent_supplied</code> + <code>cap_…</code></td>
+<td>Text an agent pasted with a claimed, unverified origin</td>
+<td>No; citing it cites the supplier, not the claimed source</td>
+</tr>
+</tbody></table>
+<p>An agent-supplied excerpt is not inherently false. It is explicitly labeled evidence of what the agent supplied. It cannot be laundered into a Room observation merely because its bytes match a real document.</p>
+<p>The same boundary applies to web research: egress authorization and immutable capture establish provenance, not truth and not permission for retrieved instructions to govern the system.</p>
+<h2>8. Findings: Claims the Server Can Re-Evaluate</h2>
+<p>A citation establishes a passage. A finding states something checkable about it.</p>
+<p>The evaluator supports five typed assertions:</p>
+<ul>
+<li><strong><code>equals</code></strong> — exact text or typed-value equality.</li>
+<li><strong><code>in_range</code></strong> — a typed numeric value against minimum/maximum bounds, with an optional unit check when the view knows the unit.</li>
+<li><strong><code>matches_regex_bounded</code></strong> — a pattern capped at 512 characters, compiled with 1 MiB size limits and nesting depth 32.</li>
+<li><strong><code>exists</code></strong> — the selected text or structural node exists.</li>
+<li><strong><code>formula_equals</code></strong> — exact comparison against a spreadsheet formula node, including the formula associated with a cached-value cell.</li>
+</ul>
+<p>The interpreter remains separate from the machine-checked assertion. A model may offer a bounded interpretation, but the server re-evaluates the predicate against the committed view.</p>
+<p>A false predicate is not deleted to make the ledger look clean. The <code>fnd_</code> finding and failed <code>evl_</code> evaluation are persisted, and only then does the call return <code>predicate_false</code>. Failed claims remain failed matter.</p>
+<h3>Absence is a coverage claim before it is a search claim</h3>
+<p>“No change-of-control clause exists in this contract” is much stronger than “the phrase did not occur in the chunks I saw.” It requires an inventory of what was examined and an explicit account of what remains unknown.</p>
+<p>For an absence claim, the server derives required unknown-coverage markers:</p>
+<ul>
+<li><code>failure</code> for failed or unsupported extraction;</li>
+<li><code>inventory</code> when enumeration is partial or unknown;</li>
+<li>every in-scope lossy <code>omission/N</code>;</li>
+<li>every <code>child:&lt;locator&gt;</code> for whole-document scope, because child text is not merged into the parent&#39;s searched stories.</li>
+</ul>
+<p>The caller supplies <code>acknowledged_gaps</code> as the relevant <strong>node IDs</strong>. These are not authoritative character offsets and are not a second set of fabricated evidence references. The server checks that every required marker is acknowledged and that every acknowledged marker exists in the view. Outline receipts can be used to cite and inspect those textless markers.</p>
+<p>Only then does the evaluator search for the phrase or bounded pattern. A successful negative result means, precisely:</p>
+<blockquote>
+<p>The phrase is absent from the content this view examined; acknowledged gaps remain unknown, not absent.</p>
+</blockquote>
+<h3>Exhibit 5 — <code>absence_unsupported</code></h3>
+<pre><code class="language-json">&quot;absence_unsupported: the claimed scope has unknown coverage; an absence claim must acknowledge each marker at its narrowest known location: omission/1&quot;
+</code></pre>
+<p>The server refuses to let a missing OCR pass become proof that page 2 contains nothing.</p>
+<h2>9. Revision, Reassessment, and Correspondence Without Retargeting</h2>
+<p>Evidence is allowed to change. History is not allowed to move underneath its citations.</p>
+<p>When a new view is committed for a source, dependent findings, evaluations, and requirements receive deterministic <code>rsa_</code> reassessment flags. Requirement amendments form <code>reqrev_</code> revision chains; task evidence manifests (<code>man_</code>) pin the admitted source and optional view context. A task or handoff cannot silently complete over evidence now marked for reassessment.</p>
+<p>Cross-version correspondence is a separate, explicit operation:</p>
+<ol>
+<li><code>correspond</code> proposes candidate locations in a later view.</li>
+<li>The candidate search has four stages, with a separate same-kind rule for textless structural nodes: <code>same_node_same_text</code>, <code>same_node_same_kind</code>, <code>exact_text</code>, <code>normalized_text</code>, then the weak <code>same_node_changed_text</code> fallback.</li>
+<li>The reviewer must actually be served the candidate in the later view.</li>
+<li><code>adopt-correspondence</code> records <code>coa_</code>, creates a <strong>new</strong> <code>ev_</code> handle, and adds a <code>corresponds_to</code> relation.</li>
+<li>The old handle remains bound to its old view. A requirement-role handle adopted through correspondence becomes supporting evidence in the new view rather than silently carrying governing authority forward.</li>
+</ol>
+<pre><code class="language-text">old view + old ev_ handle ───────────────→ remains historically pinned
+       │                                         │
+       ├─ new view committed ─→ rsa_ reassessment flags on dependents
+       │                                         │
+       └─ cor_ proposal → candidate served in new view
+                                      ↓
+                         coa_ adoption + new ev_ handle
+                                      ↓
+                         corresponds_to relation; no retargeting
+</code></pre>
+<p>This is the difference between provenance and path mutation. The system can say how two observations correspond without pretending they are the same observation.</p>
+<h2>10. Echo Collapse: Count First-Hand Origins, Not Repetitions</h2>
+<p>Multi-agent systems are particularly good at making repetition look like corroboration. Agent A reads a passage. Agent B cites A&#39;s finding. Agent C cites B&#39;s summary. The graph now contains three records and still contains only one first-hand observer.</p>
+<p><code>lineage::origins</code> walks citations for the target view and node. A first-hand citer contributes its actor identity as an origin. An echo contributes the origin it rests on. The output records <code>first_hand_citers</code>, <code>echo_citations</code>, and the collapsed <code>distinct_origins</code> set.</p>
+<h3>Exhibit 6 — Three citation records, one first-hand origin</h3>
+<pre><code class="language-json">{
+  &quot;room&quot;: &quot;architecture-demo&quot;,
+  &quot;view_digest&quot;: &quot;a1b2c3d4e5f60718293a4b5c6d7e8f901a2b3c4d5e6f708192a3b4c5d6e7f809&quot;,
+  &quot;node&quot;: &quot;page:1!BT:0&quot;,
+  &quot;citations&quot;: 3,
+  &quot;records_by_kind&quot;: { &quot;finding&quot;: 3 },
+  &quot;first_hand_citers&quot;: [&quot;analyst-alpha&quot;],
+  &quot;echo_citations&quot;: [
+    {
+      &quot;citer&quot;: &quot;reviewer-beta&quot;,
+      &quot;rests_on&quot;: &quot;analyst-alpha&quot;,
+      &quot;record&quot;: &quot;fnd_11111111111111111111111111111111&quot;
+    },
+    {
+      &quot;citer&quot;: &quot;reviewer-gamma&quot;,
+      &quot;rests_on&quot;: &quot;analyst-alpha&quot;,
+      &quot;record&quot;: &quot;fnd_22222222222222222222222222222222&quot;
+    }
+  ],
+  &quot;distinct_origins&quot;: [&quot;analyst-alpha&quot;],
+  &quot;distinct_origin_count&quot;: 1
+}
+</code></pre>
+<p>If beta later receives the passage directly and cites it first-hand, the count becomes two. That is a precise operational metric for an owner-declared evidence-origin requirement.</p>
+<p>It is not proof of statistical, organizational, or causal independence. Two first-hand readers can share a flawed parser, training data, administrative control, or source document. <strong>Distinct first-hand observation is not the same thing as independent validation.</strong> Article 01&#39;s three independence claims still apply.</p>
+
+
+      <p class="part-compact-nav"><strong>END OF §02 PART 3/4</strong> — Next: <a href="/02-zero-trust-document-ingestion-and-server-cut-evidence/part-4/"><code>https://blayneaina.com/02-zero-trust-document-ingestion-and-server-cut-evidence/part-4/</code></a> · <a href="/02/brief/">§02 1-Call Brief</a> · <a href="/02.md">Raw .md</a></p>
+    
+        </div>
+
+        
+        
+        
+        
+
+        
+
+        
+      </article>
+    </main>
+
+  </div>
+
+  <footer class="site-footer compact-ai-footer"><p><strong>blayneaina.com</strong> — <a href="https://blayneaina.com/ai-brief/">Master Brief (https://blayneaina.com/ai-brief/)</a> · <a href="https://blayneaina.com/ai-brief.txt">Plain-Text Brief (https://blayneaina.com/ai-brief.txt)</a> · <a href="https://blayneaina.com/articles/">All 9 Articles &amp; Briefs (https://blayneaina.com/articles/)</a> · <a href="https://blayneaina.com/llms.txt">llms.txt</a> · <a href="mailto:me@blayneaina.com">me@blayneaina.com</a></p></footer>
+
+
+
+
+
+  <script src="/script.js?v=20261109-s-tier"></script>
+</body>
+</html>

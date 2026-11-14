@@ -1,0 +1,317 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>AINA Research &amp; Assurance Programme — Independent Due-Diligence Binder | Blayne Aina</title>
+  <meta name="description" content="Security problem, Authority-to-Effect (A2E) architecture, existing baseline vs. proposed capabilities, reproducible evidence, open-source deliverables, and background-IP boundaries.">
+  <meta name="author" content="Blayne Aina">
+  <meta name="robots" content="index, follow, max-snippet:-1, max-image-preview:large, max-video-preview:-1">
+  <link rel="canonical" href="https://blayneaina.com/research-assurance/">
+  <link rel="icon" href="/favicon.ico" sizes="any">
+  <link rel="icon" href="/favicon.svg" type="image/svg+xml">
+
+  <!-- OpenGraph / Social -->
+  <meta property="og:type" content="article">
+  <meta property="og:title" content="AINA Research &amp; Assurance Programme — Independent Due-Diligence Binder">
+  <meta property="og:description" content="Security problem, Authority-to-Effect (A2E) architecture, existing baseline vs. proposed capabilities, reproducible evidence, open-source deliverables, and background-IP boundaries.">
+  <meta property="og:url" content="https://blayneaina.com/research-assurance/">
+  <meta property="og:site_name" content="Blayne Aina — The Route to Trusting AI">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="AINA Research &amp; Assurance Programme — Independent Due-Diligence Binder">
+  <meta name="twitter:description" content="Security problem, Authority-to-Effect (A2E) architecture, existing baseline vs. proposed capabilities, reproducible evidence, open-source deliverables, and background-IP boundaries.">
+  
+  <link rel="stylesheet" href="/style.css?v=20261109-s-tier">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@500;700&family=Instrument+Serif:ital@0;1&family=Inter:wght@400;500;600;700;800&family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,500;0,6..72,600;1,6..72,400&family=JetBrains+Mono:wght@400;500&family=Plus+Jakarta+Sans:wght@600;700;800&display=swap" rel="stylesheet">
+</head>
+<body>
+  <div class="reading-progress-bar" id="progressBar"></div>
+
+  <header class="site-header"><div class="header-inner"><a href="/" class="brand"><span class="brand-name">BLAYNE AINA</span> <span class="brand-divider">/</span> <span class="brand-tagline">The Route to Trusting AI</span></a> <nav class="header-actions" aria-label="Primary site navigation"><a href="/ai-brief/" class="header-link">AI Brief (§01–§09)</a> <a href="/articles/" class="header-link">All 9 Articles</a> <a href="/research-assurance/" class="header-link">Assurance</a> <a href="/refusal-proof/" class="header-link">Proof</a> <a href="/sitemap/" class="header-link">Sitemap</a> <a href="https://github.com/SquadForge/blayne.aina" class="header-link" rel="noopener noreferrer">GitHub</a> <button type="button" class="header-link header-search" id="quickSearchBtn" aria-label="Search articles and proof artifacts">Search</button> <a href="/09-bring-one-real-boundary-work-with-blayne/" class="header-cta">Peer Review (§09)</a> <button id="themeToggle" class="theme-btn" aria-label="Toggle theme"><span class="theme-icon light">☀️</span><span class="theme-icon dark">🌙</span></button><button id="mobileMenuBtn" class="mobile-menu-btn" aria-label="Open navigation menu" aria-controls="sidebar" aria-expanded="false">☰</button></nav></div></header>
+  <div class="candidate-ribbon" role="region" aria-label="Peer review and structured brief navigation"><span class="candidate-identity"><strong>TECHNICAL REVIEW &amp; BRIEF INDEX:</strong></span> <nav class="candidate-links" aria-label="Evaluation paths"><a href="/ai-brief/">Master Brief https://blayneaina.com/ai-brief/</a> · <a href="/ai-brief.txt">Plain Text https://blayneaina.com/ai-brief.txt</a> · <a href="/articles/">Articles &amp; Briefs https://blayneaina.com/articles/</a> · <a href="/research-assurance/">Assurance https://blayneaina.com/research-assurance/</a> · <a href="mailto:me@blayneaina.com" class="candidate-email">me@blayneaina.com</a></nav></div>
+  <div class="layout-container ">
+    <main class="content-area">
+      <article class="prose-wrapper ">
+<section class="series-hero" aria-labelledby="research-assurance-title">
+  <div class="hero-kicker"><span class="kicker-dot"></span><span>AINA RESEARCH &amp; ASSURANCE INITIATIVE · INDEPENDENT DUE-DILIGENCE BINDER</span></div>
+  <h1 class="series-title" id="research-assurance-title">AINA Research &amp; Assurance Programme</h1>
+  <p class="series-subtitle"><strong>AINA is a deterministic authority-enforcement architecture that treats probabilistic AI outputs as untrusted proposals. It independently validates evidence, authorization, execution identity, and permitted state transitions at the boundary where external effects are committed, producing independently verifiable evidence when an attempted operation is refused.</strong></p>
+  <div class="hero-actions">
+    <a href="/refusal-proof/" class="btn-primary">Run Offline Refusal Verifier (<10s)</a>
+    <a href="https://github.com/SquadForge/blayne.aina" class="btn-secondary" rel="noopener noreferrer">Public Proof Repository</a>
+    <a href="mailto:me@blayneaina.com?subject=[RESEARCH]%20AINA%20Assurance%20Evaluation" class="btn-secondary">Contact PI: me@blayneaina.com</a>
+  </div>
+</section>
+
+        
+        
+    <section class="executive-brief" aria-label="Executive reading guide">
+      <div class="brief-label">Executive reading guide · 60 seconds</div>
+      <dl class="brief-grid">
+        <div class="brief-item">
+          <dt>Problem</dt>
+          <dd>Writing code by hand is no longer the bottleneck. The hard problem is decomposing ambiguous work across parallel AI agents without context collapse, catching plausible-but-wrong output, and proving the result.</dd>
+        </div>
+        <div class="brief-item">
+          <dt>What it proves</dt>
+          <dd>AINA is both a deterministic execution-governance architecture and a recursive proof-of-work: one architect directing 9 concurrent IDE lanes under the runtime&#039;s own confinement and verification rules.</dd>
+        </div>
+        <div class="brief-item">
+          <dt>Peer review &amp; diligence scope</dt>
+          <dd>Published for independent technical peer review, security and formal-verification critique, and R&amp;D / research grant due diligence.</dd>
+        </div>
+        <div class="brief-item">
+          <dt>Next step</dt>
+          <dd>Start with Article 01, or inspect the Refusal &amp; Conformance proof pack.</dd>
+        </div>
+      </dl>
+    </section>
+  
+
+        <div class="article-body">
+          
+<section class="portability-note" id="security-problem">
+  <h2>1. The Specific Security Problem: Why Probabilistic Guardrails Cannot Govern Consequence</h2>
+  <p>As autonomous AI systems gain direct access to operating systems, databases, code execution, and cyber-physical actuators, four structural failure gaps emerge at the boundary between a model's output and an external state mutation:</p>
+  <ol>
+    <li><strong>Untrusted Proposals &amp; Model-Monitor Failure Modes:</strong> Prompt instructions, RLHF, and secondary LLM-as-judge monitors operate over probabilistic token sequences. AINA deliberately does not rely on proving the general internal safety or alignment of an opaque neural network; instead, it restricts which externally observable operations can be authorized and checks the admissibility conditions for those operations inside a minimal, deterministic Trusted Computing Base (TCB).</li>
+    <li><strong>Multi-Agent Sycophancy &amp; Echo-Chamber Quorum Laundering:</strong> Multiple agent instances can converge on a hallucinated or adversarial action without independent primary-source evidence.</li>
+    <li><strong>Approval-to-Execution (TOCTOU) Substitution:</strong> Between asynchronous human or policy approval and actual OS process execution, command-line arguments, environment blocks, target files, or inherited kernel handles can be substituted.</li>
+    <li><strong>Stale-Worker Overwrites &amp; Unverifiable Rollbacks:</strong> Delayed workers holding expired clock-based TTL locks can overwrite newer state upon waking, and ordinary application logs rarely provide cryptographic proof that a refused attempt left the target resource untouched.</li>
+  </ol>
+</section>
+
+<section class="portability-note" id="a2e-architecture">
+  <h2>2. The Authority-to-Effect (<code>A2E</code>) Architecture &amp; Three Enforcement Layers</h2>
+  <p>AINA interposes a deterministic reference monitor at the commit boundary across four composable mechanisms and three explicit enforcement layers:</p>
+  <ul>
+    <li><strong>Evidence Instruction Set Architecture (<code>EISA</code> — Seven Closed Opcodes):</strong> Every proposed action must compile into a closed 10-key envelope (<a href="/proof/schemas/squad.eisa.act_envelope.v1.json"><code>squad.eisa.act_envelope.v1.json</code></a>) restricted to <strong>seven closed opcodes</strong> across four acyclic layers: <code>BindEvidenceTag</code> (Layer 0, <code>Fracture</code>), <code>RequestHumanReview</code> (Layer 0, <code>Fracture</code>), <code>RejectUnlawfulAct</code> (Layer 0, <code>Fracture</code>), <code>AssertLayoutRelation</code> (Layer 0, <code>Forge</code>), <code>AssertDuplicatePair</code> (Layer 1, <code>Fracture</code>), <code>AssertTransitiveClosure</code> (Layer 2, <code>Fracture</code>), and <code>ProposePartition</code> (Layer 3, <code>Fracture</code>).</li>
+    <li><strong>Three Explicit Enforcement Layers:</strong>
+      <ol>
+        <li><strong>Layer 1 (Pre-Parse &amp; Deserializer Boundary):</strong> Enforces byte caps (<code>MAX_SUBMISSION_BYTES = 1,048,576</code>, <code>MAX_REQUESTED_ACT_BYTES = 65,536</code>, <code>MAX_EVIDENCE_REF_BYTES = 4,096</code>), <code>MAX_ACTS = 256</code>, single-stage submission homogeneity, duplicate JSON key rejection (<code>visit_map</code>), and non-finite number rejection (<code>visit_f64</code>) before AST allocation.</li>
+        <li><strong>Layer 2 (Recursive Draft-07 JSON Schema Validation):</strong> Enforces recursive <code>additionalProperties: false</code> closure across all 12 schemas, <code>allOf</code> opcode-to-stage-to-operands binding, integer-only <code>confidence</code> basis points (<code>0..10000</code>, zero floats), 15 non-inferential evidence tags, 47 registered fault codes, RFC 6901 pointer depth <code>MAX_POINTER_DEPTH = 8</code> (regex <code>^(?:/(?:[^/~\u0000-\u001f]|~[01])*){1,8}$</code>) and <code>MAX_POINTER_BYTES = 256</code>, <code>MAX_REASON_CHARS = 1,024</code>, <code>MAX_ID_CHARS = 64</code>, <code>MAX_REFS = 16</code>, <code>MAX_LIST = 1,000</code>, and <code>MAX_CHAIN = 4</code>.</li>
+        <li><strong>Layer 3 (Runtime Four-Gate Verdict Machine &amp; OS Kernel Confinement):</strong> Enforces <code>MAX_CASE_BYTES = 4,194,304</code>, <code>MAX_CASE_RECORDS = 1,000</code>, <code>MAX_VALUE_CHARS = 1,024</code>, and <code>MIN_PHONE_DIGITS = 7</code> over sealed <code>eisacase_&lt;32hex&gt;</code> substrates; acyclic Layer <code>0 → 3</code> DAG resolution; <code>counterevidence_suppressed</code> scanning; Disjoint-Set Union-Find partition verification; and Windows NT kernel process/handle confinement.</li>
+      </ol>
+    </li>
+    <li><strong>Server-Cut Provenance (<code>srv_</code>/<code>ev_</code>) &amp; Sycophancy Collapse (<code>consensusIdentity</code>):</strong> Requires controller-computed SHA-256 digests and exact 64-bit integer byte-offset spans (<a href="/proof/schemas/squad.evidence_ref.v1.json"><code>squad.evidence_ref.v1.json</code></a>) prior to admission, collapsing correlated agent claims lacking independent source spans.</li>
+    <li><strong>Approval-to-Execution Act-Pinning (<code>act-pin</code>) &amp; Monotonic Lease Fencing:</strong> Binds a controller-fixed <a href="/proof/schemas/squad.requested_act.v1.json"><code>RequestedAct</code></a> digest to the OS worker process instance across spawn and enforces monotonic integer generation fencing at commit time.</li>
+    <li><strong>Proof-Carrying Non-Action (<code>PCNA</code>):</strong> Emits canonical JSON refusal receipts binding the refusal fault code to pre-attempt and post-refusal SHA-256 digests of the measured target resource.</li>
+  </ul>
+</section>
+
+<section class="portability-note" id="baseline-vs-proposed">
+  <h2>3. Existing Baseline vs. Proposed Research &amp; Engineering Capabilities</h2>
+  <table>
+    <thead><tr><th scope="col">Capability Domain</th><th scope="col">Completed Baseline (Built &amp; Inspectable Today)</th><th scope="col">Proposed Funded R&amp;D (Foreground Work — Not Claimed as Built Today)</th></tr></thead>
+    <tbody>
+      <tr><td><strong>OS Reference Monitor &amp; Act-Pinning</strong></td><td><strong>Windows NT reference runtime (<code>squad.exe</code>):</strong> 56.2 MB Rust supervisor enforcing <code>CreateProcessW(CREATE_SUSPENDED)</code> + <code>PssCaptureSnapshot</code> pre-resume inspection, Win32 share-mode write exclusion, and SQLite row-version checks; passes <code>45/45</code> author-controlled isolated conformance cases and <code>20/20</code> server-cut evidence cases.</td><td><strong>Linux Pre-Execution Authorization Barrier &amp; Automated OS Hardening (<code>AINA-LinuxHardener</code> — <code>PRJ-NAVY-01</code>):</strong> Pairing <code>clone3(CLONE_PIDFD)</code> with a pre-execution synchronization barrier that verifies <code>/proc/&lt;pid&gt;/fd</code>, <code>/proc/&lt;pid&gt;/maps</code>, cgroup v2 membership, and an <code>F_SEAL_WRITE</code>-sealed <code>memfd</code> executable digest prior to applying <code>Landlock</code> LSM / <code>seccomp-bpf</code> and invoking <code>fexecve()</code>, demonstrated on <strong>Rocky Linux 9 / RHEL 9 + containerized ROS 2 Humble</strong>.</td></tr>
+      <tr><td><strong>Refusal &amp; Schema Verification (<code>PCNA</code>)</strong></td><td><strong>Offline Refusal-Bundle &amp; Schema Verifier (<code>proof/verify_refusal_proof.py</code>):</strong> Zero-dependency Python 3 script verifying (1) <code>39/39</code> files against <code>SHA256SUMS.txt</code>, (2) <code>3</code> static fixture SHA-256 invariance chains (<code>pre_sha256 == post_sha256</code>) + <code>1</code> absent-preimage stale-generation refusal, and (3) recursive <code>additionalProperties: false</code> closure + <code>18/18</code> positive and <code>26/26</code> negative Draft-07 and pre-parse bound tests across all <code>12</code> schemas.</td><td><strong>Authenticated <code>PCNA</code> v2 &amp; External Security Assessment (<code>PRJ-LC-01</code>):</strong> Adding Ed25519 / hardware-backed TPM 2.0 asymmetric receipt signing, monotonic supervisor counter binding, and commissioning an independent third-party security audit of the runtime and verification package.</td></tr>
+      <tr><td><strong>Formal Methods &amp; Crash Recovery</strong></td><td><strong>Closed <code>EISA</code> JSON Schema &amp; Runtime Recognizer:</strong> 6 structural finiteness bounds, 7 closed opcodes, and 47 fault codes enforced across pre-parse, Draft-07 schema, and Rust recognizer layers.</td><td><strong>Mechanized Lean 4 Semantics (<code>eisa-lean4</code>) &amp; Crash-Recovery Benchmark (<code>PRJ-TAIF-01</code>):</strong> Machine-checked Lean 4 termination and verdict-uniqueness proofs across all 7 opcodes and 47 fault classes + a 10,000-trial mid-commit crash-injection benchmark for <code>result_read_only</code> successor grants (<code>satisfies_original_return: false</code>).</td></tr>
+      <tr><td><strong>Empirical AI-Control Benchmarking</strong></td><td><strong>45-case conformance &amp; 20-case evidence battery:</strong> Author-controlled release qualification in isolated Windows NT fixtures.</td><td><strong>250-Case Multi-Model AI-Control Comparison Study (<code>PRJ-CG-02</code>):</strong> Controlled empirical comparison of (1) standard OS permissions, (2) frontier LLM-as-judge monitors, and (3) deterministic <code>A2E</code> enforcement across multi-agent collusion, tool manipulation, and TOCTOU races.</td></tr>
+      <tr><td><strong>Hardware Actuation Interlock</strong></td><td><strong>Tier 1/2 Software/OS Reference Implementation</strong> + USPTO Provisional #3 architectural specification.</td><td><strong>Tier 4 FPGA Proxy Substrate &amp; Execution Latch Benchtop Demonstrator:</strong> Physical RTL / FPGA hardware bus-gating prototype for edge actuators.</td></tr>
+    </tbody>
+  </table>
+</section>
+
+<section class="portability-note" id="reproducible-evidence">
+  <h2>4. Publicly Reproducible Evidence &amp; Exact Claim Ceiling</h2>
+  <p>Anyone can verify the public evidence bundle offline in under 10 seconds with Python 3 and zero external dependencies:</p>
+  <pre><code>git clone https://github.com/SquadForge/blayne.aina.git
+cd blayne.aina
+python3 proof/verify_refusal_proof.py</code></pre>
+  <p><strong>What <code>verify_refusal_proof.py</code> proves today (Three-Part Offline Verification):</strong> (1) <strong>Manifest Integrity:</strong> All <code>39</code> published files match their SHA-256 digests in <code>SHA256SUMS.txt</code>; (2) <strong>Fixture &amp; Conformance Consistency:</strong> The <code>3</code> fixture-backed refusal records (<code>evidence-selector.json</code>, <code>unleased-write.json</code>, <code>act-pinning.json</code>) match the exact SHA-256 digests and byte lengths of the preserved static fixtures in <code>proof/refusal/fixtures/</code>, <code>stale-generation.json</code> records an absent preimage, and the <code>45/45</code> conformance and <code>20/20</code> evidence manifests match candidate attestation; and (3) <strong>Recursive Schema &amp; Pre-Parse Bound Validation:</strong> All <code>12</code> public JSON schemas pass recursive <code>additionalProperties: false</code> closure plus <code>18/18</code> positive and <code>26/26</code> negative Draft-07 and pre-parse bound tests across all 7 <code>EISA</code> opcodes. <strong>What it does not claim by itself:</strong> It does not by itself prove independent third-party execution of the private <code>squad.exe</code> binary or verify an asymmetric hardware signature authenticating receipt origin—capabilities explicitly scoped under <strong>Authenticated <code>PCNA</code> v2</strong> and our independent external security audit milestone (<code>PRJ-LC-01</code>).</p>
+</section>
+
+<section class="portability-note" id="research-programme-tracks">
+  <h2>5. The Independent Research &amp; Assurance Programme (Non-Overlapping Work Packages)</h2>
+  <table>
+    <thead><tr><th scope="col">Work Package Code</th><th scope="col">Research / Engineering Focus</th><th scope="col">Primary Measurable Question &amp; Deliverables</th></tr></thead>
+    <tbody>
+      <tr><td><strong><code>PRJ-TW-01</code></strong><br>Assurance Initiative</td><td><strong>Institutional Launch &amp; Cross-Framework <code>A2E</code> Assurance Standard</strong></td><td>Establish the independent public-benefit AINA Assurance Initiative, hire dedicated systems/kernel and AI-control engineers, commission two external lab audits, and publish cross-framework <code>A2E</code> enforcement adapters.</td></tr>
+      <tr><td><strong><code>PRJ-LC-01</code></strong><br>Open Verifier &amp; Audit</td><td><strong><code>eisa-core</code> / <code>pcna-verifier</code> Release Packaging, Authenticated <code>PCNA</code> v2 &amp; External Security Assessment</strong></td><td>Package the standalone open-source admission validator and verifier, add Ed25519 / TPM 2.0 asymmetric receipt signing (<code>Authenticated PCNA v2</code>), and publish an unedited third-party security assessment.</td></tr>
+      <tr><td><strong><code>PRJ-CG-02</code></strong><br>Empirical AI Control</td><td><strong>250-Case Multi-Model Comparison: Deterministic <code>A2E</code> vs. LLM-as-Judge Monitors</strong></td><td>Quantify unauthorized mutation rates, false-rejection rates, sycophantic false-consensus acceptance, and <code>p50</code>/<code>p95</code>/<code>p99</code> latency across 4 frontier model families comparing OS permissions, LLM judges, and <code>A2E</code>.</td></tr>
+      <tr><td><strong><code>PRJ-TAIF-01</code></strong><br>Formal Semantics</td><td><strong>Lean 4 <code>EISA</code> Mechanization (<code>eisa-lean4</code>) &amp; Crash-Straddling Fault-Injection Benchmark</strong></td><td>Prove bounded-step termination and verdict uniqueness in Lean 4 across all 7 opcodes and 47 fault classes, and evaluate <code>result_read_only</code> successor-grant crash recovery across 10,000 injected mid-commit faults.</td></tr>
+      <tr><td><strong><code>PRJ-NAVY-01</code></strong><br>Linux OS Hardening</td><td><strong>Automated Linux Debloating, Hardening &amp; Pre-Execution Barrier (<code>AINA-LinuxHardener</code>)</strong></td><td>Automate RPM/ELF/module dependency analysis, OS debloating, <code>Landlock</code>/<code>seccomp-bpf</code> synthesis, Linux Pre-Execution Authorization Barrier, and deterministic ROS 2 Humble functional regression testing on Rocky Linux 9 / RHEL 9.</td></tr>
+    </tbody>
+  </table>
+</section>
+
+<section class="portability-note" id="open-source-deliverables">
+  <h2>6. Planned Open-Source Deliverables</h2>
+  <ul>
+    <li><strong><code>eisa-core</code> &amp; Closed JSON Schemas:</strong> Standalone deterministic validator and closed 7-opcode schema definitions (<a href="/proof/schemas/squad.eisa.act_envelope.v1.json"><code>squad.eisa.act_envelope.v1.json</code></a>).</li>
+    <li><strong><code>pcna-verifier</code> &amp; <code>Authenticated PCNA v2</code> Tooling:</strong> Open-source offline bundle verifier and Ed25519 / TPM-attested receipt signature checker.</li>
+    <li><strong><code>eisa-lean4</code> Formal Specification:</strong> Mechanized Lean 4 operational semantics and termination proofs for the 6-bound <code>EISA</code> grammar.</li>
+    <li><strong>250-Case Multi-Agent AI-Control Benchmark Dataset:</strong> Reproducible adversarial test vectors and comparative evaluation harness for LLM-judge vs. deterministic reference-monitor benchmarking.</li>
+  </ul>
+</section>
+
+<section class="portability-note" id="ip-and-licensing">
+  <h2>7. Background IP, Verbatim USPTO Provisional Schedule &amp; Licensing Distinction</h2>
+  <p>All background architecture developed prior to external grant funding is covered by <strong>three solo-authored U.S. Provisional Patent Applications filed in April–May 2026</strong> by Blayne Manuia Aina (100% solo owned, zero third-party encumbrances):</p>
+  <ol>
+    <li><strong>U.S. Provisional #1 (Filed April 12, 2026):</strong> <em>Autonomous Intelligent Network Architecture Protocol; Systems, Methods, and Computing Architectures for Constitutionally Governed Machine Action, Machine Participation, Machine Encounter, Machine Execution, and Machine Finality Across Multi-Stage Verifiable State-Formation, State-Extraction, and Temporal Defense</em>.</li>
+    <li><strong>U.S. Provisional #2 (Single Omnibus Application, Parts 2A &amp; 2B — Filed May 2, 2026):</strong>
+      <ul>
+        <li><strong>Part 2A:</strong> <em>AINA Semantic Switch and MX2MX; Systems, Methods, and Computing Architectures for Constitutionally Created Machine Domains, Typed Correspondence Governance, Protected Cross-Boundary Admissibility, Consequence-Bearing Re-Binding, and Monotonic Burden Accumulation Under an Effective Constitutional Envelope</em>.</li>
+        <li><strong>Part 2B:</strong> <em>AINA Topological Physics Pipeline; Systems, Methods, and Machine Architectures for Candidate-Universe Sealing, Asymmetrical Topology Adjudication, Claim-Graph Canonical Extraction, Reversible Patch-Plan Materialization, Baseline-State Defense, and Instruction-Bundle Constraints Under Stage-Local Constitutional Governance</em>.</li>
+      </ul>
+    </li>
+    <li><strong>U.S. Provisional #3 (Filed May 15, 2026):</strong> <em>AINA Authority-to-Effect (A2E) Governance: Layer-Zero Constitutional Transduction of Machine-Computed Authority into Consequence-Bearing Actuation Under an Effective Constitutional Envelope</em>.</li>
+  </ol>
+  <p><strong>Clean Background vs. Foreground Separation:</strong> Pre-existing background IP and the private Windows NT <code>squad.exe</code> runtime remain protected background assets (available for live demonstration and scoped evaluation under mutual NDA, or under applicable federal SBIR Data Rights for defense contracts). All public-interest foreground research deliverables—including the public JSON schemas, standalone verification packages (<code>eisa-core</code>, <code>pcna-verifier</code>), mechanized Lean 4 proofs (<code>eisa-lean4</code>), empirical benchmark datasets, and third-party security audit reports—are structured for open publication (MIT / Apache-2.0) to support independent scientific reproduction (<a href="mailto:me@blayneaina.com">me@blayneaina.com</a>).</p>
+</section>
+
+        </div>
+
+        
+        
+        
+        
+
+        
+
+        <footer class="article-footer-cta">
+          <h3>Technical Peer Review &amp; Scoped Evaluation (§09): Bring One Real Boundary</h3>
+          <p>Do not rely on a vision deck. Bring one consequential transition—workflow standing, hostile document adjudication, or protected entity resolution—or propose an independent research evaluation. We establish a written acceptance boundary, run the existing implementation, and make the positive, refusal, and unresolved evidence inspectable.</p>
+          <div class="cta-actions">
+            <a href="/09-bring-one-real-boundary-work-with-blayne/" class="btn-primary">Peer Review &amp; Evaluation (§09)</a>
+            <a href="/articles/" class="btn-secondary">Complete 9-Article &amp; Chunk Index</a>
+            <a href="mailto:me@blayneaina.com?subject=[RESEARCH]%20Technical%20Peer%20Review%20%2F%20R%26D%20Evaluation" class="btn-secondary">me@blayneaina.com</a>
+          </div>
+        </footer>
+      </article>
+    </main>
+    <aside class="site-sidebar" id="sidebar">
+      <div class="sidebar-header">
+        <span class="sidebar-label">Architecture Series</span>
+        <span class="sidebar-date">October 2026</span>
+      </div>
+      <nav class="series-nav">
+        <ul>
+          <li class="">
+            <a href="/">
+              <span class="nav-num">§00</span>
+              <span class="nav-title">Series Overview &amp; Thesis (https://blayneaina.com/)</span>
+            </a>
+          </li>
+          <li>
+            <a href="/ai-brief/">
+              <span class="nav-num">AI</span>
+              <span class="nav-title">1-Page Master Brief (§01–§09) (https://blayneaina.com/ai-brief/)</span>
+            </a>
+          </li>
+          <li>
+            <a href="/articles/">
+              <span class="nav-num">ALL</span>
+              <span class="nav-title">All 9 Articles, Briefs &amp; Chunks (https://blayneaina.com/articles/)</span>
+            </a>
+          </li>
+          
+      <li class="">
+        <a href="/01-an-ai-output-is-not-an-act/">
+          <span class="nav-num">§01</span>
+          <span class="nav-title">An AI Output Is Not an Act (https://blayneaina.com/01-an-ai-output-is-not-an-act/)</span>
+        </a>
+      </li>
+    
+      <li class="">
+        <a href="/02-zero-trust-document-ingestion-and-server-cut-evidence/">
+          <span class="nav-num">§02</span>
+          <span class="nav-title">Zero-Trust Document Ingestion (https://blayneaina.com/02-zero-trust-document-ingestion-and-server-cut-evidence/)</span>
+        </a>
+      </li>
+    
+      <li class="">
+        <a href="/03-eisa-four-gate-verdict-machine-and-entity-resolution/">
+          <span class="nav-num">§03</span>
+          <span class="nav-title">Semantic Switch & EISA (https://blayneaina.com/03-eisa-four-gate-verdict-machine-and-entity-resolution/)</span>
+        </a>
+      </li>
+    
+      <li class="">
+        <a href="/04-the-room-why-git-and-chat-are-not-coordination-planes/">
+          <span class="nav-num">§04</span>
+          <span class="nav-title">The Room Coordination Plane (https://blayneaina.com/04-the-room-why-git-and-chat-are-not-coordination-planes/)</span>
+        </a>
+      </li>
+    
+      <li class="">
+        <a href="/05-expiry-is-not-fencing-typed-leases-and-kernel-write-exclusion/">
+          <span class="nav-num">§05</span>
+          <span class="nav-title">Expiry Is Not Fencing (https://blayneaina.com/05-expiry-is-not-fencing-typed-leases-and-kernel-write-exclusion/)</span>
+        </a>
+      </li>
+    
+      <li class="">
+        <a href="/06-rollback-is-not-erasure-dual-tier-vaults-and-ungated-quarantine/">
+          <span class="nav-num">§06</span>
+          <span class="nav-title">Rollback Is Not Erasure (https://blayneaina.com/06-rollback-is-not-erasure-dual-tier-vaults-and-ungated-quarantine/)</span>
+        </a>
+      </li>
+    
+      <li class="">
+        <a href="/07-defeating-approval-laundering-act-pinning-and-successor-grants/">
+          <span class="nav-num">§07</span>
+          <span class="nav-title">Defeating Approval Laundering (https://blayneaina.com/07-defeating-approval-laundering-act-pinning-and-successor-grants/)</span>
+        </a>
+      </li>
+    
+      <li class="">
+        <a href="/08-sovereign-kill-switch-break-glass-epochs-and-conformance-gate/">
+          <span class="nav-num">§08</span>
+          <span class="nav-title">The Sovereign Kill Switch (https://blayneaina.com/08-sovereign-kill-switch-break-glass-epochs-and-conformance-gate/)</span>
+        </a>
+      </li>
+    
+        </ul>
+        <div class="sidebar-section-divider">
+          <span class="sidebar-label">Peer Review &amp; Evaluate</span>
+        </div>
+        <ul>
+          
+      <li class=" nav-commercial">
+        <a href="/09-bring-one-real-boundary-work-with-blayne/">
+          <span class="nav-num">→</span>
+          <span class="nav-title">Bring One Real Boundary: Peer Review & R&D Evaluation (https://blayneaina.com/09-bring-one-real-boundary-work-with-blayne/)</span>
+        </a>
+      </li>
+    
+          <li>
+            <a href="/research-assurance/">
+              <span class="nav-num">↗</span>
+              <span class="nav-title">Research &amp; Assurance Binder (https://blayneaina.com/research-assurance/)</span>
+            </a>
+          </li>
+          <li>
+            <a href="mailto:me@blayneaina.com?subject=[RESEARCH]%20Independent%20Technical%20Evaluation">
+              <span class="nav-num">↗</span>
+              <span class="nav-title">Independent Evaluation [RESEARCH]</span>
+            </a>
+          </li>
+        </ul>
+      </nav>
+      <div class="sidebar-footer">
+        <div class="author-card">
+          <div class="author-name">Blayne Aina</div>
+          <div class="author-bio">By Blayne Aina · Principal Systems Architect and creator of AINA · October 31, 2026 · AINA Governance Specification</div>
+          <div class="author-bio">Principal Systems Architect · 11+ Years Enterprise Systems Delivery · USMC Veteran</div>
+          <a href="mailto:me@blayneaina.com" class="author-email">me@blayneaina.com</a>
+          <div class="author-contact">Blayne Aina · Denver, CO · <a href="mailto:me@blayneaina.com">me@blayneaina.com</a></div>
+          <a href="https://github.com/SquadForge/blayne.aina" class="author-contact" rel="noopener noreferrer">GitHub Repo (https://github.com/SquadForge/blayne.aina)</a>
+        </div>
+      </div>
+    </aside>
+  </div>
+
+  <footer class="site-footer"><p class="footer-inner"><span class="footer-left"><strong>blayneaina.com</strong> — Architectural invariants, verifiable execution, and production governance for autonomous systems. © 2026 Blayne Aina.</span> <span class="footer-series-nav" role="navigation" aria-label="Complete architecture series and verification index"><a href="/">Overview</a> · <a href="/ai-brief/">Master Brief (§01–§09)</a> · <a href="/ai-brief.txt">ai-brief.txt</a> · <a href="/articles/">All 9 Articles &amp; Chunks</a> · <a href="/articles/digest-1/">Digest 1</a> · <a href="/articles/digest-2/">Digest 2</a> · <a href="/articles/digest-3/">Digest 3</a> · <a href="/research-assurance/">Research &amp; Assurance</a> · <a href="/refusal-proof/">Refusal Proof</a> · <a href="/semantic-switch-proof/">Semantic Switch</a> · <a href="/sitemap/">Sitemap</a> · <a href="/llms.txt">llms.txt</a> · <a href="/llms-full.txt">llms-full.txt</a> · <a href="mailto:me@blayneaina.com">me@blayneaina.com</a></span></p></footer>
+
+
+
+  <dialog class="quick-search" id="quickSearchDialog" aria-labelledby="quick-search-title"><div class="quick-search-head"><label id="quick-search-title" for="quickSearchInput">Search architecture and evidence</label><button type="button" id="quickSearchClose" aria-label="Close search">Close</button></div><input id="quickSearchInput" type="search" placeholder="Try EISA, PCNA, SQLite, leases, Semantic Switch…" autocomplete="off"><div class="quick-search-results" id="quickSearchResults"></div></dialog><script type="application/json" id="quickSearchData">[{"href":"/ai-brief/","title":"1-Page Complete Master Brief (§01–§09)","sub":"Single-page architecture compendium · zero truncation"},{"href":"/articles/","title":"All 9 Articles, Briefs & Multi-Part Chunks Index","sub":"Complete directory · 1-call briefs · zero-loss parts"},{"href":"/research-assurance/","title":"Research & Assurance Due-Diligence Binder","sub":"A2E · 3 provisionals · 5 PRJ work packages"},{"href":"/refusal-proof/","title":"Refusal & Unchanged-Destination Proof","sub":"PCNA · EISA · verifier · SQLite · 45 cases"},{"href":"/proof/conformance/conformance_45_manifest.json","title":"45-case conformance manifest","sub":"release qualification · candidate results"},{"href":"/semantic-switch-proof/","title":"Semantic Switch proof","sub":"AKO · Lampson confinement · relation isomorphism"},{"href":"/#formal-confinement","title":"Formal confinement and A2E","sub":"bounded TCB · finiteness · three provisionals"},{"href":"/#career-snapshot","title":"Enterprise delivery snapshot","sub":"2015–2026 · CRM · migrations · production cutovers"},{"href":"/01-an-ai-output-is-not-an-act/","title":"§01 · An AI Output Is Not an Act","sub":"Ambient Authority & Machine Standing"},{"href":"/02-zero-trust-document-ingestion-and-server-cut-evidence/","title":"§02 · Zero-Trust Document Ingestion","sub":"Parser Jails & Server-Cut Evidence"},{"href":"/03-eisa-four-gate-verdict-machine-and-entity-resolution/","title":"§03 · Semantic Switch & EISA","sub":"Protected Computation & 4-Gate Verdicts"},{"href":"/04-the-room-why-git-and-chat-are-not-coordination-planes/","title":"§04 · The Room Coordination Plane","sub":"Transaction Graphs vs. Git & Chat"},{"href":"/05-expiry-is-not-fencing-typed-leases-and-kernel-write-exclusion/","title":"§05 · Expiry Is Not Fencing","sub":"Typed Leases & Kernel Write Exclusion"},{"href":"/06-rollback-is-not-erasure-dual-tier-vaults-and-ungated-quarantine/","title":"§06 · Rollback Is Not Erasure","sub":"Dual-Tier Vaults & Forensic Quarantine"},{"href":"/07-defeating-approval-laundering-act-pinning-and-successor-grants/","title":"§07 · Defeating Approval Laundering","sub":"Act Pinning & Successor Continuity"},{"href":"/08-sovereign-kill-switch-break-glass-epochs-and-conformance-gate/","title":"§08 · The Sovereign Kill Switch","sub":"Break-Glass Epochs & Conformance Release Gate"},{"href":"/09-bring-one-real-boundary-work-with-blayne/","title":"§09 · Bring One Real Boundary: Peer Review & R&D Evaluation","sub":"Technical Peer Review, Challenge Tracks & R&D Diligence"}]</script>
+
+  <script src="/script.js?v=20261109-s-tier"></script>
+</body>
+</html>

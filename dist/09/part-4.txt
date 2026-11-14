@@ -1,0 +1,104 @@
+# §09 Part 4/8 — Bring One Real Boundary: Peer Review & R&D Evaluation
+Canonical: https://blayneaina.com/09-bring-one-real-boundary-work-with-blayne/part-4/ | Raw Article: https://blayneaina.com/09.md | Next Part: https://blayneaina.com/09/part-5.txt
+
+## 5. Operating Reality: Maintenance Is Part of the System
+
+A governed deployment changes with its environment. Connectors and IDE adapters evolve. Provider APIs deprecate fields. Parser updates create new extraction identities. Schemas and destination policies change. New source views can require reassessment of earlier findings.
+
+The operating model therefore includes monitoring, staging, affected-path replay, and requalification—not silent auto-upgrade.
+
+### Exhibit 9.5 — Deployment and requalification checklist
+
+```text
+[ ] Destination authority, credentials, targets, and project roots rebound
+[ ] Admitted model/provider routes and external dependencies declared
+[ ] Source revisions, parser profiles, and view supersession rules recorded
+[ ] Reassessment flags (`rsa_`) assigned to affected dependent findings/tasks
+[ ] Connector/schema changes reflected in versioned destination plans
+[ ] Alternate effect paths and new consequence surfaces admitted or excluded
+[ ] Positive, refusal, unresolved, and recovery predicates replayed
+[ ] Candidate source/image identity verified and 45-case gate passed before promotion
+[ ] Latency, storage, availability, refusal, recovery, and operator load observed
+[ ] Receipts, unresolved operations, exclusions, and recovery duties handed to an owner
+[ ] Support model selected: client-operated, founder-supported, or joint
+```
+
+A source or requirement revision does not launder an old conclusion into a new context. Evidence-linked `rsa_` flags keep dependent findings and tasks marked for reassessment. A new parser identity creates a new view; historical handles remain tied to their historical view. Runtime changes require the candidate-binary publication gate again.
+
+The client's responsibilities remain explicit: credential and key custody, protected local storage, provider entitlements, backup and retention policy, destination authorization, operating escalation, and any organizational control outside the software. Support can be client-operated, founder-supported, or joint, but it is not maintenance-free.
+
+## 6. The Commercial Wedge: Duplicates to Defensible Relationships
+
+Entity resolution is a strong first wedge because duplicate records are common, consequential, and evidence-rich. The problem is easy to describe and difficult to fake: which records represent the same entity, which values should survive, and what evidence justifies each decision?
+
+The commercial expansion follows a disciplined chain.
+
+### Exhibit 9.6 — From duplicates to distribution
+
+```text
+duplicate records
+  → defensible identity substrate
+  → canonical values with field-level provenance
+  → evidence-linked relationships
+  → inspectable graph paths
+  → authorized read-only vertical pilot
+  → repeatable vertical package
+  → deployment, distribution, and principal mandates
+```
+
+The wedge is not generic “AI safety.” It is **entity resolution and evidence-linked state**. A resolved contact or company becomes more useful when deals, activities, tickets, addresses, parent organizations, and other associations can retain their provenance. HubSpot is one concrete CRM topology; Salesforce, Dynamics, NetSuite, and custom systems may present different authorized schemas and are not assumed to be identical.
+
+An evidence-linked relationship graph retains source coordinates, relation type, scope, freshness, authority, and status for its nodes and edges. Unsupported paths remain candidate or unresolved. A configured search may include six-hop paths, but six hops are a **query horizon**, not proof of familiarity, influence, willingness to introduce, consent, or business value.
+
+A graph path does not authorize outreach, disclosure, enrichment, mutation, or a CRM write. Those require separate authority and, where applicable, a controller-fixed destination act. Production graph ingestion and lead generation are separately paid scopes, not gifts hidden inside the initial challenge.
+
+This creates a credible distribution path. A founding deployment partner can fund vertical customization. A distribution partner can contribute domain knowledge, qualified client access, and a repeatable channel. Neither label means sponsor, equity cofounder, or independent validator. Licensing, exclusivity, revenue sharing, support, data responsibility, and runtime rights require separate agreements.
+
+The architectural differentiator is the common transition grammar—the layer that compiles organizational authority into per-transition technical standing so that evidence, actor, act, target, execution, effect, and closure remain bound even as model providers and adapters rotate. Client-controlled Windows execution is a differentiated deployment niche, not a claim that other platforms or a conventional composition cannot achieve equivalent properties. A mature stack that demonstrates the same bindings and failure behavior earns functional credit.
+
+## Why an Enterprise Integrator Built AINA: 11+ Years in the Data Trenches Before AI
+
+AINA was not designed in an academic vacuum. Before spending 14 months architecting AINA, I spent 11+ years embedded inside enterprise operations—building inbound and outbound HubSpot and Salesforce data pipelines and deduplication workflows at Agile Education Marketing (2022–2025), migrating six years of operational data across seven operating companies and **800+ intermodal transportation, logistics, and supply chain carriers** for DrayMaster's intermodal drayage rate-management and carrier-onboarding platform (2019–2022), designing deterministic stage-gate state machines for photographic evidence capture at Photector, and migrating six retail/distribution locations and 15,000+ SKUs from legacy ecommerce infrastructure at Jacuzzi Colorado (2015–2018).
+
+At Photector, I facilitated daily architectural whiteboarding sessions with a distributed team to define edge-case scenario criteria and deterministic state-machine workflows for a patent-pending blockchain photographic evidence application. That work was workflow and scenario architecture, not a claim of authorship over Photector's patent.
+
+Every mechanism in AINA—from server-cut provenance to lease fencing and quarantine vaults—exists because I have seen firsthand how unverified merges, race conditions, and silent rollbacks corrupt production enterprise databases.
+
+## 7. Operator Credibility: Delivery Is the Commercial Proof Point
+
+The architecture is recent. The customer-embedded delivery career underneath it is not.
+
+My operational record across enterprise integration, data migration, and field execution includes:
+
+- **11+ years of customer-embedded technical delivery** across integration, data migration, workflow automation, launch readiness, operator training, and live production issue resolution;
+- **Enterprise catalog, ERP, and multi-location systems (Jacuzzi Colorado / Spa Palace):** systems and catalog architecture supporting **six retail/distribution locations and more than 15,000 products**;
+- **Multi-entity logistics & CRM migration (TCompanies / DrayMaster):** migration, carrier compliance, and CRM/onboarding consolidation involving **800+ intermodal transportation, logistics, and supply chain carriers across a seven-business group**, encompassing six years of operating data;
+- **Cross-platform enterprise integration:** hands-on implementation across **HubSpot, Salesforce, Microsoft Dynamics, NetSuite, Marketo, Zoho**, operational SQL databases, warehouses, and custom applications;
+- **700+ production digital deliverables:** websites, applications, databases, ecommerce properties, and automation workflows delivered through independent practices, alongside **technology and marketing teams trained across 13 U.S. states**; and
+- **U.S. Marine Corps service:** **Combat Correspondent, Photojournalist, and Northern Bureau Chief**, coordinating field reporting and public-affairs operations across Northern Okinawa under strict evidentiary discipline.
+
+<aside class="context-callout author-profile" aria-label="Author and architect profile">
+  <div class="brief-label">Author &amp; Principal Investigator Profile</div>
+  <p>Named after my family surname and standing for Autonomous Intelligent Networked Architecture, AINA represents the deterministic transition-governance patterns developed through that operator history.</p>
+  <p>Blayne Aina is a Principal Systems &amp; Data Integrations Architect (11+ years customer-embedded enterprise delivery across CRM, logistics state machines, and data pipelines; USMC Veteran). Over a 14-month independent engineering sprint (August 2025 – October 2026), he solo-architected the AINA specification, the <code>squad.exe</code> reference runtime, and the 45-case conformance battery by holding the master constitutional state machine at the architectural level and orchestrating strictly bounded execution slices across 9 concurrent AI IDE lanes. Available for independent technical peer review, non-dilutive AI safety and federal R&amp;D collaborations, university STTR partnerships, and bounded enterprise evaluation pilots.</p>
+  <p class="author-contact"><strong>Blayne Aina · Denver, CO · <a href="mailto:me@blayneaina.com">me@blayneaina.com</a> · <a href="https://github.com/SquadForge/blayne.aina" rel="noopener noreferrer">GitHub Repo (SquadForge/blayne.aina)</a></strong></p>
+</aside>
+
+<aside class="context-callout" aria-label="Intellectual property, open verification standards, and R&D collaboration">
+  <h2>Intellectual Property, 2026 U.S. Provisional Patent Estate &amp; Open Research Boundaries</h2>
+  <p>I am the sole inventor and owner of three pending 2026 U.S. Provisional Patent Applications filed in April–May 2026 covering the AINA governance architecture, EISA adjudication, Semantic Switch / MX2MX cross-domain treaties, and the <code>squad.exe</code> reference runtime (Provisional #1 filed April 12, 2026; Provisional #2 single omnibus application containing Parts 2A &amp; 2B filed May 2, 2026; Provisional #3 filed May 15, 2026). To support rigorous peer review and research funding due diligence, AINA separates open verification standards from background IP:</p>
+  <ol>
+    <li><strong>Open-Source Verification, Conformance &amp; Research Outputs (Apache 2.0 / MIT):</strong> The 12 JSON schema declarations (<code>EISA</code>, <code>RequestedAct</code>, <code>PCNA</code>, <code>LeaseDeclarations</code>), the 45-case and 20-case conformance manifests, the Semantic Switch synthetic dataset, and the zero-dependency offline verifier (<code>proof/verify_refusal_proof.py</code>) are published openly so researchers, standards bodies, and grant evaluators can independently verify and extend the benchmarks. Proposed public-interest R&amp;D work packages (such as cross-platform Linux/POSIX reference-monitor specifications and Lean 4 formalization) are likewise structured for open-source release.</li>
+    <li><strong>Clean Background / Foreground IP Demarcation for R&amp;D Grants, STTR/SBIR &amp; Pilots:</strong> Because 100% of AINA's background IP was solo-authored prior to external funding with zero third-party encumbrances, research sponsors, university STTR partners, federal R&amp;D agencies, and enterprise pilot partners receive a clean, unambiguous boundary between pre-existing background IP and newly funded foreground deliverables.</li>
+  </ol>
+  <p>The public specification and Windows NT runtime (<code>squad.exe</code>) demonstrated on this site represent the Tier 1/Tier 2 software reference implementation of the April–May 2026 three-provisional patent estate (spanning internal constitutional state-formation, Semantic Switch / MX2MX cross-boundary treaty governance, and Layer-Zero Authority-to-Effect [A2E] hardware-interlocked transduction across a 4-Tier Constitutional Assurance Continuum). Application numbers, full provisional specifications, and the live Rust workspace are available for technical peer review and R&amp;D grant due diligence.</p>
+  <p>The core system and runtime are written in <strong>Rust</strong>, with <strong>TypeScript used only as minimal glue</strong>.</p>
+</aside>
+
+That operational history matters for technical due diligence and R&D execution because the hardest part of systems governance is rarely writing a conceptual whitepaper. It is identifying field ownership, resolving conflicting records, defining deterministic state transitions, enforcing pre/post state invariance, and making the system operable under real failure conditions.
+
+It is not independent validation of AINA. AINA is founder-led and self-funded research and development, with work beginning in August 2025. AI-assisted coding and critique have contributed to the development process; I retain responsibility for the architecture, implementation integration, technical review, validation, and release decisions. Solo authorship establishes accountability and provenance, not production separation of duties.
+
+All background provisional filings and implementation artifacts are documented with explicit claim ceilings so research evaluators, peer reviewers, and pilot partners can inspect exactly what has been demonstrated and what remains proposed research.
+
+

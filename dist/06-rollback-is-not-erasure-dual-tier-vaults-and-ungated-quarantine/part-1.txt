@@ -1,0 +1,247 @@
+# §06 Part 1/3 — Rollback Is Not Erasure
+Canonical: https://blayneaina.com/06-rollback-is-not-erasure-dual-tier-vaults-and-ungated-quarantine/part-1/ | Raw Article: https://blayneaina.com/06.md | Next Part: https://blayneaina.com/06/part-2.txt
+
+# Rollback Is Not Erasure: Dual-Tier Vaults and Ungated Quarantine
+
+*A backup can restore a clean state. It cannot explain what happened afterward. Recovery needs a certified baseline and a separate forensic history.*
+
+**By Blayne Aina · Principal Systems Architect and creator of AINA · October 31, 2026**
+
+---
+
+A backup can tell you where to go back to. It cannot tell you what happened afterward.
+
+An autonomous agent edits a file five times, an external process changes it a sixth, and the framework “rolls back” by overwriting the file with its only snapshot. The clean baseline is gone. The intermediate states are gone. The unauthorized write is gone from the audit story. The system now looks exactly as it did before anything happened—which is precisely the evidence it needed to preserve.
+
+**Rollback is not erasure.** Restoring a clean file is one state transition. Preserving what occurred is another obligation. A governed recovery system needs both:
+
+- a trusted operational baseline for recovery;
+- an evidence-preserving account of every intermediate and ungated state for forensics.
+
+Article 05 proved current ownership at the write window. Article 06 makes recovery equally rigorous: certified checkout capture, dual-tier raw-byte vaults, replay-bound versions, bypass observation, release quarantine, and governed restoration.
+
+> **The baseline tells you where to revert. The vaults tell you why you may trust it—and what you must not pretend never happened.**
+
+## 1. Why Single-Tier Undo Fails
+
+Single-slot backup systems fail in two distinct ways.
+
+### Failure 1: The baseline is overwritten by the task itself
+
+```text
+checkout → snapshot state 0
+edit 1   → overwrite snapshot with state 1
+edit 2   → overwrite snapshot with state 2
+edit 3   → overwrite snapshot with state 3
+```
+
+The task has an undo button but no state 0 left. Worse, it cannot explain how state 3 was reached or which intermediate state was valid.
+
+AINA keeps the Primary pre-checkout baseline intact and accumulates each mutation as a new content-addressed Amber object. N edits under one checkout produce N recoverable Amber states without consuming the Primary anchor.
+
+### Failure 2: Ungated content becomes a trusted post-edit state
+
+An external process changes the file while a lease is active. At release, the system archives the current bytes as if the agent wrote them through the governed path. Provenance has been laundered: unauthorized content now looks like a legitimate post-edit artifact.
+
+AINA compares live bytes with the last authorized state. A mismatch becomes `quarantine_ungated`, emits `released_with_ungated_content`, and returns `content_mismatch: true`. The divergent bytes remain on disk for inspection; they are not silently restored or deleted.
+
+## 2. The Dual-Tier Separation
+
+Primary and Amber are not two copies of one backup. They answer different questions and have different failure and custody properties.
+
+### Exhibit 6.1 — Dual-tier operational separation
+
+```text
+                         CHECKOUT INVOCATION
+                                  │
+                    Lease + kernel handle acquired
+                                  │
+                     save_checkout_copy(verified bytes)
+                       ┌──────────┴──────────┐
+                       ▼                     ▼
+              PRIMARY OPERATIONAL VAULT   AMBER FORENSIC VAULT
+       .squad/vault/<fnv1a_16hex>/      $AMBER_VAULT/objects/<hex2>/<sha256>.obj
+       ├─ versioned raw bytes           ├─ raw content-addressed bytes
+       ├─ adjacent .sha256 sidecar      ├─ deduplicated by content
+       ├─ create_new + sync_all         ├─ atomic write + exact readback
+       ├─ PRIMARY_KEEP = 100            ├─ append-only amber.jsonl
+       └─ bound by vault.jsonl replay   └─ quarantine and per-edit states
+                       │                     │
+                       └──────────┬──────────┘
+                                  ▼
+                  certified baseline + complete forensic history
+```
+
+Primary is the bounded operational store for rapid rollback. Amber is the append-oriented, content-addressed forensic store for checkout, edit snapshots, post-edit states, native consistent snapshots, and quarantine. “Append-oriented” describes its write model, not deletion-proof immutability; storage survival is a separate custody question addressed below.
+
+## One Checkout, Six Mutations, Two Truths
+
+Consider one file checked out for remediation:
+
+1. **Certified checkout.** The lease and kernel handle are acquired. State 0 is written to Primary with its sidecar and capture-ledger binding, and archived to Amber with exact readback. If any step fails, both lease and handle are released.
+2. **Five governed edits.** Each pre-mutation state is appended to Amber as `edit_snapshot`. Primary remains the certified state-0 anchor; Amber now holds five additional states.
+3. **One ungated write.** A separate process changes state 6 outside the tool path. The mtime-based sentinel may flag `bypass_detected`, but the more important fact is that the last authorized gated state no longer matches the live bytes.
+4. **Release.** The current bytes hash differently from the last gated state. They become `quarantine_ungated`, with `content_mismatch: true` and `released_with_ungated_content`. The bytes remain available for inspection instead of disappearing into a clean release.
+5. **Governed restoration.** Under fresh current authority, the system restores the certified state-0 bytes as another governed write and preserves the displaced current state first. The operation is a new transition, not an assertion that the earlier mutations never happened.
+
+The result is deliberately two truths: the file can return to a trusted baseline, while the evidence retains every intermediate and ungated state. A third-party observer may already have consumed the divergent bytes; that external consequence requires its own reconciliation and is not erased by restoring the file.
+
+## 3. Primary: A Certified Operational Baseline
+
+A file on disk in the Primary directory is not a baseline yet. It becomes one only after its bytes, sidecar, scope identity, and durable capture binding all verify.
+
+### Scope sharding and identity
+
+Each canonical file scope maps to `.squad/vault/<fnv1a_16hex>/`. The hash is a 64-bit FNV-1a value rendered as 16 lowercase hexadecimal characters, providing a fixed-width, path-safe directory identity without drive-colon or separator problems.
+
+`meta.json` binds the directory back to its canonical scope and hash. If saved metadata does not resolve to the requested file, the copy is rejected with `primary_scope_identity_mismatch`. Legacy directories from an older path spelling are considered only when their recorded scope resolves to the same canonical file.
+
+This is routing, not capability proof; Article 05 already established that FNV-1a cannot carry authority by itself.
+
+### Monotonic version filenames
+
+Each capture receives a fresh name:
+
+```text
+{:013}-{:06}-{random_8}__{sanitized_name}
+```
+
+The components are a 13-digit Unix-millisecond prefix, a six-digit sub-millisecond remainder, an eight-character random tag, and a sanitized terminal filename. Lexicographic order tracks capture order, while the random tag prevents same-instant collisions.
+
+`create_new_synced` uses create-new semantics, writes the data, and calls `sync_all`. Existing objects are never overwritten. Every version gets an adjacent `.sha256` sidecar containing the content digest.
+
+### Readback before trust
+
+After writing the version and sidecar, `primary_store` reads both back. The saved bytes must equal the input exactly, and the sidecar must equal the computed SHA-256. A mismatch returns `primary_readback_mismatch` and prevents the protected change from proceeding.
+
+`prune_primary` keeps the most recent **100 versions per scope**, deleting older versions and their sidecars together. Operational retention is bounded without leaving orphaned digest files.
+
+### Durable version binding
+
+A saved version is bound by appending `vault_checkout_saved` to `.squad/vault.jsonl` with the canonical scope, destination, byte count, content hash, kind, owner, and timestamp.
+
+`version_binding` then replays the entire ledger:
+
+- every nonempty line must parse;
+- the destination must name the selected version exactly;
+- the record's canonical scope must resolve to the same file;
+- duplicate or conflicting bindings are refused;
+- digest, byte count, owner, and RFC 3339 timestamp must be well formed.
+
+`verify_primary_version` requires all three independent predicates before restoration:
+
+1. current bytes hash to the adjacent `.sha256` sidecar;
+2. replay binds that exact version to the same canonical source, digest, and size;
+3. a caller-supplied restore pin, when present, matches the verified digest exactly.
+
+A legacy object without a capture binding is accepted only against an independently supplied original restore pin. Otherwise the operator must re-baseline with a fresh checkout. No binding is synthesized retrospectively.
+
+### Exhibit 6.4 — A valid Primary capture binding
+
+```json
+{
+  "action": "vault_checkout_saved",
+  "scope": "project:/services/renewal.rs",
+  "owner": "reviewer-beta",
+  "intent": "governed renewal remediation",
+  "dest": ".squad/vault/7c9a2e1d0f8b4a3c/0001730304000-000128-e4b8c9d2__renewal_rs",
+  "bytes": 34120,
+  "content_sha256": "4b92ec173d8f8a12b4e8035a92cfb912384a71b2d3080e7d56a89403d1685bb3",
+  "kind": "checkout",
+  "at": "2026-10-31T17:10:00.128000Z"
+}
+```
+
+The binding does not merely say a file exists. It certifies which source produced it, which bytes it holds, who captured it, and when the receipt became durable.
+
+## 4. Amber: Content-Addressed Forensic Objects
+
+Amber stores raw bytes under:
+
+```text
+$AMBER_VAULT/objects/<first-two-hex>/<full-sha256>.obj
+```
+
+The first two digest characters create 256 shard directories. There is no Zstandard or `.zst` container. Raw bytes eliminate codec selection from the recovery trust boundary and make the content address itself the object's identity.
+
+### Atomic creation, deduplication, and exact readback
+
+When an object is new, bytes are written atomically and immediately read back. They must equal the input exactly. If an object with that digest already exists, writing is skipped and the receipt records `deduped: true`. A mismatch between path and content fails with `archived: false` instead of silently accepting a substituted object.
+
+Every capture appends to `amber.jsonl` with:
+
+- `event: "amber_archived"`;
+- capture kind, canonical scope and absolute source identity;
+- owner and intent;
+- SHA-256 and raw byte count;
+- timestamp and deduplication status.
+
+The five capture classes are `checkout`, `edit_snapshot`, `post_edit`, `quarantine_ungated`, and `native_snapshot`. Native consistent snapshots capture verified bytes rather than pretending a raw live database copy is consistent.
+
+`read_verified_amber` enforces a 64-hex digest, a caller-declared maximum size, and a full hash match before returning any bytes. Path traversal and oversized recovery artifacts are refused before they can exhaust memory.
+
+## 5. Fail-Closed Checkout Capture
+
+Checkout is a state machine, not a best-effort backup call.
+
+### Exhibit 6.2 — Fail-closed checkout capture state machine
+
+```text
+LockRequested
+→ manager lease + kernel OS handle acquired
+→ Primary create_new + sidecar + full readback
+→ Amber raw-byte archive + exact readback
+→ append vault_checkout_saved to vault.jsonl
+→ version_binding full replay
+     ├─ SUCCESS → tenancy granted with certified baseline
+     └─ FAILURE → manager::release(&lease)
+                → oshandle::release(&scope)
+                → return capture failure; no tenancy
+```
+
+The lease and kernel handle are acquired first so the source cannot be casually changed during capture. Any failure in storage, sidecar verification, Amber persistence, ledger append, or binding replay releases both. Tenancy is never granted without a certified recovery baseline.
+
+### Exhibit 6.5 — Checkout failure revokes tenancy
+
+```json
+{
+  "error": "vault_capture_receipt_unconfirmed: the persisted capture receipt does not read back as this exact version",
+  "baseline_certified": false,
+  "manager_lease_released": true,
+  "os_handle_released": true,
+  "tenancy_granted": false
+}
+```
+
+The retained bytes can aid diagnosis, but they do not certify recovery or permit execution.
+
+## 6. Per-Mutation Amber Accumulation
+
+`snapshot_edit_state` captures the current bytes before a governed mutation and archives them only to Amber with `kind: "edit_snapshot"`. Primary remains the state-0 undo baseline.
+
+```text
+Primary: state 0 ───────────────────────────────► remains certified
+Amber:   state 0 → state 1 → state 2 → … → state N
+                  every edit adds a content-addressed object
+```
+
+If ten edits occur under one checkout, Amber holds ten recoverable states while Primary retains the original anchor. A restoration to state 0 does not erase the other ten; a later investigation can still inspect them.
+
+### Exhibit 6.6 — Amber edit snapshot
+
+```json
+{
+  "event": "amber_archived",
+  "at": "2026-10-31T17:12:04.112000Z",
+  "kind": "edit_snapshot",
+  "scope": "project:/services/renewal.rs",
+  "abs": "project:/services/renewal.rs",
+  "owner": "reviewer-beta",
+  "intent": "pre-edit snapshot before mutation 3",
+  "sha256": "9a1f28b76e4c3d21a08456b9c832104e7651a2b3c4d5e6f7a8b9c0d1e2f3a4b5",
+  "bytes": 35890,
+  "deduped": false
+}
+```
+
+

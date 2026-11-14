@@ -1,0 +1,231 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>§04 Part 1/5: The Room Coordination Plane (Introduction &amp; Overview) | Blayne Aina</title>
+  <meta name="description" content="Sections: Introduction &amp; Overview, The Whole Machine, Not a Wake Queue, One Assignment Through the Machine, 1. Git and Chat Are Necessary—and Insufficient, 2. Subsystem 1: Territory and Principal Identity">
+  <meta name="author" content="Blayne Aina">
+  <meta name="robots" content="index, follow, max-snippet:-1, max-image-preview:large, max-video-preview:-1">
+  <link rel="canonical" href="https://blayneaina.com/04-the-room-why-git-and-chat-are-not-coordination-planes/part-1/">
+  <link rel="icon" href="/favicon.ico" sizes="any">
+  <link rel="icon" href="/favicon.svg" type="image/svg+xml">
+
+  <!-- OpenGraph / Social -->
+  <meta property="og:type" content="article">
+  <meta property="og:title" content="§04 Part 1/5: The Room Coordination Plane (Introduction &amp; Overview)">
+  <meta property="og:description" content="Sections: Introduction &amp; Overview, The Whole Machine, Not a Wake Queue, One Assignment Through the Machine, 1. Git and Chat Are Necessary—and Insufficient, 2. Subsystem 1: Territory and Principal Identity">
+  <meta property="og:url" content="https://blayneaina.com/04-the-room-why-git-and-chat-are-not-coordination-planes/part-1/">
+  <meta property="og:site_name" content="Blayne Aina — The Route to Trusting AI">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="§04 Part 1/5: The Room Coordination Plane (Introduction &amp; Overview)">
+  <meta name="twitter:description" content="Sections: Introduction &amp; Overview, The Whole Machine, Not a Wake Queue, One Assignment Through the Machine, 1. Git and Chat Are Necessary—and Insufficient, 2. Subsystem 1: Territory and Principal Identity">
+  
+  <link rel="stylesheet" href="/style.css?v=20261109-s-tier">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@500;700&family=Instrument+Serif:ital@0;1&family=Inter:wght@400;500;600;700;800&family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,500;0,6..72,600;1,6..72,400&family=JetBrains+Mono:wght@400;500&family=Plus+Jakarta+Sans:wght@600;700;800&display=swap" rel="stylesheet">
+</head>
+<body>
+  <div class="reading-progress-bar" id="progressBar"></div>
+
+  <header class="site-header compact-ai-header"><div class="header-inner compact-ai-nav"><a href="/" class="brand"><strong>BLAYNE AINA</strong></a> | <a href="/ai-brief/">1-Page Master Brief (§01–§09)</a> | <a href="/articles/">All 9 Articles &amp; Briefs</a> | <a href="/research-assurance/">Assurance</a> | <a href="/refusal-proof/">Proof</a> | <a href="/llms.txt">llms.txt</a> | <a href="mailto:me@blayneaina.com">me@blayneaina.com</a></div></header>
+  <div class="layout-container presentation-layout">
+    <main class="content-area">
+      <article class="prose-wrapper presentation-wrapper">
+<header class="article-header compact-article-header"><h1 class="article-title">§04 Part 1/5: The Room Coordination Plane (Introduction &amp; Overview)</h1><p class="article-subtitle">Sections: Introduction &amp; Overview, The Whole Machine, Not a Wake Queue, One Assignment Through the Machine, 1. Git and Chat Are Necessary—and Insufficient, 2. Subsystem 1: Territory and Principal Identity</p></header>
+
+        
+        
+
+        <div class="article-body">
+          
+      <p class="part-compact-nav"><strong>§04 PART 1/5</strong> (14,370 chars · Sections: Introduction &amp; Overview; The Whole Machine, Not a Wake Queue; One Assignment Through the Machine; 1. Git and Chat Are Necessary—and Insufficient; 2. Subsystem 1: Territory and Principal Identity) — <a href="/04-the-room-why-git-and-chat-are-not-coordination-planes/part-2/">Part 2 →</a> · <a href="/04/brief/">1-Call Brief</a> · <a href="/04-the-room-why-git-and-chat-are-not-coordination-planes/">Full §04</a> · <a href="/04/part-1.txt">Raw .txt</a> · All: <a href="/04-the-room-why-git-and-chat-are-not-coordination-planes/part-1/">P1</a> <a href="/04-the-room-why-git-and-chat-are-not-coordination-planes/part-2/">P2</a> <a href="/04-the-room-why-git-and-chat-are-not-coordination-planes/part-3/">P3</a> <a href="/04-the-room-why-git-and-chat-are-not-coordination-planes/part-4/">P4</a> <a href="/04-the-room-why-git-and-chat-are-not-coordination-planes/part-5/">P5</a></p>
+    
+<h1>The Room: Why Git and Chat Are Not Coordination Planes</h1>
+<p><em>Source history records what changed. Chat records what was said. The Room decides who may read, act, receive, stop, and close work now—and makes every transition prove it.</em></p>
+<p><strong>By Blayne Aina · Principal Systems Architect and creator of AINA · October 31, 2026</strong></p>
+<hr>
+<p>A commit proves what source history recorded. A chat message proves what someone said.</p>
+<p>Neither proves who may mutate a live resource now, whether the intended native session received the assignment, whether the worker saw every causal parent before acting, whether a queued instruction still has authority, or whether the resulting work passed acceptance.</p>
+<p>That is the coordination problem. It does not disappear because agents have worktrees, checkpoints, tool schemas, and an execution log.</p>
+<p>Article 03 produced recognized constitutional acts and committed them as <code>eisa_&lt;32hex&gt;</code>. Article 04 is the machine that gives those acts a live authority domain: <strong>The Room</strong>.</p>
+<blockquote>
+<p><strong>The Room is not a chat channel. It is a coordination plane that binds territory, identity, observation, delivery, execution, cancellation, and completion into one revalidated authority chain.</strong></p>
+</blockquote>
+<aside class="context-callout" aria-label="Production dogfooding with nine concurrent AI IDEs">
+  <h2>Production Dogfooding Note: 9 Concurrent AI IDEs in The Room</h2>
+  <p>In daily operation, The Room coordinates 9 concurrent AI IDE worker lanes running on a single Windows workstation against one shared repository. Rather than relying on Git branches or chat logs—which only record collisions after they happen—each of the 9 IDE lanes must acquire a live territory lease and causal wake token from The Room before mutating any file or SQLite row.</p>
+  <ol>
+    <li><strong>Human architect owns invariants and slice boundaries:</strong> No single model holds the entire multi-module architecture in context. Blayne holds the global state-machine contract and decomposes work into bounded, single-responsibility slices—for example, an RFC 8785 JCS serializer, a Win32 <code>FILE_SHARE_READ</code> wrapper, or an adversarial conformance-vector generator.</li>
+    <li><strong>Vendor-agnostic model assignment:</strong> Different IDE lanes use different models and assistants suited to each slice: high-reasoning models for state-machine logic and edge-case auditing, and fast local/flash models for codebase tracing, log extraction, and fixture generation.</li>
+    <li><strong>Plausible-but-wrong output is rejected through conformance:</strong> No lane is accepted because its code compiles or its explanation sounds coherent. Every slice must pass strict schema validation (<code>StrictVisitor</code>), pre/post SHA-256 fixture checks, and the 45-case conformance gate before entering the Primary Vault.</li>
+  </ol>
+</aside><h2>The Whole Machine, Not a Wake Queue</h2>
+<p>The Room includes eleven cooperating mechanism families grouped into six architectural domains. Nine receive numbered subsystem sections below; worker staging and controller-side brokerage are developed within native execution and cancellation rather than numbered separately. Treating the Room as a messaging API leaves most of its assurance on the table.</p>
+<pre><code class="language-text">[1. TERRITORY &amp; PRINCIPAL PINNING]
+  state-tree identity + 192-bit combined Win32 project object IDs
+  CSPRNG enrollment + thread-local SessionGuard + native conversation binding
+  EffectiveTier clamp + multiplexer verb probing + stdio/pre-model egress isolation
+          │
+          ▼
+[2. PER-ROOM GRAPH SHARDS &amp; VISIBILITY]
+  immutable scope binding + content-addressed artifacts
+  monotonic parent-withholding closure + multi-Room composition
+  reparse-safe snapshot recovery
+          │
+          ▼
+[3. ROOM SYNC ENGINE &amp; PRE-ACTION WORK GATE]
+  per-Room SQLite WAL sync index + handle-pinned journal reconciliation
+  conversation/view checkpoints + recursive causal-parent verification
+  atomic turn commit + Fold Rule + post-read revalidation
+          │
+          ▼
+[4. CONTRIBUTION GRAMMAR &amp; SEALED WAKE PERMITS]
+  note / reply / say / send / handoff / done with different authority effects
+  18-field room-wake-job-v3 + dispatch and split-lock revalidation
+  per-recipient evidence delivery + complete governing-source coverage
+          │
+          ▼
+[5. NATIVE SESSIONS, CONFINED WORKERS &amp; ACTIVE CANCELLATION]
+  Session Factory v1 + five delivery/reply proof states
+  row/column staging + controller-side MCP broker
+  held in-flight operations + 1 Hz Job observer + two-phase stop outbox
+          │
+          ▼
+[6. TASK LINEAGE, PRIVILEGED ACCEPTANCE &amp; RUNTIME INVARIANTS]
+  16-level delegation ancestry + 14-key completion revalidation
+  7 engine-evaluated acceptance kinds
+  exactly_once + well_formed + exclusive + causal + resolution
+</code></pre>
+<p>The result is a continuous authority path:</p>
+<pre><code class="language-text">EISA-recognized act
+→ live actor, credential, native conversation, project, and Room scope
+→ confirmed observation of the live causal frontier
+→ task-bound contribution and sealed wake permit
+→ dispatch-time and worker-claim authority revalidation
+→ confined execution and native reply proof
+→ destination and artifact acceptance
+→ terminal evidence or explicit in-doubt state
+</code></pre>
+<h2>One Assignment Through the Machine</h2>
+<p>Consider a coordinator assigning renewal-evidence review to <code>reviewer-beta</code>. The path is not “write a prompt and hope the right agent answers”:</p>
+<ol>
+<li><strong>Territory and principal.</strong> The coordinator&#39;s credential, native conversation, project object, and Room scope are re-derived. The recipient&#39;s registration is current.</li>
+<li><strong>Recognized work.</strong> An EISA submission supplies the constitutional act and its evidence handles. The task binds that work to an exact project and acceptance contract.</li>
+<li><strong>Observed readiness.</strong> Before the coordinator can send, the Work Gate proves the conversation checkpoint covers the live frontier and every required causal parent is confirmed.</li>
+<li><strong>Sealed assignment.</strong> <code>send</code> writes the message and obligations, then seals an 18-field wake permit with the recipient, task, evidence, registration, Room authority, control epoch, and original deadline.</li>
+<li><strong>Dispatch revalidation.</strong> The Room rechecks the permit, roster, registration, task ancestry, governing source, project, admission, epoch, and remaining time. Evidence is admitted specifically for <code>reviewer-beta</code> and delivered with a fresh <code>wake_delivery</code> receipt.</li>
+<li><strong>Split-lock worker claim.</strong> The worker first validates context outside the transition lock, then rereads the job inside it and requires the unchanged binding digest before claiming.</li>
+<li><strong>Native delivery.</strong> The bound native session receives the prompt. Dispatch, body delivery, body visibility, wrong-body refusal, and reply remain separate facts.</li>
+<li><strong>Reply and production.</strong> The worker returns a correlated reply and produces the required artifact. Process exit alone would leave the obligation unresolved.</li>
+<li><strong>Privileged acceptance.</strong> The engine measures the artifact digest, distinct evidence origins, destination effect, and original worker receipt against the declared acceptance checks.</li>
+<li><strong>Terminal closure.</strong> Completion revalidates all 14 task-authority keys, releases the scope through the structured path, and records <code>task_done</code>.</li>
+</ol>
+<p>If registration changes before dispatch, the old wake stops with <code>wake_recipient_registration_changed</code>. If cancellation arrives after launch, new effects stop, the owned Job is terminated, and only <code>ActiveProcesses == 0</code> confirms quiescence. Any destination operation whose outcome is uncertain remains <code>held_until_reconciled</code>; it is not relabeled “cancelled and safe.”</p>
+<h2>1. Git and Chat Are Necessary—and Insufficient</h2>
+<p>Git is an excellent source-history plane. Chat is an excellent human and model communication surface. The Room does not replace either. It prevents their artifacts from impersonating live authority.</p>
+<table>
+<thead>
+<tr>
+<th>Existing primitive</th>
+<th>Native value</th>
+<th>Additional question the Room answers</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>Tool-call schema</td>
+<td>The proposal has a valid shape</td>
+<td>Is this exact act recognized, currently standing, and inside the caller&#39;s verb and tier authority?</td>
+</tr>
+<tr>
+<td>Graph/workflow checkpoint</td>
+<td>A prior plan can resume</td>
+<td>Is that plan valid for the current target, conversation, task lineage, registration, generation, and control epoch?</td>
+</tr>
+<tr>
+<td>Git worktree</td>
+<td>Source histories and working directories are separated</td>
+<td>Who owns the live resource and may produce this effect now?</td>
+</tr>
+<tr>
+<td>Model reviewer or vote</td>
+<td>More cognition and critique</td>
+<td>Which deterministic predicate admits or refuses the act?</td>
+</tr>
+<tr>
+<td>Execution log</td>
+<td>A tool reported an outcome</td>
+<td>Did the destination and receipt chain verify it, and did the responsible native session return it?</td>
+</tr>
+<tr>
+<td>Idempotency key</td>
+<td>A retry can be deduplicated</td>
+<td>Was the effect committed, and was the original obligation actually answered?</td>
+</tr>
+</tbody></table>
+<p>Clean merges do not prove semantic non-interference. Two agents can edit different lines and violate a shared invariant. They can modify separate files whose combination is unsafe, call the same external API twice, or make locally valid decisions against the same stale pre-state.</p>
+<p>Mature coordination systems—consensus services, compare-and-swap stores, MVCC databases, lease and fencing protocols, durable workflow engines—absolutely can answer these questions. The claim is not that AINA invented coordination. The claim is that <strong>source history and conversation are the wrong artifacts to carry its full burden</strong>. A conventional stack that enforces the same canonical transition through the same current predicates earns the same functional credit.</p>
+<h2>2. Subsystem 1: Territory and Principal Identity</h2>
+<p>Authority starts by proving which state tree and which physical project object the act concerns.</p>
+<h3>Split-brain state-tree refusal</h3>
+<p>Before the engine opens its state tree, <code>validate_state_dir</code> requires the state-directory identity marker. The marker carries an <code>id</code> and <code>canonical_path</code>; the machine bootstrap supplies the canonical instance and root. A missing marker, an unreadable bootstrap, a different instance ID, a noncanonical path, or a mismatched <code>SQUAD_ROOT</code> fails closed.</p>
+<p>This prevents two <code>.squad</code> trees from independently accumulating tasks, leases, credentials, and Room history while believing they are one machine. It is not a path prettification step. It is a split-brain admission gate.</p>
+<h3>Project grants pin path and kernel object identity</h3>
+<p>An owner-opened <code>ProjectGrant</code> binds:</p>
+<ul>
+<li>a unique project ID and bounded name;</li>
+<li>the requested and canonical root paths;</li>
+<li><code>root_object_id</code>, a 192-bit combined identity: a 64-bit volume serial number plus the 128-bit NTFS/ReFS file ID;</li>
+<li>opening actor and time;</li>
+<li>an optional governing-source grant and its reading policy.</li>
+</ul>
+<p>The directory is opened with backup semantics and queried through <code>GetFileInformationByHandleEx(FileIdInfo)</code>. Every live authorization rechecks both canonical path and object identity. A junction, symlink, replacement, or redirected root produces <code>project_root_redirected</code>.</p>
+<p>Project opening refuses non-directories, filesystem roots, broad owner containers, control and recovery storage, worker roots, and overlapping project territories. Roster membership does not widen this boundary.</p>
+<p><code>ReadAuthority</code> applies the same provenance discipline to shared briefcases, contexts, artifacts, braindumps, and proposals: project-scoped records go to admitted project readers, coordination records to the appropriate Room roster, and legacy unscoped records only to their original author.</p>
+<h3>CSPRNG enrollment without persistent plaintext secrets</h3>
+<p>Agent enrollment generates a 32-byte secret with Windows <code>BCryptGenRandom</code>. The controller stores only <code>secret_sha256</code>, issuance, revocation, and target metadata. Host configuration receives the actual token for connection authentication; enrollment receipts do not return it. Multi-agent enrollment restores exact preimages if any step fails.</p>
+<p>Every call revalidates the current credential digest, so rotation and revocation affect live connections without a restart.</p>
+<h3>Thread-local sessions and native conversation identity</h3>
+<p><code>SessionGuard</code> binds one authenticated session to one synchronous dispatch. Its <code>PhantomData&lt;Rc&lt;()&gt;&gt;</code> prevents the authority guard from moving across threads, and <code>Drop</code> removes the active frame during normal return or unwind.</p>
+<p><code>IS_HTTP_WORKER</code> closes the privilege-fallback path: an HTTP worker thread without an active request session never inherits the process launch principal.</p>
+<p>For supported Codex hosts, <code>bind_tool_request_context</code> reads <code>params._meta.threadId</code> outside model-authored arguments, requires a non-nil canonical UUID, and binds <code>codex:&lt;UUID&gt;</code> as the native conversation. The authenticated host is the metadata trust boundary. This is not cryptographic attestation against every process that might possess its credential, and Article 04 does not claim otherwise.</p>
+<p>Self-identifying argument fields must match the bound principal. Mismatches produce <code>actor_mismatch</code> and an integrity signal rather than letting a model nominate a more privileged author.</p>
+<h3>Tier clamping includes the route, not just the tool name</h3>
+<p>The effective tier is the minimum of:</p>
+<pre><code class="language-text">session-declared tier
+owner per-agent max_tier
+fleet-wide control ceiling
+</code></pre>
+<p>Owner policy and the fleet ceiling are re-read on every invocation. The multiplexer guard then derives verb routes from the MCP schema build table using <code>VERB_PROBE</code>. A denial of <code>room_note</code> therefore also blocks <code>squad_room</code> with <code>{&quot;action&quot;:&quot;note&quot;}</code>. Blocking the friendly tool name while leaving the generic route open is not policy enforcement.</p>
+<h3>Stdio and pre-model egress are separate boundaries</h3>
+<p>The MCP transport duplicates its original input/output as private handles and clears inheritance flags. Process standard input is detached, and standard output is redirected to diagnostics so a child cannot corrupt the JSON-RPC wire or retain the parent&#39;s pipe accidentally.</p>
+<p>Before a result or error reaches model context, every string passes <code>redact_checked</code>. If the redaction policy cannot be established, the response becomes <code>tool_result_withheld</code>. The tool may already have run; the uninspected result still does not escape.</p>
+
+
+      <p class="part-compact-nav"><strong>END OF §04 PART 1/5</strong> — Next: <a href="/04-the-room-why-git-and-chat-are-not-coordination-planes/part-2/"><code>https://blayneaina.com/04-the-room-why-git-and-chat-are-not-coordination-planes/part-2/</code></a> · <a href="/04/brief/">§04 1-Call Brief</a> · <a href="/04.md">Raw .md</a></p>
+    
+        </div>
+
+        
+        
+        
+        
+
+        
+
+        
+      </article>
+    </main>
+
+  </div>
+
+  <footer class="site-footer compact-ai-footer"><p><strong>blayneaina.com</strong> — <a href="https://blayneaina.com/ai-brief/">Master Brief (https://blayneaina.com/ai-brief/)</a> · <a href="https://blayneaina.com/ai-brief.txt">Plain-Text Brief (https://blayneaina.com/ai-brief.txt)</a> · <a href="https://blayneaina.com/articles/">All 9 Articles &amp; Briefs (https://blayneaina.com/articles/)</a> · <a href="https://blayneaina.com/llms.txt">llms.txt</a> · <a href="mailto:me@blayneaina.com">me@blayneaina.com</a></p></footer>
+
+
+
+
+
+  <script src="/script.js?v=20261109-s-tier"></script>
+</body>
+</html>

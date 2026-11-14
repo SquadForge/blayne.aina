@@ -1,0 +1,265 @@
+# §03 Part 3/6 — Semantic Switch & EISA
+Canonical: https://blayneaina.com/03-eisa-four-gate-verdict-machine-and-entity-resolution/part-3/ | Raw Article: https://blayneaina.com/03.md | Next Part: https://blayneaina.com/03/part-4.txt
+
+## Exhibit A — A Valid Contact Submission
+
+The following synthetic submission binds two email relationships, asserts a pair, and proposes a complete partition over three sealed records. `artifactHash` is the case's bare digest. Values are resolved from the sealed case, not trusted from the prose.
+
+```json
+[
+  {
+    "version": "EISA_ACT_V1",
+    "stage": "Fracture",
+    "actor": "agent_er_worker_01",
+    "opcode": "BindEvidenceTag",
+    "operands": {
+      "id": "act_bind_email_01",
+      "tag": "EMAIL_LOCAL_MATCH",
+      "coordinates": [
+        { "artifact": "records", "recordId": "rec_101", "pointer": "/email" },
+        { "artifact": "records", "recordId": "rec_102", "pointer": "/contact/workEmail" }
+      ]
+    },
+    "evidenceRefs": ["ev_8f31c09a4b2e11d08a7c65e41902b3a1"],
+    "confidence": { "bps": 9400 },
+    "boundedReason": "Both sealed values share the local part m.chen across regional domains.",
+    "sourceEvent": "evt_0123456789abcdef_a1b2c3d4",
+    "artifactHash": "4a9c8e12f03b7d651928374655647382910abcdef1234567890abcdef1234567"
+  },
+  {
+    "version": "EISA_ACT_V1",
+    "stage": "Fracture",
+    "actor": "agent_er_worker_01",
+    "opcode": "BindEvidenceTag",
+    "operands": {
+      "id": "act_bind_tld_02",
+      "tag": "DOMAIN_COUNTRY_TLD_VARIATION",
+      "coordinates": [
+        { "artifact": "records", "recordId": "rec_101", "pointer": "/email" },
+        { "artifact": "records", "recordId": "rec_102", "pointer": "/contact/workEmail" }
+      ]
+    },
+    "evidenceRefs": ["ev_8f31c09a4b2e11d08a7c65e41902b3a1"],
+    "confidence": { "bps": 9400 },
+    "boundedReason": "The first domain labels match and the full regional domains differ.",
+    "sourceEvent": "evt_0123456789abcdef_a1b2c3d4",
+    "artifactHash": "4a9c8e12f03b7d651928374655647382910abcdef1234567890abcdef1234567"
+  },
+  {
+    "version": "EISA_ACT_V1",
+    "stage": "Fracture",
+    "actor": "agent_er_worker_01",
+    "opcode": "AssertDuplicatePair",
+    "operands": {
+      "id": "act_dup_101_102",
+      "pair": ["rec_101", "rec_102"],
+      "support": ["act_bind_email_01", "act_bind_tld_02"],
+      "counter": []
+    },
+    "evidenceRefs": ["ev_8f31c09a4b2e11d08a7c65e41902b3a1"],
+    "confidence": { "bps": 9100 },
+    "boundedReason": "Two admitted positive bindings support this pair; no counter binding exists in this submission.",
+    "sourceEvent": "evt_0123456789abcdef_a1b2c3d4",
+    "artifactHash": "4a9c8e12f03b7d651928374655647382910abcdef1234567890abcdef1234567"
+  },
+  {
+    "version": "EISA_ACT_V1",
+    "stage": "Fracture",
+    "actor": "agent_er_worker_01",
+    "opcode": "ProposePartition",
+    "operands": {
+      "id": "act_part_final",
+      "groups": [["rec_101", "rec_102"], ["rec_103"]],
+      "support": ["act_dup_101_102"]
+    },
+    "evidenceRefs": ["ev_8f31c09a4b2e11d08a7c65e41902b3a1"],
+    "confidence": { "bps": 9100 },
+    "boundedReason": "A complete disjoint cover with one connected pair and one singleton.",
+    "sourceEvent": "evt_0123456789abcdef_a1b2c3d4",
+    "artifactHash": "4a9c8e12f03b7d651928374655647382910abcdef1234567890abcdef1234567"
+  }
+]
+```
+
+The recognizer, not the narrative, decides whether the sealed values satisfy `EmailLocalEqual` and `EmailTldVariation`, whether the dependencies match, and whether the partition laws hold.
+
+## Exhibit B — `counterevidence_suppressed`
+
+Suppose the same submission also admitted `act_bind_counter_03`, binding `DOMAIN_ROOT_MISMATCH` on the pair, but `act_dup_101_102` omitted it from `counter`. Its recognized-act report entry is:
+
+```json
+{
+  "index": 2,
+  "id": "act_dup_101_102",
+  "opcode": "AssertDuplicatePair",
+  "class": "typed_fault",
+  "identity": null,
+  "act_sha256": "01928374655647382910abcdef1234567890abcdef1234567890abcdef123456",
+  "canonical": "{\"actor\":\"agent_er_worker_01\",\"artifactHash\":\"4a9c8e12f03b7d651928374655647382910abcdef1234567890abcdef1234567\",\"boundedReason\":\"Pair asserted without admitted counterevidence.\",\"confidence\":{\"bps\":9100},\"evidenceRefs\":[],\"opcode\":\"AssertDuplicatePair\",\"operands\":{\"counter\":[],\"id\":\"act_dup_101_102\",\"pair\":[\"rec_101\",\"rec_102\"],\"support\":[\"act_bind_email_01\"]},\"sourceEvent\":\"evt_0123456789abcdef_a1b2c3d4\",\"stage\":\"Fracture\",\"version\":\"EISA_ACT_V1\"}",
+  "fault": {
+    "code": "counterevidence_suppressed",
+    "detail": "admitted counterevidence on this pair is not listed in counter: act_bind_counter_03"
+  },
+  "observations": [],
+  "comparator": null,
+  "depends_on": [],
+  "evidence_refs": []
+}
+```
+
+The refusal is not a score penalty. It is the absence of standing for that pair.
+
+## 6. Proof Lane A: Spatial Relations Without Visual Guesswork
+
+A flowchart can have perfect OCR and still produce a false graph. Recognizing the words inside two boxes does not establish which arrow connects them, which direction the arrow points, whether the tip touches a node or an enclosing frame, or whether “Yes” and “No” label the same geometric edge.
+
+EISA's layout family does not ask a model to settle those questions from prose. It judges `AssertLayoutRelation` over parser-committed `LayoutFact` values sealed from whole-node document citations.
+
+### From PDF operators to integer evidence
+
+The layout projection decodes PDF content streams, tracks affine transforms and graphics-state nesting, interprets subpaths and paint operators, and expands Form XObjects within bounded recursion. Coordinates become integer **centi-points**—hundredths of a PDF point—only when finite and within the declared coordinate ceiling.
+
+The projection is bounded at 4,000 elements per page and 20,000 points per path. Cubic Bezier bounding boxes solve derivative extrema rather than treating control points as the painted extent. Course tracing samples each cubic segment 16 times and keeps at most 4,096 trace points.
+
+Small filled triangular marks no larger than 24 points can become arrowheads. The attachment logic associates marks with open connector ends, so direction and touch are measured from the actual marked end. Branch labels up to 20 points high are assigned to a connector when the traced course establishes ownership. A label beside a course must be within 12 points and every other course must be at least twice as far; otherwise it is tied and assigned to neither.
+
+The recognizer never accepts replacement geometry from the act.
+
+### The `CONNECTS` proof
+
+`CONNECTS` is the only relation in the current layout alphabet. The act names three distinct sealed records—connector, from, and to—and its `evidenceRefs` must be exactly those three handles, each once. An outer frame is found through the parser-committed attachment and must also be sealed in the case, but it is not added as a fourth citation.
+
+The recognizer then enforces:
+
+1. **Provenance.** All three records come from one Room, view digest, source revision, parser digest, and page. Each record's committed `LayoutFact.node` is exactly the node its evidence handle cites.
+2. **Element types.** The connector is an open `line`, `polyline`, or `open_curve` with stroke paint and bounded start/end geometry. Both endpoints' targets are closed `rect`, `rects`, `closed_curve`, or `compound` shapes.
+3. **Direction.** The committed direction is `toward_end` or `toward_start`, determined by one marked end. No direction or an ambiguous direction is `relation_indeterminate`.
+4. **Unique attachment.** Neither end may carry parser-recorded ambiguity or no attached node. The parser's attached `from` and `to` node IDs must equal the act's cited nodes exactly.
+5. **Touch.** A direct tail lies within `LAYOUT_TOUCH = 150` centi-points (1.5 pt) of the `from` box. A direct head or its mark touches the `to` box within 150; a marked head can use `LAYOUT_NEAR_TOUCH = 200` centi-points (2.0 pt) for mark-box contact.
+6. **Frame proof.** When the parser routed an end through an outer frame, the frame and cited inner shape must independently satisfy the sealed frame law rather than letting a group boundary impersonate a target.
+
+A frame must be a sealed, stroke-only closed shape on the same view and page with exactly the committed box. The cited inner shape must be closed and filled. All four inner-minus-outer gaps must be nonnegative, and the **maximum** gap may not exceed `LAYOUT_FRAME_GAP = 600` centi-points (6.0 pt). The frame node must be sealed whole exactly once, and no other sealed closed shape may create an inner-shape tie. Page-wide uniqueness is reported as `parser_committed`; the recognizer separately checks contradictions present in the sealed case.
+
+The thresholds are therefore not interchangeable: 150 is direct touch, 200 is marked-head near-touch, and 600 is the maximum frame-to-inner gap.
+
+### Branch labels enter relation identity
+
+A connector's committed `path_labels` qualify the relation. Their label-node IDs enter `consensusIdentity`, so a “Yes” edge and a “No” edge between the same two shapes are not the same constitutional relation. The recognizer reads label words only when the corresponding text node is sealed whole from the same view. `labels_tied` remains visible and is assigned to neither connector.
+
+The result is deliberately narrow: EISA can prove one directed `CONNECTS` relation under declared geometry. It does not infer `flows_to`, `branches_to`, `grouped_with`, electrical correctness, process safety, or the diagram author's intent.
+
+## Exhibit C — An Operative Layout Relation
+
+This is the layout portion of a synthetic recognized-act report. The frame fields are observations in the current report shape, not an agent-authored `layout_proof` object.
+
+```json
+{
+  "index": 0,
+  "id": "layout_connect_07",
+  "opcode": "AssertLayoutRelation",
+  "class": "operative",
+  "identity": "9f2d4b8c1e7a0356d4c2b1a0987654321fedcba0987654321fedcba098765432",
+  "fault": null,
+  "observations": [
+    {
+      "recordId": "ev_11111111111111111111111111111111",
+      "node_id": "page4/e42",
+      "shape": "polyline",
+      "direction": "toward_end",
+      "tail": [24100, 41200],
+      "head": [28900, 42150],
+      "tail_via": "direct",
+      "head_via": "frame",
+      "path_labels": [
+        {
+          "label": "page4/e43",
+          "bbox": [26000, 41400, 27800, 41700],
+          "text_node": "page4/t9",
+          "text": { "recordId": "ev_44444444444444444444444444444444", "text": "ADMITTED" },
+          "text_sealed": true,
+          "on": "course",
+          "beside_gap": null
+        }
+      ],
+      "labels_tied": []
+    },
+    {
+      "recordId": "ev_22222222222222222222222222222222",
+      "node_id": "page4/e18",
+      "shape": "rect",
+      "bbox": [23000, 40000, 24500, 42400]
+    },
+    {
+      "recordId": "ev_33333333333333333333333333333333",
+      "node_id": "page4/e29",
+      "shape": "rect",
+      "bbox": [28000, 41000, 29600, 43000],
+      "head_marks": [
+        { "node": "page4/e40", "bbox": [28700, 41900, 28900, 42200] }
+      ]
+    },
+    {
+      "end": "head",
+      "recordId": "ev_55555555555555555555555555555555",
+      "node_id": "page4/e5",
+      "shape": "rect",
+      "paint": "stroke",
+      "bbox": [27500, 40500, 30100, 43500],
+      "inner": "page4/e29",
+      "gap": 500,
+      "uniqueness": "parser_committed",
+      "sealed_case_other_inner": 0
+    }
+  ],
+  "comparator": "LayoutConnects(touch=150,mark_touch=200,frame=parser_committed_inner,frame_gap=600)",
+  "depends_on": [],
+  "evidence_refs": [
+    "ev_11111111111111111111111111111111",
+    "ev_22222222222222222222222222222222",
+    "ev_33333333333333333333333333333333"
+  ]
+}
+```
+
+The frame and label-text records are sealed in the case for verification, but the act's citations remain exactly connector, from, and to as required.
+
+## Exhibit D — Two Distinct Partition Failures
+
+```json
+[
+  {
+    "index": 3,
+    "id": "act_part_split_cluster",
+    "opcode": "ProposePartition",
+    "class": "typed_fault",
+    "identity": null,
+    "fault": {
+      "code": "partition_contradicts_support",
+      "detail": "'act_dup_101_102' asserts rec_101 and rec_102 are one record, but they are in different groups"
+    },
+    "observations": [],
+    "comparator": null,
+    "depends_on": [],
+    "evidence_refs": []
+  },
+  {
+    "index": 3,
+    "id": "act_part_unconnected_cluster",
+    "opcode": "ProposePartition",
+    "class": "typed_fault",
+    "identity": null,
+    "fault": {
+      "code": "partition_unsupported_group",
+      "detail": "group 0 is not connected by its cited relations"
+    },
+    "observations": [],
+    "comparator": null,
+    "depends_on": [],
+    "evidence_refs": []
+  }
+]
+```
+
+The first splits records already proven equivalent. The second groups records without proving connectivity. They are different defects and receive different faults.
+
+

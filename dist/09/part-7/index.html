@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>§09 Part 7/8: Bring One Real Boundary: Peer Review &amp; R&amp;D Evaluation (Bring the Boundary) | Blayne Aina</title>
+  <meta name="description" content="Sections: Bring the Boundary">
+  <meta name="author" content="Blayne Aina">
+  <meta name="robots" content="index, follow, max-snippet:-1, max-image-preview:large, max-video-preview:-1">
+  <link rel="canonical" href="https://blayneaina.com/09-bring-one-real-boundary-work-with-blayne/part-7/">
+  <link rel="icon" href="/favicon.ico" sizes="any">
+  <link rel="icon" href="/favicon.svg" type="image/svg+xml">
+
+  <!-- OpenGraph / Social -->
+  <meta property="og:type" content="article">
+  <meta property="og:title" content="§09 Part 7/8: Bring One Real Boundary: Peer Review &amp; R&amp;D Evaluation (Bring the Boundary)">
+  <meta property="og:description" content="Sections: Bring the Boundary">
+  <meta property="og:url" content="https://blayneaina.com/09-bring-one-real-boundary-work-with-blayne/part-7/">
+  <meta property="og:site_name" content="Blayne Aina — The Route to Trusting AI">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="§09 Part 7/8: Bring One Real Boundary: Peer Review &amp; R&amp;D Evaluation (Bring the Boundary)">
+  <meta name="twitter:description" content="Sections: Bring the Boundary">
+  
+  <link rel="stylesheet" href="/style.css?v=20261109-s-tier">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@500;700&family=Instrument+Serif:ital@0;1&family=Inter:wght@400;500;600;700;800&family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,500;0,6..72,600;1,6..72,400&family=JetBrains+Mono:wght@400;500&family=Plus+Jakarta+Sans:wght@600;700;800&display=swap" rel="stylesheet">
+</head>
+<body>
+  <div class="reading-progress-bar" id="progressBar"></div>
+
+  <header class="site-header compact-ai-header"><div class="header-inner compact-ai-nav"><a href="/" class="brand"><strong>BLAYNE AINA</strong></a> | <a href="/ai-brief/">1-Page Master Brief (§01–§09)</a> | <a href="/articles/">All 9 Articles &amp; Briefs</a> | <a href="/research-assurance/">Assurance</a> | <a href="/refusal-proof/">Proof</a> | <a href="/llms.txt">llms.txt</a> | <a href="mailto:me@blayneaina.com">me@blayneaina.com</a></div></header>
+  <div class="layout-container presentation-layout">
+    <main class="content-area">
+      <article class="prose-wrapper presentation-wrapper">
+<header class="article-header compact-article-header"><h1 class="article-title">§09 Part 7/8: Bring One Real Boundary: Peer Review &amp; R&amp;D Evaluation (Bring the Boundary)</h1><p class="article-subtitle">Sections: Bring the Boundary</p></header>
+
+        
+        
+
+        <div class="article-body">
+          
+      <p class="part-compact-nav"><strong>§09 PART 7/8</strong> (15,858 chars · Sections: Bring the Boundary) — <a href="/09-bring-one-real-boundary-work-with-blayne/part-6/">← Part 6</a> · <a href="/09-bring-one-real-boundary-work-with-blayne/part-8/">Part 8 →</a> · <a href="/09/brief/">1-Call Brief</a> · <a href="/09-bring-one-real-boundary-work-with-blayne/">Full §09</a> · <a href="/09/part-7.txt">Raw .txt</a> · All: <a href="/09-bring-one-real-boundary-work-with-blayne/part-1/">P1</a> <a href="/09-bring-one-real-boundary-work-with-blayne/part-2/">P2</a> <a href="/09-bring-one-real-boundary-work-with-blayne/part-3/">P3</a> <a href="/09-bring-one-real-boundary-work-with-blayne/part-4/">P4</a> <a href="/09-bring-one-real-boundary-work-with-blayne/part-5/">P5</a> <a href="/09-bring-one-real-boundary-work-with-blayne/part-6/">P6</a> <a href="/09-bring-one-real-boundary-work-with-blayne/part-7/">P7</a> <a href="/09-bring-one-real-boundary-work-with-blayne/part-8/">P8</a></p>
+    
+<h2>Bring the Boundary</h2>
+<p>Bring one AI-proposed mutation, one hostile document, or one duplicate-record problem. Include the operating owner, the handling constraints, and the question you need answered.</p>
+<p>We will establish the exact transition, predeclare acceptance and refusal, run the appropriate existing implementation, and return the evidence and its ceiling. If the result supports a next step, we can scope it. If it fails or remains unresolved, that result stays visible too.</p>
+<blockquote>
+<p><strong>Bring one real boundary. Make the result inspectable before deciding what comes next.</strong></p>
+</blockquote>
+<h2 id="exhibit-9-6">Technical &amp; Security Due Diligence FAQ</h2><p>These are the concrete mechanisms and assurance ceilings behind a technical walkthrough. Each answer links back to the relevant architectural proof surface.</p>
+<details class="faq-item" id="faq-q1">
+<summary><strong>1. How can an already-authorized operation become a different operation between human approval and execution, and what precise mechanism prevents it?</strong></summary><p>A high-level tool call can be approved at time <em>t1</em> and mutated before execution at <em>t2</em>: a path or image can be substituted, child arguments or environment state can change, or an inherited writable handle can address an unapproved target. AINA binds approval to a controller-fixed, RFC 8785 JCS-hashed <code>RequestedAct</code> before the worker environment exists. The worker is spawned suspended inside a restricted Job Object; the pre-resume audit observes its token, image and handle inventory before instruction 0. <code>requested_act::validate</code> re-resolves current task, source, tenancy, destination and act identity at execution. A mismatch such as <code>requested_act_mismatch</code> or an unclassified pre-resume capability fails closed; no resume or destination mutation occurs.</p>
+<p><strong>Proof:</strong> <a href="/07-defeating-approval-laundering-act-pinning-and-successor-grants/">§07 Act Pinning</a> · <a href="/proof/refusal/act-pinning.json">actual refused-substitution receipt and unchanged SQLite digest</a></p>
+</details><details class="faq-item" id="faq-q2">
+<summary><strong>2. What happens when an agent or local process already holds a writable handle to a file before the kernel lease is established?</strong></summary><p>The lease cannot be granted. On Windows, the coordinator opens the target with <code>FILE_SHARE_READ</code> and without write/delete sharing. If another process already holds a compatible writable handle, the kernel rejects the coordinator&#39;s open with <code>ERROR_SHARING_VIOLATION</code> (os error 32). Acquisition fails closed, no generation token is issued, and the territory remains contested until the foreign handles are closed and the baseline is re-verified. The gate does not pretend that a clock expiry revoked a handle the OS still holds open.</p>
+<p><strong>Proof:</strong> <a href="/05-expiry-is-not-fencing-typed-leases-and-kernel-write-exclusion/">§05 Kernel Write Exclusion</a> · <code>os_lock_conflict</code> in <code>leases/oshandle.rs</code></p>
+</details><details class="faq-item" id="faq-q3">
+<summary><strong>3. What happens when the protected destination changes out-of-band after authorization but before final commit?</strong></summary><p>Authorization binds a baseline file digest or SQLite row version; it does not authorize whatever bytes happen to exist later. At commit, file guards recheck the current preimage and tenancy while SQLite uses an immediate write reservation and a conditional <code>UPDATE ... WHERE version = expected</code>. A drift produces <code>preimage_hash_mismatch</code> or <code>record_version_changed</code> rather than an overwrite. Where candidate file bytes exist, divergence is preserved for forensic review rather than silently laundering it into a clean baseline. Quarantine is mechanism-specific, not a claim that every refused API call creates Amber bytes.</p>
+<p><strong>Proof:</strong> <a href="/03-eisa-four-gate-verdict-machine-and-entity-resolution/">§03 Deterministic judgment</a> · <a href="/05-expiry-is-not-fencing-typed-leases-and-kernel-write-exclusion/">§05 fencing</a> · <a href="/07-defeating-approval-laundering-act-pinning-and-successor-grants/">§07 fenced SQLite</a></p>
+</details><details class="faq-item" id="faq-q4">
+<summary><strong>4. What happens after a successful database commit or atomic rename followed by a crash before the receipt reaches the caller?</strong></summary><p>The operation is treated as in-doubt, not blindly retried. Durable operation identities and pre/post execution records let recovery determine whether the effect committed. A fresh successor task can receive a narrowly scoped <code>result_read_only</code> grant to inspect the historical outcome after its tenancy, grant, source, delivery, and receipt bindings validate. The successor does not re-execute the mutation and does not fabricate the original worker&#39;s first receipt: <code>satisfies_original_return: false</code> and <code>resolves_original_obligation: false</code>.</p>
+<p><strong>Proof:</strong> <a href="/07-defeating-approval-laundering-act-pinning-and-successor-grants/">§07 crash continuity and successor grants</a> · <code>result_grant_*</code> refusal family</p>
+</details><details class="faq-item" id="faq-q5">
+<summary><strong>5. How does Semantic Switch preserve useful matching relationships without exposing native identifiers, and what are its actual limits?</strong></summary><p>For structured CRM and logistics records, Semantic Switch replaces lexical identifiers with deterministic surrogates while preserving equality relations, edit-distance structure, blocking keys, and graph topology. A confined worker can perform blind entity-resolution tasks without receiving raw customer identifiers in its prompt. It is an experimental alpha relational-confinement layer, not encryption or universal anonymization. Tokenizer boundaries, unconstrained prose, frequency analysis, auxiliary-data correlation, and production matching accuracy remain outside the demonstrated guarantee.</p>
+<p><strong>Proof:</strong> <a href="/03-eisa-four-gate-verdict-machine-and-entity-resolution/">§03 production EISA core and alpha module</a> · <a href="/semantic-switch-proof/">synthetic invariance testbed</a></p>
+</details><details class="faq-item" id="faq-q6">
+<summary><strong>6. What attacks have been tested against transformed records, how do you distinguish preserved relationships from re-identified entities, and what evidence exists beyond synthetic fixtures?</strong></summary><p>Current public validation is limited to deterministic synthetic invariance fixtures and offline verifier behavior. The 20/20 block and 23/23 relation results test structural transport fidelity, not anonymity or population accuracy. I have not completed formal frequency-analysis, auxiliary-graph reconstruction, or production-corpus re-identification benchmarks, and no such guarantee is claimed. The dedicated isomorphic prototype&#39;s result is not evidence that every generator branch preserves every tokenizer or semantic relationship.</p>
+<p><strong>Proof:</strong> <a href="/semantic-switch-proof/">published fixtures, harnesses, and alpha claim ceiling</a></p>
+</details><details class="faq-item" id="faq-q7">
+<summary><strong>7. What is the smallest useful deployment of AINA in a real company today?</strong></summary><p>One deterministic mutation gate around one high-consequence workflow. For example, gate AI-proposed merges in a HubSpot or Salesforce deduplication workflow: validate the act and baseline, require current tenancy, revalidate the destination at commit, and record rejected proposals instead of silently corrupting production records. You do not need to deploy every mechanism or migrate the whole company to begin proving value.</p>
+<p><strong>Proof:</strong> <a href="/01-an-ai-output-is-not-an-act/">§01 machine standing</a> · <a href="/06-rollback-is-not-erasure-dual-tier-vaults-and-ungated-quarantine/">§06 forensic history</a> · <a href="/refusal-proof/">public refusal exhibit</a></p>
+</details><details class="faq-item" id="faq-q8">
+<summary><strong>8. What are the actual latency and resource costs?</strong></summary><p>There is no universal millisecond benchmark to quote. JCS canonicalization, hashing, EISA evaluation, handle operations, and SQLite transactions are local primitives, but their cost depends on payload, fixture, process creation, destination, filesystem, and host. The fresh 45-case battery took 118.753576 seconds end to end, including isolated fixture provisioning, process launches, document handling, and SQLite work; averaging that duration across cases does not produce a per-gate latency measurement. Specific per-operation timings and LPAC worker-spawn overhead must be measured on the admitted profile, not asserted as empirical guarantees.</p>
+<p><strong>Proof:</strong> <a href="/proof/conformance/binary_attestation.json">fresh execution timing and candidate attestation</a> · <a href="/08-sovereign-kill-switch-break-glass-epochs-and-conformance-gate/">§08 assurance boundary</a></p>
+</details><details class="faq-item" id="faq-q9">
+<summary><strong>9. What happens when the governing controller itself is compromised by a local administrator or kernel exploit?</strong></summary><p>AINA does not claim to defeat a hostile OS kernel, ring-0 rootkit, or administrator controlling the same host. The local interactive-console owner, operating-system kernel, and controller host are inside the v1 trusted computing base. The current runtime confines untrusted model outputs, hostile documents, and concurrent workers beneath that controller. Hardware attestation or multi-node enclave designs are outside the current implementation and are not represented as deployed capabilities.</p>
+<p><strong>Proof:</strong> <a href="/08-sovereign-kill-switch-break-glass-epochs-and-conformance-gate/">§08 sovereign stop and its trust boundary</a></p>
+</details><details class="faq-item" id="faq-q10">
+<summary><strong>10. How much of the architecture is deployable across multiple machines, and which parts have run in customer production?</strong></summary><p>The unified AINA reference runtime, Room coordinator, and 45-case gate were built and exercised on a single Windows workstation as independent R&amp;D. They have not yet been deployed as a unified system in an external enterprise production environment. The 11+ years of production history is the underlying delivery record: CRM data hygiene, multi-company ETL migration, 800+ carrier workflows at DrayMaster, deterministic operational state machines at Photector, and HubSpot/Salesforce integration work. That experience informs the architecture but is not represented as external production validation of AINA itself.</p>
+<p><strong>Proof:</strong> <a href="/09-bring-one-real-boundary-work-with-blayne/#faq-q10">this deployment boundary</a> · <a href="/refusal-proof/">local candidate evidence and its stated ceiling</a></p>
+</details><details class="faq-item" id="faq-q11">
+  <summary><strong>11. What is the smallest useful deployment of AINA in a real company today?</strong></summary>
+  <p>The smallest practical enterprise deployment is a <strong>single CRM/database mutation gate</strong> wrapping §01 (proposal versus act), §03 (deterministic EISA checks), and §06 (pre-image and forensic vaulting). An existing model or subagent interacting with HubSpot, Salesforce, SQLite, or another relational store is placed behind one MCP tool boundary. The gate validates the controller-fixed <code>RequestedAct</code>, checks optimistic row versions, journals the pre-attempt state, and requires unapproved substitutions to fail closed with zero database effects. The whole nine-module architecture is not a prerequisite.</p>
+  <p><strong>Proof:</strong> <a href="/01-an-ai-output-is-not-an-act/">§01 output boundary</a> · <a href="/06-rollback-is-not-erasure-dual-tier-vaults-and-ungated-quarantine/">§06 dual-tier recovery</a> · <a href="/refusal-proof/#sqlite-forensics-title">Case C SQLite refusal proof</a></p>
+</details><details class="faq-item" id="faq-q12">
+  <summary><strong>12. What are the actual latency and resource costs?</strong></summary>
+  <p>Operational gate latency and full-lifecycle test duration are different measurements:</p>
+  <ul>
+    <li><strong>In-process gate work:</strong> JCS canonicalization, SHA-256 hashing, EISA evaluation, and SQLite predicates are local operations, but this battery did not produce a standalone per-gate latency benchmark. No <code>&lt;5 ms</code> figure is claimed.</li>
+    <li><strong>Full battery duration:</strong> The 45-case run took <strong>118.753576 seconds</strong>, an average of about 2.64 seconds per scenario. That includes isolated fixture provisioning, process launches, evidence parsing, SQLite initialization, lease contention, and durable disk flushes—not the cost of evaluating one envelope in memory.</li>
+  </ul>
+  <p><strong>Proof:</strong> <a href="/refusal-proof/#timing-notes">binary composition and timing note</a> · <a href="/proof/conformance/binary_attestation.json">candidate attestation</a></p>
+</details><details class="faq-item" id="faq-q13">
+  <summary><strong>13. Which components come from real customer production environments vs. independent R&amp;D?</strong></summary>
+  <p>AINA keeps enterprise delivery history separate from the unified reference runtime:</p>
+  <ul>
+    <li><strong>Enterprise production delivery (11+ years):</strong> managing rate and operational data for 800+ intermodal carriers at DrayMaster (acquired by Envase); facilitating deterministic workflow and scenario whiteboarding for Photector's patent-pending photographic-evidence application (integrated with Hirschbach TMS); building deduplication workflows across HubSpot, Salesforce, APIs, and SFTP at Agile Education Marketing; and migrating 15,000+ SKUs across six retail locations at Jacuzzi Colorado.</li>
+    <li><strong>Independent R&amp;D reference runtime:</strong> the 56.2 MB <code>squad.exe</code> Windows NT supervisor, the 45-case conformance battery, and the refusal receipts were engineered during 14 months of independent work on a single workstation. They are not represented as a unified external customer production deployment.</li>
+  </ul>
+  <p><strong>Proof:</strong> <a href="/09-bring-one-real-boundary-work-with-blayne/#exhibit-9-6">this production boundary</a> · <a href="/refusal-proof/">offline verification bundle</a></p>
+</details><details class="faq-item" id="faq-q14">
+  <summary><strong>14. How can a security researcher, peer reviewer, or R&amp;D funding evaluator verify the runtime beyond the static proof pack?</strong></summary>
+  <p>Verification has two tiers:</p>
+  <ol>
+    <li><strong>Offline cryptographic verification (immediate):</strong> Download <a href="/proof/aina-refusal-proof-pack-v1.zip"><code>aina-refusal-proof-pack-v1.zip</code></a> and run <code>python verify_refusal_proof.py</code> locally without internet access to audit all four refusal records, 12 schemas, and the 45-case manifest against published SHA-256 digests.</li>
+    <li><strong>Live interactive walkthrough (peer-review &amp; diligence session):</strong> In a 45-minute technical screen share, the reviewer or evaluator chooses an ad-hoc destination target, unauthorized parameter substitution, or simulated lease collision and observes the running worker refuse the mutation while the destination remains unchanged.</li>
+  </ol>
+  <p><strong>Proof:</strong> <a href="/refusal-proof/">Refusal proof pack</a> · <a href="mailto:me@blayneaina.com?subject=Technical%20Walkthrough%20Request">Schedule a live boundary walkthrough (me@blayneaina.com)</a></p>
+</details>
+
+      <p class="part-compact-nav"><strong>END OF §09 PART 7/8</strong> — Next: <a href="/09-bring-one-real-boundary-work-with-blayne/part-8/"><code>https://blayneaina.com/09-bring-one-real-boundary-work-with-blayne/part-8/</code></a> · <a href="/09/brief/">§09 1-Call Brief</a> · <a href="/09.md">Raw .md</a></p>
+    
+        </div>
+
+        
+        
+        
+        
+
+        
+
+        
+      </article>
+    </main>
+
+  </div>
+
+  <footer class="site-footer compact-ai-footer"><p><strong>blayneaina.com</strong> — <a href="https://blayneaina.com/ai-brief/">Master Brief (https://blayneaina.com/ai-brief/)</a> · <a href="https://blayneaina.com/ai-brief.txt">Plain-Text Brief (https://blayneaina.com/ai-brief.txt)</a> · <a href="https://blayneaina.com/articles/">All 9 Articles &amp; Briefs (https://blayneaina.com/articles/)</a> · <a href="https://blayneaina.com/llms.txt">llms.txt</a> · <a href="mailto:me@blayneaina.com">me@blayneaina.com</a></p></footer>
+
+
+
+
+
+  <script src="/script.js?v=20261109-s-tier"></script>
+</body>
+</html>

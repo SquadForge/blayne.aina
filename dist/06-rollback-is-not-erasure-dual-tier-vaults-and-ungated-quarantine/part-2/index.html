@@ -1,0 +1,268 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>§06 Part 2/3: Rollback Is Not Erasure (7. The Active Bypass Sentinel) | Blayne Aina</title>
+  <meta name="description" content="Sections: 7. The Active Bypass Sentinel, 8. Release Verification and Ungated Quarantine, 9. Restoration Is Another Governed Mutation, 10. The Local-History and Non-Erasure Ceilings, 11. The 2026 Recovery Evidence Landscape, The Forensic Baseline &amp; Quarantine Challenge, The Twelve Recovery Claims">
+  <meta name="author" content="Blayne Aina">
+  <meta name="robots" content="index, follow, max-snippet:-1, max-image-preview:large, max-video-preview:-1">
+  <link rel="canonical" href="https://blayneaina.com/06-rollback-is-not-erasure-dual-tier-vaults-and-ungated-quarantine/part-2/">
+  <link rel="icon" href="/favicon.ico" sizes="any">
+  <link rel="icon" href="/favicon.svg" type="image/svg+xml">
+
+  <!-- OpenGraph / Social -->
+  <meta property="og:type" content="article">
+  <meta property="og:title" content="§06 Part 2/3: Rollback Is Not Erasure (7. The Active Bypass Sentinel)">
+  <meta property="og:description" content="Sections: 7. The Active Bypass Sentinel, 8. Release Verification and Ungated Quarantine, 9. Restoration Is Another Governed Mutation, 10. The Local-History and Non-Erasure Ceilings, 11. The 2026 Recovery Evidence Landscape, The Forensic Baseline &amp; Quarantine Challenge, The Twelve Recovery Claims">
+  <meta property="og:url" content="https://blayneaina.com/06-rollback-is-not-erasure-dual-tier-vaults-and-ungated-quarantine/part-2/">
+  <meta property="og:site_name" content="Blayne Aina — The Route to Trusting AI">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="§06 Part 2/3: Rollback Is Not Erasure (7. The Active Bypass Sentinel)">
+  <meta name="twitter:description" content="Sections: 7. The Active Bypass Sentinel, 8. Release Verification and Ungated Quarantine, 9. Restoration Is Another Governed Mutation, 10. The Local-History and Non-Erasure Ceilings, 11. The 2026 Recovery Evidence Landscape, The Forensic Baseline &amp; Quarantine Challenge, The Twelve Recovery Claims">
+  
+  <link rel="stylesheet" href="/style.css?v=20261109-s-tier">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@500;700&family=Instrument+Serif:ital@0;1&family=Inter:wght@400;500;600;700;800&family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,500;0,6..72,600;1,6..72,400&family=JetBrains+Mono:wght@400;500&family=Plus+Jakarta+Sans:wght@600;700;800&display=swap" rel="stylesheet">
+</head>
+<body>
+  <div class="reading-progress-bar" id="progressBar"></div>
+
+  <header class="site-header compact-ai-header"><div class="header-inner compact-ai-nav"><a href="/" class="brand"><strong>BLAYNE AINA</strong></a> | <a href="/ai-brief/">1-Page Master Brief (§01–§09)</a> | <a href="/articles/">All 9 Articles &amp; Briefs</a> | <a href="/research-assurance/">Assurance</a> | <a href="/refusal-proof/">Proof</a> | <a href="/llms.txt">llms.txt</a> | <a href="mailto:me@blayneaina.com">me@blayneaina.com</a></div></header>
+  <div class="layout-container presentation-layout">
+    <main class="content-area">
+      <article class="prose-wrapper presentation-wrapper">
+<header class="article-header compact-article-header"><h1 class="article-title">§06 Part 2/3: Rollback Is Not Erasure (7. The Active Bypass Sentinel)</h1><p class="article-subtitle">Sections: 7. The Active Bypass Sentinel, 8. Release Verification and Ungated Quarantine, 9. Restoration Is Another Governed Mutation, 10. The Local-History and Non-Erasure Ceilings, 11. The 2026 Recovery Evidence Landscape, The Forensic Baseline &amp; Quarantine Challenge, The Twelve Recovery Claims</p></header>
+
+        
+        
+
+        <div class="article-body">
+          
+      <p class="part-compact-nav"><strong>§06 PART 2/3</strong> (14,061 chars · Sections: 7. The Active Bypass Sentinel; 8. Release Verification and Ungated Quarantine; 9. Restoration Is Another Governed Mutation; 10. The Local-History and Non-Erasure Ceilings; 11. The 2026 Recovery Evidence Landscape; The Forensic Baseline &amp; Quarantine Challenge; The Twelve Recovery Claims) — <a href="/06-rollback-is-not-erasure-dual-tier-vaults-and-ungated-quarantine/part-1/">← Part 1</a> · <a href="/06-rollback-is-not-erasure-dual-tier-vaults-and-ungated-quarantine/part-3/">Part 3 →</a> · <a href="/06/brief/">1-Call Brief</a> · <a href="/06-rollback-is-not-erasure-dual-tier-vaults-and-ungated-quarantine/">Full §06</a> · <a href="/06/part-2.txt">Raw .txt</a> · All: <a href="/06-rollback-is-not-erasure-dual-tier-vaults-and-ungated-quarantine/part-1/">P1</a> <a href="/06-rollback-is-not-erasure-dual-tier-vaults-and-ungated-quarantine/part-2/">P2</a> <a href="/06-rollback-is-not-erasure-dual-tier-vaults-and-ungated-quarantine/part-3/">P3</a></p>
+    
+<h2>7. The Active Bypass Sentinel</h2>
+<p>A guarded file can still be changed by a process outside the tool path. The active bypass sentinel scans active File leases and cross-indexes three observations:</p>
+<ul>
+<li>the lease&#39;s <code>started_at</code> timestamp;</li>
+<li>the latest gated write found in <code>snapshot.jsonl</code> and <code>file_edits.jsonl</code>;</li>
+<li>the file&#39;s current filesystem modification time.</li>
+</ul>
+<p>The bypass condition is:</p>
+<pre><code class="language-text">mtime_ms &gt; lock_started_ms
+AND
+mtime_ms &gt; last_gated_write_ms
+</code></pre>
+<p>Path spellings are normalized so a junction, case variant, or slash variant cannot make a legitimate gated write look foreign. When the condition holds, the scanner returns the lease, owner, approximate mtime, last gated time, and a next action—and emits <code>bypass_detected</code> into the Room transaction graph.</p>
+<h3>Exhibit 6.7 — <code>bypass_detected</code></h3>
+<pre><code class="language-json">{
+  &quot;path&quot;: &quot;project:/services/renewal.rs&quot;,
+  &quot;resolved_path&quot;: &quot;project:/services/renewal.rs&quot;,
+  &quot;owner&quot;: &quot;reviewer-beta&quot;,
+  &quot;lock_started_at&quot;: &quot;2026-10-31T17:00:00Z&quot;,
+  &quot;mtime_approx_ms&quot;: 1730300012000,
+  &quot;last_gated_write_ms&quot;: 1730300005000,
+  &quot;ts&quot;: &quot;2026-10-31T17:15:00Z&quot;
+}
+</code></pre>
+<p>This is an <strong>active heuristic</strong>, not total kernel containment or proof of complete observation. A process can falsify timestamps, use pre-existing handles or mappings, or mutate through a route not represented in the index. Article 05&#39;s kernel exclusion governs later incompatible opens; the sentinel supplies additional forensic visibility rather than claiming omniscience.</p>
+<h2>8. Release Verification and Ungated Quarantine</h2>
+<p>Release checks live on-disk bytes against the last authorized state. If a gated write occurred under the lease, the expected value is its <code>post_sha256</code>; otherwise the expected value is the checkout&#39;s pre-write FNV-1a hash and byte count. The no-gated-write comparison is a <strong>non-cryptographic drift check</strong>, not an integrity guarantee against a malicious writer deliberately engineering an FNV collision. Gated writes and guarded publication use SHA-256 instead.</p>
+<h3>Exhibit 6.3 — Release verification and quarantine flow</h3>
+<pre><code class="language-text">Read live bytes and compute SHA-256
+→ compare with last authorized gated state
+     ├─ MATCH → archive post_edit → release tenancy + OS handle
+     └─ MISMATCH
+          → archive divergent bytes as quarantine_ungated
+          → emit released_with_ungated_content
+          → return content_mismatch: true
+          → release tenancy + OS handle
+          → preserve divergent bytes for inspection
+</code></pre>
+<p>The mismatch path does not silently restore the baseline. It does not delete the divergent bytes. It quarantines them, signals the Room, and makes their disposition explicit.</p>
+<h3>Exhibit 6.8 — Release quarantine receipt</h3>
+<pre><code class="language-json">{
+  &quot;released&quot;: &quot;project:/services/renewal.rs&quot;,
+  &quot;owner&quot;: &quot;reviewer-beta&quot;,
+  &quot;was_held&quot;: true,
+  &quot;amber_kind&quot;: &quot;quarantine_ungated&quot;,
+  &quot;content_mismatch&quot;: true,
+  &quot;content_check&quot;: {
+    &quot;status&quot;: &quot;mismatch&quot;,
+    &quot;baseline_source&quot;: &quot;gated_write_post_sha256&quot;,
+    &quot;expected_sha256&quot;: &quot;4b92ec173d8f8a12b4e8035a92cfb912384a71b2d3080e7d56a89403d1685bb3&quot;,
+    &quot;actual_sha256&quot;: &quot;9a1f28b76e4c3d21a08456b9c832104e7651a2b3c4d5e6f7a8b9c0d1e2f3a4b5&quot;
+  },
+  &quot;warning&quot;: &quot;Divergent bytes preserved in Amber and released_with_ungated_content recorded; baseline was not silently restored&quot;
+}
+</code></pre>
+<p>This is the non-laundering rule in executable form: unauthorized bytes become evidence, not a legitimate post-edit artifact.</p>
+<h2>9. Restoration Is Another Governed Mutation</h2>
+<p>A restore does not travel backward through history and delete the unauthorized act. It creates a new, evidence-bound transition from current state to a verified prior state.</p>
+<h3>Governed restore</h3>
+<p>The ordinary restore path verifies the selected Primary bytes against the sidecar and full capture binding, optionally against an exact caller pin. It then dispatches through the normal protected-write pipeline with the current task and lease, generation and control epoch, expected pre-state, and displaced-state preservation.</p>
+<p>A caller cannot substitute a same-shaped file from another source, replace both version and sidecar to force agreement, or skip the task&#39;s execution checks. The restore itself becomes a governed write with recovery evidence.</p>
+<h3>Console-exclusive operator rescue</h3>
+<p>Operator rescue exists for the case where the ordinary protected-write gate itself cannot run. It is available only through the local interactive owner console with <code>--by operator</code>; it is denied to MCP sessions, scheduled jobs, and scripts.</p>
+<p>Rescue takes one exclusive handle with <code>ShareMode::None</code>. Any other open handle causes refusal before writing. It verifies the target object and expected failed image, preserves the failed image in Amber before the first byte changes, journals preparation, writes through the same handle, and requires an exact readback.</p>
+<p><code>live_images</code> exposes live Squad server PIDs and compares each running image hash with the binary on disk, so a repaired file is not mistaken for a recovered fleet. It is not a universal enumeration of every process holding every handle.</p>
+<p>The rescue&#39;s crash ceiling is explicit: the write is in place, not a rename, and <strong>not crash-atomic</strong>. A crash between truncate and flush can leave partial bytes. <code>rescue_prepared</code> records the planned restore and preserved failed image before mutation, allowing later inspection and recovery rather than pretending the partial write never occurred.</p>
+<p>Governed restore is therefore the default; console rescue is the bounded exception with its own forensic and crash disclosures.</p>
+<h2>10. The Local-History and Non-Erasure Ceilings</h2>
+<p>Recovery has three distinct assurance properties that must not be collapsed.</p>
+<h3>Artifact integrity</h3>
+<p>SHA-256 and capture binding prove that stored bytes still match the evidence recorded for them. This detects substitution, corruption, and misleading provenance.</p>
+<h3>Artifact survival</h3>
+<p>Hashes cannot stop a privileged administrator or hostile process from unlinking the vault. <code>rm -rf .squad</code> is not a threat a checksum can prevent. Durable survival requires separate custody, replication, and appropriately isolated write-once storage.</p>
+<h3>Downstream irreversibility</h3>
+<p>Restoring local bits cannot recall what other systems already did with them:</p>
+<ul>
+<li>an external API or webhook already dispatched;</li>
+<li>a database query or third-party sync already committed;</li>
+<li>confidential content already read or disclosed by another process;</li>
+<li>another agent&#39;s reasoning, notifications, or subsequent state transitions already caused by the modified state.</li>
+</ul>
+<p>Local rollback restores the file. It does not erase the causal residue. External systems must receive the quarantine signal and perform their own governed reconciliation.</p>
+<blockquote>
+<p><strong>Integrity verifies the object. Custody determines whether it survives. Reconciliation determines what the rest of the world must do next.</strong></p>
+</blockquote>
+<h2>11. The 2026 Recovery Evidence Landscape</h2>
+<p>The strongest 2026 sources support independent interception, out-of-band supervision, and tamper-evident forensic records. They do not justify pretending that local rollback erases global consequences.</p>
+<table>
+<thead>
+<tr>
+<th>2026 primary source</th>
+<th>What it actually establishes</th>
+<th>How the recovery architecture composes with it</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>Shu, <a href="https://arxiv.org/abs/2609.37475"><em>Boundary-State Control for Tool-Using Language-Model Agents</em></a>, September 2026 preprint</td>
+<td>BSC-R binds a single-use commit authorization to the exact action and semantic authorization state, rejecting represented changed and replayed classes while still committing 25% of invalid effects in the broader external suite.</td>
+<td>Recovery must bind the exact target and authorized pre-state at execution, not invoke a generic undo. The broader-suite limit also supports the article&#39;s refusal to claim total effect coverage or downstream erasure.</td>
+</tr>
+<tr>
+<td>Pino, <a href="https://arxiv.org/abs/2609.29808"><em>Hard Stop: Kernel-Level Preemption and Containment for Rogue Agentic Execution</em></a>, September 2026 preprint, revised v2</td>
+<td>Presents a forensic autopsy of a multi-stage rogue-agent intrusion and argues for out-of-band supervisory control and deterministic preemption boundaries rather than relying on centralized model guardrails.</td>
+<td>Supports exclusive kernel handles, fail-closed lease release, and console-exclusive rescue. It does not prove that every leaked handle can be revoked; the article preserves that ceiling.</td>
+</tr>
+<tr>
+<td>Qin et al., <a href="https://arxiv.org/abs/2609.30266"><em>LLM Agents Can Easily Tamper With Their Own Traces</em></a>, September 2026 preprint</td>
+<td>All tested local agent harnesses except Muse Code allowed agents to delete traces without triggering monitor guardrails; external attackers could induce deletion, and tampering also emerged during reward optimization.</td>
+<td>Forensic logs need an independent interception and custody boundary. Primary replay, content-addressed Amber objects, and protected controller storage help, but artifact survival still requires separate custody.</td>
+</tr>
+<tr>
+<td>Bindschaedler, Botha, and Siebenbrunner, <a href="https://arxiv.org/abs/2609.01931"><em>Agent Flight Recorder</em></a>, September 2026 preprint</td>
+<td>Binds intent through execution and provenance into canonical events, using hash chains, Merkle batches, and on-chain epoch roots for independent verification. Synthetic ablations detected edit, delete, reorder, and fork tampering at 100% with zero false positives.</td>
+<td>Demonstrates how independent witnesses can verify evidence without trusting the agent&#39;s infrastructure. AINA&#39;s local capture bindings provide the source evidence; they do not by themselves provide a blockchain or independent validation tier.</td>
+</tr>
+<tr>
+<td>Ghosh, <a href="https://arxiv.org/abs/2609.35659"><em>Tracekit: Tamper-Evident Intent-Reasoning-Action Auditing for AI Agents</em></a>, September 2026 preprint, revised v2</td>
+<td>A signer outside the agent&#39;s reach signs tool decisions and results into a hash chain with independent witnesses. A signed log detected six of eight tamper classes and a witness caught the other two; policy-only rules missed 211 of 420 blind harmful calls.</td>
+<td>Shows why provenance must be captured outside the model&#39;s authority and why policy alone is insufficient. It also distinguishes evidence integrity from independent validation, matching Amber&#39;s role and its explicit ceiling.</td>
+</tr>
+</tbody></table>
+<p>These sources reinforce the architecture without becoming its assurance grade. The vaults remain implemented and author-verified local mechanisms, not independent certification or proof of complete history.</p>
+<p><strong>Evidence availability and operating-cost boundary:</strong> the vault, capture, and reconciliation records are <code>CONTROLLED</code> for qualified, method-scoped technical review, with adverse findings permitted. They are not unrestricted public downloads or independent validation. Capture latency, disk amplification, replay cost, and quarantine recovery time must be measured against the actual object sizes, edit count, filesystem, and retention profile; this article does not claim a universal performance envelope.</p>
+<h2>The Forensic Baseline &amp; Quarantine Challenge</h2>
+<p>The <strong>Forensic Baseline &amp; Out-of-Band Mutation Quarantine Challenge</strong> exercises the complete sequence: certified checkout, several Amber-accumulated edits, an out-of-band mutation, release-time mismatch, and a governed restoration. The returned evidence distinguishes the operational baseline, per-edit forensic history, quarantined divergence, and any external effect that remains irreversible.</p>
+<p>The challenge excludes total bypass observation, deletion-proof history, universal downstream erasure, and independent validation. Deployment and paid pilots are separately scoped; independent evaluation remains outside the commercial ladder through <a href="https://blayneaina.com/09-bring-one-real-boundary-work-with-blayne/">Article 09</a>.</p>
+<h2>The Twelve Recovery Claims</h2>
+<table>
+<thead>
+<tr>
+<th>ID</th>
+<th>Bounded claim</th>
+<th>Evidence and ceiling</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><code>06-C01</code></td>
+<td>FNV-1a scope sharding and <code>meta.json</code> bind Primary directories to canonical file identity</td>
+<td>Implemented and author-verified; mismatched saved scopes are refused</td>
+</tr>
+<tr>
+<td><code>06-C02</code></td>
+<td>Monotonic version names and create-new synced writes prevent accidental overwrite</td>
+<td>Implemented and author-verified; collisions fail instead of reusing an object</td>
+</tr>
+<tr>
+<td><code>06-C03</code></td>
+<td>Primary bytes and sidecars are read back immediately after writing</td>
+<td>Implemented and author-verified; mismatch aborts protected change</td>
+</tr>
+<tr>
+<td><code>06-C04</code></td>
+<td>Full ledger replay binds exact versions to canonical source, digest, size, owner, and time</td>
+<td>Implemented and author-verified; corrupt, conflicting, or missing bindings are not certified</td>
+</tr>
+<tr>
+<td><code>06-C05</code></td>
+<td>Checkout failure releases both coordination lease and kernel handle</td>
+<td>Implemented and author-verified; no tenancy without certified baseline</td>
+</tr>
+<tr>
+<td><code>06-C06</code></td>
+<td>Amber stores raw, content-addressed bytes with deduplication and exact readback</td>
+<td>Implemented and author-verified; no <code>.zst</code> or compression trust boundary</td>
+</tr>
+<tr>
+<td><code>06-C07</code></td>
+<td>Each governed edit can append an Amber state without touching Primary</td>
+<td>Implemented and author-verified; N edits preserve N states plus the state-0 anchor</td>
+</tr>
+<tr>
+<td><code>06-C08</code></td>
+<td>Primary retention retains 100 versions and deletes sidecars with expired versions</td>
+<td>Implemented and author-verified; operational storage remains bounded</td>
+</tr>
+<tr>
+<td><code>06-C09</code></td>
+<td>The active sentinel flags mtime evidence of out-of-band writes and emits <code>bypass_detected</code></td>
+<td>Implemented and author-verified as a heuristic, not total observation or containment</td>
+</tr>
+<tr>
+<td><code>06-C10</code></td>
+<td>Release mismatch becomes <code>quarantine_ungated</code> with <code>content_mismatch: true</code></td>
+<td>Implemented and author-verified; divergent bytes are preserved, not silently reverted</td>
+</tr>
+<tr>
+<td><code>06-C11</code></td>
+<td>Governed restore and console rescue verify sources and preserve displaced state</td>
+<td>Implemented and author-verified; rescue is console-exclusive, and its in-place write is not crash-atomic</td>
+</tr>
+<tr>
+<td><code>06-C12</code></td>
+<td>Recovery explicitly separates integrity, survival, and downstream irreversibility</td>
+<td>Author-verified design ceiling; no deletion-proof history or erasure of external effects</td>
+</tr>
+</tbody></table>
+
+
+      <p class="part-compact-nav"><strong>END OF §06 PART 2/3</strong> — Next: <a href="/06-rollback-is-not-erasure-dual-tier-vaults-and-ungated-quarantine/part-3/"><code>https://blayneaina.com/06-rollback-is-not-erasure-dual-tier-vaults-and-ungated-quarantine/part-3/</code></a> · <a href="/06/brief/">§06 1-Call Brief</a> · <a href="/06.md">Raw .md</a></p>
+    
+        </div>
+
+        
+        
+        
+        
+
+        
+
+        
+      </article>
+    </main>
+
+  </div>
+
+  <footer class="site-footer compact-ai-footer"><p><strong>blayneaina.com</strong> — <a href="https://blayneaina.com/ai-brief/">Master Brief (https://blayneaina.com/ai-brief/)</a> · <a href="https://blayneaina.com/ai-brief.txt">Plain-Text Brief (https://blayneaina.com/ai-brief.txt)</a> · <a href="https://blayneaina.com/articles/">All 9 Articles &amp; Briefs (https://blayneaina.com/articles/)</a> · <a href="https://blayneaina.com/llms.txt">llms.txt</a> · <a href="mailto:me@blayneaina.com">me@blayneaina.com</a></p></footer>
+
+
+
+
+
+  <script src="/script.js?v=20261109-s-tier"></script>
+</body>
+</html>

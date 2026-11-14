@@ -1,0 +1,216 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>§04 Part 3/5: The Room Coordination Plane (6. Subsystem 5: A Wake Is a Sealed Authority Transition) | Blayne Aina</title>
+  <meta name="description" content="Sections: 6. Subsystem 5: A Wake Is a Sealed Authority Transition, 7. Subsystem 6: Native Session Delivery and Reply Are Different Proofs, 8. Subsystem 7: Active Cancellation and Worker Authority">
+  <meta name="author" content="Blayne Aina">
+  <meta name="robots" content="index, follow, max-snippet:-1, max-image-preview:large, max-video-preview:-1">
+  <link rel="canonical" href="https://blayneaina.com/04-the-room-why-git-and-chat-are-not-coordination-planes/part-3/">
+  <link rel="icon" href="/favicon.ico" sizes="any">
+  <link rel="icon" href="/favicon.svg" type="image/svg+xml">
+
+  <!-- OpenGraph / Social -->
+  <meta property="og:type" content="article">
+  <meta property="og:title" content="§04 Part 3/5: The Room Coordination Plane (6. Subsystem 5: A Wake Is a Sealed Authority Transition)">
+  <meta property="og:description" content="Sections: 6. Subsystem 5: A Wake Is a Sealed Authority Transition, 7. Subsystem 6: Native Session Delivery and Reply Are Different Proofs, 8. Subsystem 7: Active Cancellation and Worker Authority">
+  <meta property="og:url" content="https://blayneaina.com/04-the-room-why-git-and-chat-are-not-coordination-planes/part-3/">
+  <meta property="og:site_name" content="Blayne Aina — The Route to Trusting AI">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="§04 Part 3/5: The Room Coordination Plane (6. Subsystem 5: A Wake Is a Sealed Authority Transition)">
+  <meta name="twitter:description" content="Sections: 6. Subsystem 5: A Wake Is a Sealed Authority Transition, 7. Subsystem 6: Native Session Delivery and Reply Are Different Proofs, 8. Subsystem 7: Active Cancellation and Worker Authority">
+  
+  <link rel="stylesheet" href="/style.css?v=20261109-s-tier">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@500;700&family=Instrument+Serif:ital@0;1&family=Inter:wght@400;500;600;700;800&family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,500;0,6..72,600;1,6..72,400&family=JetBrains+Mono:wght@400;500&family=Plus+Jakarta+Sans:wght@600;700;800&display=swap" rel="stylesheet">
+</head>
+<body>
+  <div class="reading-progress-bar" id="progressBar"></div>
+
+  <header class="site-header compact-ai-header"><div class="header-inner compact-ai-nav"><a href="/" class="brand"><strong>BLAYNE AINA</strong></a> | <a href="/ai-brief/">1-Page Master Brief (§01–§09)</a> | <a href="/articles/">All 9 Articles &amp; Briefs</a> | <a href="/research-assurance/">Assurance</a> | <a href="/refusal-proof/">Proof</a> | <a href="/llms.txt">llms.txt</a> | <a href="mailto:me@blayneaina.com">me@blayneaina.com</a></div></header>
+  <div class="layout-container presentation-layout">
+    <main class="content-area">
+      <article class="prose-wrapper presentation-wrapper">
+<header class="article-header compact-article-header"><h1 class="article-title">§04 Part 3/5: The Room Coordination Plane (6. Subsystem 5: A Wake Is a Sealed Authority Transition)</h1><p class="article-subtitle">Sections: 6. Subsystem 5: A Wake Is a Sealed Authority Transition, 7. Subsystem 6: Native Session Delivery and Reply Are Different Proofs, 8. Subsystem 7: Active Cancellation and Worker Authority</p></header>
+
+        
+        
+
+        <div class="article-body">
+          
+      <p class="part-compact-nav"><strong>§04 PART 3/5</strong> (12,817 chars · Sections: 6. Subsystem 5: A Wake Is a Sealed Authority Transition; 7. Subsystem 6: Native Session Delivery and Reply Are Different Proofs; 8. Subsystem 7: Active Cancellation and Worker Authority) — <a href="/04-the-room-why-git-and-chat-are-not-coordination-planes/part-2/">← Part 2</a> · <a href="/04-the-room-why-git-and-chat-are-not-coordination-planes/part-4/">Part 4 →</a> · <a href="/04/brief/">1-Call Brief</a> · <a href="/04-the-room-why-git-and-chat-are-not-coordination-planes/">Full §04</a> · <a href="/04/part-3.txt">Raw .txt</a> · All: <a href="/04-the-room-why-git-and-chat-are-not-coordination-planes/part-1/">P1</a> <a href="/04-the-room-why-git-and-chat-are-not-coordination-planes/part-2/">P2</a> <a href="/04-the-room-why-git-and-chat-are-not-coordination-planes/part-3/">P3</a> <a href="/04-the-room-why-git-and-chat-are-not-coordination-planes/part-4/">P4</a> <a href="/04-the-room-why-git-and-chat-are-not-coordination-planes/part-5/">P5</a></p>
+    
+<h2>6. Subsystem 5: A Wake Is a Sealed Authority Transition</h2>
+<p>A queued prompt is not execution authority. It is a proposal to deliver work later, under conditions that may have changed.</p>
+<h3>The 18-field <code>room-wake-job-v3</code> binding</h3>
+<p><code>binding_sha256</code> covers these exact queue fields:</p>
+<pre><code class="language-text">schema, room, agent, from, source_event, path, prompt,
+task (explicit null when untasked), evidence_refs (when present),
+mention_ids, obligation_ids, pulse_message, deadline_ms,
+created_at, not_after, control_epoch, room_authority,
+registration_sha256
+</code></pre>
+<p>The explicit <code>task: null</code> matters: adding or stripping a task binding changes the digest. <code>not_after</code> is computed from the original creation time and deadline—60 seconds for untasked delivery and 20 minutes for task-bound work—so queue wait consumes the same budget as execution. Registration and Room authority are sealed for comparison, not treated as evergreen.</p>
+<p>Prompt and pulse text pass the egress redactor before the job is stored. The queue path itself must resolve to the canonical regular, non-reparse object.</p>
+<p><code>binding_sha256</code> is an <strong>integrity comparison, not a digital signature or standalone authentication mechanism</strong>. Authenticity comes from the controller-governed queue object and write protocol plus the live revalidation below. A party that rewrites both the job and its digest still does not inherit the sealed recipient, registration, Room authority, task, project, or control epoch; those must independently match now. This is not a claim to contain a privileged host administrator outside the governed boundary.</p>
+<h3>Five live dispatch checks</h3>
+<p><code>authority::validate</code> re-derives five independent authority centers before launch:</p>
+<ol>
+<li><strong>Sealed integrity and replay eligibility.</strong> Schema, binding digest, canonical queue object, and <code>retry_allowed</code> must hold. Tampering records <code>wake_job_binding_changed</code> as an integrity signal.</li>
+<li><strong>Current Room and recipient authority.</strong> The Room must be open and uncancelled; recipient and sender rosters, owner grant, reset/session state, graph-reader admission, and registration digest must match the sealed values. Replacement authority produces <code>wake_room_authority_changed</code> or <code>wake_recipient_registration_changed</code>.</li>
+<li><strong>Active task and governing-source authority.</strong> The task must be open or claimed, have valid ancestry, remain owned by the sealed sender or an eligible operator/delegator, and pass <code>pin_task_source</code>. Project Rooms require a task from the exact project; project tasks cannot hide in coordination Rooms.</li>
+<li><strong>Current admission and control epoch.</strong> Project closure, control admission, break-glass subject, and sealed <code>control_epoch</code> must still permit a new effect.</li>
+<li><strong>Original deadline and running-process binding.</strong> <code>not_after</code> must still have budget. Once claimed, <code>RequestPermit</code> binds the canonical path, digest, <code>running</code> status, and worker PID; later effects revalidate that exact claim.</li>
+</ol>
+<h3>Single flight, capacity, and split-lock claim</h3>
+<p>Dispatch enforces one active worker per recipient with <code>recipient_busy</code> and defers excess model-route load through <code>worker_route_capacity</code>, preserving the obligation instead of dropping it. The launcher uses the verified installed engine, strips caller credentials and tier overrides, and isolates standard handles.</p>
+<p>The worker claim uses a split-lock protocol:</p>
+<pre><code class="language-text">validated_context outside with_transition
+→ file, ancestry, task, and source checks without starving sender lease locks
+→ enter with_transition
+→ re-read job and require unchanged binding_sha256
+→ require remaining deadline
+→ mark running with worker_pid and attempts + 1
+</code></pre>
+<p>A change between those phases becomes <code>wake_job_changed_during_validation</code>, not a replay.</p>
+<h3>Evidence is delivered to the recipient, not inherited from the sender</h3>
+<p><code>attach_evidence</code> rechecks every <code>ev_</code> handle for the specific recipient at wake time. Admitted passages ride inline in the wake prompt, while served and withheld dispositions are recorded. Each delivery receives a fresh <code>squad.evidence.receipt/1</code> with <code>tool: &quot;wake_delivery&quot;</code> and an <code>srv_&lt;32hex&gt;</code> identifier.</p>
+<p>For governing-source tasks, <code>require_source_reading_between</code> proves that the native actor/session&#39;s receipts cover the continuous <code>[0, length)</code> interval across every primary story and detached element of one complete current parser view, inside the <code>[not_before, not_after]</code> connection/checkpoint window. Registration, summaries, or a few impressive chunks do not satisfy <code>complete_text_v1</code>.</p>
+<h3>Exhibit 1 — A sealed wake binding excerpt</h3>
+<p>Synthetic values show the current binding shape. The digest covers all 18 fields, not only this display excerpt.</p>
+<pre><code class="language-json">{
+  &quot;schema&quot;: &quot;room-wake-job-v3&quot;,
+  &quot;room&quot;: &quot;architecture-demo&quot;,
+  &quot;agent&quot;: &quot;reviewer-beta&quot;,
+  &quot;from&quot;: &quot;coordinator-alpha&quot;,
+  &quot;source_event&quot;: &quot;evt_0123456789abcdef_a1b2c3d4&quot;,
+  &quot;path&quot;: &quot;room_wake_jobs/architecture-demo/reviewer-beta/evt_0123456789abcdef_a1b2c3d4.json&quot;,
+  &quot;prompt&quot;: &quot;Review the sealed renewal evidence and answer the assigned obligation.&quot;,
+  &quot;task&quot;: &quot;TSK-2026-ROOM-004&quot;,
+  &quot;evidence_refs&quot;: [&quot;ev_8f31c09a4b2e11d08a7c65e41902b3a1&quot;],
+  &quot;mention_ids&quot;: [&quot;mention_synthetic_01&quot;],
+  &quot;obligation_ids&quot;: [&quot;obligation_synthetic_01&quot;],
+  &quot;pulse_message&quot;: &quot;Review the sealed renewal evidence.&quot;,
+  &quot;deadline_ms&quot;: 1200000,
+  &quot;created_at&quot;: &quot;2026-10-31T16:00:00Z&quot;,
+  &quot;not_after&quot;: &quot;2026-10-31T16:20:00Z&quot;,
+  &quot;control_epoch&quot;: 7,
+  &quot;room_authority&quot;: {
+    &quot;owner_grant&quot;: &quot;synthetic-owner-grant&quot;,
+    &quot;revision&quot;: 12,
+    &quot;reset_at&quot;: null,
+    &quot;session&quot;: &quot;room-session-synthetic&quot;
+  },
+  &quot;registration_sha256&quot;: &quot;4a9c8e12f03b7d651928374655647382910abcdef1234567890abcdef1234567&quot;,
+  &quot;binding_sha256&quot;: &quot;e01928374655647382910abcdef1234567890abcdef1234567890abcdef12345&quot;
+}
+</code></pre>
+<h3>Exhibit 2 — Registration changed after sealing</h3>
+<pre><code class="language-json">&quot;wake_recipient_registration_changed&quot;
+</code></pre>
+<p>The old prompt may still be intact. Its recipient authority is not.</p>
+<h3>Exhibit 3 — Deadline consumed before dispatch</h3>
+<pre><code class="language-json">&quot;wake_job_expired: queue time counts against the original deadline&quot;
+</code></pre>
+<p>A prompt that became stale in the queue cannot acquire fresh execution time merely because a worker became available.</p>
+<h2>7. Subsystem 6: Native Session Delivery and Reply Are Different Proofs</h2>
+<p>A tool transport can deliver a request to a process. It cannot prove that the intended native conversation received it or that the resulting obligation was answered.</p>
+<h3>Session Factory v1</h3>
+<p><code>session_factory_v1</code> gives each native session a global ID of the form <code>sf_&lt;ide&gt;_&lt;native&gt;</code>, with lane, native session ID, working directory, transport, model profile, proof cursor, parent, lease, tags, and per-adapter operation coverage. The current contract covers 15 IDE/CLI adapter families and eleven operations: <code>list</code>, <code>create</code>, <code>bind</code>, <code>resume</code>, <code>focus</code>, <code>send</code>, <code>prove</code>, <code>summarize</code>, <code>fork</code>, <code>archive</code>, and <code>restore</code>.</p>
+<p>For stateful IDE wakes, <code>spawn_policy: &quot;never&quot;</code> requires delivery into the bound native session rather than launching an untracked sibling. Adapter capability remains explicit; a shared session schema does not invent identical native features everywhere. Each adapter&#39;s <code>operation_coverage</code> determines which lifecycle operations and proof states it can actually supply. <code>dispatched</code> may be available where body-visible or correlated-reply evidence is not; an unsupported proof is reported as unsupported, never inferred from transport success.</p>
+<h3>The five delivery/reply proof states</h3>
+<table>
+<thead>
+<tr>
+<th>State</th>
+<th>What is proven</th>
+<th>Obligation status</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><code>dispatched</code></td>
+<td>A delivery attempt exists, not body delivery</td>
+<td><code>delivery_unproven</code>; unresolved</td>
+</tr>
+<tr>
+<td><code>delivered_to_body</code> / <code>ide_delivered</code></td>
+<td>The prompt reached the native session body</td>
+<td><code>pending_reply</code>; unresolved</td>
+</tr>
+<tr>
+<td><code>body_visible_pending_reply</code></td>
+<td>The target thread UI or store shows the prompt</td>
+<td><code>pending_reply</code>; unresolved</td>
+</tr>
+<tr>
+<td><code>wrong_body_rejected</code></td>
+<td>A nonmatching open thread was refused</td>
+<td>Unresolved; no cross-thread credit</td>
+</tr>
+<tr>
+<td><code>replied</code></td>
+<td>A correlated native reply exists</td>
+<td>Resolved mentions and obligations</td>
+</tr>
+</tbody></table>
+<p>These are not fungible green statuses. Body delivery does not prove a reply. A reply does not prove destination acceptance. A wrong-body result never counts as delivery.</p>
+<p>For ACP/CLI execution, <code>exited_ok</code> without a correlated Room reply produces <code>proof_kind: &quot;process_exit_only&quot;</code> and leaves the job in <code>pending_reply</code>. Exit code zero is not an answered obligation.</p>
+<p><code>WakeObligationFold</code> promotes obligations that remain unproven beyond the declared age threshold to <code>dead_obligation</code>, and cycle detection walks up to 20 links to surface circular waits. Unfinished work remains visible instead of disappearing behind a process status.</p>
+<h2>8. Subsystem 7: Active Cancellation and Worker Authority</h2>
+<p>Room control is authenticated and physically enforced. It does not rely on a worker noticing a cancellation message eventually.</p>
+<h3>Authenticated control and held in-flight operations</h3>
+<p>Lifecycle actions require <code>control_actor</code> standing through an authenticated operator or local owner console. A caller-supplied <code>by = operator</code> string does not create control authority.</p>
+<p><code>run_cancel</code> stops the Room compiler, dead-letters queued/deferred/unclaimed jobs with <code>retry_allowed: false</code>, leaves addressed obligations unresolved, and advances Room authority so running wake lineage no longer matches.</p>
+<p>It then inventories unresolved file operations, destination operations, and brokered model requests tied to the Room or project as <code>held_until_reconciled: true</code>. Work a destination may already have accepted is not rewritten into “cancelled and safe.” It remains held for governed reconciliation.</p>
+<h3>The 1 Hz owned-Job observer and durable stop outbox</h3>
+<p>Every confined worker belongs to a named Win32 Job Object. The <code>squad-owned-job-control</code> observer runs at 1 Hz, watches admission, break-glass, Room authority revision, cancellation, and worker authority, and calls <code>TerminateJobObject(handle, 1)</code> when authority trips.</p>
+<p>A successful terminate call is not proof of quiescence. The observer queries <code>JobObjectBasicAccountingInformation</code> and confirms termination only when <code>ActiveProcesses == 0</code>.</p>
+<p>The <code>squad.room-owned-stop.v1</code> outbox preserves that sequence before any ledger or graph commit:</p>
+<pre><code class="language-text">phase-1.json
+  termination_confirmed: false
+  pending: bounded reason
+
+phase-2.json
+  termination_confirmed: true
+  pending: null
+  predecessor: exact phase-1 event_id + envelope_sha256
+</code></pre>
+<p>Replay commits those captured envelopes in causal order and writes separate <code>phase-1.committed.json</code> and <code>phase-2.committed.json</code> markers. A crash cannot manufacture a Phase 2 commit without its Phase 1 predecessor, and a stop request cannot impersonate a zero-process observation.</p>
+<h3>Worker staging minimizes data before confinement</h3>
+<p>Staging admits 1–256 exact source selections with SHA-256 verification and a 64 MiB aggregate ceiling. JSON, JSONL, and SQLite sources can be projected to explicit rows and columns. SQLite projection copies the pinned bytes to a temporary file first; the live database is never opened by the projection builder. The projected copy requires the row key and integer version, records withheld rows and fields, and prepares changes only as governed proposals.</p>
+<p>When changes are requested, the controller prepares the <code>RequestedAct</code>. The worker does not choose its own mutation.</p>
+<p>The bridge binary is staged by content digest as <code>squad-worker-bridge.exe</code> and read back through a pinned handle. Reparse points and hardlinked files are refused. Empty-work-root ACL normalization emits a receipt bound to the pinned root. <code>internetClient</code> is refused as nonconforming; model access travels only through owner-approved brokered routes.</p>
+<h3>The controller-side MCP broker revalidates the worker and the call</h3>
+<p>For LPAC workers, an <code>AF_UNIX</code> endpoint with a per-launch ACL admits the package. The controller verifies the held worker&#39;s Job membership with <code>IsProcessInJob</code>, its token and capabilities with <code>verify_worker_token</code>, and a 32-byte launch nonce. It does not pretend that an unavailable AF_UNIX peer-PID ioctl supplied a kernel identity for the bridge peer.</p>
+<p>For brokered-host Named Pipes, first-instance creation and <code>PIPE_REJECT_REMOTE_CLIENTS</code> prevent squatting and remote clients. The broker additionally uses <code>QueryFullProcessImageNameW</code> to require the exact staged bridge image.</p>
+<p>Every request and response is bounded and rechecked. Revocation before response transport produces a typed refusal; revocation after part of the response escaped records <code>severed_mid_response</code> rather than appending a second contradictory frame. The check and following write are not falsely described as one atomic primitive.</p>
+
+
+      <p class="part-compact-nav"><strong>END OF §04 PART 3/5</strong> — Next: <a href="/04-the-room-why-git-and-chat-are-not-coordination-planes/part-4/"><code>https://blayneaina.com/04-the-room-why-git-and-chat-are-not-coordination-planes/part-4/</code></a> · <a href="/04/brief/">§04 1-Call Brief</a> · <a href="/04.md">Raw .md</a></p>
+    
+        </div>
+
+        
+        
+        
+        
+
+        
+
+        
+      </article>
+    </main>
+
+  </div>
+
+  <footer class="site-footer compact-ai-footer"><p><strong>blayneaina.com</strong> — <a href="https://blayneaina.com/ai-brief/">Master Brief (https://blayneaina.com/ai-brief/)</a> · <a href="https://blayneaina.com/ai-brief.txt">Plain-Text Brief (https://blayneaina.com/ai-brief.txt)</a> · <a href="https://blayneaina.com/articles/">All 9 Articles &amp; Briefs (https://blayneaina.com/articles/)</a> · <a href="https://blayneaina.com/llms.txt">llms.txt</a> · <a href="mailto:me@blayneaina.com">me@blayneaina.com</a></p></footer>
+
+
+
+
+
+  <script src="/script.js?v=20261109-s-tier"></script>
+</body>
+</html>

@@ -1,0 +1,253 @@
+# §07 Part 2/3 — Defeating Approval Laundering
+Canonical: https://blayneaina.com/07-defeating-approval-laundering-act-pinning-and-successor-grants/part-2/ | Raw Article: https://blayneaina.com/07.md | Next Part: https://blayneaina.com/07/part-3.txt
+
+## 3. Controller-Fixed `RequestedAct`
+
+The act is derived from exact projected bytes before the worker environment is issued. It is not re-read from live model prose at execution time.
+
+This is the **strict confined-worker staging path**. The destination also admits controller-driven record changes, whose authority must not be described as if every call used identical staging. Those changes still require the exact task, row, pre-state, act, approval, and current tenancy; they do not inherit the worker environment's proof by implication. The common invariant is exact-act and current-authority verification, not a claim that all routes are physically identical.
+
+### Exhibit 7.2 — `RequestedAct` lifecycle
+
+```text
+prepare: projected bytes → one typed row key + integer version + permitted changes
+→ persist: environment + task authority + source tenancy + RFC 8785 digest
+→ create-only requested_acts/<sha256>.json + sync_all + exact readback
+→ worker receives environment and act reference
+→ validate: open with FILE_SHARE_READ and retain handle through UPDATE/commit
+→ re-derive current task authority, source tenancy, and exact destination
+→ historical: verify completed act without consulting current tenancy
+```
+
+### Derivation
+
+`prepare` requires one staged SQLite row and validates that its typed key matches the projection. Proposed changes must be nonempty, at most 64 fields and 16 KiB, exclude the key and `version`, and remain inside the declared projection fields. The current version must be a nonnegative integer.
+
+The destination becomes `{source}#{table}#{key_column}={typed_key}`. Worker input does not select a different row.
+
+### Durable fixation
+
+`persist` re-resolves task authority and source tenancy, then binds:
+
+- environment ID and worker;
+- staging actor and complete task binding;
+- exact source projection receipt;
+- source generation and source tenancy;
+- the controller-fixed destination.
+
+RFC 8785 JCS canonicalization produces the act reference. The record is written with create-new semantics to `requested_acts/<sha256>.json`, flushed with `sync_all()`, and read back for exact body and digest equality. JCS is an **Informational RFC**, and the implementation uses it to make the digest repeatable rather than to make the act authorized by hashing alone.
+
+### Execution revalidation
+
+`validate` opens the act with Windows `share_mode(1)` and retains that handle through update and commit. It recomputes the digest, re-derives current task authority and source tenancy, and requires the environment, worker, actor, task binding, source, generation, and exact destination to match. Any authority drift becomes `requested_act_authority_changed`; any target, key, field, or version divergence becomes `requested_act_mismatch`.
+
+The pinned handle prevents deletion or replacement of the act object during the mutation window.
+
+### Historical verification
+
+`historical` verifies a completed act against the immutable submission without consulting current tenancy (`current_authority_consulted: false`). A retired environment or released row task does not falsify a valid past act. It checks the reference, environment, worker, task, staged source, tenancy-at-staging, and exact destination rather than reviving execution authority.
+
+### Exhibit 7.4 — Sanitized `RequestedAct` record
+
+```json
+{
+  "schema": 1,
+  "environment_id": "env_synthetic_worker_07",
+  "worker": "reviewer-beta",
+  "actor": "controller-alpha",
+  "task_binding": {
+    "id": "TSK-2026-ACT-007",
+    "owner": "controller-alpha",
+    "project_id": "proj_synthetic",
+    "project_root_pin": "project:/workspace",
+    "source": "doc_20261030_142011_a1b2c3d4",
+    "scope": "session://sqlite.records/accounts.db#customers#customer_id=cust_994182",
+    "coordination_only": false,
+    "epoch": 4,
+    "revision": 2,
+    "delegation": null
+  },
+  "source": {
+    "path": "project:/data/accounts.db",
+    "projection": {
+      "format": "sqlite",
+      "table": "customers",
+      "row_key": "customer_id",
+      "row_values": ["cust_994182"],
+      "fields": ["tier", "status", "credit_limit"]
+    },
+    "sha256": "4a7b8c9d0e1f2a3b4c5d6e7f8a9b0c1d2e3f4a5b6c7d8e9f0a1b2c3d4e5f6a7b"
+  },
+  "source_generation": 12,
+  "source_tenancy": {
+    "scope": "session://sqlite.records/accounts.db#customers#customer_id=cust_994182",
+    "task": "TSK-2026-ACT-007",
+    "generation": 12,
+    "control_epoch": 4
+  },
+  "act": {
+    "destination": {
+      "target": "accounts.db#customers#customer_id=cust_994182",
+      "key": "cust_994182",
+      "key_field": "customer_id",
+      "expected_version": 3,
+      "fields": {
+        "tier": "enterprise_gold",
+        "status": "active"
+      }
+    }
+  }
+}
+```
+
+### Exhibit 7.5 — `requested_act_mismatch`
+
+```json
+"requested_act_mismatch: proposed target, key, changes or prepared version differs from the controller-fixed act"
+```
+
+The worker's altered proposal does not acquire authority by resembling the approved one.
+
+## 4. The Fenced SQLite Execution Window
+
+`destinations/records.rs` executes the mutation inside one ordered window that joins lease authority, transaction isolation, act validation, recovery, and observation.
+
+### Exhibit 7.3 — SQLite fenced execution flow
+
+```text
+acquire file coordination lease
+→ with_transition
+→ BEGIN IMMEDIATE (write reservation)
+→ reread row and require now_version == expected
+→ capture prior row values + JCS digest for recovery
+→ recheck locator identity
+→ revalidate pinned RequestedAct
+→ recheck live approval
+→ recheck locator identity again
+→ UPDATE ... WHERE key = ? AND version = expected
+→ require changed_rows == 1
+→ pre-commit readback: exact fields and version = expected + 1
+→ transaction.commit()
+→ release lease
+→ independent post-commit observation and durable outcome
+```
+
+`BEGIN IMMEDIATE` starts a write transaction immediately instead of waiting for the first write statement. The version predicate adds a second, destination-native optimistic concurrency check: if an uncooperative writer moved the row, the conditional update cannot satisfy `key + expected_version`, and the operation refuses rather than overwriting it.
+
+The transaction is not trusted merely because it is immediate. The engine also revalidates target, act, and approval inside that same window and requires readback to equal the approved result before commit.
+
+### Exhibit 7.7 — Row-version refusal
+
+```json
+"record_version_changed: the row moved to version 4 after operation model_op_synthetic_07 was proposed; nothing applied, it returns for review (reconcile the operation as absent)"
+```
+
+The proposed version was 3. The current version is 4. Nothing was applied.
+
+### Recovery capture is separate from the mutation
+
+Before update, the engine records prior row values and their JCS digest through `prepare_recovery`. A governed restoration is separately authorized and requires the exact post-operation state. Recovery is not a license to repeat the original mutation or to erase its uncertainty.
+
+### Exhibit 7.8 — Pre-write recovery capture
+
+```json
+{
+  "method": "row_values",
+  "version": 3,
+  "values": {
+    "customer_id": "cust_994182",
+    "tier": "standard",
+    "status": "pending",
+    "credit_limit": 10000
+  },
+  "sha256": "58b2e91f4c03d8a7126590ef4312ab98c7654321fedcba09876543210fedcba9"
+}
+```
+
+The capture proves what preceded the write. It does not prove that the write occurred or that its result was returned.
+
+## 5. Multi-Destination Capability Plans
+
+A coordinated plan is not a distributed transaction. Each destination declares what its own write path can actually guarantee.
+
+| Destination | Declared guarantees | `cross_destination_atomic` |
+|---|---|---|
+| `sqlite.records` | `conditional_write`, `idempotent_retry`, `recovery_capture` | `false` |
+| `goose.sessions.db` | `conditional_write`, `idempotent_retry`, `recovery_capture` | `false` |
+| `opencode.http_api` | Empty set; every fresh effect is held | `false` |
+
+A plan names required guarantees for each step. `require_route` evaluates them before an operation begins and again before effect. An unmet requirement produces `destination_route_incompatible` and the step is held. Nothing silently accepts the gap.
+
+A versioned revision is the only way to change those requirements. It names every removed requirement and the weaker semantics now in force, records its authorization, and invalidates decisions made for the prior version. Authorization comes from a trusted operator other than the plan's author, or from the author only when every step runs under the owner's exact project assignment.
+
+Partial completion is tracked per step. Compensation is a separately governed restore naming the exact applied operation. There is no simulated 2PC and no `cross_destination_atomic: true` hiding behind an orchestration diagram.
+
+## 6. Non-Fabricating Successor Grants
+
+A committed effect and its first receipt are different events. A crash can separate them permanently.
+
+### The `ResultGrant`
+
+A controller may issue a `ResultGrant` for one historical proposal to a **new receiving task and environment**. The grant binds:
+
+- the original proposal ID and nested payload digest;
+- the whole immutable submission record digest;
+- the whole executor outcome digest and outcome class;
+- the receiving worker, task, environment, project, tenancy, and control epoch;
+- the issuer's current authenticated controller identity and grant expiry.
+
+The receiving environment gets persistent `purpose: "result_read_only"`. It receives no destination tenancy, proposal, apply, restore, private-write, or terminal authority. Revoking or superseding the grant cannot restore those privileges.
+
+The original controller remains historical provenance. The current trusted issuer must own and stage the receiving task.
+
+### What a successor acknowledgement must prove
+
+`successor_return_for_task` verifies all of the following:
+
+1. The expected original's current proposal head and receiving-environment head name the same unrevoked, unexpired grant, and the saved original has not changed.
+2. The receiving task, environment, tenancy, Room, and current lease still reproduce the grant's binding. The receiving task remains a fresh result-only recipient with no protected submission of its own.
+3. Exactly one acknowledgement exists. Its source event is fresh, not the original delivery.
+4. The native `room-wake-job-v3` verifies, names the expected Room, worker, task, sender, registration, attempt, and has `dispatch_status: "completed"`.
+5. Acknowledgement time lies inside the grant's validity window and the wake job's sealed window.
+6. The acknowledgement's delivery identity matches the actual sealed wake job.
+7. The governing source was served to that worker on the same broker session.
+8. A fresh correlated Room return exists and every addressed mention and obligation is resolved by the Room service at or after the reply.
+
+Only then does the return report an historical outcome. It does not execute, repair, issue, revoke, register, or resend anything.
+
+### Exhibit 7.9 — Successor acknowledgement
+
+```json
+{
+  "schema": 1,
+  "kind": "successor_result_receipt",
+  "successor": true,
+  "satisfies_original_return": false,
+  "resolves_original_obligation": false,
+  "grant_id": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+  "proposal_id": "a1b2c3d4e5f60718293a4b5c6d7e8f901a2b3c4d5e6f708192a3b4c5d6e7f809",
+  "proposal_sha256": "8f434346648f6b96df89dda901c5176b10a6d83961dd3c1ac88b59b2dc327aa4",
+  "record_bytes_sha256": "a1b2c3d4e5f6a7b8c9d0e1f2a3b4c5d6e7f8a9b0c1d2e3f4a5b6c7d8e9f0a1b2",
+  "outcome_bytes_sha256": "9f8e7d6c5b4a3f2e1d0c9b8a7f6e5d4c3b2a1f0e9d8c7b6a5f4e3d2c1b0a9f8e",
+  "outcome": "applied",
+  "outcome_at": "2026-10-31T19:22:15.012480Z",
+  "worker": "reviewer-beta",
+  "task": "TSK-2026-SUCCESSOR-009",
+  "environment_id": "env_synthetic_successor_11",
+  "worker_session": "worker-mcp:00000000-0000-0000-0000-000000000011",
+  "delivery_id": "dlv_synthetic_fresh_wake_8821",
+  "delivery": {
+    "room": "architecture-demo",
+    "agent": "reviewer-beta",
+    "task": "TSK-2026-SUCCESSOR-009",
+    "source_event": "evt_0123456789abcdef_0000beef",
+    "wake_attempt": 1,
+    "worker_pid": 14208
+  },
+  "at": "2026-10-31T19:24:00.912004Z"
+}
+```
+
+The original return obligation is untouched. The successor has read and acknowledged the historical result; the original session has not been made to witness it.
+
+

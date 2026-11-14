@@ -1,0 +1,19 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "Break-Glass EpochState Declaration",
+  "type": "object",
+  "additionalProperties": false,
+  "maxProperties": 2,
+  "required": ["sequence", "scopes"],
+  "properties": {
+    "sequence": { "type": "integer", "minimum": 0, "maximum": 9007199254740991 },
+    "scopes": {
+      "type": "object",
+      "maxProperties": 1024,
+      "propertyNames": { "type": "string", "minLength": 1, "maxLength": 256 },
+      "additionalProperties": { "type": "integer", "minimum": 0, "maximum": 9007199254740991 },
+      "description": "Scope to monotonic revocation revision. Scope forms are machine, agent:<name>, and project:<root>."
+    }
+  },
+  "description": "Public declaration of the two EpochState fields with bounded 64-bit integer counters and scope map cardinality."
+}

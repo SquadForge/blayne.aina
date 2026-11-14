@@ -1,0 +1,106 @@
+# §04 Part 2/5 — The Room Coordination Plane
+Canonical: https://blayneaina.com/04-the-room-why-git-and-chat-are-not-coordination-planes/part-2/ | Raw Article: https://blayneaina.com/04.md | Next Part: https://blayneaina.com/04/part-3.txt
+
+## 3. Subsystem 2: The Room Graph Is a Visibility and Recovery Boundary
+
+Each Room owns a physically isolated graph shard derived from the workspace instance and Room name:
+
+```text
+room_graphs/<graph_id>/
+  manifest.json
+  binding.json
+  nodes.jsonl
+  artifacts.jsonl
+  errors.jsonl
+  blobs/<sha256>.<json|txt>
+  sync_index.db
+```
+
+`binding.json` permanently fixes `Scope::Coordination` or `Scope::Project { id }`. Historical artifacts cannot be rebound to another project or scope class; `graph_project_rebind_refused` requires a new Room identity. Policy mutation uses `expected_sha256` optimistic concurrency, atomic preimage retention, and `prepared`/`applied` journal stages.
+
+Payloads over 8 KiB spill into content-addressed blobs. MCP call text over 24 KiB compacts to a blob with a 4 KiB preview. Sensitive credential arguments are omitted from audit projections rather than preserved for convenience. Legacy imports require quiescence: a live pre-shard writer triggers `room_graph_legacy_writer_detected` instead of racing the new graph. Hash-chained artifacts make alteration detectable; they do not prove non-deletion or independent validation.
+
+### Withholding closes over descendants
+
+`ProjectVisibility` first filters by project and evidence visibility, including collaborative-pass staging. It then computes a monotonic parent-withholding closure: if any parent is withheld, every child evaluation, citation, or derived record is withheld too. Legacy unscoped MCP calls degrade to `project_metadata_only`, removing arguments, responses, read/write sets, and artifact references.
+
+A hidden parent cannot leak through a visible child.
+
+### Composition is intersection, not union, of authority
+
+`squad.room_composition.v1` composes a bounded set of Rooms under an owner grant. Every constituent must remain admitted. The effective reader scope is the intersection of the composition grant, each Room grant, current membership, and active project. A failed constituent yields `incomplete_source_set`, not a partial composition that silently drops its restrictions.
+
+Pagination binds `request_sha256` to the composition, reader, filter, limit, and source snapshots. If a source changes between pages, `graph_page_snapshot_changed` prevents a mixed-generation export. Composition confers no execution authority.
+
+### Recovery refuses reparse shortcuts and preserves causal order
+
+Snapshot recovery uses `squad.room_snapshot.v1`. Copying refuses symlinks and NTFS reparse points. A verified staged tree is fingerprinted, the previous live tree is preserved, and promotion occurs only after current-state and staged-state checks. Interrupted recovery remains pending and blocks ordinary graph access until the exact operation resumes.
+
+## 4. Subsystem 3: The Room Sync Engine and the Pre-Action Work Gate
+
+A coordination plane cannot rely on an agent remembering what it has read. It must measure the observation.
+
+### A durable per-Room sync index
+
+Each Room has `sync_index.db` under `squad.room_sync_index.v1`. Every connection enforces and verifies:
+
+- `journal_mode = WAL`;
+- `synchronous = FULL` (`2`);
+- `foreign_keys = ON`;
+- `busy_timeout = 5000 ms`.
+
+Nine relational tables hold the rebuildable event projection, context head, graph links, receipts, checkpoints, snapshots, causal edges, confirmed events, and local event embeddings. The event index is rebuildable from the authoritative journals; receipts and checkpoints survive index repair.
+
+### Handle-pinned reconciliation
+
+Reconciliation opens `EVENTS.jsonl`, verifies its Win32 file identity, and retains a trailing anchor of up to 4,096 bytes with its SHA-256. Journal replacement or incompatible rotation is `room_sync_journal_rotated`, not an invisible reset.
+
+The reader advances in 1 MiB batches with an 8 MiB per-record ceiling, verifies the `prev_hash → hash` chain and monotonic Hybrid Logical Clock, and computes local embeddings outside the SQLite write transaction. Expensive semantic work never holds the database lock.
+
+### Checkpoints bind actor, conversation, credentials, Room, and view
+
+A delivery checkpoint is not just `agent_x read_offset = N`. It binds a `conversation_key` derived from workspace instance, bound actor, registration digest, native conversation UUID, and Room, plus a `view_gen` derived from evidence-read admission, reset state, project, participants, and readers.
+
+Changing IDE thread, rotating registration, resetting the Room, or changing the visible project invalidates the checkpoint and requires fresh synchronization.
+
+Pages are limited to 24 KiB including the MCP envelope. Oversized events split into 1,024-byte UTF-8-safe `item_chunk` fragments. Only the final `item_complete` fragment advances the journal offset, so an interrupted read re-serves the item rather than pretending it was consumed.
+
+Redaction runs again at confirmation. If policy changed the delivered representation, confirmation fails with `room_sync_delivery_policy_changed`. A receipt tip that is not an ancestor of the current journal fails with `room_sync_receipt_forked`.
+
+### The Work Gate requires frontier and causal readiness
+
+Nine participant verbs—`note`, `say`, `reply`, `send`, `done`, `blocked`, `decline`, `handoff`, and `circle`—must pass the pre-action Work Gate.
+
+Two conditions must hold:
+
+1. The conversation checkpoint is ready and `confirmed_offset` covers the live coordination frontier.
+2. `verify_causal_parents_confirmed` proves that the explicit parents and every ancestor returned by a recursive SQLite CTE over `causal_edges` are confirmed for that conversation and view. A matching confirmed event or a confirmed receipt covering the parent's offset can establish coverage; the bound identity's own events are handled explicitly.
+
+Failure returns `room_sync_required` with the next authorized page. The agent must read and confirm the missing context before acting.
+
+At commit, the writer lock revalidates the frontier and conversation, assigns HLC and hash lineage, and appends the staged events atomically. A foreign arrival triggers `room_sync_concurrent_arrival` rather than letting a stale turn slip through.
+
+The **Fold Rule (D1)** advances the author's confirmed offset only when no foreign coordination event exists between the old checkpoint and the newly written event. The author folds its own work, never someone else's unread work.
+
+Named system writers have separate authority and cannot emit participant message kinds. Finally, `RoomEventView::revalidate()` rechecks actor, project visibility, Room authority, and task-source digest after a read, catching authority changes that occurred while the view was being assembled.
+
+## 5. Subsystem 4: Contribution Verbs Have Different Authority Effects
+
+The Room is not freeform chat with locks added later. Its verbs deliberately separate status, answer, assignment, transfer, and completion.
+
+| Verb | Wake and task rule | Constitutional effect |
+|---|---|---|
+| `note` | Never wakes; visible `@mentions` refused | Status or identity telemetry without mentions, obligations, or dispatch |
+| `reply` | Never wakes; explicit `reply_to` required | Resolves an addressed mention or obligation after validating that it belongs to the caller |
+| `say` | Coordination-only wake behavior; rejects `--task`; project wake delivery requires `send` | Conversational turn with strict targeting and ambiguity handling |
+| `send` | Task required in project Rooms; creates sealed wake jobs | Two-phase message/obligation commit and authorized worker delivery |
+| `handoff` | Bounded invitation; project no-wake inbox or coordination delivery | Transfers task ownership without transferring a lease |
+| `done` | Task required | Runs privileged acceptance and resolves only proven addressed items or verified successors |
+
+An untargeted `say` reply cannot resolve a mixed set of pending obligations. If open items trace to more than one source event, the Room refuses with `say_reply_target_ambiguous` before writing anything.
+
+`send` prevalidates the task and every evidence handle before its first event. A citation belonging to another Room produces `cross_room_evidence_refused`. Flush 1 commits the `room_message`; Flush 2 commits the mention and obligation records. A cooldown-deferred wake is still a sealed permit, and the 2,000 ms damper clock starts at dispatch completion rather than at initial gate passage.
+
+`handoff` records `lease_transferred: false` and `fresh_claim_required: true`. Ownership can move; the old kernel and lease authority cannot be inherited as a side effect. `done` can resolve items from a superseded task only when `verified_successor` proves a non-weaker replacement: same owner, source, project, requirements, and non-empty acceptance, with no wider scope.
+
+

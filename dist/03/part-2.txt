@@ -1,0 +1,147 @@
+# §03 Part 2/6 — Semantic Switch & EISA
+Canonical: https://blayneaina.com/03-eisa-four-gate-verdict-machine-and-entity-resolution/part-2/ | Raw Article: https://blayneaina.com/03.md | Next Part: https://blayneaina.com/03/part-3.txt
+
+## 3. The Evidence Alphabet: 17 Tags and 12 Comparators
+
+EISA's tags are not natural-language hints. Each positive or counter tag binds to one deterministic comparator. The two inferential tags are reserved for transitive composition and are refused in `BindEvidenceTag`.
+
+| # | Evidence tag | Class | Comparator and exact predicate |
+|---:|---|---|---|
+| 1 | `PHONE_STRONG` | Positive | `DigitsEqual`: both digit strings have at least seven digits and are identical |
+| 2 | `PHONE_ONE_DIGIT_VARIANCE` | Positive | `DigitsOneSubstitution`: equal-length digit strings, Hamming distance exactly one |
+| 3 | `PHONE_MULTI_DIGIT_VARIANCE` | Positive | `DigitsMultiSubstitution`: equal-length digit strings, Hamming distance two or three |
+| 4 | `PHONE_COUNTRY_CODE_VARIATION` | Positive | `DigitsSuffix`: the shorter digit string is a proper suffix of the longer |
+| 5 | `INTERNATIONAL_PHONE_VARIATION` | Positive | `DigitsSuffix`: the same suffix law under a distinct declared evidence tag |
+| 6 | `EMAIL_LOCAL_MATCH` | Positive | `EmailLocalEqual`: valid trimmed/lowercased email shapes have equal local parts |
+| 7 | `DOMAIN_ROOT_MATCH` | Positive | `EmailDomainRootEqual`: the first domain label before the first dot is identical |
+| 8 | `DOMAIN_COUNTRY_TLD_VARIATION` | Positive | `EmailTldVariation`: first domain labels match and full domains differ |
+| 9 | `DOMAIN_ROOT_MISMATCH` | Counter | `EmailDomainRootDiffers`: first domain labels differ |
+| 10 | `NAME_STRONG` | Positive | `TextEqual`: lowercase whitespace-collapsed non-empty strings match |
+| 11 | `NAME_SIMILARITY` | Positive | `TokenOverlap`: nonblank values share at least one lowercase alphanumeric token of two or more characters |
+| 12 | `COMPANY_ROOT_MATCH` | Positive | `FirstTokenEqual`: first qualifying tokens match |
+| 13 | `COMPANY_REGIONAL_VARIATION` | Positive | `FirstTokenVariation`: first tokens match and normalized full strings differ |
+| 14 | `REGIONAL_SUBSIDIARY_PATTERN` | Positive | `FirstTokenVariation`: the same first-token variation law under a distinct declared tag |
+| 15 | `REGIONAL_VARIATION` | Positive | `FirstTokenVariation`: the same first-token variation law under a distinct declared tag |
+| 16 | `TRANSITIVE_CLOSURE_APPLIED` | Inferential | No field comparator; express with `AssertTransitiveClosure` |
+| 17 | `TRANSITIVE_CHAIN_DEPTH_1` | Inferential | No field comparator; express with `AssertTransitiveClosure` |
+
+The domain rule is intentionally simpler than a public-suffix analyzer: `domain_root` is the first DNS label. It does not strip `mail`, `www`, or country-code second-level domains. That limitation must remain visible; comparator semantics are declared policy, not universal identity truth.
+
+A comparator can answer only its exact predicate. `TokenOverlap` does not prove two people are identical. `FirstTokenVariation` does not prove two companies share a parent. `DigitsSuffix` does not establish ownership of a phone number. EISA determines whether the declared relation holds between the sealed strings—not whether the relation is sufficient evidence for a worldly identity decision.
+
+### The 47 registered fault classes
+
+Faults are residue, never standing. The current `FAULTS` registry contains exactly these 47 codes:
+
+```text
+Representation and bounds (16):
+  act_not_object, unknown_field, missing_field, field_type,
+  unknown_version, unknown_stage, stage_not_admitted, unknown_opcode,
+  unknown_symbol, tag_class_mismatch, bound_exceeded, act_id_invalid,
+  act_id_repeated, actor_mismatch, case_mismatch, evidence_ref_refused
+
+Coordinates and observations (11):
+  pointer_foreign_artifact, pointer_malformed, record_unknown,
+  member_repeated, field_absent, value_null, value_empty,
+  value_not_string, value_shape_mismatch, observation_contradicted,
+  pair_mismatch
+
+Dependencies and composition (8):
+  dependency_missing, dependency_kind, dependency_faulted, dependency_cycle,
+  support_missing, counterevidence_suppressed, chain_broken,
+  chain_depth_exceeded
+
+Partitions and terminal decisions (7):
+  partition_member_unknown, partition_member_repeated,
+  partition_member_missing, partition_unsupported_group,
+  partition_contradicts_support, partition_repeated,
+  submission_mixed_decision
+
+Layout (5):
+  layout_fact_absent, layout_scope_mismatch, layout_kind_mismatch,
+  layout_citation_mismatch, relation_indeterminate
+```
+
+Malformed submissions can also produce whole-submission inadmissibility codes such as `submission_too_large`, `submission_unparseable`, `submission_not_array`, `submission_size`, and `submission_mixed_stage`. Those envelope outcomes are distinct from the 47 registered per-act fault classes that `RejectUnlawfulAct` may cite.
+
+## 4. Sealed Cases: Two Substrates, One Artifact Identity
+
+An act may point only into a sealed case. EISA creates `eisacase_<32hex>` by hashing the Room name, a NUL separator, and the case's RFC 8785 JCS record digest. The `artifactHash` carried by every act is that record digest; the Room-qualified case ID is the graph address.
+
+Identical records sealed in two Rooms therefore have the same `artifactHash` but different case nodes. Neither Room can resolve the other's case through composition.
+
+### File cases
+
+`seal_file` reads a JSON case through a task-scoped `ReadAuthority` under the Room's transition serialization, revalidates that authority, checks Room-project containment, enforces 4 MiB and 1,000-record ceilings, and applies the same strict parser. A case is either an array of record objects or `{ "records": [...] }`. Every record has a unique valid `id`.
+
+The graph record binds the canonical records, digest, source-path identity and source-byte SHA-256, actor, session, task, Room, and time. Loading recomputes the record digest before recognition.
+
+### Passage cases
+
+`seal_passages` bridges Article 02 directly into EISA. Each input is a Room-issued `ev_` handle. The sealer:
+
+1. prepares and validates the citation for the caller and task;
+2. refuses handles from another Room or unrevealed collaborative-pass findings;
+3. loads and reverifies the canonical view and live source;
+4. cuts the exact Unicode-scalar passage using the handle's selector;
+5. refuses textless gaps, empty selections, and passages over 1,024 characters;
+6. attaches committed `layout` facts when a whole-node citation names a PDF layout element;
+7. seals records containing the exact text and source provenance;
+8. commits citation edges so later source reassessment reaches the case.
+
+A passage record's `/text` is the selected passage. Its `/source/...` fields bind Room, view digest, node ID, unit, start, end, source revision, source SHA-256, and parser digest. Every later `case::load` rechecks the JCS digest, source views, live source bytes, and sealed layout equality. A drifted source cannot be used for a new judgment.
+
+The two substrates share constitutional identity but not assurance. A task-scoped file case establishes JCS integrity over an admitted file. A passage case additionally binds each value to server-cut document evidence and layout provenance. Neither proves that the underlying records are worldly true.
+
+## 5. The Four-Gate Verdict Machine
+
+| Gate | What the recognizer establishes | What it refuses to let the proposal do |
+|---|---|---|
+| **1. Syntax and stage isolation** | Strict JSON, exact keys, closed symbols, authenticated actor, unique IDs, bounded sizes, one act family, matching `artifactHash` | Smuggle duplicate fields, foreign opcodes, mixed stages, self-declared actors, or unbounded matter |
+| **2. Spatial containment** | Every coordinate resolves inside the named sealed case; every layout citation names the same committed view, revision, parser, and page | Point at foreign records, manufactured geometry, another Room's evidence, or unstored fields |
+| **3. Type and canonical identity** | Values are non-empty bounded strings, dependencies have the right opcode/layer, and admitted acts receive JCS consensus identities | Coerce shapes, cite faulted dependencies, or let prose and local naming change the proof identity |
+| **4. Substance and coverage** | Comparators hold, counterevidence stays visible, chains are simple paths, and partitions are exact, connected, and non-contradicted | Suppress contradiction, break a chain, omit members, split proven duplicates, or assert an unsupported cluster |
+
+Each act ends in one consequence class:
+
+- **`operative`** — a recognized act with a consensus identity.
+- **`lawful_non_operative`** — a valid review request, which creates no operative identity claim.
+- **`anti_knowledge`** — a valid rejection of other matter.
+- **`typed_fault`** — preserved residue with a fault code and no standing.
+
+A malformed whole submission is `inadmissible`. A recognized submission reports `decision: partition`, `review`, `relation`, or `none`; it does not acquire a blanket database-execution verdict.
+
+### Counterevidence is submission-complete
+
+For `AssertDuplicatePair`, **at least one admitted positive `BindEvidenceTag` on the same pair is required**. Every listed support dependency must be such a binding. Every listed counter dependency must be an admitted counter binding on that pair. An empty counter list is valid only when the submission contains no admitted counter binding for that pair.
+
+Then EISA scans all admitted acts in the submission. If any counter binding on that pair is absent from `operands.counter`, the pair faults with `counterevidence_suppressed`. This is the minimum support and complete-counter rule—not a domain-specific claim that one similarity signal is sufficient proof of real-world identity.
+
+The proposer cannot bind `DOMAIN_ROOT_MISMATCH` in one act and then omit it when asserting identity in another. The check is deliberately scoped to the **current submission's admitted acts**; it is not a claim to have searched every historical record or external source in the world.
+
+### Transitive closure is a path proof, not a slogan
+
+`AssertTransitiveClosure` cites two to four admitted `AssertDuplicatePair` links. Pairs are canonically ordered, but the walker can traverse each edge in either direction. It starts from either requested endpoint, requires every link to continue from the current record, tracks visited IDs to reject cycles, and must end at the other endpoint.
+
+This establishes that the cited simple path exists. It does not prove that transitivity is a safe business rule for every relationship.
+
+### Partition verification is global across the admitted submission
+
+`ProposePartition` enforces four separate mathematical properties:
+
+1. **Exact disjoint cover.** Every group member exists in the case, appears in at most one group, and every sealed record appears somewhere. Empty groups are meaningless.
+2. **Cited support stays inside groups.** Every support reference must be an admitted duplicate pair or transitive closure.
+3. **No admitted relation crosses a boundary.** EISA scans all admitted Layer 1/2 acts, including those omitted from `support`. If any links records in different groups, the result is `partition_contradicts_support`.
+4. **Every multi-record group is connected.** A Disjoint-Set Union-Find structure unions cited support edges within each group. If members do not share one root, the result is `partition_unsupported_group`.
+
+A proposal cannot prove A=B and B=C, then place C outside the cluster because it dislikes the consequence. Nor can it place A, B, and C together without a cited path connecting them.
+
+### Consensus identity removes narrative, not responsibility
+
+For an admitted act, `consensusIdentity` is the SHA-256 of an RFC 8785 basis containing the version, stage, opcode, case `artifactHash`, and canonical operands. Dependency IDs are replaced by the sorted consensus identities of the acts they name. Layout acts additionally bind their profile and committed geometric identity.
+
+Excluded from that identity are `actor`, `boundedReason`, `confidence`, `sourceEvent`, `evidenceRefs`, and local act IDs.
+
+Two proposers using different names, confidence scores, and explanations therefore receive the same consensus identity only when they prove the same structural transition over the same sealed case. Their raw acts remain separately attributable through `act_sha256`, Room actor, session, and submission identity. Canonical consensus does not create independent evidence.
+
+

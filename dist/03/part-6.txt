@@ -1,0 +1,156 @@
+# §03 Part 6/6 — Semantic Switch & EISA
+Canonical: https://blayneaina.com/03-eisa-four-gate-verdict-machine-and-entity-resolution/part-6/ | Raw Article: https://blayneaina.com/03.md | Next Article Brief: https://blayneaina.com/04/brief.txt
+
+## The Article 03 Claim Card
+
+```text
+Mechanism:
+  Semantic Switch Protected Computation + EISA Constitutional Act Recognition
+  (native-data minimization, relation-isomorphic fictional records,
+   qBlock candidates, Fracture, Forge, local exact restoration, Shield,
+   strict parsing, sealed cases, pointer law, deterministic comparators,
+   Four-Gate recognition, layout proof, and Room ledger)
+
+Failure it governs:
+  Native identifiers exposed to external AI computation;
+  comparison structure destroyed by destructive redaction;
+  ambiguous or schema-valid model prose becoming authority;
+  fabricated coordinates and geometry; suppressed counterevidence;
+  broken transitive claims; incomplete or contradictory partitions;
+  unprotected external comparison; and model votes impersonating proof.
+
+Positive path:
+  native records held locally
+  → Semantic Switch protected representation
+  → qBlock / Qdrant Edge candidates over protected records
+  → Fracture partitions and Forge canonical selections
+  → local exact restoration through the private crosswalk
+  → Shield forward-only baseline defense
+  → doc_ / ev_ evidence and eisacase_ sealed records
+  → strict EISA_ACT_V1 acts and deterministic recognition
+  → squad.eisa.submission/1 as eisa_
+  → Room authority, RequestedAct, fenced execution, terminal receipt.
+
+Refusal / non-operative path:
+  Whole-submission inadmissibility for malformed envelopes.
+  typed_fault with one of 47 registered per-act fault classes.
+  counterevidence_suppressed and partition_contradicts_support.
+  partition_unsupported_group and relation_indeterminate.
+  lawful_non_operative RequestHumanReview and anti_knowledge rejection.
+  Foreign-Room, unrevealed, drifted, textless, or out-of-scope evidence refused.
+
+Evidence status:
+  EISA: Implemented and Author-Verified on declared wire, graph, and geometry paths.
+  Semantic Switch: Implemented, Measured, and Author-Verified on retained executions.
+  2,750 inputs; 50 whole blocks; 2,704 fictionalized records;
+  27,040 exact field restorations; 46 unblocked records retained;
+  20/20 relabeling-invariance blocks; 23/23 exact native edit relations;
+  53/53 records and 529/529 field values verified per isomorphic run;
+  14/14 batch and 10/10 transformation adversarial cases;
+  zero provider calls in retained Stage 1 executions.
+  Not Independently Validated; external research does not endorse AINA.
+
+Verifier and artifacts:
+  strict::parse, pointer::parse/resolve, Comparator::holds,
+  recognize::recognize, case::load, layout::LayoutFact,
+  Semantic Switch authenticated crosswalk and release-inventory verifier,
+  relation-isomorphism and exact-restoration reports,
+  batch and transformation adversarial receipts,
+  consensusIdentity, eisacase_, eisa_, cor_/coa_ where views correspond,
+  and the Room citation graph.
+
+Scope and claim ceiling:
+  Comparators are declared policies, not universal identity semantics.
+  Counterevidence and partition scans cover the current admitted submission,
+  not every historical or external fact.
+  Sealed evidence is not source truth; consensus identity is not independence.
+  Semantic Switch establishes transport and relation fidelity, not anonymity or ER accuracy.
+  Layout proves only CONNECTS under committed geometry and declared thresholds.
+  EISA recognition is not a destination mutation or independent validation.
+
+Next stage in the machine:
+  Article 03 protects native computation and recognizes constitutional acts.
+  Article 04 binds them to live actors, sessions, tasks, wake delivery,
+  acceptance, and current Room authority before execution.
+
+Commercial doorway:
+  Semantic Switch & Entity Resolution Challenge — bring one bounded contact,
+  company, product, or other duplicate-record workflow; receive a replayable
+  protected-computation demonstration, relation-fidelity report, comparator
+  and counterevidence map, exact-restoration record, and explicit
+  production-integration predicate list (Article 09 · me@blayneaina.com).
+```
+
+## Before the Room Can Govern, the Act Must Mean One Thing
+
+Return to the three agents voting for a merger.
+
+The conventional system can report that the vote was unanimous, the JSON matched a schema, and the judge was 97% confident. It still cannot answer which exact values were compared, whether the domain contradiction was included, whether the chain closes, or whether every candidate appears exactly once in the result.
+
+EISA answers those questions mechanically. The duplicate keys are gone. The case is sealed. The pointers resolve. The comparator runs on the actual values. The counter binding stays visible. The transitive path is walked. The partition is checked against every admitted relation and reconstructed with Union-Find. The surviving act receives a canonical identity and enters the Room with actor, session, task, and citation continuity.
+
+Only then does the proposal become something a coordination plane can safely govern.
+
+> **Models propose. EISA recognizes. The Room governs. Execution is fenced. Effects are observed. Every transition closes with evidence.**
+
+Article 04 takes up the next non-equivalence: a recognized act still needs a live authority domain. Git history and chat transcripts cannot supply one.
+
+## Frequently Asked Questions
+
+### Why is JSON Schema or constrained decoding insufficient to govern AI actions?
+
+Constrained decoding establishes shape. It does not resolve record-relative pointers against a sealed case, run deterministic comparators on the values, reject faulted dependencies, force counterevidence into the decision, or prove that a partition is complete, connected, and non-contradicted. EISA also refuses duplicate keys before schema evaluation.
+
+### How does EISA prevent an AI agent from suppressing conflicting evidence?
+
+Every admitted counter binding on a pair must appear in that pair's `counter` array. EISA scans all admitted acts in the submission and returns `counterevidence_suppressed` if one is omitted. Separately, any admitted identity relation crossing a proposed partition boundary causes `partition_contradicts_support`.
+
+### Does `consensusIdentity` prove independent agreement?
+
+No. It proves that two acts encode the same structural transition over the same sealed case after actor, prose, confidence, source event, evidence references, and local IDs are removed. Shared evidence, shared models, and shared mistakes can still produce the same identity.
+
+### Why does Semantic Switch run before qBlock?
+
+Because qBlock and later stages may use external AI computation. Semantic Switch transforms native values first, so Qdrant Edge and qBlock operate on structure-preserving fictional records rather than the declared raw identifiers. Native rows, keys, and the private crosswalk remain local while qBlock nominates candidates for Fracture.
+
+### Is Semantic Switch anonymization?
+
+No. It is deterministic, structure-preserving pseudonymization, with native rows, keys, crosswalks, and restoration mappings retained locally. Its measured exact restoration and relation fidelity do not prove anonymity, cross-block unlinkability, inference resistance, or matching accuracy.
+
+### How does EISA verify flowchart connections without trusting VLM prose?
+
+It seals parser-committed PDF vector facts and evaluates only `CONNECTS`: one stroked open connector, two closed shapes, one marked direction, unique attachments, touch thresholds of 150/200 centi-points, and a maximum 600-centi-point frame gap when an outer frame is involved. Ambiguity becomes `relation_indeterminate`.
+
+### Does an operative EISA verdict execute the proposed transition?
+
+No. It creates recognized constitutional matter and commits it to the Room as `eisa_<32hex>`. Actor eligibility, task and lease authority, controller-fixed execution, destination pre-state, effect observation, and terminal closure remain separate gates.
+
+## Continue the Series
+
+- **Series index:** [From Proposal to Consequence: The AINA Transition-Governance Series](https://blayneaina.com/)
+- **Previous:** [Article 02 — Zero-Trust Document Ingestion and Server-Cut Evidence](https://blayneaina.com/02-zero-trust-document-ingestion-and-server-cut-evidence/)
+- **Next:** [Article 04 — The Room: Why Git and Chat Are Not Coordination Planes](https://blayneaina.com/04-the-room-why-git-and-chat-are-not-coordination-planes/)
+- **Deployment and independent review:** [Article 09 — Bring One Real Boundary](https://blayneaina.com/09-bring-one-real-boundary-work-with-blayne/)
+
+---
+
+## Primary 2026 Sources
+
+- [Teofili et al. — *Can we trust LLM Self-Explanations for Entity Resolution?*, `arXiv:2606.01210`](https://arxiv.org/abs/2606.01210)
+- [Papadakis et al. — *AgenticER: the next frontier in Entity Resolution*, `arXiv:2607.27435`](https://arxiv.org/abs/2607.27435)
+- [Smith et al. — *OpenSanctions Pairs: Large-Scale Entity Matching with LLMs*, `arXiv:2603.11051`](https://arxiv.org/abs/2603.11051)
+- [Kasprova et al. — *Too Polite to Disagree: Understanding Sycophancy Propagation in Multi-Agent Systems*, `arXiv:2604.02668`](https://arxiv.org/abs/2604.02668)
+- [Deußer et al. — *On the Impact of Anonymization on the Performance of Large Language Models*, `arXiv:2609.11335`](https://arxiv.org/abs/2609.11335)
+- [Deng et al. — *Circuit-MLLM*, `arXiv:2609.15668`](https://arxiv.org/abs/2609.15668)
+- [Kogilathota et al. — *HALP: Detecting Hallucinations in Vision-Language Models without Generating a Single Token*, `arXiv:2603.05465`](https://arxiv.org/abs/2603.05465)
+- [NVD — `CVE-2026-71847`, Ruby JSON duplicate-key warning-path use-after-free](https://nvd.nist.gov/vuln/detail/CVE-2026-71847)
+
+---
+
+## Publication Metadata
+
+**Title tag:** Semantic Switch and EISA: Protected Computation and Entity Resolution  
+**Meta description:** Semantic Switch protects native data before external AI computation, then qBlock, Fracture, Forge, and Shield turn fictionalized records into governed entity state.  
+**Series navigation:** [Series index](https://blayneaina.com/) · Article 03 of *From Proposal to Consequence: The AINA Transition-Governance Series*.  
+**Previous installment:** [Article 02 — Zero-Trust Document Ingestion and Server-Cut Evidence](https://blayneaina.com/02-zero-trust-document-ingestion-and-server-cut-evidence/).  
+**Next installment:** [Article 04 — The Room: Why Git and Chat Are Not Coordination Planes](https://blayneaina.com/04-the-room-why-git-and-chat-are-not-coordination-planes/).

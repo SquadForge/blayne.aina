@@ -1,0 +1,183 @@
+# §04 Part 3/5 — The Room Coordination Plane
+Canonical: https://blayneaina.com/04-the-room-why-git-and-chat-are-not-coordination-planes/part-3/ | Raw Article: https://blayneaina.com/04.md | Next Part: https://blayneaina.com/04/part-4.txt
+
+## 6. Subsystem 5: A Wake Is a Sealed Authority Transition
+
+A queued prompt is not execution authority. It is a proposal to deliver work later, under conditions that may have changed.
+
+### The 18-field `room-wake-job-v3` binding
+
+`binding_sha256` covers these exact queue fields:
+
+```text
+schema, room, agent, from, source_event, path, prompt,
+task (explicit null when untasked), evidence_refs (when present),
+mention_ids, obligation_ids, pulse_message, deadline_ms,
+created_at, not_after, control_epoch, room_authority,
+registration_sha256
+```
+
+The explicit `task: null` matters: adding or stripping a task binding changes the digest. `not_after` is computed from the original creation time and deadline—60 seconds for untasked delivery and 20 minutes for task-bound work—so queue wait consumes the same budget as execution. Registration and Room authority are sealed for comparison, not treated as evergreen.
+
+Prompt and pulse text pass the egress redactor before the job is stored. The queue path itself must resolve to the canonical regular, non-reparse object.
+
+`binding_sha256` is an **integrity comparison, not a digital signature or standalone authentication mechanism**. Authenticity comes from the controller-governed queue object and write protocol plus the live revalidation below. A party that rewrites both the job and its digest still does not inherit the sealed recipient, registration, Room authority, task, project, or control epoch; those must independently match now. This is not a claim to contain a privileged host administrator outside the governed boundary.
+
+### Five live dispatch checks
+
+`authority::validate` re-derives five independent authority centers before launch:
+
+1. **Sealed integrity and replay eligibility.** Schema, binding digest, canonical queue object, and `retry_allowed` must hold. Tampering records `wake_job_binding_changed` as an integrity signal.
+2. **Current Room and recipient authority.** The Room must be open and uncancelled; recipient and sender rosters, owner grant, reset/session state, graph-reader admission, and registration digest must match the sealed values. Replacement authority produces `wake_room_authority_changed` or `wake_recipient_registration_changed`.
+3. **Active task and governing-source authority.** The task must be open or claimed, have valid ancestry, remain owned by the sealed sender or an eligible operator/delegator, and pass `pin_task_source`. Project Rooms require a task from the exact project; project tasks cannot hide in coordination Rooms.
+4. **Current admission and control epoch.** Project closure, control admission, break-glass subject, and sealed `control_epoch` must still permit a new effect.
+5. **Original deadline and running-process binding.** `not_after` must still have budget. Once claimed, `RequestPermit` binds the canonical path, digest, `running` status, and worker PID; later effects revalidate that exact claim.
+
+### Single flight, capacity, and split-lock claim
+
+Dispatch enforces one active worker per recipient with `recipient_busy` and defers excess model-route load through `worker_route_capacity`, preserving the obligation instead of dropping it. The launcher uses the verified installed engine, strips caller credentials and tier overrides, and isolates standard handles.
+
+The worker claim uses a split-lock protocol:
+
+```text
+validated_context outside with_transition
+→ file, ancestry, task, and source checks without starving sender lease locks
+→ enter with_transition
+→ re-read job and require unchanged binding_sha256
+→ require remaining deadline
+→ mark running with worker_pid and attempts + 1
+```
+
+A change between those phases becomes `wake_job_changed_during_validation`, not a replay.
+
+### Evidence is delivered to the recipient, not inherited from the sender
+
+`attach_evidence` rechecks every `ev_` handle for the specific recipient at wake time. Admitted passages ride inline in the wake prompt, while served and withheld dispositions are recorded. Each delivery receives a fresh `squad.evidence.receipt/1` with `tool: "wake_delivery"` and an `srv_<32hex>` identifier.
+
+For governing-source tasks, `require_source_reading_between` proves that the native actor/session's receipts cover the continuous `[0, length)` interval across every primary story and detached element of one complete current parser view, inside the `[not_before, not_after]` connection/checkpoint window. Registration, summaries, or a few impressive chunks do not satisfy `complete_text_v1`.
+
+### Exhibit 1 — A sealed wake binding excerpt
+
+Synthetic values show the current binding shape. The digest covers all 18 fields, not only this display excerpt.
+
+```json
+{
+  "schema": "room-wake-job-v3",
+  "room": "architecture-demo",
+  "agent": "reviewer-beta",
+  "from": "coordinator-alpha",
+  "source_event": "evt_0123456789abcdef_a1b2c3d4",
+  "path": "room_wake_jobs/architecture-demo/reviewer-beta/evt_0123456789abcdef_a1b2c3d4.json",
+  "prompt": "Review the sealed renewal evidence and answer the assigned obligation.",
+  "task": "TSK-2026-ROOM-004",
+  "evidence_refs": ["ev_8f31c09a4b2e11d08a7c65e41902b3a1"],
+  "mention_ids": ["mention_synthetic_01"],
+  "obligation_ids": ["obligation_synthetic_01"],
+  "pulse_message": "Review the sealed renewal evidence.",
+  "deadline_ms": 1200000,
+  "created_at": "2026-10-31T16:00:00Z",
+  "not_after": "2026-10-31T16:20:00Z",
+  "control_epoch": 7,
+  "room_authority": {
+    "owner_grant": "synthetic-owner-grant",
+    "revision": 12,
+    "reset_at": null,
+    "session": "room-session-synthetic"
+  },
+  "registration_sha256": "4a9c8e12f03b7d651928374655647382910abcdef1234567890abcdef1234567",
+  "binding_sha256": "e01928374655647382910abcdef1234567890abcdef1234567890abcdef12345"
+}
+```
+
+### Exhibit 2 — Registration changed after sealing
+
+```json
+"wake_recipient_registration_changed"
+```
+
+The old prompt may still be intact. Its recipient authority is not.
+
+### Exhibit 3 — Deadline consumed before dispatch
+
+```json
+"wake_job_expired: queue time counts against the original deadline"
+```
+
+A prompt that became stale in the queue cannot acquire fresh execution time merely because a worker became available.
+
+## 7. Subsystem 6: Native Session Delivery and Reply Are Different Proofs
+
+A tool transport can deliver a request to a process. It cannot prove that the intended native conversation received it or that the resulting obligation was answered.
+
+### Session Factory v1
+
+`session_factory_v1` gives each native session a global ID of the form `sf_<ide>_<native>`, with lane, native session ID, working directory, transport, model profile, proof cursor, parent, lease, tags, and per-adapter operation coverage. The current contract covers 15 IDE/CLI adapter families and eleven operations: `list`, `create`, `bind`, `resume`, `focus`, `send`, `prove`, `summarize`, `fork`, `archive`, and `restore`.
+
+For stateful IDE wakes, `spawn_policy: "never"` requires delivery into the bound native session rather than launching an untracked sibling. Adapter capability remains explicit; a shared session schema does not invent identical native features everywhere. Each adapter's `operation_coverage` determines which lifecycle operations and proof states it can actually supply. `dispatched` may be available where body-visible or correlated-reply evidence is not; an unsupported proof is reported as unsupported, never inferred from transport success.
+
+### The five delivery/reply proof states
+
+| State | What is proven | Obligation status |
+|---|---|---|
+| `dispatched` | A delivery attempt exists, not body delivery | `delivery_unproven`; unresolved |
+| `delivered_to_body` / `ide_delivered` | The prompt reached the native session body | `pending_reply`; unresolved |
+| `body_visible_pending_reply` | The target thread UI or store shows the prompt | `pending_reply`; unresolved |
+| `wrong_body_rejected` | A nonmatching open thread was refused | Unresolved; no cross-thread credit |
+| `replied` | A correlated native reply exists | Resolved mentions and obligations |
+
+These are not fungible green statuses. Body delivery does not prove a reply. A reply does not prove destination acceptance. A wrong-body result never counts as delivery.
+
+For ACP/CLI execution, `exited_ok` without a correlated Room reply produces `proof_kind: "process_exit_only"` and leaves the job in `pending_reply`. Exit code zero is not an answered obligation.
+
+`WakeObligationFold` promotes obligations that remain unproven beyond the declared age threshold to `dead_obligation`, and cycle detection walks up to 20 links to surface circular waits. Unfinished work remains visible instead of disappearing behind a process status.
+
+## 8. Subsystem 7: Active Cancellation and Worker Authority
+
+Room control is authenticated and physically enforced. It does not rely on a worker noticing a cancellation message eventually.
+
+### Authenticated control and held in-flight operations
+
+Lifecycle actions require `control_actor` standing through an authenticated operator or local owner console. A caller-supplied `by = operator` string does not create control authority.
+
+`run_cancel` stops the Room compiler, dead-letters queued/deferred/unclaimed jobs with `retry_allowed: false`, leaves addressed obligations unresolved, and advances Room authority so running wake lineage no longer matches.
+
+It then inventories unresolved file operations, destination operations, and brokered model requests tied to the Room or project as `held_until_reconciled: true`. Work a destination may already have accepted is not rewritten into “cancelled and safe.” It remains held for governed reconciliation.
+
+### The 1 Hz owned-Job observer and durable stop outbox
+
+Every confined worker belongs to a named Win32 Job Object. The `squad-owned-job-control` observer runs at 1 Hz, watches admission, break-glass, Room authority revision, cancellation, and worker authority, and calls `TerminateJobObject(handle, 1)` when authority trips.
+
+A successful terminate call is not proof of quiescence. The observer queries `JobObjectBasicAccountingInformation` and confirms termination only when `ActiveProcesses == 0`.
+
+The `squad.room-owned-stop.v1` outbox preserves that sequence before any ledger or graph commit:
+
+```text
+phase-1.json
+  termination_confirmed: false
+  pending: bounded reason
+
+phase-2.json
+  termination_confirmed: true
+  pending: null
+  predecessor: exact phase-1 event_id + envelope_sha256
+```
+
+Replay commits those captured envelopes in causal order and writes separate `phase-1.committed.json` and `phase-2.committed.json` markers. A crash cannot manufacture a Phase 2 commit without its Phase 1 predecessor, and a stop request cannot impersonate a zero-process observation.
+
+### Worker staging minimizes data before confinement
+
+Staging admits 1–256 exact source selections with SHA-256 verification and a 64 MiB aggregate ceiling. JSON, JSONL, and SQLite sources can be projected to explicit rows and columns. SQLite projection copies the pinned bytes to a temporary file first; the live database is never opened by the projection builder. The projected copy requires the row key and integer version, records withheld rows and fields, and prepares changes only as governed proposals.
+
+When changes are requested, the controller prepares the `RequestedAct`. The worker does not choose its own mutation.
+
+The bridge binary is staged by content digest as `squad-worker-bridge.exe` and read back through a pinned handle. Reparse points and hardlinked files are refused. Empty-work-root ACL normalization emits a receipt bound to the pinned root. `internetClient` is refused as nonconforming; model access travels only through owner-approved brokered routes.
+
+### The controller-side MCP broker revalidates the worker and the call
+
+For LPAC workers, an `AF_UNIX` endpoint with a per-launch ACL admits the package. The controller verifies the held worker's Job membership with `IsProcessInJob`, its token and capabilities with `verify_worker_token`, and a 32-byte launch nonce. It does not pretend that an unavailable AF_UNIX peer-PID ioctl supplied a kernel identity for the bridge peer.
+
+For brokered-host Named Pipes, first-instance creation and `PIPE_REJECT_REMOTE_CLIENTS` prevent squatting and remote clients. The broker additionally uses `QueryFullProcessImageNameW` to require the exact staged bridge image.
+
+Every request and response is bounded and rechecked. Revocation before response transport produces a typed refusal; revocation after part of the response escaped records `severed_mid_response` rather than appending a second contradictory frame. The check and following write are not falsely described as one atomic primitive.
+
+

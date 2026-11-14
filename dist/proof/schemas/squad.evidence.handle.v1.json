@@ -1,0 +1,138 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "Squad Evidence Handle Declaration (squad.evidence.handle/1)",
+  "type": "object",
+  "additionalProperties": false,
+  "maxProperties": 3,
+  "description": "Public-safe declaration of Room-issued server-cut citation handle and envelope.",
+  "required": [
+    "handle",
+    "envelope",
+    "issuance"
+  ],
+  "properties": {
+    "handle": {
+      "type": "string",
+      "minLength": 35,
+      "maxLength": 35,
+      "pattern": "^ev_[0-9a-f]{32}$",
+      "description": "Deterministic content-addressed identifier derived from canonical envelope hash."
+    },
+    "envelope": {
+      "type": "object",
+      "additionalProperties": false,
+      "maxProperties": 6,
+      "required": [
+        "version",
+        "source_revision",
+        "view_digest",
+        "node_id",
+        "selector"
+      ],
+      "properties": {
+        "version": {
+          "type": "integer",
+          "enum": [
+            1
+          ]
+        },
+        "source_revision": {
+          "type": "string",
+          "minLength": 5,
+          "maxLength": 128,
+          "pattern": "^doc_[A-Za-z0-9_-]{1,124}$"
+        },
+        "view_digest": {
+          "type": "string",
+          "minLength": 64,
+          "maxLength": 64,
+          "pattern": "^[0-9a-f]{64}$"
+        },
+        "node_id": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 128
+        },
+        "selector": {
+          "type": "object",
+          "additionalProperties": false,
+          "maxProperties": 4,
+          "required": [
+            "kind"
+          ],
+          "properties": {
+            "kind": {
+              "type": "string",
+              "enum": [
+                "whole_node",
+                "bounded_subrange",
+                "table_cell"
+              ]
+            },
+            "unit": {
+              "type": "string",
+              "enum": [
+                "unicode_scalar",
+                "utf8_byte_offset"
+              ]
+            },
+            "start": {
+              "type": "integer",
+              "minimum": 0,
+              "maximum": 4194304
+            },
+            "end": {
+              "type": "integer",
+              "minimum": 0,
+              "maximum": 4194304
+            }
+          }
+        },
+        "source_native_locator": {
+          "type": "object",
+          "additionalProperties": false,
+          "maxProperties": 6,
+          "properties": {
+            "page": { "type": "integer", "minimum": 1, "maximum": 65535 },
+            "line_start": { "type": "integer", "minimum": 1, "maximum": 1048576 },
+            "line_end": { "type": "integer", "minimum": 1, "maximum": 1048576 },
+            "byte_offset": { "type": "integer", "minimum": 0, "maximum": 4194304 },
+            "byte_length": { "type": "integer", "minimum": 0, "maximum": 4194304 },
+            "section_id": { "type": "string", "maxLength": 128 }
+          }
+        }
+      }
+    },
+    "issuance": {
+      "type": "object",
+      "additionalProperties": false,
+      "maxProperties": 4,
+      "required": [
+        "room",
+        "recipient",
+        "issued_utc",
+        "first_hand_origin"
+      ],
+      "properties": {
+        "room": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 128
+        },
+        "recipient": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 128
+        },
+        "issued_utc": {
+          "type": "string",
+          "maxLength": 64,
+          "format": "date-time"
+        },
+        "first_hand_origin": {
+          "type": "boolean"
+        }
+      }
+    }
+  }
+}

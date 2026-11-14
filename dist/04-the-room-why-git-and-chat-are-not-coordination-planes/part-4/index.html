@@ -1,0 +1,285 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>§04 Part 4/5: The Room Coordination Plane (9. Subsystem 8: Task Lineage and Privileged Acceptance) | Blayne Aina</title>
+  <meta name="description" content="Sections: 9. Subsystem 8: Task Lineage and Privileged Acceptance, 10. Subsystem 9: Five Runtime Invariants Constrain Event Law, 11. The 2026 Coordination Evidence Landscape">
+  <meta name="author" content="Blayne Aina">
+  <meta name="robots" content="index, follow, max-snippet:-1, max-image-preview:large, max-video-preview:-1">
+  <link rel="canonical" href="https://blayneaina.com/04-the-room-why-git-and-chat-are-not-coordination-planes/part-4/">
+  <link rel="icon" href="/favicon.ico" sizes="any">
+  <link rel="icon" href="/favicon.svg" type="image/svg+xml">
+
+  <!-- OpenGraph / Social -->
+  <meta property="og:type" content="article">
+  <meta property="og:title" content="§04 Part 4/5: The Room Coordination Plane (9. Subsystem 8: Task Lineage and Privileged Acceptance)">
+  <meta property="og:description" content="Sections: 9. Subsystem 8: Task Lineage and Privileged Acceptance, 10. Subsystem 9: Five Runtime Invariants Constrain Event Law, 11. The 2026 Coordination Evidence Landscape">
+  <meta property="og:url" content="https://blayneaina.com/04-the-room-why-git-and-chat-are-not-coordination-planes/part-4/">
+  <meta property="og:site_name" content="Blayne Aina — The Route to Trusting AI">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="§04 Part 4/5: The Room Coordination Plane (9. Subsystem 8: Task Lineage and Privileged Acceptance)">
+  <meta name="twitter:description" content="Sections: 9. Subsystem 8: Task Lineage and Privileged Acceptance, 10. Subsystem 9: Five Runtime Invariants Constrain Event Law, 11. The 2026 Coordination Evidence Landscape">
+  
+  <link rel="stylesheet" href="/style.css?v=20261109-s-tier">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@500;700&family=Instrument+Serif:ital@0;1&family=Inter:wght@400;500;600;700;800&family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,500;0,6..72,600;1,6..72,400&family=JetBrains+Mono:wght@400;500&family=Plus+Jakarta+Sans:wght@600;700;800&display=swap" rel="stylesheet">
+</head>
+<body>
+  <div class="reading-progress-bar" id="progressBar"></div>
+
+  <header class="site-header compact-ai-header"><div class="header-inner compact-ai-nav"><a href="/" class="brand"><strong>BLAYNE AINA</strong></a> | <a href="/ai-brief/">1-Page Master Brief (§01–§09)</a> | <a href="/articles/">All 9 Articles &amp; Briefs</a> | <a href="/research-assurance/">Assurance</a> | <a href="/refusal-proof/">Proof</a> | <a href="/llms.txt">llms.txt</a> | <a href="mailto:me@blayneaina.com">me@blayneaina.com</a></div></header>
+  <div class="layout-container presentation-layout">
+    <main class="content-area">
+      <article class="prose-wrapper presentation-wrapper">
+<header class="article-header compact-article-header"><h1 class="article-title">§04 Part 4/5: The Room Coordination Plane (9. Subsystem 8: Task Lineage and Privileged Acceptance)</h1><p class="article-subtitle">Sections: 9. Subsystem 8: Task Lineage and Privileged Acceptance, 10. Subsystem 9: Five Runtime Invariants Constrain Event Law, 11. The 2026 Coordination Evidence Landscape</p></header>
+
+        
+        
+
+        <div class="article-body">
+          
+      <p class="part-compact-nav"><strong>§04 PART 4/5</strong> (13,790 chars · Sections: 9. Subsystem 8: Task Lineage and Privileged Acceptance; 10. Subsystem 9: Five Runtime Invariants Constrain Event Law; 11. The 2026 Coordination Evidence Landscape) — <a href="/04-the-room-why-git-and-chat-are-not-coordination-planes/part-3/">← Part 3</a> · <a href="/04-the-room-why-git-and-chat-are-not-coordination-planes/part-5/">Part 5 →</a> · <a href="/04/brief/">1-Call Brief</a> · <a href="/04-the-room-why-git-and-chat-are-not-coordination-planes/">Full §04</a> · <a href="/04/part-4.txt">Raw .txt</a> · All: <a href="/04-the-room-why-git-and-chat-are-not-coordination-planes/part-1/">P1</a> <a href="/04-the-room-why-git-and-chat-are-not-coordination-planes/part-2/">P2</a> <a href="/04-the-room-why-git-and-chat-are-not-coordination-planes/part-3/">P3</a> <a href="/04-the-room-why-git-and-chat-are-not-coordination-planes/part-4/">P4</a> <a href="/04-the-room-why-git-and-chat-are-not-coordination-planes/part-5/">P5</a></p>
+    
+<h2>9. Subsystem 8: Task Lineage and Privileged Acceptance</h2>
+<p>A Room reply says the worker answered. Acceptance asks whether the actual artifacts satisfy the task.</p>
+<h3>Delegation cannot outlive or widen its ancestry</h3>
+<p>Task scopes exclude controller state, recovery storage, shipped binaries, skill mirrors, and authoritative Room ledgers. <code>validate_ancestry</code> walks at most 16 parent links and rejects cycles.</p>
+<p>Every ancestor must remain open or claimed, preserve owner and recipient eligibility, match authority epoch and any revision, retain the same governing source, and keep the child&#39;s scope within the parent. <code>coordination_only</code> cannot widen into mutation. A parent whose authority changes invalidates the descendant chain.</p>
+<h3>Seven acceptance kinds, evaluated by the engine</h3>
+<p><code>done_task</code> evaluates the task&#39;s declared checks rather than trusting completion prose.</p>
+<table>
+<thead>
+<tr>
+<th>Kind</th>
+<th>What the privileged evaluator actually measures</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><code>sha256</code></td>
+<td>Reads the in-scope file and compares its live SHA-256 with the expected digest</td>
+</tr>
+<tr>
+<td><code>file_exists</code></td>
+<td>Uses <code>Path::try_exists()</code>; an OS or permission error is <code>unconfirmed</code>, not success</td>
+</tr>
+<tr>
+<td><code>file_absent</code></td>
+<td>Uses the same observation law: an error fails closed instead of becoming absence</td>
+</tr>
+<tr>
+<td><code>command</code></td>
+<td>Executes an absolute, owner-allowlisted binary with no shell or PATH lookup, optional exact argument tail, bounded timeout, and expected exit code—outside <code>with_transition</code></td>
+</tr>
+<tr>
+<td><code>evidence_origins</code></td>
+<td>Requires 1–16 distinct, lineage-collapsed first-hand origins behind the named requirement, plus any owner-wide minimum</td>
+</tr>
+<tr>
+<td><code>destination</code></td>
+<td>Checks folded ledger status and a fresh read-only <code>effect_present</code> observation for one operation or every task operation</td>
+</tr>
+<tr>
+<td><code>worker_receipt</code></td>
+<td>Validates Basic, StrictReturn, or SuccessorReturn evidence from immutable submissions, not a worker-authored receipt path</td>
+</tr>
+</tbody></table>
+<p>The three receipt profiles are intentionally different:</p>
+<ul>
+<li><strong>Basic</strong> requires at least <code>min</code> task submissions with one terminal outcome and no pending, recording-pending, or worker-unread results.</li>
+<li><strong>StrictReturn</strong> requires one applied submission with the exact worker, target, expected fields, and version delta <code>+1</code>, then proves that the original worker received the result and returned a correlated Room reply. <code>proposal_id</code> is optional; <code>outcome</code> and <code>min</code> are forbidden.</li>
+<li><strong>SuccessorReturn</strong> requires all eight pins: <code>proposals: &quot;successor&quot;</code>, worker, proposal ID and digest, whole-record digest, whole-outcome digest, and outcome. It proves fresh acknowledgment of a historical result while explicitly keeping <code>satisfies_original_return: false</code> and <code>resolves_original_obligation: false</code>.</li>
+</ul>
+<p>A successor acknowledgment never fabricates the original session&#39;s return.</p>
+<h3>Completion revalidates authority and live evidence</h3>
+<p>Long-running command checks run before the short transition. Inside <code>with_transition</code>, completion then:</p>
+<ol>
+<li>re-reads the task and requires it to remain claimed;</li>
+<li>compares all 14 authority keys: <code>owner</code>, <code>scope</code>, <code>active_scope_pin</code>, <code>file_scope_pin</code>, <code>project_id</code>, <code>project_root_pin</code>, <code>authority_epoch</code>, <code>authority_revision</code>, <code>source</code>, <code>delegation</code>, <code>lock</code>, <code>acceptance</code>, <code>requirements</code>, and <code>evidence_manifest</code>;</li>
+<li>rechecks dependencies, ancestry, project scope, and settled worker contributions;</li>
+<li>re-evaluates every non-command check against current files, evidence, and destinations;</li>
+<li>refuses completion on changed acceptance or <code>content_mismatch</code> quarantine;</li>
+<li>releases the scope lock through the structured release path and appends <code>task_done</code>.</li>
+</ol>
+<p>Requirement- or source-bound tasks cannot close with an empty acceptance array unless a trusted operator records an explicit override and reason. Acceptance is configured evidence, not a ceremonial green check.</p>
+<h3>Exhibit 4 — Successful artifact acceptance</h3>
+<p>This synthetic result combines file, evidence, destination, and receipt measurements. Every predicate is independently true; none borrows the others&#39; assurance.</p>
+<pre><code class="language-json">{
+  &quot;task&quot;: &quot;TSK-2026-ROOM-004&quot;,
+  &quot;acceptance_pass&quot;: true,
+  &quot;acceptance_results&quot;: [
+    {
+      &quot;kind&quot;: &quot;sha256&quot;,
+      &quot;pass&quot;: true,
+      &quot;detail&quot;: {
+        &quot;path&quot;: &quot;project:/artifacts/renewal-result.json&quot;,
+        &quot;expected&quot;: &quot;4a9c8e12f03b7d651928374655647382910abcdef1234567890abcdef1234567&quot;,
+        &quot;actual&quot;: &quot;4a9c8e12f03b7d651928374655647382910abcdef1234567890abcdef1234567&quot;
+      }
+    },
+    {
+      &quot;kind&quot;: &quot;evidence_origins&quot;,
+      &quot;pass&quot;: true,
+      &quot;detail&quot;: { &quot;req&quot;: &quot;R1&quot;, &quot;min&quot;: 2, &quot;distinct_origins&quot;: 2, &quot;basis&quot;: &quot;task_acceptance&quot; }
+    },
+    {
+      &quot;kind&quot;: &quot;destination&quot;,
+      &quot;pass&quot;: true,
+      &quot;detail&quot;: { &quot;operation_id&quot;: &quot;op_synthetic_004&quot;, &quot;status&quot;: &quot;resolved&quot;, &quot;effect_present&quot;: true }
+    },
+    {
+      &quot;kind&quot;: &quot;worker_receipt&quot;,
+      &quot;pass&quot;: true,
+      &quot;detail&quot;: { &quot;profile&quot;: &quot;strict&quot;, &quot;proposals&quot;: &quot;task&quot;, &quot;worker&quot;: &quot;reviewer-beta&quot;, &quot;proof&quot;: &quot;original-session-return-verified&quot; }
+    }
+  ]
+}
+</code></pre>
+<h3>Exhibit 5 — <code>file_absent</code> cannot turn an observation error into absence</h3>
+<pre><code class="language-json">{
+  &quot;kind&quot;: &quot;file_absent&quot;,
+  &quot;pass&quot;: false,
+  &quot;detail&quot;: {
+    &quot;path&quot;: &quot;project:/protected/unreadable-result.json&quot;,
+    &quot;error&quot;: &quot;Access is denied.&quot;,
+    &quot;error_kind&quot;: &quot;PermissionDenied&quot;,
+    &quot;observation&quot;: &quot;unconfirmed&quot;
+  }
+}
+</code></pre>
+<p><code>!path.exists()</code> would be the wrong proof here. <code>try_exists()</code> preserves the difference between absent and unknowable.</p>
+<h2>10. Subsystem 9: Five Runtime Invariants Constrain Event Law</h2>
+<p>Pre-action gates decide whether an act may proceed. The runtime invariant engine continuously checks the event stream for structural violations and records dedicated <code>invariant_violation</code> nodes through the journal and Room graph.</p>
+<table>
+<thead>
+<tr>
+<th>Invariant</th>
+<th>State carrier and rule</th>
+<th>Severity and boundary</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><code>exactly_once</code></td>
+<td>A bounded 10,000-entry FIFO <code>IdempotencyRegistry</code> rejects a repeated confirmed idempotency key</td>
+<td><code>Reject</code>; deduplicates registered events, not every external effect</td>
+</tr>
+<tr>
+<td><code>well_formed</code></td>
+<td>A lifecycle tracker per <code>(agent_id, parent_id)</code> enforces valid <code>Begin → Effect → Resolve</code> transitions</td>
+<td><code>Reject</code>; an effect or resolution cannot invent its own lifecycle</td>
+</tr>
+<tr>
+<td><code>exclusive</code></td>
+<td>A lease set over <code>TypedScope(namespace, resource_id)</code> rejects conflicting live holders</td>
+<td><code>Reject</code>; file scopes conflict hierarchically, non-file scopes by exact identity</td>
+</tr>
+<tr>
+<td><code>causal</code></td>
+<td>A resolved-ID set checks whether each <code>parent_id</code> is already resolved</td>
+<td><code>Flag</code>; unresolved causal matter is surfaced, not silently accepted as complete</td>
+</tr>
+<tr>
+<td><code>resolution</code></td>
+<td>An unresolved-intention map detects begins that exceed the caller&#39;s TTL before resolution</td>
+<td><code>IndoubtEffect</code>; the effect remains uncertain rather than being declared success or failure</td>
+</tr>
+</tbody></table>
+<p>Reject violations are recorded without committing the triggering envelope. Flag violations are buffered in the same checked append path. The graph therefore preserves both rejected operations and suspicious causal conditions without laundering them into valid effects.</p>
+<p>The 10,000-entry FIFO also defines a <strong>bounded replay-detection window</strong>. An evicted key no longer receives the registry&#39;s duplicate protection; eviction does not create a fresh execution grant or a permanent replay-proof history. Deployment acceptance must state the registry&#39;s retention and reconstruction horizon rather than treating it as unlimited.</p>
+<p><strong>Exactly-once event resolution is not exactly-once external effect.</strong> A destination can accept an effect while its ordinary receipt fails, an external service can perform a non-idempotent side effect, and a process can crash between mutation and observation. Articles 06–08 carry that burden through recovery records, readback, held completion, and break-glass reconciliation.</p>
+<h3>Exhibit 6 — An in-doubt TTL record</h3>
+<pre><code class="language-json">{
+  &quot;event_id&quot;: &quot;evt_0123456789abcdef_deadbeef&quot;,
+  &quot;agent_id&quot;: &quot;reviewer-beta&quot;,
+  &quot;began_at&quot;: &quot;&quot;,
+  &quot;elapsed_secs&quot;: 317
+}
+</code></pre>
+<p>This is not a failure receipt and not a success receipt. It is a bounded indication that an intention remained unresolved beyond the declared TTL and requires reconciliation.</p>
+<h2>11. The 2026 Coordination Evidence Landscape</h2>
+<p>The 2026 literature and protocol specifications reinforce the same architectural distinction: state management, native session identity, revalidation, and measured completion are separate control surfaces. Each source has a bounded claim.</p>
+<table>
+<thead>
+<tr>
+<th>2026 primary source</th>
+<th>What it actually establishes</th>
+<th>How the Room composes with it</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>Liu et al., <a href="https://arxiv.org/abs/2605.20563"><em>Multi-agent Collaboration with State Management (STORM)</em></a>, May 2026 preprint</td>
+<td>Worktree isolation defers conflicts to post-hoc merge; STORM mediates shared-workspace state at write time and outperforms the baseline by 18.7 points on Commit0-Lite and 1.4 on PaperBench, with comparable or better cost efficiency.</td>
+<td>Strong evidence for live state mediation. Git remains the source-history plane; the Room handles current observation, admission, and ownership.</td>
+</tr>
+<tr>
+<td>Sarkar, <a href="https://arxiv.org/abs/2606.19616"><em>Before the Pull Request: Mining Multi-Agent Coordination</em></a>, June 2026 preprint</td>
+<td>A shared coordination substrate reduced redundant work from 78% to 0% while useful throughput more than tripled, converged without silently dropped writes, and exposed lock starvation, rediscovery, and race-to-close hidden from PR history.</td>
+<td>Coordination artifacts must preserve claims and collisions before the PR. The Room additionally gates their authority and acceptance rather than merely mining them afterward.</td>
+</tr>
+<tr>
+<td>Nechepurenko and Shuvalov, <a href="https://arxiv.org/abs/2605.03310"><em>Coordination as an Architectural Layer for LLM-Based Multi-Agent Systems</em></a>, May 2026 preprint</td>
+<td>An information-controlled prediction-market study reports distinguishable coordination signatures and a cost-quality Pareto frontier. The authors call it a methodology-validating first instantiation, not a general cross-model claim; pairwise tests do not survive correction.</td>
+<td>Coordination belongs in architecture, not only prompts. The Room does not borrow a universal failure-rate claim from this bounded study.</td>
+</tr>
+<tr>
+<td><a href="https://modelcontextprotocol.io/specification/2026-07-28">Model Context Protocol <code>2026-07-28</code></a></td>
+<td>Defines stateless, self-contained requests and per-request capability negotiation, with optional tasks and context features.</td>
+<td>Stateless transport does not supply native conversational standing. The Room binds actor, registration, native conversation, and current view explicitly.</td>
+</tr>
+<tr>
+<td><a href="https://agentclientprotocol.com">Agent Client Protocol documentation</a>, 2026</td>
+<td>Standardizes editor–agent communication and native session lifecycle across local JSON-RPC/stdio and remote transports.</td>
+<td>Native sessions are the delivery boundary. The Room&#39;s Session Factory and proof ladder distinguish dispatch, body visibility, wrong body, reply, and process exit.</td>
+</tr>
+<tr>
+<td>Wang, Wang, and Wu, <a href="https://arxiv.org/abs/2609.08589"><em>The Unreliable Progress Bar</em></a>, September 2026 preprint</td>
+<td>Reporting reliability varies by task stage: most tested models lose accuracy mid-task and recover at completion, while newer models become conservative at the finish line. The authors advise against controlling flow from state reports alone.</td>
+<td><code>done</code> requires privileged artifact and destination acceptance, not a model&#39;s progress bar.</td>
+</tr>
+<tr>
+<td>Lyu et al., <a href="https://arxiv.org/abs/2609.08015"><em>From Version Conflicts to Decision Conflicts</em></a>, September 2026 preprint</td>
+<td>ATR rechecks only decision-affecting conditions, matched every specified outcome across 210,000 controlled executions, evaluated 0.6 versus 6.0 conditions per change, and reports a large latency reduction. The authors limit this to controlled feasibility.</td>
+<td>The Room rechecks current authority at turn entry, dispatch, worker claim, completion, and destination—not merely whether bytes changed.</td>
+</tr>
+<tr>
+<td>Khan, <a href="https://arxiv.org/abs/2605.17076"><em>S-Bus: Automatic Read-Set Reconstruction for Multi-Agent LLM State Coordination</em></a>, May 2026 preprint, revised v2</td>
+<td>Observable-Read Isolation reconstructs read sets from observed GET traffic, with formal checks and zero Type-I corruptions across 884,110 commit attempts. It also documents topology-dependent limits and agent over-reporting.</td>
+<td>The Room measures confirmed read coverage and causal ancestry rather than assuming an agent observed the state it cites.</td>
+</tr>
+<tr>
+<td><a href="https://www.sqlite.org/wal.html">SQLite WAL documentation</a> and <a href="https://learn.microsoft.com/en-us/windows/win32/api/">Microsoft Win32 documentation</a>, current 2026 references</td>
+<td>WAL durability modes govern when transactions reach stable storage; <code>GetFileInformationByHandleEx</code>, Job Object termination, and accounting provide kernel object identity and process-count observations.</td>
+<td>These are implementation primitives, not complete coordination semantics. The Room composes them into object pinning, journal reconciliation, and durable stop proof.</td>
+</tr>
+</tbody></table>
+<p>A final concession matters: a conventional deployment can implement the same invariants with different names. The Room&#39;s claim is not exclusive ownership of coordination theory. Its claim is a concrete, inspectable composition of the required predicates in one continuous machine.</p>
+<p><strong>Evidence availability and performance boundary:</strong> the implementation and acceptance artifacts are <code>CONTROLLED</code> for qualified, method-scoped technical review, with adverse findings permitted. They are not unrestricted public downloads or independent validation. The architecture does not claim a universal latency or throughput envelope: recursive causal queries, journal folds, live revalidation, recipient evidence checks, native-session proof, and stop confirmation must be measured against the actual Room topology, adapters, and workload.</p>
+
+
+      <p class="part-compact-nav"><strong>END OF §04 PART 4/5</strong> — Next: <a href="/04-the-room-why-git-and-chat-are-not-coordination-planes/part-5/"><code>https://blayneaina.com/04-the-room-why-git-and-chat-are-not-coordination-planes/part-5/</code></a> · <a href="/04/brief/">§04 1-Call Brief</a> · <a href="/04.md">Raw .md</a></p>
+    
+        </div>
+
+        
+        
+        
+        
+
+        
+
+        
+      </article>
+    </main>
+
+  </div>
+
+  <footer class="site-footer compact-ai-footer"><p><strong>blayneaina.com</strong> — <a href="https://blayneaina.com/ai-brief/">Master Brief (https://blayneaina.com/ai-brief/)</a> · <a href="https://blayneaina.com/ai-brief.txt">Plain-Text Brief (https://blayneaina.com/ai-brief.txt)</a> · <a href="https://blayneaina.com/articles/">All 9 Articles &amp; Briefs (https://blayneaina.com/articles/)</a> · <a href="https://blayneaina.com/llms.txt">llms.txt</a> · <a href="mailto:me@blayneaina.com">me@blayneaina.com</a></p></footer>
+
+
+
+
+
+  <script src="/script.js?v=20261109-s-tier"></script>
+</body>
+</html>

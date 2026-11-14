@@ -1,0 +1,358 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>§03 Part 1/6: Semantic Switch &amp; EISA (Introduction &amp; Overview) | Blayne Aina</title>
+  <meta name="description" content="Sections: Introduction &amp; Overview, One Constitution, Two Proof Lanes, 1. Strict Representation Before Judgment, 2. The Closed Grammar: Seven Opcodes, Four Layers">
+  <meta name="author" content="Blayne Aina">
+  <meta name="robots" content="index, follow, max-snippet:-1, max-image-preview:large, max-video-preview:-1">
+  <link rel="canonical" href="https://blayneaina.com/03-eisa-four-gate-verdict-machine-and-entity-resolution/part-1/">
+  <link rel="icon" href="/favicon.ico" sizes="any">
+  <link rel="icon" href="/favicon.svg" type="image/svg+xml">
+
+  <!-- OpenGraph / Social -->
+  <meta property="og:type" content="article">
+  <meta property="og:title" content="§03 Part 1/6: Semantic Switch &amp; EISA (Introduction &amp; Overview)">
+  <meta property="og:description" content="Sections: Introduction &amp; Overview, One Constitution, Two Proof Lanes, 1. Strict Representation Before Judgment, 2. The Closed Grammar: Seven Opcodes, Four Layers">
+  <meta property="og:url" content="https://blayneaina.com/03-eisa-four-gate-verdict-machine-and-entity-resolution/part-1/">
+  <meta property="og:site_name" content="Blayne Aina — The Route to Trusting AI">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="§03 Part 1/6: Semantic Switch &amp; EISA (Introduction &amp; Overview)">
+  <meta name="twitter:description" content="Sections: Introduction &amp; Overview, One Constitution, Two Proof Lanes, 1. Strict Representation Before Judgment, 2. The Closed Grammar: Seven Opcodes, Four Layers">
+  
+  <link rel="stylesheet" href="/style.css?v=20261109-s-tier">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@500;700&family=Instrument+Serif:ital@0;1&family=Inter:wght@400;500;600;700;800&family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,500;0,6..72,600;1,6..72,400&family=JetBrains+Mono:wght@400;500&family=Plus+Jakarta+Sans:wght@600;700;800&display=swap" rel="stylesheet">
+</head>
+<body>
+  <div class="reading-progress-bar" id="progressBar"></div>
+
+  <header class="site-header compact-ai-header"><div class="header-inner compact-ai-nav"><a href="/" class="brand"><strong>BLAYNE AINA</strong></a> | <a href="/ai-brief/">1-Page Master Brief (§01–§09)</a> | <a href="/articles/">All 9 Articles &amp; Briefs</a> | <a href="/research-assurance/">Assurance</a> | <a href="/refusal-proof/">Proof</a> | <a href="/llms.txt">llms.txt</a> | <a href="mailto:me@blayneaina.com">me@blayneaina.com</a></div></header>
+  <div class="layout-container presentation-layout">
+    <main class="content-area">
+      <article class="prose-wrapper presentation-wrapper">
+<header class="article-header compact-article-header"><h1 class="article-title">§03 Part 1/6: Semantic Switch &amp; EISA (Introduction &amp; Overview)</h1><p class="article-subtitle">Sections: Introduction &amp; Overview, One Constitution, Two Proof Lanes, 1. Strict Representation Before Judgment, 2. The Closed Grammar: Seven Opcodes, Four Layers</p></header>
+
+        
+        
+
+        <div class="article-body">
+          
+      <p class="part-compact-nav"><strong>§03 PART 1/6</strong> (12,780 chars · Sections: Introduction &amp; Overview; One Constitution, Two Proof Lanes; 1. Strict Representation Before Judgment; 2. The Closed Grammar: Seven Opcodes, Four Layers) — <a href="/03-eisa-four-gate-verdict-machine-and-entity-resolution/part-2/">Part 2 →</a> · <a href="/03/brief/">1-Call Brief</a> · <a href="/03-eisa-four-gate-verdict-machine-and-entity-resolution/">Full §03</a> · <a href="/03/part-1.txt">Raw .txt</a> · All: <a href="/03-eisa-four-gate-verdict-machine-and-entity-resolution/part-1/">P1</a> <a href="/03-eisa-four-gate-verdict-machine-and-entity-resolution/part-2/">P2</a> <a href="/03-eisa-four-gate-verdict-machine-and-entity-resolution/part-3/">P3</a> <a href="/03-eisa-four-gate-verdict-machine-and-entity-resolution/part-4/">P4</a> <a href="/03-eisa-four-gate-verdict-machine-and-entity-resolution/part-5/">P5</a> <a href="/03-eisa-four-gate-verdict-machine-and-entity-resolution/part-6/">P6</a></p>
+    
+<h1>EISA Four-Gate Verdict Machine &amp; Strict AST Parser</h1>
+<p><em>The production EISA core determines which bounded acts earn constitutional standing; Semantic Switch is an experimental alpha module for structure-preserving entity-resolution research.</em></p>
+<p><strong>By Blayne Aina · Principal Systems Architect and creator of AINA · October 31, 2026</strong></p>
+<hr>
+<aside class="context-callout alpha-module" aria-label="Semantic Switch maturity and scope disclosure">
+  <div class="brief-label">PRODUCTION CORE + EXPERIMENTAL RESEARCH MODULE</div>
+  <h2>EISA is the production core; Semantic Switch is experimental alpha</h2>
+  <p><strong>EXPERIMENTAL RESEARCH MODULE (ALPHA) · STAGE-ZERO SYNTHETIC INVARIANCE TESTBED</strong></p>
+  <p><strong>Maturity &amp; Scope Note:</strong> Unlike the core deterministic execution, lease-fencing, and server-cut provenance layers (§01, §02, §04–§08), the Semantic Switch is an early-stage experimental research module. The 20/20 block-invariance and 23/23 relation-preservation fixtures in this pack validate deterministic structural isomorphism on synthetic test vectors only; they do not claim production entity-resolution recall across arbitrary noisy text or universal cryptographic anonymity against auxiliary-data reconstruction attacks.</p>
+</aside><p>Entity resolution has a data-boundary problem before it has a model problem.</p>
+<p>Contacts, companies, products, and other native records can contain identifiers that should never be sent raw to an external AI provider. But destructive redaction destroys the relationships that useful comparison requires: exact equality, normalized equality, phone variance, token containment, and the difference between a substitution, insertion, deletion, and transposition.</p>
+<p><strong>Semantic Switch resolves that transport problem first.</strong> Native rows, keys, and the private crosswalk remain under client control. External computation receives structure-preserving fictional records instead of the declared raw values. Qdrant Edge and qBlock can then nominate candidate partitions without exposing the native rows. Fracture adjudicates identity, Forge selects canonical values with provenance, local restoration maps authorized references back to exact native values, and Shield defends the resolved baseline.</p>
+<p>Protected computation alone still does not make a decision correct.</p>
+<p>Three agents can read the same contaminated context, repeat the same unsupported merger, and produce three confident explanations. A judge model can make the fourth vote. Nothing about that process establishes which records were compared, which values survived inspection, which contradiction was omitted, or whether the proposed partition covers the candidate universe exactly once.</p>
+<p>A trustworthy system does not count votes. It compiles each proposal into a bounded act and recomputes the declared predicates over sealed evidence.</p>
+<p>Article 02 built the evidence world: exact source revisions, confined parser views, served-content receipts, and server-cut <code>ev_</code> handles. Article 03 connects it to <strong>Semantic Switch</strong> and the <strong>Evidence Instruction Set Architecture (EISA)</strong>: protected computation first, deterministic constitutional judgment second.</p>
+<blockquote>
+<p><strong>Native data stays local. Semantic Switch powers protected qBlock candidates. EISA determines whether the resulting judgments are well-formed, evidence-contained, type-correct, and substantively consistent. The Room commits the result without executing it.</strong></p>
+</blockquote>
+<p>That last distinction matters. An operative EISA act is not a CRM merge, a file write, or a network effect. It is a recognized constitutional artifact entering the coordination and execution boundaries that Articles 04–08 govern.</p>
+<h2>One Constitution, Two Proof Lanes</h2>
+<p>EISA applies the same rule to two very different proposal classes:</p>
+<pre><code class="language-text">                         sealed evidence world
+                                  │
+                    strict acts over one sealed case
+                                  │
+                    Four-Gate deterministic verdict
+                       ┌──────────┴──────────┐
+                       │                     │
+              Proof Lane A            Proof Lane B
+         PDF vector relations       Protected entity resolution
+         CONNECTS only              Semantic Switch → qBlock →
+         geometry + direction       Fracture → Forge → Shield
+         frames + branch labels     identity + canonical state
+                       └──────────┬──────────┘
+                                  │
+                  squad.eisa.submission/1 → eisa_&lt;32hex&gt;
+                                  │
+                   Room authority and fenced execution
+</code></pre>
+<p>The recognition spine is <code>ev_</code> evidence → <code>eisacase_</code> sealed case → bounded <code>EISA_ACT_V1</code> acts → Four-Gate recognition → recognized artifact → immutable <code>eisa_</code> Room submission. The two lanes demonstrate that spine in different evidence domains.</p>
+<p>Lane A proves a narrow spatial relation from parser-committed geometry rather than asking a vision model to infer an arrow. Lane B turns native customer records into a protected comparison substrate, adjudicates identity relations, compiles canonical state, and defends the sealed baseline against later drift.</p>
+<p><strong>Naming precision:</strong> <code>Forge</code> names two related but distinct responsibilities. In Proof Lane A, <code>eisa.forge.document_layout/1</code> is the wire profile for spatial <code>AssertLayoutRelation</code> acts. In Proof Lane B, <strong>EISA Forge</strong> is Stage 3 of the entity-resolution pipeline, compiling canonical state after Fracture admits an identity partition. The layout profile and the canonical-state compiler are not the same mechanism or proof surface.</p>
+<p>The common rule is more important than either application: <strong>a proposal may not choose its own evidence world, suppress inconvenient matter, or narrate itself into authority.</strong></p>
+<h2>1. Strict Representation Before Judgment</h2>
+<p>A grammar cannot govern a transition if two parsers can assign different meanings to the same bytes.</p>
+<h3>Gate 1 begins with <code>strict::parse</code></h3>
+<p>EISA does not deserialize submissions through an ordinary last-key-wins JSON map. <code>strict::parse</code> drives a recursive <code>StrictVisitor</code> before schema evaluation:</p>
+<ul>
+<li><code>visit_map</code> checks whether each incoming key already exists and rejects duplicates.</li>
+<li><code>visit_f64</code> refuses non-finite numbers.</li>
+<li><code>de.end()</code> rejects trailing non-whitespace matter after the root value.</li>
+</ul>
+<p>A submission is capped at <strong>1 MiB</strong> before parsing and must be a non-empty array of at most <strong>256 acts</strong>. One submission belongs to one act family: Fracture contact acts or Forge layout acts, never a mixture.</p>
+<p>This prevents a gateway from seeing one opcode while a downstream evaluator executes another. The August 2026 Ruby JSON vulnerability <a href="https://nvd.nist.gov/vuln/detail/CVE-2026-71847"><code>CVE-2026-71847</code></a> is a related warning about parser edge cases: incomplete objects containing duplicate keys could trigger a heap-use-after-free in the affected native parser. EISA&#39;s separate point is semantic—duplicate-key matter is ambiguous and therefore inadmissible, not repaired.</p>
+<h3>The exact ten-key act envelope</h3>
+<p>Every act contains all ten, and only ten, top-level fields in <code>ACT_KEYS</code>:</p>
+<table>
+<thead>
+<tr>
+<th>Field</th>
+<th>Current wire law</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><code>version</code></td>
+<td>Exactly <code>EISA_ACT_V1</code></td>
+</tr>
+<tr>
+<td><code>stage</code></td>
+<td>A declared stage whose family admits the opcode: <code>Fracture</code> or <code>Forge</code></td>
+</tr>
+<tr>
+<td><code>actor</code></td>
+<td>Must match the authenticated caller, case-insensitively</td>
+</tr>
+<tr>
+<td><code>opcode</code></td>
+<td>One of the seven closed opcodes</td>
+</tr>
+<tr>
+<td><code>operands</code></td>
+<td>An object with exactly the opcode&#39;s declared keys</td>
+</tr>
+<tr>
+<td><code>evidenceRefs</code></td>
+<td>At most 16 strings naming Room-issued <code>ev_</code> handles; layout relations require exactly the connector/from/to handles</td>
+</tr>
+<tr>
+<td><code>confidence</code></td>
+<td>An empty object, or <code>{ &quot;bps&quot;: integer }</code> with <code>0 &lt;= bps &lt;= 10000</code>; audit only</td>
+</tr>
+<tr>
+<td><code>boundedReason</code></td>
+<td>A string of at most 1,024 characters, with control characters other than newline refused; audit only</td>
+</tr>
+<tr>
+<td><code>sourceEvent</code></td>
+<td>Empty, or <code>evt_&lt;16 hex&gt;_&lt;8 hex&gt;</code></td>
+</tr>
+<tr>
+<td><code>artifactHash</code></td>
+<td>The sealed case&#39;s bare 64-lowercase-hex JCS digest; no <code>sha256:</code> prefix</td>
+</tr>
+</tbody></table>
+<p><code>confidence</code> and <code>boundedReason</code> are not consulted by any gate and do not enter <code>consensusIdentity</code>. A model can explain itself for operators. It cannot make its explanation causal by declaring it confident.</p>
+<p>Act IDs are local dependency names: a letter followed by up to 63 ASCII letters, digits, underscores, or hyphens. Duplicate IDs fault every act carrying the ambiguous name.</p>
+<h3>Record-relative RFC 6901 pointers</h3>
+<p>A Fracture <code>BindEvidenceTag</code> coordinate has exactly three fields:</p>
+<pre><code class="language-json">{
+  &quot;artifact&quot;: &quot;records&quot;,
+  &quot;recordId&quot;: &quot;rec_101&quot;,
+  &quot;pointer&quot;: &quot;/contact/workEmail&quot;
+}
+</code></pre>
+<p>The participant names the record and pointer. The recognizer reads the value. Coordinates never name a filesystem path, URL, case-array index, or foreign artifact.</p>
+<p><code>pointer::parse</code> enforces:</p>
+<ul>
+<li>a leading <code>/</code>;</li>
+<li>at most 256 bytes and eight tokens;</li>
+<li>no whole-record empty pointer;</li>
+<li>no control characters;</li>
+<li>only RFC 6901 <code>~0</code> and <code>~1</code> escapes.</li>
+</ul>
+<p><code>pointer::resolve</code> then walks the sealed record. Object members must exist. Array indices use canonical decimal syntax—<code>0</code> or a nonzero digit sequence without leading zeroes—and must be in bounds. Traversal into a scalar fails. Missing fields, malformed indices, and out-of-bounds access become typed faults rather than guessed values.</p>
+<p>Comparator inputs are <strong>non-null, non-empty strings of at most 1,024 characters</strong>. Numbers, booleans, arrays, objects, nulls, and whitespace-only strings do not become comparator text through coercion.</p>
+<h3>The profile bounds</h3>
+<table>
+<thead>
+<tr>
+<th>Constant</th>
+<th align="right">Value</th>
+<th>Boundary</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><code>VERSION</code></td>
+<td align="right"><code>EISA_ACT_V1</code></td>
+<td>Wire version</td>
+</tr>
+<tr>
+<td><code>PROFILE</code></td>
+<td align="right"><code>eisa.fracture.contact/1</code></td>
+<td>Contact act family</td>
+</tr>
+<tr>
+<td><code>LAYOUT_PROFILE</code></td>
+<td align="right"><code>eisa.forge.document_layout/1</code></td>
+<td>Layout act family</td>
+</tr>
+<tr>
+<td><code>RECORDS_ARTIFACT</code></td>
+<td align="right"><code>records</code></td>
+<td>Only coordinate substrate</td>
+</tr>
+<tr>
+<td><code>MAX_SUBMISSION_BYTES</code></td>
+<td align="right">1,048,576</td>
+<td>Submission bytes</td>
+</tr>
+<tr>
+<td><code>MAX_ACTS</code></td>
+<td align="right">256</td>
+<td>Acts per submission</td>
+</tr>
+<tr>
+<td><code>MAX_REASON_CHARS</code></td>
+<td align="right">1,024</td>
+<td><code>boundedReason</code> characters</td>
+</tr>
+<tr>
+<td><code>MAX_ID_CHARS</code></td>
+<td align="right">64</td>
+<td>Act and record ID ceiling</td>
+</tr>
+<tr>
+<td><code>MAX_POINTER_BYTES</code></td>
+<td align="right">256</td>
+<td>Pointer bytes</td>
+</tr>
+<tr>
+<td><code>MAX_POINTER_DEPTH</code></td>
+<td align="right">8</td>
+<td>Pointer tokens</td>
+</tr>
+<tr>
+<td><code>MAX_VALUE_CHARS</code></td>
+<td align="right">1,024</td>
+<td>Compared string characters</td>
+</tr>
+<tr>
+<td><code>MAX_REFS</code></td>
+<td align="right">16</td>
+<td>Evidence handles per act</td>
+</tr>
+<tr>
+<td><code>MAX_LIST</code></td>
+<td align="right">1,000</td>
+<td>Members, support, counter, and groups</td>
+</tr>
+<tr>
+<td><code>MAX_CHAIN</code></td>
+<td align="right">4</td>
+<td>Duplicate links per transitive chain</td>
+</tr>
+<tr>
+<td><code>MAX_CASE_BYTES</code></td>
+<td align="right">4,194,304</td>
+<td>Sealed case-file bytes</td>
+</tr>
+<tr>
+<td><code>MAX_CASE_RECORDS</code></td>
+<td align="right">1,000</td>
+<td>Records per case</td>
+</tr>
+<tr>
+<td><code>MIN_PHONE_DIGITS</code></td>
+<td align="right">7</td>
+<td>Minimum digits on each phone side</td>
+</tr>
+</tbody></table>
+<h2>2. The Closed Grammar: Seven Opcodes, Four Layers</h2>
+<p>The opcode set is closed. New semantics cannot be introduced by sending a persuasive string.</p>
+<table>
+<thead>
+<tr>
+<th align="right">Layer</th>
+<th>Opcode</th>
+<th>Stage</th>
+<th>Exact operand keys</th>
+<th>Constitutional role</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="right">0</td>
+<td><code>BindEvidenceTag</code></td>
+<td>Fracture</td>
+<td><code>id</code>, <code>tag</code>, <code>coordinates</code></td>
+<td>Compare values at two distinct sealed-record coordinates using one positive or counter tag</td>
+</tr>
+<tr>
+<td align="right">0</td>
+<td><code>RequestHumanReview</code></td>
+<td>Fracture</td>
+<td><code>id</code>, <code>reason</code>, <code>members</code></td>
+<td>Emit lawful non-operative review matter over at least one sealed record</td>
+</tr>
+<tr>
+<td align="right">0</td>
+<td><code>RejectUnlawfulAct</code></td>
+<td>Fracture</td>
+<td><code>id</code>, <code>rejected</code>, <code>fault</code></td>
+<td>Preserve anti-knowledge rejecting a 64-hex matter identity or act digest under a registered fault</td>
+</tr>
+<tr>
+<td align="right">0</td>
+<td><code>AssertLayoutRelation</code></td>
+<td>Forge</td>
+<td><code>id</code>, <code>relation</code>, <code>connector</code>, <code>from</code>, <code>to</code></td>
+<td>Prove <code>CONNECTS</code> over three sealed whole-node layout citations</td>
+</tr>
+<tr>
+<td align="right">1</td>
+<td><code>AssertDuplicatePair</code></td>
+<td>Fracture</td>
+<td><code>id</code>, <code>pair</code>, <code>support</code>, <code>counter</code></td>
+<td>Link two records using admitted positive bindings and every admitted counter binding on that pair</td>
+</tr>
+<tr>
+<td align="right">2</td>
+<td><code>AssertTransitiveClosure</code></td>
+<td>Fracture</td>
+<td><code>id</code>, <code>pair</code>, <code>chain</code></td>
+<td>Compose two to four admitted duplicate links into a simple path</td>
+</tr>
+<tr>
+<td align="right">3</td>
+<td><code>ProposePartition</code></td>
+<td>Fracture</td>
+<td><code>id</code>, <code>groups</code>, <code>support</code></td>
+<td>Cover every sealed record exactly once with connected, non-contradicted groups</td>
+</tr>
+</tbody></table>
+<p>Dependencies point downward. Layer 0 observations feed Layer 1 pairs; Layer 1 pairs feed Layer 2 closure; Layers 1 and 2 support the Layer 3 partition. A missing, faulted, wrongly typed, cyclic, or pair-mismatched dependency cannot become support by being named confidently.</p>
+<p><code>RequestHumanReview</code> accepts only <code>INSUFFICIENT_EVIDENCE</code>, <code>CONFLICTING_EVIDENCE</code>, <code>SOURCE_DEFECT</code>, or <code>OUT_OF_PROFILE</code>. It records a review obligation; it does not assert that a human has acted. <code>RejectUnlawfulAct</code> validates the rejected identity&#39;s digest shape and fault class; it does not need to prove that the rejected target exists.</p>
+<p>A submission cannot contain both an admitted terminal partition and an admitted review request. That is <code>submission_mixed_decision</code>, not a hedge with extra authority.</p>
+
+
+      <p class="part-compact-nav"><strong>END OF §03 PART 1/6</strong> — Next: <a href="/03-eisa-four-gate-verdict-machine-and-entity-resolution/part-2/"><code>https://blayneaina.com/03-eisa-four-gate-verdict-machine-and-entity-resolution/part-2/</code></a> · <a href="/03/brief/">§03 1-Call Brief</a> · <a href="/03.md">Raw .md</a></p>
+    
+        </div>
+
+        
+        
+        
+        
+
+        
+
+        
+      </article>
+    </main>
+
+  </div>
+
+  <footer class="site-footer compact-ai-footer"><p><strong>blayneaina.com</strong> — <a href="https://blayneaina.com/ai-brief/">Master Brief (https://blayneaina.com/ai-brief/)</a> · <a href="https://blayneaina.com/ai-brief.txt">Plain-Text Brief (https://blayneaina.com/ai-brief.txt)</a> · <a href="https://blayneaina.com/articles/">All 9 Articles &amp; Briefs (https://blayneaina.com/articles/)</a> · <a href="https://blayneaina.com/llms.txt">llms.txt</a> · <a href="mailto:me@blayneaina.com">me@blayneaina.com</a></p></footer>
+
+
+
+
+
+  <script src="/script.js?v=20261109-s-tier"></script>
+</body>
+</html>

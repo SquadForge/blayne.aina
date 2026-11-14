@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>§04 Part 2/5: The Room Coordination Plane (3. Subsystem 2: The Room Graph Is a Visibility and Recovery Boundary) | Blayne Aina</title>
+  <meta name="description" content="Sections: 3. Subsystem 2: The Room Graph Is a Visibility and Recovery Boundary, 4. Subsystem 3: The Room Sync Engine and the Pre-Action Work Gate, 5. Subsystem 4: Contribution Verbs Have Different Authority Effects">
+  <meta name="author" content="Blayne Aina">
+  <meta name="robots" content="index, follow, max-snippet:-1, max-image-preview:large, max-video-preview:-1">
+  <link rel="canonical" href="https://blayneaina.com/04-the-room-why-git-and-chat-are-not-coordination-planes/part-2/">
+  <link rel="icon" href="/favicon.ico" sizes="any">
+  <link rel="icon" href="/favicon.svg" type="image/svg+xml">
+
+  <!-- OpenGraph / Social -->
+  <meta property="og:type" content="article">
+  <meta property="og:title" content="§04 Part 2/5: The Room Coordination Plane (3. Subsystem 2: The Room Graph Is a Visibility and Recovery Boundary)">
+  <meta property="og:description" content="Sections: 3. Subsystem 2: The Room Graph Is a Visibility and Recovery Boundary, 4. Subsystem 3: The Room Sync Engine and the Pre-Action Work Gate, 5. Subsystem 4: Contribution Verbs Have Different Authority Effects">
+  <meta property="og:url" content="https://blayneaina.com/04-the-room-why-git-and-chat-are-not-coordination-planes/part-2/">
+  <meta property="og:site_name" content="Blayne Aina — The Route to Trusting AI">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="§04 Part 2/5: The Room Coordination Plane (3. Subsystem 2: The Room Graph Is a Visibility and Recovery Boundary)">
+  <meta name="twitter:description" content="Sections: 3. Subsystem 2: The Room Graph Is a Visibility and Recovery Boundary, 4. Subsystem 3: The Room Sync Engine and the Pre-Action Work Gate, 5. Subsystem 4: Contribution Verbs Have Different Authority Effects">
+  
+  <link rel="stylesheet" href="/style.css?v=20261109-s-tier">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@500;700&family=Instrument+Serif:ital@0;1&family=Inter:wght@400;500;600;700;800&family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,500;0,6..72,600;1,6..72,400&family=JetBrains+Mono:wght@400;500&family=Plus+Jakarta+Sans:wght@600;700;800&display=swap" rel="stylesheet">
+</head>
+<body>
+  <div class="reading-progress-bar" id="progressBar"></div>
+
+  <header class="site-header compact-ai-header"><div class="header-inner compact-ai-nav"><a href="/" class="brand"><strong>BLAYNE AINA</strong></a> | <a href="/ai-brief/">1-Page Master Brief (§01–§09)</a> | <a href="/articles/">All 9 Articles &amp; Briefs</a> | <a href="/research-assurance/">Assurance</a> | <a href="/refusal-proof/">Proof</a> | <a href="/llms.txt">llms.txt</a> | <a href="mailto:me@blayneaina.com">me@blayneaina.com</a></div></header>
+  <div class="layout-container presentation-layout">
+    <main class="content-area">
+      <article class="prose-wrapper presentation-wrapper">
+<header class="article-header compact-article-header"><h1 class="article-title">§04 Part 2/5: The Room Coordination Plane (3. Subsystem 2: The Room Graph Is a Visibility and Recovery Boundary)</h1><p class="article-subtitle">Sections: 3. Subsystem 2: The Room Graph Is a Visibility and Recovery Boundary, 4. Subsystem 3: The Room Sync Engine and the Pre-Action Work Gate, 5. Subsystem 4: Contribution Verbs Have Different Authority Effects</p></header>
+
+        
+        
+
+        <div class="article-body">
+          
+      <p class="part-compact-nav"><strong>§04 PART 2/5</strong> (8,862 chars · Sections: 3. Subsystem 2: The Room Graph Is a Visibility and Recovery Boundary; 4. Subsystem 3: The Room Sync Engine and the Pre-Action Work Gate; 5. Subsystem 4: Contribution Verbs Have Different Authority Effects) — <a href="/04-the-room-why-git-and-chat-are-not-coordination-planes/part-1/">← Part 1</a> · <a href="/04-the-room-why-git-and-chat-are-not-coordination-planes/part-3/">Part 3 →</a> · <a href="/04/brief/">1-Call Brief</a> · <a href="/04-the-room-why-git-and-chat-are-not-coordination-planes/">Full §04</a> · <a href="/04/part-2.txt">Raw .txt</a> · All: <a href="/04-the-room-why-git-and-chat-are-not-coordination-planes/part-1/">P1</a> <a href="/04-the-room-why-git-and-chat-are-not-coordination-planes/part-2/">P2</a> <a href="/04-the-room-why-git-and-chat-are-not-coordination-planes/part-3/">P3</a> <a href="/04-the-room-why-git-and-chat-are-not-coordination-planes/part-4/">P4</a> <a href="/04-the-room-why-git-and-chat-are-not-coordination-planes/part-5/">P5</a></p>
+    
+<h2>3. Subsystem 2: The Room Graph Is a Visibility and Recovery Boundary</h2>
+<p>Each Room owns a physically isolated graph shard derived from the workspace instance and Room name:</p>
+<pre><code class="language-text">room_graphs/&lt;graph_id&gt;/
+  manifest.json
+  binding.json
+  nodes.jsonl
+  artifacts.jsonl
+  errors.jsonl
+  blobs/&lt;sha256&gt;.&lt;json|txt&gt;
+  sync_index.db
+</code></pre>
+<p><code>binding.json</code> permanently fixes <code>Scope::Coordination</code> or <code>Scope::Project { id }</code>. Historical artifacts cannot be rebound to another project or scope class; <code>graph_project_rebind_refused</code> requires a new Room identity. Policy mutation uses <code>expected_sha256</code> optimistic concurrency, atomic preimage retention, and <code>prepared</code>/<code>applied</code> journal stages.</p>
+<p>Payloads over 8 KiB spill into content-addressed blobs. MCP call text over 24 KiB compacts to a blob with a 4 KiB preview. Sensitive credential arguments are omitted from audit projections rather than preserved for convenience. Legacy imports require quiescence: a live pre-shard writer triggers <code>room_graph_legacy_writer_detected</code> instead of racing the new graph. Hash-chained artifacts make alteration detectable; they do not prove non-deletion or independent validation.</p>
+<h3>Withholding closes over descendants</h3>
+<p><code>ProjectVisibility</code> first filters by project and evidence visibility, including collaborative-pass staging. It then computes a monotonic parent-withholding closure: if any parent is withheld, every child evaluation, citation, or derived record is withheld too. Legacy unscoped MCP calls degrade to <code>project_metadata_only</code>, removing arguments, responses, read/write sets, and artifact references.</p>
+<p>A hidden parent cannot leak through a visible child.</p>
+<h3>Composition is intersection, not union, of authority</h3>
+<p><code>squad.room_composition.v1</code> composes a bounded set of Rooms under an owner grant. Every constituent must remain admitted. The effective reader scope is the intersection of the composition grant, each Room grant, current membership, and active project. A failed constituent yields <code>incomplete_source_set</code>, not a partial composition that silently drops its restrictions.</p>
+<p>Pagination binds <code>request_sha256</code> to the composition, reader, filter, limit, and source snapshots. If a source changes between pages, <code>graph_page_snapshot_changed</code> prevents a mixed-generation export. Composition confers no execution authority.</p>
+<h3>Recovery refuses reparse shortcuts and preserves causal order</h3>
+<p>Snapshot recovery uses <code>squad.room_snapshot.v1</code>. Copying refuses symlinks and NTFS reparse points. A verified staged tree is fingerprinted, the previous live tree is preserved, and promotion occurs only after current-state and staged-state checks. Interrupted recovery remains pending and blocks ordinary graph access until the exact operation resumes.</p>
+<h2>4. Subsystem 3: The Room Sync Engine and the Pre-Action Work Gate</h2>
+<p>A coordination plane cannot rely on an agent remembering what it has read. It must measure the observation.</p>
+<h3>A durable per-Room sync index</h3>
+<p>Each Room has <code>sync_index.db</code> under <code>squad.room_sync_index.v1</code>. Every connection enforces and verifies:</p>
+<ul>
+<li><code>journal_mode = WAL</code>;</li>
+<li><code>synchronous = FULL</code> (<code>2</code>);</li>
+<li><code>foreign_keys = ON</code>;</li>
+<li><code>busy_timeout = 5000 ms</code>.</li>
+</ul>
+<p>Nine relational tables hold the rebuildable event projection, context head, graph links, receipts, checkpoints, snapshots, causal edges, confirmed events, and local event embeddings. The event index is rebuildable from the authoritative journals; receipts and checkpoints survive index repair.</p>
+<h3>Handle-pinned reconciliation</h3>
+<p>Reconciliation opens <code>EVENTS.jsonl</code>, verifies its Win32 file identity, and retains a trailing anchor of up to 4,096 bytes with its SHA-256. Journal replacement or incompatible rotation is <code>room_sync_journal_rotated</code>, not an invisible reset.</p>
+<p>The reader advances in 1 MiB batches with an 8 MiB per-record ceiling, verifies the <code>prev_hash → hash</code> chain and monotonic Hybrid Logical Clock, and computes local embeddings outside the SQLite write transaction. Expensive semantic work never holds the database lock.</p>
+<h3>Checkpoints bind actor, conversation, credentials, Room, and view</h3>
+<p>A delivery checkpoint is not just <code>agent_x read_offset = N</code>. It binds a <code>conversation_key</code> derived from workspace instance, bound actor, registration digest, native conversation UUID, and Room, plus a <code>view_gen</code> derived from evidence-read admission, reset state, project, participants, and readers.</p>
+<p>Changing IDE thread, rotating registration, resetting the Room, or changing the visible project invalidates the checkpoint and requires fresh synchronization.</p>
+<p>Pages are limited to 24 KiB including the MCP envelope. Oversized events split into 1,024-byte UTF-8-safe <code>item_chunk</code> fragments. Only the final <code>item_complete</code> fragment advances the journal offset, so an interrupted read re-serves the item rather than pretending it was consumed.</p>
+<p>Redaction runs again at confirmation. If policy changed the delivered representation, confirmation fails with <code>room_sync_delivery_policy_changed</code>. A receipt tip that is not an ancestor of the current journal fails with <code>room_sync_receipt_forked</code>.</p>
+<h3>The Work Gate requires frontier and causal readiness</h3>
+<p>Nine participant verbs—<code>note</code>, <code>say</code>, <code>reply</code>, <code>send</code>, <code>done</code>, <code>blocked</code>, <code>decline</code>, <code>handoff</code>, and <code>circle</code>—must pass the pre-action Work Gate.</p>
+<p>Two conditions must hold:</p>
+<ol>
+<li>The conversation checkpoint is ready and <code>confirmed_offset</code> covers the live coordination frontier.</li>
+<li><code>verify_causal_parents_confirmed</code> proves that the explicit parents and every ancestor returned by a recursive SQLite CTE over <code>causal_edges</code> are confirmed for that conversation and view. A matching confirmed event or a confirmed receipt covering the parent&#39;s offset can establish coverage; the bound identity&#39;s own events are handled explicitly.</li>
+</ol>
+<p>Failure returns <code>room_sync_required</code> with the next authorized page. The agent must read and confirm the missing context before acting.</p>
+<p>At commit, the writer lock revalidates the frontier and conversation, assigns HLC and hash lineage, and appends the staged events atomically. A foreign arrival triggers <code>room_sync_concurrent_arrival</code> rather than letting a stale turn slip through.</p>
+<p>The <strong>Fold Rule (D1)</strong> advances the author&#39;s confirmed offset only when no foreign coordination event exists between the old checkpoint and the newly written event. The author folds its own work, never someone else&#39;s unread work.</p>
+<p>Named system writers have separate authority and cannot emit participant message kinds. Finally, <code>RoomEventView::revalidate()</code> rechecks actor, project visibility, Room authority, and task-source digest after a read, catching authority changes that occurred while the view was being assembled.</p>
+<h2>5. Subsystem 4: Contribution Verbs Have Different Authority Effects</h2>
+<p>The Room is not freeform chat with locks added later. Its verbs deliberately separate status, answer, assignment, transfer, and completion.</p>
+<table>
+<thead>
+<tr>
+<th>Verb</th>
+<th>Wake and task rule</th>
+<th>Constitutional effect</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><code>note</code></td>
+<td>Never wakes; visible <code>@mentions</code> refused</td>
+<td>Status or identity telemetry without mentions, obligations, or dispatch</td>
+</tr>
+<tr>
+<td><code>reply</code></td>
+<td>Never wakes; explicit <code>reply_to</code> required</td>
+<td>Resolves an addressed mention or obligation after validating that it belongs to the caller</td>
+</tr>
+<tr>
+<td><code>say</code></td>
+<td>Coordination-only wake behavior; rejects <code>--task</code>; project wake delivery requires <code>send</code></td>
+<td>Conversational turn with strict targeting and ambiguity handling</td>
+</tr>
+<tr>
+<td><code>send</code></td>
+<td>Task required in project Rooms; creates sealed wake jobs</td>
+<td>Two-phase message/obligation commit and authorized worker delivery</td>
+</tr>
+<tr>
+<td><code>handoff</code></td>
+<td>Bounded invitation; project no-wake inbox or coordination delivery</td>
+<td>Transfers task ownership without transferring a lease</td>
+</tr>
+<tr>
+<td><code>done</code></td>
+<td>Task required</td>
+<td>Runs privileged acceptance and resolves only proven addressed items or verified successors</td>
+</tr>
+</tbody></table>
+<p>An untargeted <code>say</code> reply cannot resolve a mixed set of pending obligations. If open items trace to more than one source event, the Room refuses with <code>say_reply_target_ambiguous</code> before writing anything.</p>
+<p><code>send</code> prevalidates the task and every evidence handle before its first event. A citation belonging to another Room produces <code>cross_room_evidence_refused</code>. Flush 1 commits the <code>room_message</code>; Flush 2 commits the mention and obligation records. A cooldown-deferred wake is still a sealed permit, and the 2,000 ms damper clock starts at dispatch completion rather than at initial gate passage.</p>
+<p><code>handoff</code> records <code>lease_transferred: false</code> and <code>fresh_claim_required: true</code>. Ownership can move; the old kernel and lease authority cannot be inherited as a side effect. <code>done</code> can resolve items from a superseded task only when <code>verified_successor</code> proves a non-weaker replacement: same owner, source, project, requirements, and non-empty acceptance, with no wider scope.</p>
+
+
+      <p class="part-compact-nav"><strong>END OF §04 PART 2/5</strong> — Next: <a href="/04-the-room-why-git-and-chat-are-not-coordination-planes/part-3/"><code>https://blayneaina.com/04-the-room-why-git-and-chat-are-not-coordination-planes/part-3/</code></a> · <a href="/04/brief/">§04 1-Call Brief</a> · <a href="/04.md">Raw .md</a></p>
+    
+        </div>
+
+        
+        
+        
+        
+
+        
+
+        
+      </article>
+    </main>
+
+  </div>
+
+  <footer class="site-footer compact-ai-footer"><p><strong>blayneaina.com</strong> — <a href="https://blayneaina.com/ai-brief/">Master Brief (https://blayneaina.com/ai-brief/)</a> · <a href="https://blayneaina.com/ai-brief.txt">Plain-Text Brief (https://blayneaina.com/ai-brief.txt)</a> · <a href="https://blayneaina.com/articles/">All 9 Articles &amp; Briefs (https://blayneaina.com/articles/)</a> · <a href="https://blayneaina.com/llms.txt">llms.txt</a> · <a href="mailto:me@blayneaina.com">me@blayneaina.com</a></p></footer>
+
+
+
+
+
+  <script src="/script.js?v=20261109-s-tier"></script>
+</body>
+</html>

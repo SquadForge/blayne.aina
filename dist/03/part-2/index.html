@@ -1,0 +1,296 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>§03 Part 2/6: Semantic Switch &amp; EISA (3. The Evidence Alphabet: 17 Tags and 12 Comparators) | Blayne Aina</title>
+  <meta name="description" content="Sections: 3. The Evidence Alphabet: 17 Tags and 12 Comparators, 4. Sealed Cases: Two Substrates, One Artifact Identity, 5. The Four-Gate Verdict Machine">
+  <meta name="author" content="Blayne Aina">
+  <meta name="robots" content="index, follow, max-snippet:-1, max-image-preview:large, max-video-preview:-1">
+  <link rel="canonical" href="https://blayneaina.com/03-eisa-four-gate-verdict-machine-and-entity-resolution/part-2/">
+  <link rel="icon" href="/favicon.ico" sizes="any">
+  <link rel="icon" href="/favicon.svg" type="image/svg+xml">
+
+  <!-- OpenGraph / Social -->
+  <meta property="og:type" content="article">
+  <meta property="og:title" content="§03 Part 2/6: Semantic Switch &amp; EISA (3. The Evidence Alphabet: 17 Tags and 12 Comparators)">
+  <meta property="og:description" content="Sections: 3. The Evidence Alphabet: 17 Tags and 12 Comparators, 4. Sealed Cases: Two Substrates, One Artifact Identity, 5. The Four-Gate Verdict Machine">
+  <meta property="og:url" content="https://blayneaina.com/03-eisa-four-gate-verdict-machine-and-entity-resolution/part-2/">
+  <meta property="og:site_name" content="Blayne Aina — The Route to Trusting AI">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="§03 Part 2/6: Semantic Switch &amp; EISA (3. The Evidence Alphabet: 17 Tags and 12 Comparators)">
+  <meta name="twitter:description" content="Sections: 3. The Evidence Alphabet: 17 Tags and 12 Comparators, 4. Sealed Cases: Two Substrates, One Artifact Identity, 5. The Four-Gate Verdict Machine">
+  
+  <link rel="stylesheet" href="/style.css?v=20261109-s-tier">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@500;700&family=Instrument+Serif:ital@0;1&family=Inter:wght@400;500;600;700;800&family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,500;0,6..72,600;1,6..72,400&family=JetBrains+Mono:wght@400;500&family=Plus+Jakarta+Sans:wght@600;700;800&display=swap" rel="stylesheet">
+</head>
+<body>
+  <div class="reading-progress-bar" id="progressBar"></div>
+
+  <header class="site-header compact-ai-header"><div class="header-inner compact-ai-nav"><a href="/" class="brand"><strong>BLAYNE AINA</strong></a> | <a href="/ai-brief/">1-Page Master Brief (§01–§09)</a> | <a href="/articles/">All 9 Articles &amp; Briefs</a> | <a href="/research-assurance/">Assurance</a> | <a href="/refusal-proof/">Proof</a> | <a href="/llms.txt">llms.txt</a> | <a href="mailto:me@blayneaina.com">me@blayneaina.com</a></div></header>
+  <div class="layout-container presentation-layout">
+    <main class="content-area">
+      <article class="prose-wrapper presentation-wrapper">
+<header class="article-header compact-article-header"><h1 class="article-title">§03 Part 2/6: Semantic Switch &amp; EISA (3. The Evidence Alphabet: 17 Tags and 12 Comparators)</h1><p class="article-subtitle">Sections: 3. The Evidence Alphabet: 17 Tags and 12 Comparators, 4. Sealed Cases: Two Substrates, One Artifact Identity, 5. The Four-Gate Verdict Machine</p></header>
+
+        
+        
+
+        <div class="article-body">
+          
+      <p class="part-compact-nav"><strong>§03 PART 2/6</strong> (12,494 chars · Sections: 3. The Evidence Alphabet: 17 Tags and 12 Comparators; 4. Sealed Cases: Two Substrates, One Artifact Identity; 5. The Four-Gate Verdict Machine) — <a href="/03-eisa-four-gate-verdict-machine-and-entity-resolution/part-1/">← Part 1</a> · <a href="/03-eisa-four-gate-verdict-machine-and-entity-resolution/part-3/">Part 3 →</a> · <a href="/03/brief/">1-Call Brief</a> · <a href="/03-eisa-four-gate-verdict-machine-and-entity-resolution/">Full §03</a> · <a href="/03/part-2.txt">Raw .txt</a> · All: <a href="/03-eisa-four-gate-verdict-machine-and-entity-resolution/part-1/">P1</a> <a href="/03-eisa-four-gate-verdict-machine-and-entity-resolution/part-2/">P2</a> <a href="/03-eisa-four-gate-verdict-machine-and-entity-resolution/part-3/">P3</a> <a href="/03-eisa-four-gate-verdict-machine-and-entity-resolution/part-4/">P4</a> <a href="/03-eisa-four-gate-verdict-machine-and-entity-resolution/part-5/">P5</a> <a href="/03-eisa-four-gate-verdict-machine-and-entity-resolution/part-6/">P6</a></p>
+    
+<h2>3. The Evidence Alphabet: 17 Tags and 12 Comparators</h2>
+<p>EISA&#39;s tags are not natural-language hints. Each positive or counter tag binds to one deterministic comparator. The two inferential tags are reserved for transitive composition and are refused in <code>BindEvidenceTag</code>.</p>
+<table>
+<thead>
+<tr>
+<th align="right">#</th>
+<th>Evidence tag</th>
+<th>Class</th>
+<th>Comparator and exact predicate</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="right">1</td>
+<td><code>PHONE_STRONG</code></td>
+<td>Positive</td>
+<td><code>DigitsEqual</code>: both digit strings have at least seven digits and are identical</td>
+</tr>
+<tr>
+<td align="right">2</td>
+<td><code>PHONE_ONE_DIGIT_VARIANCE</code></td>
+<td>Positive</td>
+<td><code>DigitsOneSubstitution</code>: equal-length digit strings, Hamming distance exactly one</td>
+</tr>
+<tr>
+<td align="right">3</td>
+<td><code>PHONE_MULTI_DIGIT_VARIANCE</code></td>
+<td>Positive</td>
+<td><code>DigitsMultiSubstitution</code>: equal-length digit strings, Hamming distance two or three</td>
+</tr>
+<tr>
+<td align="right">4</td>
+<td><code>PHONE_COUNTRY_CODE_VARIATION</code></td>
+<td>Positive</td>
+<td><code>DigitsSuffix</code>: the shorter digit string is a proper suffix of the longer</td>
+</tr>
+<tr>
+<td align="right">5</td>
+<td><code>INTERNATIONAL_PHONE_VARIATION</code></td>
+<td>Positive</td>
+<td><code>DigitsSuffix</code>: the same suffix law under a distinct declared evidence tag</td>
+</tr>
+<tr>
+<td align="right">6</td>
+<td><code>EMAIL_LOCAL_MATCH</code></td>
+<td>Positive</td>
+<td><code>EmailLocalEqual</code>: valid trimmed/lowercased email shapes have equal local parts</td>
+</tr>
+<tr>
+<td align="right">7</td>
+<td><code>DOMAIN_ROOT_MATCH</code></td>
+<td>Positive</td>
+<td><code>EmailDomainRootEqual</code>: the first domain label before the first dot is identical</td>
+</tr>
+<tr>
+<td align="right">8</td>
+<td><code>DOMAIN_COUNTRY_TLD_VARIATION</code></td>
+<td>Positive</td>
+<td><code>EmailTldVariation</code>: first domain labels match and full domains differ</td>
+</tr>
+<tr>
+<td align="right">9</td>
+<td><code>DOMAIN_ROOT_MISMATCH</code></td>
+<td>Counter</td>
+<td><code>EmailDomainRootDiffers</code>: first domain labels differ</td>
+</tr>
+<tr>
+<td align="right">10</td>
+<td><code>NAME_STRONG</code></td>
+<td>Positive</td>
+<td><code>TextEqual</code>: lowercase whitespace-collapsed non-empty strings match</td>
+</tr>
+<tr>
+<td align="right">11</td>
+<td><code>NAME_SIMILARITY</code></td>
+<td>Positive</td>
+<td><code>TokenOverlap</code>: nonblank values share at least one lowercase alphanumeric token of two or more characters</td>
+</tr>
+<tr>
+<td align="right">12</td>
+<td><code>COMPANY_ROOT_MATCH</code></td>
+<td>Positive</td>
+<td><code>FirstTokenEqual</code>: first qualifying tokens match</td>
+</tr>
+<tr>
+<td align="right">13</td>
+<td><code>COMPANY_REGIONAL_VARIATION</code></td>
+<td>Positive</td>
+<td><code>FirstTokenVariation</code>: first tokens match and normalized full strings differ</td>
+</tr>
+<tr>
+<td align="right">14</td>
+<td><code>REGIONAL_SUBSIDIARY_PATTERN</code></td>
+<td>Positive</td>
+<td><code>FirstTokenVariation</code>: the same first-token variation law under a distinct declared tag</td>
+</tr>
+<tr>
+<td align="right">15</td>
+<td><code>REGIONAL_VARIATION</code></td>
+<td>Positive</td>
+<td><code>FirstTokenVariation</code>: the same first-token variation law under a distinct declared tag</td>
+</tr>
+<tr>
+<td align="right">16</td>
+<td><code>TRANSITIVE_CLOSURE_APPLIED</code></td>
+<td>Inferential</td>
+<td>No field comparator; express with <code>AssertTransitiveClosure</code></td>
+</tr>
+<tr>
+<td align="right">17</td>
+<td><code>TRANSITIVE_CHAIN_DEPTH_1</code></td>
+<td>Inferential</td>
+<td>No field comparator; express with <code>AssertTransitiveClosure</code></td>
+</tr>
+</tbody></table>
+<p>The domain rule is intentionally simpler than a public-suffix analyzer: <code>domain_root</code> is the first DNS label. It does not strip <code>mail</code>, <code>www</code>, or country-code second-level domains. That limitation must remain visible; comparator semantics are declared policy, not universal identity truth.</p>
+<p>A comparator can answer only its exact predicate. <code>TokenOverlap</code> does not prove two people are identical. <code>FirstTokenVariation</code> does not prove two companies share a parent. <code>DigitsSuffix</code> does not establish ownership of a phone number. EISA determines whether the declared relation holds between the sealed strings—not whether the relation is sufficient evidence for a worldly identity decision.</p>
+<h3>The 47 registered fault classes</h3>
+<p>Faults are residue, never standing. The current <code>FAULTS</code> registry contains exactly these 47 codes:</p>
+<pre><code class="language-text">Representation and bounds (16):
+  act_not_object, unknown_field, missing_field, field_type,
+  unknown_version, unknown_stage, stage_not_admitted, unknown_opcode,
+  unknown_symbol, tag_class_mismatch, bound_exceeded, act_id_invalid,
+  act_id_repeated, actor_mismatch, case_mismatch, evidence_ref_refused
+
+Coordinates and observations (11):
+  pointer_foreign_artifact, pointer_malformed, record_unknown,
+  member_repeated, field_absent, value_null, value_empty,
+  value_not_string, value_shape_mismatch, observation_contradicted,
+  pair_mismatch
+
+Dependencies and composition (8):
+  dependency_missing, dependency_kind, dependency_faulted, dependency_cycle,
+  support_missing, counterevidence_suppressed, chain_broken,
+  chain_depth_exceeded
+
+Partitions and terminal decisions (7):
+  partition_member_unknown, partition_member_repeated,
+  partition_member_missing, partition_unsupported_group,
+  partition_contradicts_support, partition_repeated,
+  submission_mixed_decision
+
+Layout (5):
+  layout_fact_absent, layout_scope_mismatch, layout_kind_mismatch,
+  layout_citation_mismatch, relation_indeterminate
+</code></pre>
+<p>Malformed submissions can also produce whole-submission inadmissibility codes such as <code>submission_too_large</code>, <code>submission_unparseable</code>, <code>submission_not_array</code>, <code>submission_size</code>, and <code>submission_mixed_stage</code>. Those envelope outcomes are distinct from the 47 registered per-act fault classes that <code>RejectUnlawfulAct</code> may cite.</p>
+<h2>4. Sealed Cases: Two Substrates, One Artifact Identity</h2>
+<p>An act may point only into a sealed case. EISA creates <code>eisacase_&lt;32hex&gt;</code> by hashing the Room name, a NUL separator, and the case&#39;s RFC 8785 JCS record digest. The <code>artifactHash</code> carried by every act is that record digest; the Room-qualified case ID is the graph address.</p>
+<p>Identical records sealed in two Rooms therefore have the same <code>artifactHash</code> but different case nodes. Neither Room can resolve the other&#39;s case through composition.</p>
+<h3>File cases</h3>
+<p><code>seal_file</code> reads a JSON case through a task-scoped <code>ReadAuthority</code> under the Room&#39;s transition serialization, revalidates that authority, checks Room-project containment, enforces 4 MiB and 1,000-record ceilings, and applies the same strict parser. A case is either an array of record objects or <code>{ &quot;records&quot;: [...] }</code>. Every record has a unique valid <code>id</code>.</p>
+<p>The graph record binds the canonical records, digest, source-path identity and source-byte SHA-256, actor, session, task, Room, and time. Loading recomputes the record digest before recognition.</p>
+<h3>Passage cases</h3>
+<p><code>seal_passages</code> bridges Article 02 directly into EISA. Each input is a Room-issued <code>ev_</code> handle. The sealer:</p>
+<ol>
+<li>prepares and validates the citation for the caller and task;</li>
+<li>refuses handles from another Room or unrevealed collaborative-pass findings;</li>
+<li>loads and reverifies the canonical view and live source;</li>
+<li>cuts the exact Unicode-scalar passage using the handle&#39;s selector;</li>
+<li>refuses textless gaps, empty selections, and passages over 1,024 characters;</li>
+<li>attaches committed <code>layout</code> facts when a whole-node citation names a PDF layout element;</li>
+<li>seals records containing the exact text and source provenance;</li>
+<li>commits citation edges so later source reassessment reaches the case.</li>
+</ol>
+<p>A passage record&#39;s <code>/text</code> is the selected passage. Its <code>/source/...</code> fields bind Room, view digest, node ID, unit, start, end, source revision, source SHA-256, and parser digest. Every later <code>case::load</code> rechecks the JCS digest, source views, live source bytes, and sealed layout equality. A drifted source cannot be used for a new judgment.</p>
+<p>The two substrates share constitutional identity but not assurance. A task-scoped file case establishes JCS integrity over an admitted file. A passage case additionally binds each value to server-cut document evidence and layout provenance. Neither proves that the underlying records are worldly true.</p>
+<h2>5. The Four-Gate Verdict Machine</h2>
+<table>
+<thead>
+<tr>
+<th>Gate</th>
+<th>What the recognizer establishes</th>
+<th>What it refuses to let the proposal do</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><strong>1. Syntax and stage isolation</strong></td>
+<td>Strict JSON, exact keys, closed symbols, authenticated actor, unique IDs, bounded sizes, one act family, matching <code>artifactHash</code></td>
+<td>Smuggle duplicate fields, foreign opcodes, mixed stages, self-declared actors, or unbounded matter</td>
+</tr>
+<tr>
+<td><strong>2. Spatial containment</strong></td>
+<td>Every coordinate resolves inside the named sealed case; every layout citation names the same committed view, revision, parser, and page</td>
+<td>Point at foreign records, manufactured geometry, another Room&#39;s evidence, or unstored fields</td>
+</tr>
+<tr>
+<td><strong>3. Type and canonical identity</strong></td>
+<td>Values are non-empty bounded strings, dependencies have the right opcode/layer, and admitted acts receive JCS consensus identities</td>
+<td>Coerce shapes, cite faulted dependencies, or let prose and local naming change the proof identity</td>
+</tr>
+<tr>
+<td><strong>4. Substance and coverage</strong></td>
+<td>Comparators hold, counterevidence stays visible, chains are simple paths, and partitions are exact, connected, and non-contradicted</td>
+<td>Suppress contradiction, break a chain, omit members, split proven duplicates, or assert an unsupported cluster</td>
+</tr>
+</tbody></table>
+<p>Each act ends in one consequence class:</p>
+<ul>
+<li><strong><code>operative</code></strong> — a recognized act with a consensus identity.</li>
+<li><strong><code>lawful_non_operative</code></strong> — a valid review request, which creates no operative identity claim.</li>
+<li><strong><code>anti_knowledge</code></strong> — a valid rejection of other matter.</li>
+<li><strong><code>typed_fault</code></strong> — preserved residue with a fault code and no standing.</li>
+</ul>
+<p>A malformed whole submission is <code>inadmissible</code>. A recognized submission reports <code>decision: partition</code>, <code>review</code>, <code>relation</code>, or <code>none</code>; it does not acquire a blanket database-execution verdict.</p>
+<h3>Counterevidence is submission-complete</h3>
+<p>For <code>AssertDuplicatePair</code>, <strong>at least one admitted positive <code>BindEvidenceTag</code> on the same pair is required</strong>. Every listed support dependency must be such a binding. Every listed counter dependency must be an admitted counter binding on that pair. An empty counter list is valid only when the submission contains no admitted counter binding for that pair.</p>
+<p>Then EISA scans all admitted acts in the submission. If any counter binding on that pair is absent from <code>operands.counter</code>, the pair faults with <code>counterevidence_suppressed</code>. This is the minimum support and complete-counter rule—not a domain-specific claim that one similarity signal is sufficient proof of real-world identity.</p>
+<p>The proposer cannot bind <code>DOMAIN_ROOT_MISMATCH</code> in one act and then omit it when asserting identity in another. The check is deliberately scoped to the <strong>current submission&#39;s admitted acts</strong>; it is not a claim to have searched every historical record or external source in the world.</p>
+<h3>Transitive closure is a path proof, not a slogan</h3>
+<p><code>AssertTransitiveClosure</code> cites two to four admitted <code>AssertDuplicatePair</code> links. Pairs are canonically ordered, but the walker can traverse each edge in either direction. It starts from either requested endpoint, requires every link to continue from the current record, tracks visited IDs to reject cycles, and must end at the other endpoint.</p>
+<p>This establishes that the cited simple path exists. It does not prove that transitivity is a safe business rule for every relationship.</p>
+<h3>Partition verification is global across the admitted submission</h3>
+<p><code>ProposePartition</code> enforces four separate mathematical properties:</p>
+<ol>
+<li><strong>Exact disjoint cover.</strong> Every group member exists in the case, appears in at most one group, and every sealed record appears somewhere. Empty groups are meaningless.</li>
+<li><strong>Cited support stays inside groups.</strong> Every support reference must be an admitted duplicate pair or transitive closure.</li>
+<li><strong>No admitted relation crosses a boundary.</strong> EISA scans all admitted Layer 1/2 acts, including those omitted from <code>support</code>. If any links records in different groups, the result is <code>partition_contradicts_support</code>.</li>
+<li><strong>Every multi-record group is connected.</strong> A Disjoint-Set Union-Find structure unions cited support edges within each group. If members do not share one root, the result is <code>partition_unsupported_group</code>.</li>
+</ol>
+<p>A proposal cannot prove A=B and B=C, then place C outside the cluster because it dislikes the consequence. Nor can it place A, B, and C together without a cited path connecting them.</p>
+<h3>Consensus identity removes narrative, not responsibility</h3>
+<p>For an admitted act, <code>consensusIdentity</code> is the SHA-256 of an RFC 8785 basis containing the version, stage, opcode, case <code>artifactHash</code>, and canonical operands. Dependency IDs are replaced by the sorted consensus identities of the acts they name. Layout acts additionally bind their profile and committed geometric identity.</p>
+<p>Excluded from that identity are <code>actor</code>, <code>boundedReason</code>, <code>confidence</code>, <code>sourceEvent</code>, <code>evidenceRefs</code>, and local act IDs.</p>
+<p>Two proposers using different names, confidence scores, and explanations therefore receive the same consensus identity only when they prove the same structural transition over the same sealed case. Their raw acts remain separately attributable through <code>act_sha256</code>, Room actor, session, and submission identity. Canonical consensus does not create independent evidence.</p>
+
+
+      <p class="part-compact-nav"><strong>END OF §03 PART 2/6</strong> — Next: <a href="/03-eisa-four-gate-verdict-machine-and-entity-resolution/part-3/"><code>https://blayneaina.com/03-eisa-four-gate-verdict-machine-and-entity-resolution/part-3/</code></a> · <a href="/03/brief/">§03 1-Call Brief</a> · <a href="/03.md">Raw .md</a></p>
+    
+        </div>
+
+        
+        
+        
+        
+
+        
+
+        
+      </article>
+    </main>
+
+  </div>
+
+  <footer class="site-footer compact-ai-footer"><p><strong>blayneaina.com</strong> — <a href="https://blayneaina.com/ai-brief/">Master Brief (https://blayneaina.com/ai-brief/)</a> · <a href="https://blayneaina.com/ai-brief.txt">Plain-Text Brief (https://blayneaina.com/ai-brief.txt)</a> · <a href="https://blayneaina.com/articles/">All 9 Articles &amp; Briefs (https://blayneaina.com/articles/)</a> · <a href="https://blayneaina.com/llms.txt">llms.txt</a> · <a href="mailto:me@blayneaina.com">me@blayneaina.com</a></p></footer>
+
+
+
+
+
+  <script src="/script.js?v=20261109-s-tier"></script>
+</body>
+</html>

@@ -1,0 +1,63 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "Squad Break-Glass Recovery Intent (squad.breakglass.recovery/1)",
+  "type": "object",
+  "additionalProperties": false,
+  "maxProperties": 7,
+  "description": "Local interactive-console recovery intent carrying forward unresolved operations.",
+  "required": [
+    "kind",
+    "by",
+    "reason",
+    "scope",
+    "new_epoch",
+    "carried_forward_operations"
+  ],
+  "properties": {
+    "kind": {
+      "type": "string",
+      "enum": [
+        "recovery_intent"
+      ]
+    },
+    "by": {
+      "type": "string",
+      "enum": [
+        "operator"
+      ]
+    },
+    "reason": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 1024
+    },
+    "scope": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 256
+    },
+    "new_epoch": {
+      "type": "integer",
+      "minimum": 1,
+      "maximum": 9007199254740991
+    },
+    "carried_forward_operations": {
+      "type": "array",
+      "minItems": 0,
+      "maxItems": 1024,
+      "items": {
+        "type": "string",
+        "minLength": 1,
+        "maxLength": 128
+      },
+      "description": "In-doubt file, destination, and model operations carried forward unresolved."
+    },
+    "state_disposition": {
+      "type": "string",
+      "enum": [
+        "CLEARED",
+        "FROZEN_SAFE"
+      ]
+    }
+  }
+}

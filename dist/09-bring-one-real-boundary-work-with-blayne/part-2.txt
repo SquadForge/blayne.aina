@@ -1,0 +1,93 @@
+# §09 Part 2/8 — Bring One Real Boundary: Peer Review & R&D Evaluation
+Canonical: https://blayneaina.com/09-bring-one-real-boundary-work-with-blayne/part-2/ | Raw Article: https://blayneaina.com/09.md | Next Part: https://blayneaina.com/09/part-3.txt
+
+## 1. Choose the Boundary, Not the Buzzword: Three Technical Evaluation Tracks
+
+A useful technical evaluation or R&D pilot starts with one narrow question and a clear acceptance contract. Three technical tracks provide that entrance:
+
+### Exhibit 9.1 — Three challenge tracks
+
+```text
+TRACK 1: AI WORKFLOW STANDING & CONFINEMENT
+  one AI-proposed file or SQLite mutation
+  → wake authority → typed lease → guarded write → RequestedAct
+  → fenced execution → original/successor receipt → break-glass
+  evidence route: AINA-E05–E07 · Articles 01, 04–08
+
+TRACK 2: ZERO-TRUST DOCUMENT, CITATION & EISA ADJUDICATION
+  one hostile document, evidence-heavy workflow, or diagram relation
+  → confined parsing → explicit omissions → immutable views
+  → server-cut citations → bounded absence → deterministic EISA verdict
+  evidence route: AINA-E02–E04 · Articles 02–03
+
+TRACK 3: PROTECTED COMPUTATION & ENTITY RESOLUTION
+  one bounded contact, company, product, or other duplicate-record problem
+  → Semantic Switch → qBlock / Qdrant Edge → EISA Fracture
+  → EISA Forge → local exact restoration → Shield
+  evidence route: AINA-E01, E03, E04, E08, E09 · Article 03
+```
+
+**Evidence-route key (`AINA-E01`–`E09`):** Each track maps to concrete verification routes established across the architecture series:
+- `AINA-E01` — Semantic Switch structure-preserving fictionalization, relation-isomorphism verification, and exact local restoration ([§01](/01-an-ai-output-is-not-an-act/), [§03](/03-eisa-four-gate-verdict-machine-and-entity-resolution/)).
+- `AINA-E02` — LPAC-confined parsing, explicit omission surfaces, committed views, server-cut `ev_` citations, and bounded-absence gates ([§02](/02-zero-trust-document-ingestion-and-server-cut-evidence/)).
+- `AINA-E03` — EISA strict parsing, sealed cases, record-relative RFC 6901 pointers, and Four-Gate deterministic adjudication ([§03](/03-eisa-four-gate-verdict-machine-and-entity-resolution/)).
+- `AINA-E04` — Parser-committed PDF integer geometry (`CONNECTS`) and EISA Fracture/Forge partition and field-provenance compilation ([§03](/03-eisa-four-gate-verdict-machine-and-entity-resolution/)).
+- `AINA-E05` — Room authority, sealed wake envelopes, typed leases, monotonic generations, and kernel write exclusion ([§04](/04-the-room-why-git-and-chat-are-not-coordination-planes/), [§05](/05-expiry-is-not-fencing-typed-leases-and-kernel-write-exclusion/)).
+- `AINA-E06` — Dual-tier vault recovery (Primary and Amber) and ungated-divergence quarantine ([§06](/06-rollback-is-not-erasure-dual-tier-vaults-and-ungated-quarantine/)).
+- `AINA-E07` — Controller-fixed `RequestedAct`, fenced SQLite execution, honest original-versus-successor receipts (`satisfies_original_return: false`), break-glass epochs, and the 45-case conformance gate ([§07](/07-defeating-approval-laundering-act-pinning-and-successor-grants/), [§08](/08-sovereign-kill-switch-break-glass-epochs-and-conformance-gate/)).
+- `AINA-E08` & `AINA-E09` — Authenticated `release_inventory` verification (`SS08`) and Shield forward-only (`DEFLECT`, `GROWTH`, `ESCALATE`) baseline defense ([§03](/03-eisa-four-gate-verdict-machine-and-entity-resolution/)).
+
+### Track 1 — AI Workflow Standing & Confinement
+
+**Who it fits:** CTOs, CISOs, principal architects, and platform owners running coding, operational, or database agents whose authority currently depends on tool schemas, advisory locks, Git branches, or a green tool result.
+
+**The asset:** one AI-proposed file or SQLite mutation that can be reproduced in a controlled fixture.
+
+**The demonstration:** sealed wake authority, current typed tenancy, monotonic generation fencing, guarded file replacement, a controller-fixed `RequestedAct`, fenced SQLite execution, recovery evidence, original-versus-successor receipt handling, and scoped break-glass behavior.
+
+**The boundary:** the Windows reference path and declared destinations. The challenge does not grant production write authority, claim universal adapter or operating-system coverage, promise exactly-once external effects, or turn author-controlled evidence into independent validation.
+
+### Track 2 — Zero-Trust Document, Citation & EISA Adjudication
+
+**Who it fits:** legal, compliance, finance, research, and engineering teams ingesting untrusted documents, evidence-heavy material, or spatial diagrams.
+
+**The asset:** one hostile or contentious document, one bounded evidence question, or one diagram connection claim with an authorized source.
+
+**The demonstration:** LPAC-confined parsing, explicit omission and failure surfaces, immutable canonical views, server-cut `ev_` citations, bounded absence claims with acknowledged gaps, and a sealed EISA case judged by deterministic gates.
+
+**The boundary:** declared formats and extraction profiles. A citation proves what the server served from a committed view; it does not prove that the source is true. The track does not claim complete-document comprehension, universal format support, absence without acknowledged gaps, or legal interpretation as a warranty.
+
+### Track 3 — Protected Computation & Entity Resolution
+
+**Who it fits:** enterprise data, RevOps, CRM, product-data, and integration leaders with duplicate contacts, companies, products, confidential identifiers, fragmented hierarchies, or unsupported canonical values.
+
+**The asset:** one bounded contact, company, product, or other duplicate-record problem, or access to an existing replayable run. Initial scoping can use synthetic, redacted, or already authorized data; confidential production data is not required to start the conversation.
+
+**The demonstration:** the privacy-first pipeline and its local return path:
+
+- **Semantic Switch** transforms native values into structure-preserving fictional records before any provider-exposed computation. Native rows, keys, and the private crosswalk remain under client control.
+- **qBlock / Qdrant Edge** consumes the protected records and nominates candidate blocks without declaring identity.
+- **EISA Fracture** adjudicates those candidate partitions with explicit support, counterevidence, and preserved dissent.
+- **EISA Forge** compiles canonical fields with source provenance rather than treating identity equivalence as permission to merge.
+- **Local exact restoration** maps authorized field-source references back to native values through the private crosswalk; no model reproduces the originals.
+- **Shield** handles later records through forward-only `DEFLECT`, `GROWTH`, or `ESCALATE` dispositions without rewriting the sealed baseline.
+
+Semantic Switch is an experimental alpha relational-confinement module. The retained synthetic executions account for 2,750 inputs, 50 complete blocks, 2,704 fictionalized records, and 27,040 exact original-field restorations. Relation-isomorphism verification adds 20/20 relabeling-invariance blocks, 23/23 exact native edit relations, 53/53 records and 529/529 field values verified per run, 14/14 batch cases, and 10/10 transformation cases. These measurements establish **transport and relation fidelity on declared synthetic fixtures**—not population matching accuracy, anonymity, successful production merges, universal tokenizer preservation, or independent validation.
+
+When evaluating entity resolution on a prospective customer's admitted dataset during a scoped pilot, transport fidelity is paired with explicit **matching-quality acceptance criteria**:
+
+| Evaluation dimension | What a pilot measures |
+|---|---|
+| **Candidate recall** | Fraction of known duplicate pairs included in nominated candidate blocks |
+| **Candidate precision** | Size and noise level of candidate blocks delivered to adjudication |
+| **False merges** | Distinct entities incorrectly combined into a single partition |
+| **False splits** | Records representing the same entity left separated without review |
+| **Adjudication outcomes** | Proportion of records merged, kept separate, or held explicitly unresolved |
+| **Field provenance** | Verification that every surviving canonical field cites its exact source record and pointer |
+| **Privacy boundary** | Verification that raw identifiers remain local while external computation receives only protected fictional records |
+
+**The boundary:** an existing implementation profile and acceptance run. The initial challenge excludes custom schema engineering, production CRM ingestion or write-back, lead-list generation, enterprise graph construction, and universal privacy or matching-accuracy claims.
+
+Physical actuation, defense systems, and other high-consequence control surfaces do not enter a general-purpose focused challenge. They require separately scoped diligence and an environment appropriate to the consequence class.
+
+

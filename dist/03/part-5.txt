@@ -1,0 +1,118 @@
+# §03 Part 5/6 — Semantic Switch & EISA
+Canonical: https://blayneaina.com/03-eisa-four-gate-verdict-machine-and-entity-resolution/part-5/ | Raw Article: https://blayneaina.com/03.md | Next Part: https://blayneaina.com/03/part-6.txt
+
+## 9. The 2026 Research Landscape: Proposal Quality Is Not Transition Standing
+
+The current research supports a hybrid division of labor: models can improve nomination, comparison, and review, while deterministic systems must decide which declared predicates actually hold. The sources do not endorse AINA, and their results need their original scopes.
+
+| 2026 primary source | What it establishes | How EISA composes with it—without overclaiming |
+|---|---|---|
+| Teofili et al., [*Can we trust LLM Self-Explanations for Entity Resolution?*](https://arxiv.org/abs/2606.01210), June 2026 preprint | Across three LLMs, ten datasets, and multiple prompting strategies, self-explanations were often unstable, weakly faithful, and poorly aligned with counterfactual evidence. Established post-hoc methods were more trustworthy but costly. | `boundedReason` is audit context, not causal evidence. EISA admission depends on coordinates, comparators, dependencies, and counterevidence—not on the persuasiveness of an explanation. |
+| Papadakis et al., [*AgenticER: the next frontier in Entity Resolution*](https://arxiv.org/abs/2607.27435), July 2026 vision paper | Formalizes ER as sequential evidence gathering and decision-making with external sources and selective human involvement; proposes a reference architecture and evaluation dimensions. | Agentic ER needs constitutional checkpoints as iteration increases authority and cost. This is a vision paper, not an empirical superiority result. |
+| Smith et al., [*OpenSanctions Pairs*](https://arxiv.org/abs/2603.11051), February 2026 preprint, revised August 2026 | Provides 755,540 expert-labeled pairs from 293 sources across 45 jurisdictions. The rule baseline reached 91.3% F1, GPT-4o 99.0%, and a local DeepSeek model 98.2%; rules and LLMs failed in complementary ways. | Strong pairwise models are valuable proposers. The authors also point attention toward blocking, clustering, and uncertainty review—the exact places where candidate recall, counterevidence, partitions, and human review need separate proof. |
+| Kasprova et al., [*Too Polite to Disagree*](https://arxiv.org/abs/2604.02668), April 2026 preprint, revised July 2026; SIGDIAL 2026 | In six open-source model discussions, supplying peer-sycophancy rankings reduced the influence of sycophancy-prone peers and error cascades, improving final accuracy by 10.5 percentage points. | Multi-agent review can be improved, but social mitigation is not deterministic adjudication. EISA does not infer standing from a vote, whether the vote is naive or carefully managed. |
+| Deußer et al., [*On the Impact of Anonymization on the Performance of Large Language Models*](https://arxiv.org/abs/2609.11335), September 2026 preprint | Across five models and eleven benchmarks, anonymization effects were task- and model-dependent. Reversible methods preserving entity uniqueness outperformed irreversible approaches; explicitly prompting about anonymization did not help. | Structure-preserving pseudonymization belongs in the transport design, not in a prompt. Semantic Switch's measured restoration still does not prove anonymity or downstream matching accuracy. |
+| Deng et al., [*Circuit-MLLM*](https://arxiv.org/abs/2609.15668), September 2026 preprint; ECCV 2026 | Addresses the difficulty dense circuit schematics pose for multimodal models through device localization, path tracing, and topology-guided latent reasoning; reports a 25% higher average score than GPT-5.1 on its tasks. | Topological structure deserves explicit representation and verification. A stronger VLM remains a proposal mechanism; EISA's separate claim is a deterministic proof over committed PDF vector facts. |
+| Kogilathota et al., [*HALP*](https://arxiv.org/abs/2603.05465), March 2026 preprint; EACL 2026 | Shows that hallucination risk can be probed before generation across eight VLMs, with up to 0.93 AUROC on several models and architecture-dependent variation. | Early abstention and routing are useful. Risk probes do not prove which connector touches which shape; `AssertLayoutRelation` still requires committed geometry, unique attachments, and direction. |
+| [`CVE-2026-71847`](https://nvd.nist.gov/vuln/detail/CVE-2026-71847), August 2026 | Ruby JSON 2.20.0–2.21.x before 2.21.2 could dereference stale pointers and terminate when incomplete attacker-controlled objects containing duplicate keys reached the affected warning path. | Duplicate-key handling is a real parser-security boundary as well as a semantic ambiguity. EISA refuses duplicate keys before schema evaluation rather than delegating meaning to parser defaults. |
+
+The architectural conclusion is not that models are unnecessary. It is that **proposal quality and transition standing are different evidence claims**. Better models reduce the number of bad candidates requiring refusal. They do not remove the need for the refusal boundary.
+
+## 10. The Continuous Wire into the Room
+
+EISA recognition and Room admission share one path. `recognize` previews a verdict; `submit` runs the same recognition logic and records the result. The caller is authenticated, the Room is admitted, the case is loaded and rechecked, and every evidence handle used by a non-faulted act is prepared for that Room. Foreign-Room evidence is refused rather than cited across an authority boundary.
+
+The recorded `squad.eisa.submission/1` payload binds:
+
+- `by` and native `session`;
+- `room` and optional `task`;
+- the case's bare `artifactHash`;
+- the complete recognition result;
+- submission time.
+
+Its content identity becomes `eisa_<32hex>`. Citation edges then link that immutable submission to its sealed case and every checked `ev_` handle. Resolved source values stay in the case; the recognized report carries their digests.
+
+```text
+server-cut evidence (ev_)
+→ sealed case (eisacase_)
+→ Four-Gate recognized acts and consensus identities
+→ Room submission (eisa_)
+→ actor, native session, task, project, and wake authority
+→ typed lease and monotonic generation
+→ controller-fixed RequestedAct
+→ fenced destination mutation and independent observation
+→ strict original receipt or non-fabricating successor grant
+→ terminal evidence
+```
+
+This is the fully wired machine, with authority changing form at every boundary rather than leaking across it. The EISA verdict supplies recognized matter for Room authority evaluation. It does not execute itself. The destination still has to accept the exact act under current ownership, pre-state, time, and release conditions.
+
+## Exhibit E — The Current Room Ledger Envelope
+
+This synthetic `show` response illustrates the current ledger shape with one operative binding. The per-act report remains inside `result`.
+
+```json
+{
+  "submission": "eisa_7c4e91a02f8b3d651092a8b7c6d5e4f3",
+  "room": "architecture-demo",
+  "record": {
+    "schema": "squad.eisa.submission/1",
+    "by": "agent_er_worker_01",
+    "session": "worker-mcp:00000000-0000-0000-0000-000000000001",
+    "room": "architecture-demo",
+    "task": "TSK-2026-ER-001",
+    "artifactHash": "4a9c8e12f03b7d651928374655647382910abcdef1234567890abcdef1234567",
+    "result": {
+      "version": "EISA_ACT_V1",
+      "profile": "eisa.fracture.contact/1",
+      "class": "recognized",
+      "raw_sha256": "e01928374655647382910abcdef1234567890abcdef1234567890abcdef12345",
+      "artifactHash": "4a9c8e12f03b7d651928374655647382910abcdef1234567890abcdef1234567",
+      "case": "eisacase_3b8f19c04e2a7d6518293a4b5c6d7e8f",
+      "acts": [
+        {
+          "index": 0,
+          "id": "act_bind_email_01",
+          "opcode": "BindEvidenceTag",
+          "class": "operative",
+          "identity": "6b8f1029384756ab12cd34ef567890124a9c8e12f03b7d651928374655647382",
+          "act_sha256": "01928374655647382910abcdef1234567890abcdef1234567890abcdef123456",
+          "canonical": "{\"actor\":\"agent_er_worker_01\",\"artifactHash\":\"4a9c8e12f03b7d651928374655647382910abcdef1234567890abcdef1234567\",\"boundedReason\":\"Both sealed values share one local part.\",\"confidence\":{\"bps\":9400},\"evidenceRefs\":[\"ev_8f31c09a4b2e11d08a7c65e41902b3a1\"],\"opcode\":\"BindEvidenceTag\",\"operands\":{\"coordinates\":[{\"artifact\":\"records\",\"pointer\":\"/email\",\"recordId\":\"rec_101\"},{\"artifact\":\"records\",\"pointer\":\"/contact/workEmail\",\"recordId\":\"rec_102\"}],\"id\":\"act_bind_email_01\",\"tag\":\"EMAIL_LOCAL_MATCH\"},\"sourceEvent\":\"evt_0123456789abcdef_a1b2c3d4\",\"stage\":\"Fracture\",\"version\":\"EISA_ACT_V1\"}",
+          "fault": null,
+          "observations": [
+            {
+              "recordId": "rec_101",
+              "pointer": "/email",
+              "value_sha256": "1111111111111111111111111111111111111111111111111111111111111111"
+            },
+            {
+              "recordId": "rec_102",
+              "pointer": "/contact/workEmail",
+              "value_sha256": "2222222222222222222222222222222222222222222222222222222222222222"
+            }
+          ],
+          "comparator": "EmailLocalEqual",
+          "depends_on": [],
+          "evidence_refs": ["ev_8f31c09a4b2e11d08a7c65e41902b3a1"]
+        }
+      ],
+      "classes": { "operative": 1 },
+      "decision": "none",
+      "partition": null
+    },
+    "at": "2026-10-31T21:50:00Z"
+  }
+}
+```
+
+The immutable node is constitutional proof matter for the next boundary. It is not a destination receipt.
+
+**Evidence availability:** the EISA implementation, recognition artifacts, and Semantic Switch measurement record are `CONTROLLED` for qualified, method-scoped technical review, with adverse findings permitted. They are not represented as unrestricted public downloads or independent validation. Performance and privacy claims must be evaluated against the declared record population, parser/profile, and deployment threat model.
+
+## Bring One Bounded Protected-Computation Problem
+
+The **Semantic Switch & Entity Resolution Challenge** applies this constitutional layer to one bounded contact, company, product, or other duplicate-record workflow. The demonstration follows Semantic Switch → qBlock → Fracture → Forge → local restoration → Shield and returns a relation-fidelity report, comparator and counterevidence map, exact-restoration record, and the predicates required before any production destination mutation.
+
+The challenge excludes custom schema engineering, production CRM write-back, lead-list generation, universal privacy or matching-accuracy claims, and independent validation. Deployment and paid pilots are separately scoped; independent evaluation remains outside the commercial ladder through [Article 09](https://blayneaina.com/09-bring-one-real-boundary-work-with-blayne/).
+
+

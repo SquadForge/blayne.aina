@@ -1,0 +1,203 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>§01 Part 1/6: An AI Output Is Not an Act (Introduction &amp; Overview) | Blayne Aina</title>
+  <meta name="description" content="Sections: Introduction &amp; Overview, The Green Check Mark That Proved the Wrong Thing, A 60-Second Map of the Argument, The Complete Path in One View, Two 2026 Failure Classes: Forged Origin and Approval Laundering">
+  <meta name="author" content="Blayne Aina">
+  <meta name="robots" content="index, follow, max-snippet:-1, max-image-preview:large, max-video-preview:-1">
+  <link rel="canonical" href="https://blayneaina.com/01-an-ai-output-is-not-an-act/part-1/">
+  <link rel="icon" href="/favicon.ico" sizes="any">
+  <link rel="icon" href="/favicon.svg" type="image/svg+xml">
+
+  <!-- OpenGraph / Social -->
+  <meta property="og:type" content="article">
+  <meta property="og:title" content="§01 Part 1/6: An AI Output Is Not an Act (Introduction &amp; Overview)">
+  <meta property="og:description" content="Sections: Introduction &amp; Overview, The Green Check Mark That Proved the Wrong Thing, A 60-Second Map of the Argument, The Complete Path in One View, Two 2026 Failure Classes: Forged Origin and Approval Laundering">
+  <meta property="og:url" content="https://blayneaina.com/01-an-ai-output-is-not-an-act/part-1/">
+  <meta property="og:site_name" content="Blayne Aina — The Route to Trusting AI">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="§01 Part 1/6: An AI Output Is Not an Act (Introduction &amp; Overview)">
+  <meta name="twitter:description" content="Sections: Introduction &amp; Overview, The Green Check Mark That Proved the Wrong Thing, A 60-Second Map of the Argument, The Complete Path in One View, Two 2026 Failure Classes: Forged Origin and Approval Laundering">
+  
+  <link rel="stylesheet" href="/style.css?v=20261109-s-tier">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@500;700&family=Instrument+Serif:ital@0;1&family=Inter:wght@400;500;600;700;800&family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,500;0,6..72,600;1,6..72,400&family=JetBrains+Mono:wght@400;500&family=Plus+Jakarta+Sans:wght@600;700;800&display=swap" rel="stylesheet">
+</head>
+<body>
+  <div class="reading-progress-bar" id="progressBar"></div>
+
+  <header class="site-header compact-ai-header"><div class="header-inner compact-ai-nav"><a href="/" class="brand"><strong>BLAYNE AINA</strong></a> | <a href="/ai-brief/">1-Page Master Brief (§01–§09)</a> | <a href="/articles/">All 9 Articles &amp; Briefs</a> | <a href="/research-assurance/">Assurance</a> | <a href="/refusal-proof/">Proof</a> | <a href="/llms.txt">llms.txt</a> | <a href="mailto:me@blayneaina.com">me@blayneaina.com</a></div></header>
+  <div class="layout-container presentation-layout">
+    <main class="content-area">
+      <article class="prose-wrapper presentation-wrapper">
+<header class="article-header compact-article-header"><h1 class="article-title">§01 Part 1/6: An AI Output Is Not an Act (Introduction &amp; Overview)</h1><p class="article-subtitle">Sections: Introduction &amp; Overview, The Green Check Mark That Proved the Wrong Thing, A 60-Second Map of the Argument, The Complete Path in One View, Two 2026 Failure Classes: Forged Origin and Approval Laundering</p></header>
+
+        
+        
+
+        <div class="article-body">
+          
+      <p class="part-compact-nav"><strong>§01 PART 1/6</strong> (11,041 chars · Sections: Introduction &amp; Overview; The Green Check Mark That Proved the Wrong Thing; A 60-Second Map of the Argument; The Complete Path in One View; Two 2026 Failure Classes: Forged Origin and Approval Laundering) — <a href="/01-an-ai-output-is-not-an-act/part-2/">Part 2 →</a> · <a href="/01/brief/">1-Call Brief</a> · <a href="/01-an-ai-output-is-not-an-act/">Full §01</a> · <a href="/01/part-1.txt">Raw .txt</a> · All: <a href="/01-an-ai-output-is-not-an-act/part-1/">P1</a> <a href="/01-an-ai-output-is-not-an-act/part-2/">P2</a> <a href="/01-an-ai-output-is-not-an-act/part-3/">P3</a> <a href="/01-an-ai-output-is-not-an-act/part-4/">P4</a> <a href="/01-an-ai-output-is-not-an-act/part-5/">P5</a> <a href="/01-an-ai-output-is-not-an-act/part-6/">P6</a></p>
+    
+<h1>An AI Output Is Not an Act: The Lawful-Act Defect and Machine Standing</h1>
+<p><em>Most AI safety work improves what models say. Enterprise consequence requires proof of what the resulting transition is allowed to do.</em></p>
+<p><strong>By Blayne Aina · Principal Systems Architect and creator of AINA · October 31, 2026</strong></p>
+<hr>
+<p>An AI output is not an act. It is a proposal.</p>
+<p>Between that proposal and a customer record changing, a file being replaced, a database committing, or information leaving a protected boundary, a system must prove that <strong>this exact transition may acquire this exact consequence now</strong>. Valid JSON does not prove it. A credential does not prove it. A model’s confidence does not prove it. A green check mark after execution does not prove it either.</p>
+<p>The route to trusting AI is not to make probability sovereign. It is to let models propose while deterministic systems decide standing, bind execution, and preserve terminal evidence.</p>
+<p>This is the missing execution layer for enterprise AI.</p>
+<h2>The Green Check Mark That Proved the Wrong Thing</h2>
+<p>Consider an enterprise customer-record agent evaluating two accounts. It returns:</p>
+<pre><code class="language-json">{
+  &quot;action&quot;: &quot;merge_customer_records&quot;,
+  &quot;source&quot;: &quot;C-18422&quot;,
+  &quot;target&quot;: &quot;C-98104&quot;,
+  &quot;confidence&quot;: 0.94
+}
+</code></pre>
+<p>The object is valid JSON. Its fields satisfy the schema. The tool is registered. The caller is authenticated and authorized to invoke the merge endpoint. The confidence score exceeds the company’s threshold. The database commits. The API returns <code>200 OK</code>. The dashboard turns green.</p>
+<p>What did the machine actually establish?</p>
+<p>It established that a sequence of characters attributed to a model could be parsed, that the requested operation had an expected shape, and that the surrounding service had enough privilege to perform it. It did <strong>not</strong> establish that the two records describe the same human or organization, that the shared phone number is current, that the conflicting email addresses were investigated, that the selected address is supported by source evidence, that the target did not drift between evaluation and commit, or that this model had standing to make an identity decision.</p>
+<p>The system executed the wrong act perfectly. Nothing crashed. No attacker was required.</p>
+<p>The same defect appears without an identity mistake. A worker whose lease has expired can resume and overwrite a successor’s file because the clock changed ownership without physically revoking the old writer. A destination can commit an effect before the ordinary receipt append fails, inviting a blind retry unless the system preserves the operation as <strong>in-doubt</strong> rather than guessing failure or success.</p>
+<p>I call the underlying defect the <strong>Lawful-Act Defect</strong>: locally valid facts adding themselves into authority without a decision-independent boundary determining whether they refer to the same transition and satisfy every condition for its consequence.</p>
+<p>The constitutional response is <strong>machine standing</strong>. Standing is not a reputation, alignment score, certification, or continuing property of an agent. It is a status of one exact proposed transition under current evidence, governance, target, execution, and time conditions.</p>
+<blockquote>
+<p><strong>Models generate proposals. Systems create acts. Only a decision-independent consequence boundary may decide whether a proposal has machine standing to acquire operative force.</strong></p>
+</blockquote>
+<h2>A 60-Second Map of the Argument</h2>
+<table>
+<thead>
+<tr>
+<th>Local fact that may be true</th>
+<th>What it cannot prove by itself</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>The JSON is valid and matches the schema.</td>
+<td>The proposal is supported, correctly targeted, or authorized for consequence.</td>
+</tr>
+<tr>
+<td>The caller is authenticated and has a permitted role.</td>
+<td>This exact transition has standing under current conditions.</td>
+</tr>
+<tr>
+<td>The model is confident, or several models agree.</td>
+<td>The evidence is valid, complete, or independently verified.</td>
+</tr>
+<tr>
+<td>The policy engine returned <code>allow</code>.</td>
+<td>The evidence world, target pre-state, execution path, and terminal disposition are valid.</td>
+</tr>
+<tr>
+<td>The tool returned <code>200 OK</code> or exit code zero.</td>
+<td>The intended effect occurred once and closed correctly.</td>
+</tr>
+<tr>
+<td>A durable outcome exists in a ledger.</td>
+<td>The original worker session received the result or discharged its return obligation.</td>
+</tr>
+<tr>
+<td>Surviving artifacts verify cryptographically.</td>
+<td>Every artifact survives, every effect path is covered, or an external party validated the system.</td>
+</tr>
+</tbody></table>
+<p>The remainder of this article shows how to turn that critique into a working architecture: a continuous machine that carries a proposal from protected reality through recognition, standing, bounded execution, independent observation, and terminal closure.</p>
+<h2>The Complete Path in One View</h2>
+<p>Remember only two constitutional terms: the <strong>Lawful-Act Defect</strong> is the failure, and <strong>machine standing</strong> is the transition-specific authority that defeats it. Every other name in the series is a mechanism used to establish or test that standing.</p>
+<pre><code class="language-text">1  PROTECTED REALITY       exact sources, governance, and evidence coordinates sealed
+             │
+2  PROPOSAL                model or other origin submits one requested consequence
+             │
+3  RECOGNITION             proposal becomes a bounded act—or a typed refusal
+             │
+4  ADMISSION               current actor, evidence, target, time, and release path checked
+             │
+5  EXECUTION               controller-fixed act revalidated at the ordering point
+             │
+6  INDEPENDENT OBSERVATION destination read back or measured
+             │
+7  TERMINAL CLOSURE        confirmed, refused, withheld, divergent, or unconfirmed
+
+Positive path: sealed evidence → recognized act → current standing
+             → fenced effect → observed result → honest receipt
+
+Refusal path:  stale actor, changed payload, invalid evidence, or superseded target
+             → release withheld → no mutation → typed evidence preserved
+</code></pre>
+<p>One transition identity must survive the entire path. A valid fact at one stage cannot compensate for a failed condition at another.</p>
+<h2>Two 2026 Failure Classes: Forged Origin and Approval Laundering</h2>
+<p>The necessity of governing the transition rather than trusting the wrapper became especially clear in August and September 2026.</p>
+<h3>1. CoreBreak: execution without model origin</h3>
+<p>The August 2026 CoreBreak disclosures concerned different products, prerequisites, and execution paths. They should not be flattened into one vulnerability. But they exposed the same architectural omission: the dispatch layer received matter shaped like a tool call without proving that an eligible model event had originated it.</p>
+<table>
+<thead>
+<tr>
+<th>Affected infrastructure</th>
+<th>Exact prerequisite and defect</th>
+<th>Vendor remedy and remaining standing gap</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><strong>Amazon Bedrock AgentCore <code>InvokeHarness</code></strong></td>
+<td>An authenticated caller could place a tool-use content block into the final message of a managed request. The event loop could dispatch the configured tool without model mediation. (<a href="https://aws.amazon.com/security/security-bulletins/2026-073-aws/">AWS Security Bulletin <code>2026-073-AWS</code></a>, <code>CVE-2026-18830</code>, <code>CWE-1287</code>)</td>
+<td>AWS added server-side validation rejecting caller-supplied tool-use blocks before the event loop. That restores origin binding, but it does not prove that the resulting target, evidence, scope, or terminal disposition is lawful.</td>
+</tr>
+<tr>
+<td><strong>Google ADK for Python</strong></td>
+<td>In affected resumable and confirmation flows, caller-controlled session history could counterfeit function calls or confirmation conditions without verifying registration, confirmation requirements, or the session-recorded arguments. (<code>CVE-2026-18236</code>, patched in <code>v2.5.0</code> via commits <a href="https://github.com/google/adk-python/commit/c03f333769feaeaa9fe8910fbe95cb9f2d513f54"><code>c03f3337</code></a> and <a href="https://github.com/google/adk-python/commit/283e92efc2297246ff6f70ceb220b9b299aa2d67"><code>283e92ef</code></a>)</td>
+<td>Google rejected caller-authored function-call histories and bound confirmation to the tool and arguments recorded in the session. That does not fence concurrent destination state or preserve receipt continuity across a crash.</td>
+</tr>
+<tr>
+<td><strong>Vercel AI SDK harnesses</strong></td>
+<td>Untrusted code already executing inside a Linux sandbox could satisfy a permissive process-path relay check and invoke host-exposed tools without a bridge-observed model event. (<a href="https://github.com/vercel/ai/security/advisories/GHSA-qw9h-448j-6rph">GitHub Advisory <code>GHSA-qw9h-448j-6rph</code></a>, <code>CVE-2026-64650</code> and <code>CVE-2026-64651</code>, fixed in <code>@ai-sdk/harness-codex</code> <code>v1.0.29</code>)</td>
+<td>Vercel removed the process-path fallback and now requires an exact, short-lived, one-time authorization matching the tool name and input observed in a model event. That still does not verify pre-resume confinement or destination pre-state.</td>
+</tr>
+</tbody></table>
+<p>No stronger system prompt can govern a path that bypasses the model. No refusal classifier can inspect a decision the model was never asked to make.</p>
+<p>But origin binding alone is not standing. A genuine model event can still propose the wrong target, cite unserved evidence, exceed actor authority, arrive after lease expiry, or leave an unconfirmed effect.</p>
+<h3>2. Approval laundering: execution diverging from approval</h3>
+<p>A second failure class appears even when the model runs and a human or policy approves an action (A): the harness executes a materially different action (A&#39;).</p>
+<p>In September 2026, Yang Wang’s <a href="https://arxiv.org/abs/2609.38983"><em>Approval Laundering: Systematizing Approval–Execution Binding Failures in AI Coding-Agent Harnesses</em></a> and Jinqian Zhang et al.’s <a href="https://arxiv.org/abs/2609.28586"><em>Agent Approval Laundering: Transitive Effects Beyond the Approved Invocation</em></a> documented six classes of divergence:</p>
+<ol>
+<li><strong>Scope laundering</strong> — approval covers a narrow path while execution reaches a broader resource.</li>
+<li><strong>Argument laundering</strong> — a file, payload, environment value, or staged operand changes after approval.</li>
+<li><strong>Temporal laundering</strong> — a stale approval is consumed after authority or target state changes.</li>
+<li><strong>Tool laundering</strong> — an approved operation is routed through an alias or fallback with different effects.</li>
+<li><strong>Delegation laundering</strong> — ambient credentials or permissions flow to sub-agents or lifecycle hooks that were never evaluated.</li>
+<li><strong>Semantic or transitive laundering</strong> — a benign-looking surface command triggers unrecorded network or filesystem mutations.</li>
+</ol>
+<p>Wang’s study is especially useful because it does not pretend that one approval token solves every class. The prototype eliminated the seeded delegation and temporal cases while leaving scope and argument laundering unresolved. A receipt or hash is not complete effect coverage.</p>
+<p>CoreBreak proves that <strong>shape is not origin</strong>. Approval laundering proves that <strong>origin plus approval is not execution fidelity</strong>. The response must bind the exact transition from sealed evidence and recognized act, through current authority and target pre-state, to a controller-fixed <code>RequestedAct</code> revalidated inside the destination transaction.</p>
+
+
+      <p class="part-compact-nav"><strong>END OF §01 PART 1/6</strong> — Next: <a href="/01-an-ai-output-is-not-an-act/part-2/"><code>https://blayneaina.com/01-an-ai-output-is-not-an-act/part-2/</code></a> · <a href="/01/brief/">§01 1-Call Brief</a> · <a href="/01.md">Raw .md</a></p>
+    
+        </div>
+
+        
+        
+        
+        
+
+        
+
+        
+      </article>
+    </main>
+
+  </div>
+
+  <footer class="site-footer compact-ai-footer"><p><strong>blayneaina.com</strong> — <a href="https://blayneaina.com/ai-brief/">Master Brief (https://blayneaina.com/ai-brief/)</a> · <a href="https://blayneaina.com/ai-brief.txt">Plain-Text Brief (https://blayneaina.com/ai-brief.txt)</a> · <a href="https://blayneaina.com/articles/">All 9 Articles &amp; Briefs (https://blayneaina.com/articles/)</a> · <a href="https://blayneaina.com/llms.txt">llms.txt</a> · <a href="mailto:me@blayneaina.com">me@blayneaina.com</a></p></footer>
+
+
+
+
+
+  <script src="/script.js?v=20261109-s-tier"></script>
+</body>
+</html>

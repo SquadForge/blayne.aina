@@ -1,0 +1,201 @@
+# §02 Part 2/4 — Zero-Trust Document Ingestion
+Canonical: https://blayneaina.com/02-zero-trust-document-ingestion-and-server-cut-evidence/part-2/ | Raw Article: https://blayneaina.com/02.md | Next Part: https://blayneaina.com/02/part-3.txt
+
+## 3. The Parser Jail: Prove Confinement Before Resume
+
+A sandbox named in a configuration file is not a sandbox observed in a child token. AINA's document worker is built around pre-resume verification.
+
+### Private staging
+
+Each parse receives an ephemeral scratch tree with three distinct grants:
+
+- `bin/`: a private read-execute copy of `squad-doc-extract.exe`, so the jail need not read the installation directory.
+- `input/`: read-only `source.bin` and a bounded `doc_source.worker/1` request containing the expected input digest and extraction limits.
+- `work/`: the only writable grant, including a jail-local temporary directory and a `result.json` opened with `create_new(true)`.
+
+The child recomputes the input digest before parsing. The supervisor bounds the result at 256 MiB, checks the response schema and input digest, and validates the returned extraction structure. Child output remains untrusted data even though the child was confined.
+
+### Six-step launch contract
+
+1. **Exclusive AppContainer identity.** A fresh per-parse profile is created. An already-existing profile is a `confinement_identity_reused` failure, not an invitation to share a jail.
+2. **LPAC policy.** `PROCESS_CREATION_ALL_APPLICATION_PACKAGES_OPT_OUT` removes the implicit `ALL APPLICATION PACKAGES` access that would otherwise widen filesystem and registry reads.
+3. **Minimal capabilities.** The document-media profile grants exactly `lpacCom`. Network, registry-read, and credential capabilities are not granted.
+4. **Suspended creation and token inspection.** The process starts suspended. Before `ResumeThread`, the supervisor verifies that the token is AppContainer, carries the fresh package SID, has the non-zero `WIN://NOALLAPPPKG` attribute, and contains exactly the expected capability set. A mismatch kills the child before its initial thread executes.
+5. **Job Object backstop.** While suspended, the child enters a kill-on-close Job Object with `ActiveProcessLimit = 1`, a 2 GiB job-memory ceiling, and a 25% hard CPU-rate cap. EcoQoS reduces scheduling priority; internal runtime thread pools are capped at two. The job is registered with break-glass observation so sovereign revocation covers in-flight parsers.
+6. **Audited teardown.** The supervisor records `scratch_removed` and `profile_deleted` in the worker receipt. Cleanup failure is disclosed rather than rewritten into success.
+
+```text
+verified Captured bytes
+→ read-only input grant + expected digest
+→ CREATE_SUSPENDED
+→ AppContainer SID + LPAC attribute + exact capabilities verified
+→ Job Object process/memory/CPU limits assigned
+→ ResumeThread exactly once
+→ content identification + budgeted extraction + warning capture
+→ digest-bound result.json
+→ supervisor schema and structural validation
+→ worker Receipt + scratch/profile teardown disclosure
+```
+
+Parser panics become `parser_fault`. A panic isolated to one embedded child fails that child while preserving the parent and sibling reads; a top-level panic invalidates the extraction. On non-Windows, the untrusted-document path refuses with `parser_worker_unavailable` rather than pretending that an ordinary subprocess is equivalent to LPAC plus a Job Object.
+
+This is the Windows reference embodiment's claim ceiling: bounded process, capability, network, memory, CPU, and filesystem exposure on the governed parser path—not proof that every parser is bug-free or that a privileged host administrator cannot attack the machine.
+
+## 4. Extraction Is Not Complete If the Gaps Disappear
+
+A parser that returns a string has answered only one question: what text did this adapter emit? It has not established whether the document contained more text, whether a library recovered by discarding structure, or whether the caller later received everything extracted.
+
+AINA keeps five status dimensions separate.
+
+| Dimension | Values | Question answered |
+|---|---|---|
+| `Integrity` | `verified`, `failed` | Did the captured bytes match the registered identity and integrity checks? |
+| `Inventory` | `complete_for_profile`, `partial`, `unknown` | Could the adapter enumerate the document's parts and establish a denominator? |
+| `Extraction` | `complete_for_profile`, `partial`, `unsupported`, `failed` | Was every in-profile, text-bearing part recovered without lossy omission? |
+| `Admission` | `allowed`, `blocked` | Is this source currently readable by this actor under project and Room policy? |
+| `Delivery` | `complete`, `truncated`, `chunked` | Did this response serve everything requested, or only a bounded window? |
+
+The immutable document report carries integrity, inventory, and extraction. Admission and delivery are facts about a particular serving. A fully extracted document shown through a 60-character window remains fully extracted **and** incompletely delivered. Those facts must not collapse into one green status.
+
+### The 35-reason omission ledger
+
+The current `Reason` alphabet has 35 variants: **12 non-lossy profile exclusions and 23 lossy reasons**. `nesting_limit` belongs to the non-lossy set in the current implementation; it is not counted twice.
+
+| Classification | Exact variants | Consequence |
+|---|---|---|
+| **Profile-excluded, non-lossy (12)** | `binary_part`, `structure_only`, `embedded_font_program`, `image_content`, `media_content`, `deleted_revision`, `external_relationship`, `macro_content`, `derived_alternative`, `nesting_limit`, `structure_unavailable`, `markup_not_rendered` | Recorded for transparency without, by itself, forcing partial extraction or blocking absence evaluation |
+| **Lossy (23)** | `ocr_not_enabled`, `ocr_unavailable`, `unsupported_format`, `unsupported_part`, `unsupported_compression`, `unmapped_glyphs`, `font_encoding_unavailable`, `undecodable_text`, `stream_decode_failed`, `content_stream_invalid`, `object_missing`, `malformed`, `sheet_read_failed`, `formula_unavailable`, `encrypted`, `encrypted_entry`, `duplicate_entry_name`, `duplicate_member_name`, `multi_disk_archive`, `budget_exceeded`, `library_warning`, `parser_fault` | Forces partial/failed/unsupported handling and creates unknown coverage that an absence claim must acknowledge when in scope |
+
+Non-lossy does not mean irrelevant. It means the omission is expected under the declared extraction profile. A deleted revision excluded by `text/v1` may still matter enormously to a human reviewer; the profile must therefore be visible beside the claim.
+
+### Parser warnings become evidence
+
+The confined child installs a `log::Log` interceptor at warning level. It preserves up to 1,000 observations, truncates each message at 2,000 characters, and counts overflow. Every warning becomes an observation. Except for one explicitly content-neutral PDF trailer normalization, every warning also becomes a lossy `library_warning` omission at document scope.
+
+A library's lenient recovery can therefore never silently upgrade itself to `complete_for_profile`.
+
+The omission collector has its own memory defense: at most 2,000 distinct omission tuples are retained, and additional occurrences are counted into a terminal budget-overflow record. Identical adapter omissions aggregate by location, reason, scope, and story. The coverage ledger cannot be allowed to become the denial-of-service vector it exists to report.
+
+### Gaps are addressable nodes
+
+When the view is committed, omissions become `omission/1`, `omission/2`, and so on. A whole-document failure is `failure`; inventory status is `inventory`; each nested source is `child:<locator>`. These nodes carry no extracted text, but they can be outlined, cited, reviewed, and included in absence analysis.
+
+That is the difference between “the model said nothing was there” and “the system can identify exactly where its knowledge stops.”
+
+### Exhibit 1 — A synthetic `ViewManifest` with an addressable omission
+
+The following is structurally faithful to `squad.evidence.view/1`, with synthetic identities and hashes. The view digest is computed over the manifest's JCS bytes; it is not a mutable field inside the manifest.
+
+```json
+{
+  "schema": "squad.evidence.view/1",
+  "report_schema": "doc_source.report/2",
+  "source": {
+    "revision": "doc_20261030_142011_a1b2c3d4",
+    "sha256": "58b2e91f4c03d8a7126590ef4312ab98c7654321fedcba09876543210fedcba9",
+    "bytes": 12345,
+    "name": "renewal.pdf",
+    "canonical_path": "project:/evidence/renewal.pdf",
+    "registered_at": "2026-10-31T14:20:11Z"
+  },
+  "origin": "room_captured",
+  "parser": {
+    "name": "squad-doc-source",
+    "profile": "text/v1",
+    "digest": "4b9c210e8f1a77d4c0592a1e38f47c1190ab2d3e4f5061728394a5b6c7d8e9f0",
+    "features": "synthetic-parser-feature-profile"
+  },
+  "config": {
+    "limits": {
+      "max_child_bytes": 33554432,
+      "max_item_decompressed": 67108864,
+      "max_total_decompressed": 268435456,
+      "max_parts": 20000,
+      "max_nesting": 3,
+      "max_xml_depth": 256,
+      "max_pdf_objects": 500000,
+      "max_form_depth": 8,
+      "max_cells": 2000000,
+      "max_elements": 250000,
+      "max_output_chars": 33554432,
+      "max_wall_ms": 60000,
+      "max_image_pixels": 16000000,
+      "max_total_pixels": 64000000
+    },
+    "limits_sha256": "84e01b92c7d34f56a1230987654321fedcba9876543210abcdef0123456789ab"
+  },
+  "format": "pdf",
+  "status": {
+    "integrity": "verified",
+    "inventory": "complete_for_profile",
+    "extraction": "partial"
+  },
+  "inventory_total": 2,
+  "inventory": [],
+  "stories": [
+    {
+      "id": "page:1",
+      "kind": "page",
+      "locator": { "kind": "page", "page": 1 },
+      "primary": true,
+      "method": "pdf_text_operators",
+      "text": "Section 4.2 Renewal Cap: Annual uplift shall not exceed 3.0%."
+    }
+  ],
+  "elements": [
+    {
+      "id": "page:1!BT:0",
+      "story": "page:1",
+      "kind": "text_object",
+      "span": { "start": 0, "end": 61 },
+      "locator": { "kind": "page_element", "page": 1, "element": "BT", "ordinal": 0 }
+    }
+  ],
+  "omissions": [
+    {
+      "id": "omission/1",
+      "omission": {
+        "location": "page:2/image:1",
+        "stage": "extract",
+        "reason": "ocr_not_enabled",
+        "scope": "page",
+        "detail": "page 2 contains a raster scan and local OCR is disabled",
+        "count": 1
+      }
+    }
+  ],
+  "children": [],
+  "observations": []
+}
+```
+
+The extracted cap is citable. So is the fact that page 2 was not OCRed. Neither fact may impersonate the other.
+
+## 5. Immutable Views: Identity Includes the Reader
+
+Two systems can read identical bytes and produce different evidence because their parsers, profiles, feature sets, or limits differ. AINA therefore binds a view to all of them:
+
+```text
+source revision + source SHA-256
++ parser name + parser source/build digest + text/v1 profile + feature profile
++ exact 14-field limits + limits_sha256
++ report schema + view schema
++ stories + elements + omissions + children + observations
+= canonical ViewManifest
+```
+
+RFC 8785 JSON Canonicalization Scheme (JCS) gives the manifest one deterministic serialization. Object keys are sorted as UTF-16 code-unit sequences, insignificant whitespace disappears, non-finite numbers are refused, integers beyond exact IEEE-754 range are not rounded, and nesting is capped at 128. String content is escaped but **not Unicode-normalized or whitespace-rewritten**.
+
+The SHA-256 of those canonical bytes is the 64-hex view digest.
+
+### Commit children first, then seal the parent
+
+Attachments, archive members, and embedded workbooks are sources in their own right. Their revisions compose the parent revision, an encoded member locator, and the child SHA-256. Their views commit first; the parent's `child:<locator>` nodes then name the resulting child digests or failures. Child text is never promoted into the parent as though it had been read in the parent's own story.
+
+The commit runs inside the Room's cross-process `with_transition` serialization. A `begin` provenance node records the attempted view, the canonical artifact is stored by digest, and a `complete` node plus index closes the commit. Repeating the same manifest in the same Room resolves to the existing view rather than rewriting it.
+
+Loading is equally strict. The resolver checks the artifact's recorded digest, hashes the served bytes, re-canonicalizes the parsed value, and compares canonical form. One altered byte or non-canonical repair yields `view_digest_mismatch`.
+
+A new parser or configuration creates a new view. It does not retarget old citations. Historical identity survives; current authority must be re-established.
+
+

@@ -1,0 +1,170 @@
+# §05 Part 1/4 — Expiry Is Not Fencing
+Canonical: https://blayneaina.com/05-expiry-is-not-fencing-typed-leases-and-kernel-write-exclusion/part-1/ | Raw Article: https://blayneaina.com/05.md | Next Part: https://blayneaina.com/05/part-2.txt
+
+# Expiry Is Not Fencing: Typed Leases and Kernel Write Exclusion
+
+*A lease clock can expire without removing a stale worker's ability to write. Authority must be revalidated at the effect boundary and held through the rename.*
+
+**By Blayne Aina · Principal Systems Architect and creator of AINA · October 31, 2026**
+
+---
+
+Worker A's lease expires. Worker B takes over and commits. Worker A resumes with a valid-looking local state and tries to write.
+
+The clock cannot stop it.
+
+Expiry is a liveness mechanism: it allows ownership to move after a holder stops responding. It is not a physical fence. A paused process, delayed packet, cached credential, or lingering thread can still attempt the write. Only current authority at the effect boundary can refuse it.
+
+The local version is just as important. A background script does not consult your JSON lockfile. It opens the target with `GENERIC_WRITE` and changes the bytes while your coordination plane is busy being correct.
+
+Article 04 established who may receive and perform work. Article 05 enforces ownership at the actual mutation window: typed scopes, monotonic generations, conditional lifecycle, kernel-backed handle exclusion, guarded replacement, and explicit reconciliation.
+
+> **A lease is not a timer with a filename. It is a current tenancy whose generation must match at execution and whose kernel exclusion must survive every handle handoff.**
+
+## The Two Hazards the Architecture Must Defeat
+
+### Hazard 1: The resurrected worker
+
+```text
+Worker A acquires generation 14 and stalls
+→ TTL expires; Worker B acquires generation 15 and commits
+→ Worker A resumes and presents generation 14
+→ executor rejects stale_lease_generation
+```
+
+The refusal must happen at the resource. A wake-time check is not enough because authority can change after the wake. A heartbeat alone is not enough because a delayed heartbeat can arrive after succession. The worker's generation and the resource's high-water mark must be compared at commit.
+
+### Hazard 2: The uncooperative local writer
+
+A lease record under `.squad/locks` is advisory to cooperating software. It has no power over a process that never reads it. On Windows, the enforcement mechanism is a kernel handle whose sharing mode denies later incompatible opens.
+
+A long-lived server holding `FILE_SHARE_READ` causes later write, delete, or rename attempts to fail with `ERROR_SHARING_VIOLATION` (32). That is an operating-system boundary, not a prompt convention.
+
+The two hazards require different but composed responses:
+
+```text
+stale logical authority → monotonic generation + tenancy revalidation
+uncooperative file opens → Win32 share-mode exclusion
+replacement races → overlapping guard handoff + identity/content/path verification
+divergent bytes after release → Amber quarantine, never silent baseline laundering
+```
+
+## 1. Six Typed Namespaces and Real Target Identity
+
+Leases are partitioned by resource class, not by an undifferentiated path string.
+
+| Namespace | Example resource | Conflict rule |
+|---|---|---|
+| `file://` | Exact files or directory hierarchies | Canonical path-prefix conflicts; parent and child scopes overlap |
+| `session://` | Managed sessions and virtual resources such as `sqlite.records/<target>` | Canonical session-resource prefix conflicts |
+| `window://` | GUI application windows | Hierarchical prefix conflicts |
+| `account://` | Shared service accounts or external identities | Hierarchical prefix conflicts |
+| `focus://` | Global user focus and interaction ownership | Singleton: every pair of distinct focus scopes conflicts |
+| `browser://` | Browser automation contexts and page targets | Hierarchical prefix conflicts |
+
+Bare paths default to `file://` for compatibility. A `TypedScope` contains the namespace and full `resource_id`; different namespaces never conflict with one another **at the lease-algebra level**. That does not prove two names cannot designate the same physical resource. A `session://sqlite.records/<target>` lease and a `file://` lease over the underlying database file are different authority domains: the session route is not a Win32 guarded-file replacement, and the file route is not a SQLite row-version fence. A deployment exposing both routes must bind their path and transition authority explicitly rather than assuming namespace separation has made them mutually exclusive. `with_transition` serializes governed controller mutations; it does not invent a global fence around every out-of-band alias.
+
+FNV-1a 64-bit derives a deterministic routing key from `prefix() + resource_id`, used for filenames such as `locks/write/<hash:016x>.json`. It is **not** a cryptographic capability, a fencing token, or a collision-resistant authority proof. Security decisions compare the full canonical namespace and resource identity, not the hash alone.
+
+### Lexical paths are not kernel object identity
+
+`file_scope` rejects empty paths, wildcards, parent traversal, NTFS alternate data stream colons, and trailing dots or spaces. For a not-yet-created target, it finds the nearest existing ancestor, canonicalizes that object, and reattaches the suffix. Windows paths normalize to lowercase forward-slash form.
+
+`opened_file_scope` goes further: it calls `GetFinalPathNameByHandleW` on the already-open handle and resolves the actual file object. This is how the system distinguishes “the path I intended” from “the object I actually opened,” piercing junctions, symlinks, mount points, and other reparse indirection.
+
+The non-equivalence is fundamental:
+
+```text
+path string                 ≠ opened kernel object identity
+FNV-1a routing key          ≠ authority proof
+lease record                ≠ current tenancy
+```
+
+## 2. Workspace-Wide Monotonic Generations
+
+A per-file counter can restart when the file is replaced or a lease is released. That makes old authority look current again. AINA therefore uses a **workspace-wide high-water sequence** in `room.generation.v2`.
+
+### Two-phase persistence
+
+Each new generation is the maximum counter across the store plus one, computed with `checked_add(1)` and an overflow refusal (`generation_exhausted`). Persistence has two ordered steps:
+
+```text
+Phase 1: write .generations-initialized
+  protocol: room.generation.v2
+  map_sha256: SHA-256 of the complete prepared counter map
+  high_water: the newly issued generation
+  prepared_counters: the complete prepared map
+
+Phase 2: atomically publish generations.json
+```
+
+A missing store after initialization is `generation_store_missing`. A marker digest or high-water mismatch is `generation_checkpoint_mismatch`. Unknown protocols, malformed counters, and persistence failure (`generation_persist_failed`) refuse acquisition. Missing, corrupt, or rolled-back state never silently becomes generation zero.
+
+The marker detects partial writes, divergence, and one-sided or inconsistent rollback. It does **not** prove monotonicity against a privileged actor who restores both the marker and `generations.json` to the same earlier, internally consistent snapshot. Defeating that complete-snapshot rollback requires a monotonic anchor outside the rollback domain, such as separately protected authority or hardware-backed state; no two-file local protocol can supply it.
+
+### Exhibit 1 — A sealed generation marker
+
+```json
+{
+  "protocol": "room.generation.v2",
+  "map_sha256": "4a9c8e12f03b7d651928374655647382910abcdef1234567890abcdef1234567",
+  "high_water": 15,
+  "prepared_counters": {
+    "0123456789abcdef": 14,
+    "fedcba9876543210": 15
+  }
+}
+```
+
+The marker binds the intended complete map before the store is published. A rollback to an earlier valid JSON map is still a refusal, not a fresh start.
+
+### Exhibit 2 — The stale-worker refusal
+
+```json
+"stale_lease_generation: expected 14, current 15"
+```
+
+A later operation cannot borrow the fact that generation 14 used to be correct.
+
+## 3. A 30-Second Cross-Process Transition Mutex
+
+Generation, lease mutation, vault capture, guarded replacement, and readback must form one authoritative transition. `with_transition` serializes them through `.lease-transition.mutex`, an OS file lock opened with read/write sharing but no delete sharing.
+
+The guard supports re-entrant acquisition and polls in 10 ms intervals for up to **30 seconds**. A still-held transition returns `lease_transition_busy`; it is never stolen because a timer elapsed. The lock is released by handle drop.
+
+This is not the same thing as the 15-minute lease TTL:
+
+- The **transition mutex** serializes one commit and is held across decision, capture, replacement, and verification.
+- The **lease TTL** bounds tenancy and requires heartbeat renewal.
+- The **generation** determines whether a tenancy is current at execution.
+- The **control epoch** can revoke an entire lineage immediately, independent of remaining TTL.
+
+## 4. Acquisition, Re-Grant, and Conditional Lifecycle
+
+Acquisition checks break-glass admission, package/source exclusion, namespace conflicts, and existing tenancy. A lease cannot silently change tasks; `lease_task_mismatch` preserves the original binding. Fresh acquisition captures pre-write state and binds the current control epoch.
+
+### Dead-holder re-granting requires proof of death
+
+A disconnected holder does not make its lease instantly reusable by anyone. Re-granting is limited to the **same owner and same task**, and requires:
+
+1. an enforced server-held tenancy, or an eligible identity-bound managed SQLite session;
+2. `holder_alive` to be false;
+3. the recorded `holder_pid` to be absent according to `process_alive`.
+
+A missing server record alone is not proof of death, and a reused or uncertain PID fails closed. Once those conditions hold, re-granting issues a **new generation**, fencing delayed writes and proposals from the old process or lingering children.
+
+### Conditional lifecycle compares all six tenancy keys
+
+Heartbeat and release compare:
+
+```text
+namespace + resource_id + owner + generation + started_at + task_id
+```
+
+If any key differs, the action fails with `stale_lease_generation`. A delayed release cannot drop a successor's lease, and a heartbeat cannot adopt one.
+
+Heartbeats cannot resurrect expired tenancies. Requested TTLs clamp to `MAX_LEASE_TTL_MINS = 15`, and every renewal buys at most 15 minutes from the current instant.
+
+`transfer_holder` supports process-image handoff: every target record must name the current process and session, and all updates roll back to their preimages if any write fails. The holder fields move; the generation remains stable because this is process migration, not ownership succession.
+
+

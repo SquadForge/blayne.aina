@@ -1,0 +1,77 @@
+# §01 Part 6/6 — An AI Output Is Not an Act
+Canonical: https://blayneaina.com/01-an-ai-output-is-not-an-act/part-6/ | Raw Article: https://blayneaina.com/01.md | Next Article Brief: https://blayneaina.com/02/brief.txt
+
+## Frequently Asked Questions
+
+### What is machine standing?
+
+Machine standing is the conjunctive status of one exact proposed transition under active evidence, actor, encounter, execution, governance, and time conditions. It is not a continuing trait of a model, agent, credential, or machine.
+
+### Is a valid tool-call schema or authenticated tool call enough?
+
+No. A schema proves shape. Authentication proves some identity or access path. Neither proves proposal origin, evidence validity, target pre-state, execution integrity, or terminal disposition.
+
+### Does EISA make model output true?
+
+No. EISA makes output bounded and machine-checkable. It can evaluate declared predicates over sealed matter, but it cannot make source evidence true, a policy good, or a human identity certain.
+
+### Can another architecture solve the same problem without AINA?
+
+Yes. A conventional stack that enforces the same transition identity, conjunctive predicates, current authority, release interposition, and terminal closure defeats the same defect without using AINA’s names. The names are optional; the invariant is not.
+
+### Is the work independently validated?
+
+Not in this snapshot. The implementation and measurements are author-controlled and author-verified. Controlled inspection, public availability, deterministic verification, and multi-model agreement do not constitute independent validation.
+
+### Where does the series go next?
+
+[Article 02](https://blayneaina.com/02-zero-trust-document-ingestion-and-server-cut-evidence/) builds Stage Zero: hostile document confinement, immutable views, server-cut citations, bounded absence proofs, and reassessment. Without a stable evidence world, standing has no reliable object to evaluate.
+
+## Continue the Series
+
+- **Series index:** [From Proposal to Consequence: The AINA Transition-Governance Series](https://blayneaina.com/)
+- **Next:** [Article 02 — Zero-Trust Document Ingestion and Server-Cut Evidence](https://blayneaina.com/02-zero-trust-document-ingestion-and-server-cut-evidence/)
+- **Deployment and engagement doorway:** [Article 09 — Bring One Real Boundary](https://blayneaina.com/09-bring-one-real-boundary-work-with-blayne/)
+
+---
+
+## Primary 2026 Sources
+
+- [AWS Security Bulletin `2026-073-AWS` — Amazon Bedrock AgentCore harness](https://aws.amazon.com/security/security-bulletins/2026-073-aws/)
+- [Google ADK commit `c03f333769feaeaa9fe8910fbe95cb9f2d513f54`](https://github.com/google/adk-python/commit/c03f333769feaeaa9fe8910fbe95cb9f2d513f54)
+- [Google ADK commit `283e92efc2297246ff6f70ceb220b9b299aa2d67`](https://github.com/google/adk-python/commit/283e92efc2297246ff6f70ceb220b9b299aa2d67)
+- [Vercel GitHub Advisory `GHSA-qw9h-448j-6rph`](https://github.com/vercel/ai/security/advisories/GHSA-qw9h-448j-6rph)
+- [Yang Wang, *Approval Laundering*, `arXiv:2609.38983`](https://arxiv.org/abs/2609.38983)
+- [Jinqian Zhang et al., *Agent Approval Laundering*, `arXiv:2609.28586`](https://arxiv.org/abs/2609.28586)
+- [Kaiyuan Zhang et al., *ActGov*, `arXiv:2609.24446`](https://arxiv.org/abs/2609.24446)
+- [Rakesh Kumar Surapani et al., *Authorization Architectures*, `arXiv:2609.15906`](https://arxiv.org/abs/2609.15906)
+- [Genliang Zhu et al., *AcquireBound*, `arXiv:2609.14744`](https://arxiv.org/abs/2609.14744)
+- [Yu He et al., *AttriGuard*, USENIX Security ’26](https://www.usenix.org/conference/usenixsecurity26/presentation/he-yu)
+- [Xiaokun Guo et al., *SARA*, `arXiv:2608.27146`](https://arxiv.org/abs/2608.27146)
+- [Jiten Oswal and John Cadeddu, *Field-Tier Minimization*, `arXiv:2608.25474`](https://arxiv.org/abs/2608.25474)
+- [Adam Mazzocchetti, *Aegis*, `arXiv:2608.16891`](https://arxiv.org/abs/2608.16891)
+- [Giovanni Racioppi, *Mandato*, `arXiv:2608.14074`](https://arxiv.org/abs/2608.14074)
+- [Zexun Wang, *Proof-Carrying Agent Actions*, `arXiv:2606.04104`](https://arxiv.org/abs/2606.04104)
+- [Zexun Wang, *CAVA*, `arXiv:2607.13716`](https://arxiv.org/abs/2607.13716)
+- [Genliang Zhu and Chu Wang, *IGAC/OpenPort*, `arXiv:2606.22916v3`](https://arxiv.org/abs/2606.22916)
+- [Jun He and Deying Yu, *Sovereign Assurance Boundary*, `arXiv:2606.11632`](https://arxiv.org/abs/2606.11632)
+- [Uchi Uchibeke, *Before the Tool Call*, `arXiv:2603.20953`](https://arxiv.org/abs/2603.20953)
+- [IETF `RFC 9943` — SCITT Architecture](https://www.rfc-editor.org/rfc/rfc9943.html)
+- [IETF OAuth Transaction Tokens draft](https://datatracker.ietf.org/doc/draft-ietf-oauth-transaction-tokens/)
+- [IETF OAuth Identity Chaining draft](https://datatracker.ietf.org/doc/draft-ietf-oauth-identity-chaining/)
+- [IETF WIMSE Architecture draft](https://datatracker.ietf.org/doc/draft-ietf-wimse-arch/)
+- [OpenID Authorization API 1.0](https://openid.net/specs/authorization-api-1_0.html)
+- [OpenID AuthZEN COAZ-MCP Binding](https://openid.github.io/authzen/authzen-coaz-mcp-binding-1_0.html)
+- [OpenID Shared Signals Framework 1.0](https://openid.net/specs/openid-sharedsignals-framework-1_0-final.html)
+- [OpenID CAEP 1.0](https://openid.net/specs/openid-caep-1_0-final.html)
+- [Model Context Protocol `2026-07-28` Authorization](https://modelcontextprotocol.io/specification/2026-07-28/basic/authorization)
+- [NIST NCCoE Software and AI Agent Identity and Authorization](https://pages.nist.gov/nccoe-ai-identity/)
+
+---
+
+## Publication Metadata
+
+**Title tag:** An AI Output Is Not an Act: Machine Standing & AI Governance  
+**Meta description:** Why valid JSON, OAuth credentials, and 200 OK do not prove an AI transition is allowed to mutate enterprise state—and how EISA and The Room enforce standing.  
+**Series navigation:** [Series index](https://blayneaina.com/) · Article 01 of *From Proposal to Consequence: The AINA Transition-Governance Series*.  
+**Next installment:** [Article 02 — Zero-Trust Document Ingestion and Server-Cut Evidence](https://blayneaina.com/02-zero-trust-document-ingestion-and-server-cut-evidence/).

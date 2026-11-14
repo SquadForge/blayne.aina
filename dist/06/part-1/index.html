@@ -1,0 +1,242 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>§06 Part 1/3: Rollback Is Not Erasure (Introduction &amp; Overview) | Blayne Aina</title>
+  <meta name="description" content="Sections: Introduction &amp; Overview, 1. Why Single-Tier Undo Fails, 2. The Dual-Tier Separation, One Checkout, Six Mutations, Two Truths, 3. Primary: A Certified Operational Baseline, 4. Amber: Content-Addressed Forensic Objects, 5. Fail-Closed Checkout Capture, 6. Per-Mutation Amber Accumulation">
+  <meta name="author" content="Blayne Aina">
+  <meta name="robots" content="index, follow, max-snippet:-1, max-image-preview:large, max-video-preview:-1">
+  <link rel="canonical" href="https://blayneaina.com/06-rollback-is-not-erasure-dual-tier-vaults-and-ungated-quarantine/part-1/">
+  <link rel="icon" href="/favicon.ico" sizes="any">
+  <link rel="icon" href="/favicon.svg" type="image/svg+xml">
+
+  <!-- OpenGraph / Social -->
+  <meta property="og:type" content="article">
+  <meta property="og:title" content="§06 Part 1/3: Rollback Is Not Erasure (Introduction &amp; Overview)">
+  <meta property="og:description" content="Sections: Introduction &amp; Overview, 1. Why Single-Tier Undo Fails, 2. The Dual-Tier Separation, One Checkout, Six Mutations, Two Truths, 3. Primary: A Certified Operational Baseline, 4. Amber: Content-Addressed Forensic Objects, 5. Fail-Closed Checkout Capture, 6. Per-Mutation Amber Accumulation">
+  <meta property="og:url" content="https://blayneaina.com/06-rollback-is-not-erasure-dual-tier-vaults-and-ungated-quarantine/part-1/">
+  <meta property="og:site_name" content="Blayne Aina — The Route to Trusting AI">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="§06 Part 1/3: Rollback Is Not Erasure (Introduction &amp; Overview)">
+  <meta name="twitter:description" content="Sections: Introduction &amp; Overview, 1. Why Single-Tier Undo Fails, 2. The Dual-Tier Separation, One Checkout, Six Mutations, Two Truths, 3. Primary: A Certified Operational Baseline, 4. Amber: Content-Addressed Forensic Objects, 5. Fail-Closed Checkout Capture, 6. Per-Mutation Amber Accumulation">
+  
+  <link rel="stylesheet" href="/style.css?v=20261109-s-tier">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@500;700&family=Instrument+Serif:ital@0;1&family=Inter:wght@400;500;600;700;800&family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,500;0,6..72,600;1,6..72,400&family=JetBrains+Mono:wght@400;500&family=Plus+Jakarta+Sans:wght@600;700;800&display=swap" rel="stylesheet">
+</head>
+<body>
+  <div class="reading-progress-bar" id="progressBar"></div>
+
+  <header class="site-header compact-ai-header"><div class="header-inner compact-ai-nav"><a href="/" class="brand"><strong>BLAYNE AINA</strong></a> | <a href="/ai-brief/">1-Page Master Brief (§01–§09)</a> | <a href="/articles/">All 9 Articles &amp; Briefs</a> | <a href="/research-assurance/">Assurance</a> | <a href="/refusal-proof/">Proof</a> | <a href="/llms.txt">llms.txt</a> | <a href="mailto:me@blayneaina.com">me@blayneaina.com</a></div></header>
+  <div class="layout-container presentation-layout">
+    <main class="content-area">
+      <article class="prose-wrapper presentation-wrapper">
+<header class="article-header compact-article-header"><h1 class="article-title">§06 Part 1/3: Rollback Is Not Erasure (Introduction &amp; Overview)</h1><p class="article-subtitle">Sections: Introduction &amp; Overview, 1. Why Single-Tier Undo Fails, 2. The Dual-Tier Separation, One Checkout, Six Mutations, Two Truths, 3. Primary: A Certified Operational Baseline, 4. Amber: Content-Addressed Forensic Objects, 5. Fail-Closed Checkout Capture, 6. Per-Mutation Amber Accumulation</p></header>
+
+        
+        
+
+        <div class="article-body">
+          
+      <p class="part-compact-nav"><strong>§06 PART 1/3</strong> (13,738 chars · Sections: Introduction &amp; Overview; 1. Why Single-Tier Undo Fails; 2. The Dual-Tier Separation; One Checkout, Six Mutations, Two Truths; 3. Primary: A Certified Operational Baseline; 4. Amber: Content-Addressed Forensic Objects; 5. Fail-Closed Checkout Capture; 6. Per-Mutation Amber Accumulation) — <a href="/06-rollback-is-not-erasure-dual-tier-vaults-and-ungated-quarantine/part-2/">Part 2 →</a> · <a href="/06/brief/">1-Call Brief</a> · <a href="/06-rollback-is-not-erasure-dual-tier-vaults-and-ungated-quarantine/">Full §06</a> · <a href="/06/part-1.txt">Raw .txt</a> · All: <a href="/06-rollback-is-not-erasure-dual-tier-vaults-and-ungated-quarantine/part-1/">P1</a> <a href="/06-rollback-is-not-erasure-dual-tier-vaults-and-ungated-quarantine/part-2/">P2</a> <a href="/06-rollback-is-not-erasure-dual-tier-vaults-and-ungated-quarantine/part-3/">P3</a></p>
+    
+<h1>Rollback Is Not Erasure: Dual-Tier Vaults and Ungated Quarantine</h1>
+<p><em>A backup can restore a clean state. It cannot explain what happened afterward. Recovery needs a certified baseline and a separate forensic history.</em></p>
+<p><strong>By Blayne Aina · Principal Systems Architect and creator of AINA · October 31, 2026</strong></p>
+<hr>
+<p>A backup can tell you where to go back to. It cannot tell you what happened afterward.</p>
+<p>An autonomous agent edits a file five times, an external process changes it a sixth, and the framework “rolls back” by overwriting the file with its only snapshot. The clean baseline is gone. The intermediate states are gone. The unauthorized write is gone from the audit story. The system now looks exactly as it did before anything happened—which is precisely the evidence it needed to preserve.</p>
+<p><strong>Rollback is not erasure.</strong> Restoring a clean file is one state transition. Preserving what occurred is another obligation. A governed recovery system needs both:</p>
+<ul>
+<li>a trusted operational baseline for recovery;</li>
+<li>an evidence-preserving account of every intermediate and ungated state for forensics.</li>
+</ul>
+<p>Article 05 proved current ownership at the write window. Article 06 makes recovery equally rigorous: certified checkout capture, dual-tier raw-byte vaults, replay-bound versions, bypass observation, release quarantine, and governed restoration.</p>
+<blockquote>
+<p><strong>The baseline tells you where to revert. The vaults tell you why you may trust it—and what you must not pretend never happened.</strong></p>
+</blockquote>
+<h2>1. Why Single-Tier Undo Fails</h2>
+<p>Single-slot backup systems fail in two distinct ways.</p>
+<h3>Failure 1: The baseline is overwritten by the task itself</h3>
+<pre><code class="language-text">checkout → snapshot state 0
+edit 1   → overwrite snapshot with state 1
+edit 2   → overwrite snapshot with state 2
+edit 3   → overwrite snapshot with state 3
+</code></pre>
+<p>The task has an undo button but no state 0 left. Worse, it cannot explain how state 3 was reached or which intermediate state was valid.</p>
+<p>AINA keeps the Primary pre-checkout baseline intact and accumulates each mutation as a new content-addressed Amber object. N edits under one checkout produce N recoverable Amber states without consuming the Primary anchor.</p>
+<h3>Failure 2: Ungated content becomes a trusted post-edit state</h3>
+<p>An external process changes the file while a lease is active. At release, the system archives the current bytes as if the agent wrote them through the governed path. Provenance has been laundered: unauthorized content now looks like a legitimate post-edit artifact.</p>
+<p>AINA compares live bytes with the last authorized state. A mismatch becomes <code>quarantine_ungated</code>, emits <code>released_with_ungated_content</code>, and returns <code>content_mismatch: true</code>. The divergent bytes remain on disk for inspection; they are not silently restored or deleted.</p>
+<h2>2. The Dual-Tier Separation</h2>
+<p>Primary and Amber are not two copies of one backup. They answer different questions and have different failure and custody properties.</p>
+<h3>Exhibit 6.1 — Dual-tier operational separation</h3>
+<pre><code class="language-text">                         CHECKOUT INVOCATION
+                                  │
+                    Lease + kernel handle acquired
+                                  │
+                     save_checkout_copy(verified bytes)
+                       ┌──────────┴──────────┐
+                       ▼                     ▼
+              PRIMARY OPERATIONAL VAULT   AMBER FORENSIC VAULT
+       .squad/vault/&lt;fnv1a_16hex&gt;/      $AMBER_VAULT/objects/&lt;hex2&gt;/&lt;sha256&gt;.obj
+       ├─ versioned raw bytes           ├─ raw content-addressed bytes
+       ├─ adjacent .sha256 sidecar      ├─ deduplicated by content
+       ├─ create_new + sync_all         ├─ atomic write + exact readback
+       ├─ PRIMARY_KEEP = 100            ├─ append-only amber.jsonl
+       └─ bound by vault.jsonl replay   └─ quarantine and per-edit states
+                       │                     │
+                       └──────────┬──────────┘
+                                  ▼
+                  certified baseline + complete forensic history
+</code></pre>
+<p>Primary is the bounded operational store for rapid rollback. Amber is the append-oriented, content-addressed forensic store for checkout, edit snapshots, post-edit states, native consistent snapshots, and quarantine. “Append-oriented” describes its write model, not deletion-proof immutability; storage survival is a separate custody question addressed below.</p>
+<h2>One Checkout, Six Mutations, Two Truths</h2>
+<p>Consider one file checked out for remediation:</p>
+<ol>
+<li><strong>Certified checkout.</strong> The lease and kernel handle are acquired. State 0 is written to Primary with its sidecar and capture-ledger binding, and archived to Amber with exact readback. If any step fails, both lease and handle are released.</li>
+<li><strong>Five governed edits.</strong> Each pre-mutation state is appended to Amber as <code>edit_snapshot</code>. Primary remains the certified state-0 anchor; Amber now holds five additional states.</li>
+<li><strong>One ungated write.</strong> A separate process changes state 6 outside the tool path. The mtime-based sentinel may flag <code>bypass_detected</code>, but the more important fact is that the last authorized gated state no longer matches the live bytes.</li>
+<li><strong>Release.</strong> The current bytes hash differently from the last gated state. They become <code>quarantine_ungated</code>, with <code>content_mismatch: true</code> and <code>released_with_ungated_content</code>. The bytes remain available for inspection instead of disappearing into a clean release.</li>
+<li><strong>Governed restoration.</strong> Under fresh current authority, the system restores the certified state-0 bytes as another governed write and preserves the displaced current state first. The operation is a new transition, not an assertion that the earlier mutations never happened.</li>
+</ol>
+<p>The result is deliberately two truths: the file can return to a trusted baseline, while the evidence retains every intermediate and ungated state. A third-party observer may already have consumed the divergent bytes; that external consequence requires its own reconciliation and is not erased by restoring the file.</p>
+<h2>3. Primary: A Certified Operational Baseline</h2>
+<p>A file on disk in the Primary directory is not a baseline yet. It becomes one only after its bytes, sidecar, scope identity, and durable capture binding all verify.</p>
+<h3>Scope sharding and identity</h3>
+<p>Each canonical file scope maps to <code>.squad/vault/&lt;fnv1a_16hex&gt;/</code>. The hash is a 64-bit FNV-1a value rendered as 16 lowercase hexadecimal characters, providing a fixed-width, path-safe directory identity without drive-colon or separator problems.</p>
+<p><code>meta.json</code> binds the directory back to its canonical scope and hash. If saved metadata does not resolve to the requested file, the copy is rejected with <code>primary_scope_identity_mismatch</code>. Legacy directories from an older path spelling are considered only when their recorded scope resolves to the same canonical file.</p>
+<p>This is routing, not capability proof; Article 05 already established that FNV-1a cannot carry authority by itself.</p>
+<h3>Monotonic version filenames</h3>
+<p>Each capture receives a fresh name:</p>
+<pre><code class="language-text">{:013}-{:06}-{random_8}__{sanitized_name}
+</code></pre>
+<p>The components are a 13-digit Unix-millisecond prefix, a six-digit sub-millisecond remainder, an eight-character random tag, and a sanitized terminal filename. Lexicographic order tracks capture order, while the random tag prevents same-instant collisions.</p>
+<p><code>create_new_synced</code> uses create-new semantics, writes the data, and calls <code>sync_all</code>. Existing objects are never overwritten. Every version gets an adjacent <code>.sha256</code> sidecar containing the content digest.</p>
+<h3>Readback before trust</h3>
+<p>After writing the version and sidecar, <code>primary_store</code> reads both back. The saved bytes must equal the input exactly, and the sidecar must equal the computed SHA-256. A mismatch returns <code>primary_readback_mismatch</code> and prevents the protected change from proceeding.</p>
+<p><code>prune_primary</code> keeps the most recent <strong>100 versions per scope</strong>, deleting older versions and their sidecars together. Operational retention is bounded without leaving orphaned digest files.</p>
+<h3>Durable version binding</h3>
+<p>A saved version is bound by appending <code>vault_checkout_saved</code> to <code>.squad/vault.jsonl</code> with the canonical scope, destination, byte count, content hash, kind, owner, and timestamp.</p>
+<p><code>version_binding</code> then replays the entire ledger:</p>
+<ul>
+<li>every nonempty line must parse;</li>
+<li>the destination must name the selected version exactly;</li>
+<li>the record&#39;s canonical scope must resolve to the same file;</li>
+<li>duplicate or conflicting bindings are refused;</li>
+<li>digest, byte count, owner, and RFC 3339 timestamp must be well formed.</li>
+</ul>
+<p><code>verify_primary_version</code> requires all three independent predicates before restoration:</p>
+<ol>
+<li>current bytes hash to the adjacent <code>.sha256</code> sidecar;</li>
+<li>replay binds that exact version to the same canonical source, digest, and size;</li>
+<li>a caller-supplied restore pin, when present, matches the verified digest exactly.</li>
+</ol>
+<p>A legacy object without a capture binding is accepted only against an independently supplied original restore pin. Otherwise the operator must re-baseline with a fresh checkout. No binding is synthesized retrospectively.</p>
+<h3>Exhibit 6.4 — A valid Primary capture binding</h3>
+<pre><code class="language-json">{
+  &quot;action&quot;: &quot;vault_checkout_saved&quot;,
+  &quot;scope&quot;: &quot;project:/services/renewal.rs&quot;,
+  &quot;owner&quot;: &quot;reviewer-beta&quot;,
+  &quot;intent&quot;: &quot;governed renewal remediation&quot;,
+  &quot;dest&quot;: &quot;.squad/vault/7c9a2e1d0f8b4a3c/0001730304000-000128-e4b8c9d2__renewal_rs&quot;,
+  &quot;bytes&quot;: 34120,
+  &quot;content_sha256&quot;: &quot;4b92ec173d8f8a12b4e8035a92cfb912384a71b2d3080e7d56a89403d1685bb3&quot;,
+  &quot;kind&quot;: &quot;checkout&quot;,
+  &quot;at&quot;: &quot;2026-10-31T17:10:00.128000Z&quot;
+}
+</code></pre>
+<p>The binding does not merely say a file exists. It certifies which source produced it, which bytes it holds, who captured it, and when the receipt became durable.</p>
+<h2>4. Amber: Content-Addressed Forensic Objects</h2>
+<p>Amber stores raw bytes under:</p>
+<pre><code class="language-text">$AMBER_VAULT/objects/&lt;first-two-hex&gt;/&lt;full-sha256&gt;.obj
+</code></pre>
+<p>The first two digest characters create 256 shard directories. There is no Zstandard or <code>.zst</code> container. Raw bytes eliminate codec selection from the recovery trust boundary and make the content address itself the object&#39;s identity.</p>
+<h3>Atomic creation, deduplication, and exact readback</h3>
+<p>When an object is new, bytes are written atomically and immediately read back. They must equal the input exactly. If an object with that digest already exists, writing is skipped and the receipt records <code>deduped: true</code>. A mismatch between path and content fails with <code>archived: false</code> instead of silently accepting a substituted object.</p>
+<p>Every capture appends to <code>amber.jsonl</code> with:</p>
+<ul>
+<li><code>event: &quot;amber_archived&quot;</code>;</li>
+<li>capture kind, canonical scope and absolute source identity;</li>
+<li>owner and intent;</li>
+<li>SHA-256 and raw byte count;</li>
+<li>timestamp and deduplication status.</li>
+</ul>
+<p>The five capture classes are <code>checkout</code>, <code>edit_snapshot</code>, <code>post_edit</code>, <code>quarantine_ungated</code>, and <code>native_snapshot</code>. Native consistent snapshots capture verified bytes rather than pretending a raw live database copy is consistent.</p>
+<p><code>read_verified_amber</code> enforces a 64-hex digest, a caller-declared maximum size, and a full hash match before returning any bytes. Path traversal and oversized recovery artifacts are refused before they can exhaust memory.</p>
+<h2>5. Fail-Closed Checkout Capture</h2>
+<p>Checkout is a state machine, not a best-effort backup call.</p>
+<h3>Exhibit 6.2 — Fail-closed checkout capture state machine</h3>
+<pre><code class="language-text">LockRequested
+→ manager lease + kernel OS handle acquired
+→ Primary create_new + sidecar + full readback
+→ Amber raw-byte archive + exact readback
+→ append vault_checkout_saved to vault.jsonl
+→ version_binding full replay
+     ├─ SUCCESS → tenancy granted with certified baseline
+     └─ FAILURE → manager::release(&amp;lease)
+                → oshandle::release(&amp;scope)
+                → return capture failure; no tenancy
+</code></pre>
+<p>The lease and kernel handle are acquired first so the source cannot be casually changed during capture. Any failure in storage, sidecar verification, Amber persistence, ledger append, or binding replay releases both. Tenancy is never granted without a certified recovery baseline.</p>
+<h3>Exhibit 6.5 — Checkout failure revokes tenancy</h3>
+<pre><code class="language-json">{
+  &quot;error&quot;: &quot;vault_capture_receipt_unconfirmed: the persisted capture receipt does not read back as this exact version&quot;,
+  &quot;baseline_certified&quot;: false,
+  &quot;manager_lease_released&quot;: true,
+  &quot;os_handle_released&quot;: true,
+  &quot;tenancy_granted&quot;: false
+}
+</code></pre>
+<p>The retained bytes can aid diagnosis, but they do not certify recovery or permit execution.</p>
+<h2>6. Per-Mutation Amber Accumulation</h2>
+<p><code>snapshot_edit_state</code> captures the current bytes before a governed mutation and archives them only to Amber with <code>kind: &quot;edit_snapshot&quot;</code>. Primary remains the state-0 undo baseline.</p>
+<pre><code class="language-text">Primary: state 0 ───────────────────────────────► remains certified
+Amber:   state 0 → state 1 → state 2 → … → state N
+                  every edit adds a content-addressed object
+</code></pre>
+<p>If ten edits occur under one checkout, Amber holds ten recoverable states while Primary retains the original anchor. A restoration to state 0 does not erase the other ten; a later investigation can still inspect them.</p>
+<h3>Exhibit 6.6 — Amber edit snapshot</h3>
+<pre><code class="language-json">{
+  &quot;event&quot;: &quot;amber_archived&quot;,
+  &quot;at&quot;: &quot;2026-10-31T17:12:04.112000Z&quot;,
+  &quot;kind&quot;: &quot;edit_snapshot&quot;,
+  &quot;scope&quot;: &quot;project:/services/renewal.rs&quot;,
+  &quot;abs&quot;: &quot;project:/services/renewal.rs&quot;,
+  &quot;owner&quot;: &quot;reviewer-beta&quot;,
+  &quot;intent&quot;: &quot;pre-edit snapshot before mutation 3&quot;,
+  &quot;sha256&quot;: &quot;9a1f28b76e4c3d21a08456b9c832104e7651a2b3c4d5e6f7a8b9c0d1e2f3a4b5&quot;,
+  &quot;bytes&quot;: 35890,
+  &quot;deduped&quot;: false
+}
+</code></pre>
+
+
+      <p class="part-compact-nav"><strong>END OF §06 PART 1/3</strong> — Next: <a href="/06-rollback-is-not-erasure-dual-tier-vaults-and-ungated-quarantine/part-2/"><code>https://blayneaina.com/06-rollback-is-not-erasure-dual-tier-vaults-and-ungated-quarantine/part-2/</code></a> · <a href="/06/brief/">§06 1-Call Brief</a> · <a href="/06.md">Raw .md</a></p>
+    
+        </div>
+
+        
+        
+        
+        
+
+        
+
+        
+      </article>
+    </main>
+
+  </div>
+
+  <footer class="site-footer compact-ai-footer"><p><strong>blayneaina.com</strong> — <a href="https://blayneaina.com/ai-brief/">Master Brief (https://blayneaina.com/ai-brief/)</a> · <a href="https://blayneaina.com/ai-brief.txt">Plain-Text Brief (https://blayneaina.com/ai-brief.txt)</a> · <a href="https://blayneaina.com/articles/">All 9 Articles &amp; Briefs (https://blayneaina.com/articles/)</a> · <a href="https://blayneaina.com/llms.txt">llms.txt</a> · <a href="mailto:me@blayneaina.com">me@blayneaina.com</a></p></footer>
+
+
+
+
+
+  <script src="/script.js?v=20261109-s-tier"></script>
+</body>
+</html>

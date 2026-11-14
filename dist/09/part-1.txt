@@ -1,0 +1,47 @@
+# §09 Part 1/8 — Bring One Real Boundary: Peer Review & R&D Evaluation
+Canonical: https://blayneaina.com/09-bring-one-real-boundary-work-with-blayne/part-1/ | Raw Article: https://blayneaina.com/09.md | Next Part: https://blayneaina.com/09/part-2.txt
+
+# Bring One Real Boundary: Technical Peer Review, Challenge Tracks & R&D Evaluation
+
+*Evaluating AINA's deterministic execution-governance architecture through bounded acceptance contracts, reproducible refusal proofs, and independent research review.*
+
+**By Blayne Aina · Principal Systems Architect and creator of AINA · October 31, 2026**
+
+---
+
+<aside class="context-callout employment-primary" aria-label="Technical peer review and R&D evaluation pathways">
+  <div class="brief-label">PEER REVIEW, INDEPENDENT VERIFICATION &amp; R&amp;D DUE DILIGENCE</div>
+  <h2>Independent Technical Peer Review · Research &amp; Funding Evaluation · Bounded Boundary Challenges</h2>
+  <p><strong>How to evaluate this work:</strong> Do not rely on a vision deck or prompt-level claims. Run the offline cryptographic verifier, submit an adversarial transition vector, or bring one high-consequence boundary for a predeclared acceptance test.</p>
+</aside>
+
+## How to Peer-Review & Evaluate AINA: The 5-Step Architecture & Runtime Verification Protocol
+
+Whether you are a systems engineer, a formal-verification or AI-security researcher, or a technical evaluator for a research funding body, AINA is designed to be inspected as an operational machine rather than a slide deck.
+
+Writing code by hand is no longer the primary bottleneck in systems engineering; the bottleneck is formalizing the trust boundary, decomposing work across parallel agents without context collapse, catching plausible-but-wrong outputs, and proving that invalid transitions fail closed without mutating target state.
+
+**Researchers and technical evaluators can audit both the AINA architecture and the 9-IDE multi-agent methodology used to build it across five concrete dimensions:**
+
+1. **Threat model & operational boundary definition:** How cleanly does the architecture separate untrusted probabilistic proposals from privileged OS process creation, file handles, and relational database commits?
+2. **Bounded slice decomposition (preventing context collapse):** How are complex specifications decomposed into independent, strictly typed work slices (`RequestedAct`, `EISA` envelopes, `LeaseDeclarations`) that parallel agent lanes can execute without corrupting shared state?
+3. **Dependency, state & lease fencing:** How do monotonic generation tokens, Win32 share-mode exclusion (`FILE_SHARE_READ`), and SQLite optimistic concurrency (`WHERE version = expected`) stop stale workers at the resource?
+4. **Adversarial & negative-path verification:** Plausible code and JSON can pass superficial checks while hiding TOCTOU races, silent data drops, or approval laundering. Every AINA mechanism is tested against adversarial fault classes (`requested_act_mismatch`, `stale_lease_generation`, `evidence_bad_selector_refused`).
+5. **Deterministic verification & refusal proof (`PCNA`):** Every refused transition emits a tamper-evident receipt binding the RFC 8785 JCS-canonicalized proposal to byte-identical pre-attempt and post-refusal destination SHA-256 digests (`python3 proof/verify_refusal_proof.py`).
+
+**Plus a 15–45 minute live `squad.exe` runtime evaluation:** Alongside the static public proof bundle, I conduct live technical screen-share sessions for peer reviewers and R&D grant evaluators—running `squad.exe` against ad-hoc transitions, demonstrating `requested_act_mismatch` and `stale_lease_generation` refusals live, and walking openly through the Rust crate architecture, formal tradeoffs, and the proposed Linux/POSIX and Lean 4 research roadmap.
+
+The eight architecture papers ([§01](/01-an-ai-output-is-not-an-act/) through [§08](/08-sovereign-kill-switch-break-glass-epochs-and-conformance-gate/)) are the technical specifications for that evaluation: per-transition standing, sealed evidence, protected computation and deterministic EISA adjudication, Room coordination, fenced ownership, forensic recovery, act pinning, crash continuity, emergency containment, and candidate-binary qualification.
+
+## Why AINA Is Grounded in 11+ Years of Production Systems Engineering
+
+Every invariant in AINA was shaped by real operational failure modes encountered over more than a decade of enterprise systems integration and data migration:
+
+| Era & environment | The messy operational problem | The deterministic system delivered |
+| :--- | :--- | :--- |
+| **2025–2026: AINA & SquadForge** ([BlayneAina.com](https://blayneaina.com/) · [GitHub](https://github.com/SquadForge/blayne.aina)) | Parallel AI coding agents overwriting shared files, fabricating document citations, and executing unapproved mutations. | Directed a 9-IDE agent fleet to build a deterministic governance runtime (`squad.exe`), Four-Gate EISA state machine, kernel file fencing, and 45-case conformance gate ([refusal proof](/refusal-proof/)). |
+| **2022–2025: Agile Education Marketing** (enterprise EdTech data & CRM) | High-volume multi-source education datasets with duplicate records, schema drift, and synchronization failures between HubSpot and Salesforce. | Architected automated ETL/ELT validation pipelines, Insycle deduplication recipes, and bi-directional HubSpot/Salesforce lifecycle workflows. |
+| **2019–2022: TCompanies—DrayMaster & Photector** (intermodal logistics & evidence) | Six years of fragmented data across seven companies and **800+ intermodal logistics carriers** at DrayMaster (acquired by Envase), plus unverified carrier photo workflows at Photector (integrated with Hirschbach TMS). | Migrated six years of carrier data into a custom CRM with conditional onboarding forms and facilitated daily whiteboarding to define deterministic stage-gate state machines for Photector. |
+| **2015–2018: Jacuzzi Colorado / Spa Palace** (multi-location retail & ERP) | Six locations operating legacy point-of-sale and fragmented infrastructure with 15,000+ disconnected product SKUs. | Executed the six-location infrastructure cutover, migrated 15,000+ SKUs, built a centralized Drupal intranet, and integrated custom mobile apps with Vonage, HubSpot, and QuickBooks POS. |
+
+

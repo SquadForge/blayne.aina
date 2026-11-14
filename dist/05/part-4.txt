@@ -1,0 +1,154 @@
+# §05 Part 4/4 — Expiry Is Not Fencing
+Canonical: https://blayneaina.com/05-expiry-is-not-fencing-typed-leases-and-kernel-write-exclusion/part-4/ | Raw Article: https://blayneaina.com/05.md | Next Article Brief: https://blayneaina.com/06/brief.txt
+
+## The Twelve Execution Claims
+
+| ID | Bounded claim | Evidence and ceiling |
+|---|---|---|
+| `05-C01` | Six typed lease namespaces and hierarchical conflict rules govern ownership; FNV-1a is only a routing key | Implemented and author-verified for all lease requests; full canonical identity decides authority |
+| `05-C02` | Filesystem scopes reject ambiguous paths and resolve opened object identity through handles | Implemented and author-verified on local NTFS/ReFS targets |
+| `05-C03` | Workspace-wide monotonic generations use two-phase persistence and refuse rollback | Implemented and author-verified; missing state never resets to zero |
+| `05-C04` | A 30-second cross-process mutex serializes lease and write transitions | Implemented and author-verified for local controller and worker transitions; it is never stolen by age |
+| `05-C05` | Dead-holder re-granting requires same owner/task and proof of death, then mints a new generation | Implemented and author-verified; unknown or reused PIDs fail closed |
+| `05-C06` | Heartbeats clamp to 15 minutes and cannot resurrect expired tenancies; holder transfer is all-or-restored | Implemented and author-verified for current lifecycle paths |
+| `05-C07` | Long-lived servers deny later incompatible write/delete opens with `FILE_SHARE_READ` | Implemented and author-verified; pre-existing handles/mappings are not retroactively revoked and CLI leases are advisory |
+| `05-C08` | Parent directories are pinned by handle and re-resolved during replacement | Implemented and author-verified for parent redirection, not volume unmount or privileged host-admin behavior |
+| `05-C09` | Five-role overlapping replacement uses native POSIX handle rename with continuous write-open exclusion | Implemented and author-verified on supported Windows filesystems; delete/rename residuals remain separately disclosed |
+| `05-C10` | Surviving `W` handles prove positive preimage displacement | Implemented and author-verified for intact-link, nondeleted, different-path cases; delete-and-recreate can remain indistinguishable |
+| `05-C11` | Publication failures classify into six structured reconciliation records with exact next actions | Implemented and author-verified; no automatic rollback or clean success is invented |
+| `05-C12` | Server liveness is PID-reuse-resistant and image handoff preserves exclusion | Implemented and author-verified through sharing-violation records and shared handle adoption |
+
+## The Article 05 Claim Card
+
+```text
+Mechanism:
+  AINA Typed Leases, Monotonic Generation Fencing, and Guarded Replacement
+  (typed scopes, room.generation.v2, transition mutex, lifecycle guards,
+   G/W/T/H/G' handles, parent pin, liveness, SQLite fences, and release quarantine)
+
+Failure it governs:
+  Stale workers resurrecting after lease expiry;
+  uncooperative local write/delete/rename opens;
+  rolled-back generation stores and successor-tenancy confusion;
+  parent junction swaps and destination reparse redirection;
+  displaced preimages and divergent post-release content.
+
+Positive path:
+  current task and tenancy
+  → workspace-wide generation and control epoch
+  → exact server-held scope and preimage observation
+  → five-role guarded replacement with parent pin
+  → identity + content + resolved-path + displacement verification
+  → fresh destination observation
+  → structured release or quarantine.
+
+Refusal / reconciliation path:
+  stale_lease_generation, lease_expired, lease_task_mismatch
+  generation_store_missing, generation_checkpoint_mismatch
+  ERROR_SHARING_VIOLATION (32), destination_parent_redirected
+  GuardLost, NameRedirected, IdentityChanged, ContentDiverged,
+  PreimageDisplaced, Unverifiable
+  record_version_changed, result_grant_tenancy_required
+  content_mismatch and released_with_ungated_content.
+
+Evidence status:
+  Implemented and Author-Verified on the declared Windows reference embodiment.
+  2026 research is primary-source context, not endorsement or independent validation.
+  No universal external exactly-once or total-effect-coverage claim is made.
+
+Verifier and artifacts:
+  .generations-initialized and generations.json
+  lease tenancy records and pre-write state
+  .lease-transition.mutex
+  G/W/T/H/G' handle identities and content hashes
+  parent object identity and resolved paths
+  six structured PublishFault records
+  server liveness records and transfer_holder
+  SQLite readback and result_grant tenancy
+  Amber post_edit and quarantine_ungated.
+
+Scope and claim ceiling:
+  Win32 NTFS/ReFS reference mechanisms, not POSIX-equivalent guarantees.
+  Later incompatible opens are denied; pre-existing handles/mappings are not revoked.
+  Delete/rename intervals are bounded and reconciled, not claimed eliminated.
+  Third-party delete-and-recreate can remain indistinguishable from ordinary replace.
+  External effects require destination-specific guarantees and observation.
+  No privileged host-admin or universal external exactly-once claim.
+
+Next stage in the machine:
+  Article 05 enforces current ownership at the mutation window.
+  Article 06 proves rollback is not erasure: Primary and Amber recovery,
+  pre-write baseline verification, and ungated-content quarantine.
+
+Commercial doorway:
+  Shared-Resource Lease & Kernel Fencing Challenge — bring one shared file
+  or SQLite row exposed to multiple workers; receive a stale-generation replay,
+  guarded replacement demonstration, and recovery/quarantine evidence map
+  (Article 09 · me@blayneaina.com).
+```
+
+## The Clock Is Not the Fence
+
+A lease expires because coordination needs a way forward. That does not mean the old worker has become harmless. Authority must change form at the resource: a new generation, a new holder, a new epoch, and a kernel-enforced exclusion that survives the replacement.
+
+The architecture does not stop at that success condition. It also preserves what happened when the world did not cooperate: which guard was lost, which name redirected, which object changed, which content diverged, which preimage moved, and which checks could not run. Failure becomes reconciliation evidence rather than a vague error or a fabricated rollback.
+
+That is the difference between a lease timer and execution fencing.
+
+> **Expiry lets ownership move. Generation decides whether an act is current. Kernel exclusion decides whether an uncooperative writer can open the file. Verification decides whether the published object actually earned success.**
+
+Article 06 takes up the next non-equivalence: a verified replacement still needs recovery. Rollback restores a prior state; it does not erase what happened, and ungated mutations must never be hidden inside a clean baseline.
+
+## Frequently Asked Questions
+
+### Why is lease expiry not fencing?
+
+Expiry allows ownership to move after a holder stops responding, but it does not erase a stale worker's process, cached authority, delayed request, or physical ability to write. The resource must reject the stale generation at execution.
+
+### Is FNV-1a part of the security proof?
+
+No. FNV-1a is only a deterministic routing key for lease filenames. Authority decisions compare the complete canonical namespace and resource identity, current generation, task, control epoch, and execution handle.
+
+### Why are five handle roles necessary?
+
+The long-term guard denies delete, but Windows requires delete sharing for rename-over. `G`, `W`, `T`, `H`, and `G'` hand off exclusion in overlapping stages so no interval permits a write open, while `P` pins the parent and verification proves the published object.
+
+### Does the kernel gate revoke handles or mappings opened earlier?
+
+No. Share modes govern later incompatible opens. They do not retroactively revoke pre-existing handles, memory-mapped sections, or privileged host-admin behavior. Those routes require separate inventory and controls.
+
+### What does preimage displacement detection prove?
+
+It proves that the original object kept all links, was not deleted, and now resolves to a different ordinary path. That means it moved before the rename and an uncaptured object was replaced. Delete-and-recreate can remain indistinguishable, so the article does not claim universal recovery.
+
+### Does this guarantee exactly-once external effects?
+
+No. It proves current ownership and verified replacement on the governed Windows file route, plus version-fenced SQLite mutations. External services and non-idempotent APIs need their own conditional-write, observation, and reconciliation guarantees.
+
+## Continue the Series
+
+- **Series index:** [From Proposal to Consequence: The AINA Transition-Governance Series](https://blayneaina.com/)
+- **Previous:** [Article 04 — The Room: Why Git and Chat Are Not Coordination Planes](https://blayneaina.com/04-the-room-why-git-and-chat-are-not-coordination-planes/)
+- **Next:** [Article 06 — Rollback Is Not Erasure: Dual-Tier Vaults and Ungated Quarantine](https://blayneaina.com/06-rollback-is-not-erasure-dual-tier-vaults-and-ungated-quarantine/)
+- **Deployment and independent review:** [Article 09 — Bring One Real Boundary](https://blayneaina.com/09-bring-one-real-boundary-work-with-blayne/)
+
+---
+
+## Primary 2026 Sources
+
+- [Shu — *Boundary-State Control for Tool-Using Language-Model Agents: Commit-Time Consistency under State Drift*, `arXiv:2609.37475`](https://arxiv.org/abs/2609.37475)
+- [Lyu et al. — *CoAgent: Concurrency Control for Multi-Agent Systems*, `arXiv:2606.15376`](https://arxiv.org/abs/2606.15376)
+- [Redisson FencedLock Documentation](https://redisson.org/glossary/java-fencedlock.html)
+- [Microsoft `CreateFileW` and File-Sharing Documentation](https://learn.microsoft.com/en-us/windows/win32/fileio/creating-and-opening-files)
+- [Microsoft `FILE_RENAME_INFORMATION_EX`](https://learn.microsoft.com/en-us/windows-hardware/drivers/ddi/ntifs/ns-ntifs-_file_rename_information)
+- [Microsoft `GetFinalPathNameByHandleW`](https://learn.microsoft.com/en-us/windows/win32/api/fileapi/nf-fileapi-getfinalpathnamebyhandlew)
+
+---
+
+## Publication Metadata
+
+**Title tag:** Expiry Is Not Fencing: Typed Leases and Kernel Write Exclusion  
+**Meta description:** Why wall-clock lease expiry cannot stop stale AI writes: typed scopes, monotonic generations, five-role Win32 handle exchange, preimage forensics, and release quarantine.  
+**Series navigation:** [Series index](https://blayneaina.com/) · Article 05 of *From Proposal to Consequence: The AINA Transition-Governance Series*.  
+**Previous installment:** [Article 04 — The Room: Why Git and Chat Are Not Coordination Planes](https://blayneaina.com/04-the-room-why-git-and-chat-are-not-coordination-planes/).  
+**Next installment:** [Article 06 — Rollback Is Not Erasure: Dual-Tier Vaults and Ungated Quarantine](https://blayneaina.com/06-rollback-is-not-erasure-dual-tier-vaults-and-ungated-quarantine/).

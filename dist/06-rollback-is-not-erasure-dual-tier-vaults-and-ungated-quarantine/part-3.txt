@@ -1,0 +1,133 @@
+# §06 Part 3/3 — Rollback Is Not Erasure
+Canonical: https://blayneaina.com/06-rollback-is-not-erasure-dual-tier-vaults-and-ungated-quarantine/part-3/ | Raw Article: https://blayneaina.com/06.md | Next Article Brief: https://blayneaina.com/07/brief.txt
+
+## The Article 06 Claim Card
+
+```text
+Mechanism:
+  AINA Dual-Tier Recovery and Forensic Quarantine
+  (Primary certified baselines, Amber content-addressed objects,
+   fail-closed checkout, version replay, per-edit snapshots,
+   bypass sentinel, release verification, and governed restore)
+
+Failure it governs:
+  Single-slot undo destroying the original baseline;
+  uncertified files impersonating recovery images;
+  out-of-band writes laundered into legitimate post-edit state;
+  silent rollback destroying evidence and obscuring downstream consequences.
+
+Positive path:
+  lease + kernel handle
+  → Primary create_new + sidecar + full readback
+  → Amber raw-byte archive + exact readback
+  → vault.jsonl durable binding and full replay
+  → gated edits accumulate Amber states
+  → release content verification
+  → clean post-edit release or quarantine_ungated
+  → governed restore with current authority and displaced-state preservation.
+
+Refusal / quarantine path:
+  primary_readback_mismatch, vault_capture_receipt_unconfirmed
+  primary_scope_identity_mismatch, primary_capture_binding_missing
+  manager::release + oshandle::release at failed checkout
+  bypass_detected heuristic signal
+  content_mismatch and released_with_ungated_content
+  refused_intervening_change and rescue_effect_unconfirmed.
+
+Evidence status:
+  Implemented and Author-Verified on declared Windows recovery paths.
+  2026 research supplies independent architectural context, not endorsement.
+  No independent-validation, total-history, or total-bypass-detection claim.
+
+Verifier and artifacts:
+  Primary version and .sha256 sidecar
+  meta.json and version_binding replay
+  Amber .obj and amber.jsonl
+  checkout/edit_snapshot/post_edit/quarantine_ungated/native_snapshot records
+  bypass_detected and released_with_ungated_content signals
+  rescue_prepared and rescue_outcome records with exact readback.
+
+Scope and claim ceiling:
+  Raw-byte integrity does not prevent privileged deletion of the store.
+  Timestamp scanning is heuristic, not comprehensive kernel observation.
+  Restoration is a new governed mutation, not historical erasure.
+  Rescue in-place writes are not crash-atomic; preparation enables reconciliation.
+  Local rollback cannot recall downstream reliance, disclosure, or propagation.
+  No universal history, external-effect erasure, or independent-validation claim.
+
+Next stage in the machine:
+  Article 06 certifies recovery and preserves ungated evidence.
+  Article 07 pins the controller-fixed act, fences the destination mutation,
+  and proves original-session or non-fabricating successor receipt.
+
+Commercial doorway:
+  Forensic Baseline & Out-of-Band Mutation Quarantine Challenge — bring one
+  shared file exposed to out-of-band edits; receive a certified checkout,
+  Amber state-history demonstration, release-quarantine replay, and recovery
+  ceiling map (Article 09 · me@blayneaina.com).
+```
+
+## The Baseline Is Only Half the Recovery Story
+
+A trusted recovery image matters. So does the record of why it was needed.
+
+The dual-tier architecture preserves both. Primary certifies the state to restore. Amber preserves every state the system passed through, including the state nobody authorized. Checkout failure revokes tenancy rather than letting execution proceed without a recovery path. Release mismatch becomes a signal rather than a silent overwrite. Restoration creates another governed transition rather than deleting the past.
+
+That is how a system can recover operationally without falsifying its own history.
+
+> **Rollback restores a state. Erasure would destroy evidence. AINA preserves the baseline, the divergence, and the obligation to reconcile them.**
+
+Article 07 moves to the act and its return: whether the controller fixed the exact mutation before the worker launched, whether the destination accepted it under current tenancy, and whether the original session—or an explicitly non-fabricating successor—received the result.
+
+## Frequently Asked Questions
+
+### Why is rollback not erasure?
+
+Rollback changes current bytes to a prior state. It does not remove the fact that an action occurred, erase downstream reliance, or eliminate the need to investigate it. A governed recovery preserves both the restored baseline and the complete forensic history.
+
+### What makes a Primary version a certified baseline?
+
+The saved bytes must match the original readback, the adjacent sidecar must match their SHA-256, the full capture-ledger replay must bind that exact version to the same canonical source, digest, and size, and any caller pin must match. Unbound files are not trusted recovery images.
+
+### Why keep two vaults instead of one backup?
+
+Primary preserves the clean pre-checkout operational baseline. Amber accumulates per-edit, post-edit, native snapshot, and quarantine objects. Separating them prevents repeated edits or ungated writes from overwriting the baseline and laundering provenance.
+
+### Does `bypass_detected` prove every out-of-band write was seen?
+
+No. It is an mtime and ledger-based heuristic. Timestamp manipulation, pre-existing handles, memory mappings, and unindexed paths can evade it. Article 05 supplies kernel exclusion for later incompatible opens; the sentinel adds forensic visibility.
+
+### What happens when release content does not match the last gated state?
+
+The divergent bytes are archived to Amber as `quarantine_ungated`, the Room receives `released_with_ungated_content`, and the receipt reports `content_mismatch: true`. The bytes remain on disk for inspection instead of being silently restored or deleted.
+
+### Can recovery undo external API calls or disclosures?
+
+No. Recovery restores local file state. It cannot recall webhooks, third-party syncs, queries, disclosures, or another agent's subsequent reasoning. Those require destination-specific reconciliation driven by the quarantine evidence.
+
+## Continue the Series
+
+- **Series index:** [From Proposal to Consequence: The AINA Transition-Governance Series](https://blayneaina.com/)
+- **Previous:** [Article 05 — Expiry Is Not Fencing: Typed Leases and Kernel Write Exclusion](https://blayneaina.com/05-expiry-is-not-fencing-typed-leases-and-kernel-write-exclusion/)
+- **Next:** [Article 07 — Defeating Approval Laundering: Act Pinning and Successor Grants](https://blayneaina.com/07-defeating-approval-laundering-act-pinning-and-successor-grants/)
+- **Deployment and independent review:** [Article 09 — Bring One Real Boundary](https://blayneaina.com/09-bring-one-real-boundary-work-with-blayne/)
+
+---
+
+## Primary 2026 Sources
+
+- [Shu — *Boundary-State Control for Tool-Using Language-Model Agents*, `arXiv:2609.37475`](https://arxiv.org/abs/2609.37475)
+- [Pino — *Hard Stop: Kernel-Level Preemption and Containment for Rogue Agentic Execution*, `arXiv:2609.29808`](https://arxiv.org/abs/2609.29808)
+- [Qin et al. — *LLM Agents Can Easily Tamper With Their Own Traces*, `arXiv:2609.30266`](https://arxiv.org/abs/2609.30266)
+- [Bindschaedler, Botha, and Siebenbrunner — *Agent Flight Recorder*, `arXiv:2609.01931`](https://arxiv.org/abs/2609.01931)
+- [Ghosh — *Tracekit: Tamper-Evident Intent-Reasoning-Action Auditing for AI Agents*, `arXiv:2609.35659`](https://arxiv.org/abs/2609.35659)
+
+---
+
+## Publication Metadata
+
+**Title tag:** Rollback Is Not Erasure: Dual-Tier Vaults and Ungated Quarantine  
+**Meta description:** Why single-tier undo fails autonomous agents: certified Primary baselines, content-addressed Amber forensics, fail-closed checkout, bypass detection, and ungated quarantine.  
+**Series navigation:** [Series index](https://blayneaina.com/) · Article 06 of *From Proposal to Consequence: The AINA Transition-Governance Series*.  
+**Previous installment:** [Article 05 — Expiry Is Not Fencing: Typed Leases and Kernel Write Exclusion](https://blayneaina.com/05-expiry-is-not-fencing-typed-leases-and-kernel-write-exclusion/).  
+**Next installment:** [Article 07 — Defeating Approval Laundering: Act Pinning and Successor Grants](https://blayneaina.com/07-defeating-approval-laundering-act-pinning-and-successor-grants/).

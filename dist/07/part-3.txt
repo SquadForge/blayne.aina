@@ -1,0 +1,177 @@
+# §07 Part 3/3 — Defeating Approval Laundering
+Canonical: https://blayneaina.com/07-defeating-approval-laundering-act-pinning-and-successor-grants/part-3/ | Raw Article: https://blayneaina.com/07.md | Next Article Brief: https://blayneaina.com/08/brief.txt
+
+## 7. Official Platform and Standards Crosswalk
+
+The architecture uses existing platform primitives without pretending they are complete governance systems by themselves.
+
+| Platform or specification | Native property | How AINA composes it into execution standing |
+|---|---|---|
+| Microsoft AppContainer and LPAC security architecture | Package identity, capability restriction, and the `WIN://NOALLAPPPKG` attribute can limit ambient package access. | Fresh identity per launch, exact raw-token verification, exclusive grants, and anti-fallback native spawn refusal. |
+| Microsoft [`CompareObjectHandles`](https://learn.microsoft.com/en-us/windows/win32/api/handleapi/nf-handleapi-compareobjecthandles) | Determines whether two handles refer to the same underlying kernel object without imposing object-specific access requirements. | Audits suspended-child handles by object identity, expected provenance, and deliberate sentinel exclusion instead of trusting numeric values. |
+| Microsoft Process Snapshotting | Captures the current handle table and basic descriptors for a process. | Produces pre-resume inventory while explicitly declining to claim historical inheritance. |
+| Microsoft [`CreateFileW` sharing modes](https://learn.microsoft.com/en-us/windows/win32/fileio/creating-and-opening-files) | Sharing declarations control whether later opens are compatible. | Keeps the immutable `RequestedAct` pinned with `FILE_SHARE_READ` through update and commit. |
+| IETF [`RFC 8785`](https://www.rfc-editor.org/rfc/rfc8785.html), JSON Canonicalization Scheme, Informational RFC | Defines deterministic JSON representation for repeatable cryptographic operations. | Binds the fixed act, source, tenancy, and destination to one digest recomputed at persistence, validation, and historical verification. |
+| SQLite [`BEGIN IMMEDIATE`](https://www.sqlite.org/lang_transaction.html) | Starts a write transaction immediately; concurrent write transactions are limited by the engine. | Takes the write reservation before rereading and re-deciding, then adds exact row-version and readback predicates. |
+| Crash-straddling and multi-destination failure physics | A destination commit and its receipt are different events; heterogeneous destinations do not share a transaction coordinator. | Uses historical result grants with explicit non-fabrication and capability plans with holds instead of imaginary distributed ACID. |
+
+The functional-equivalence concession remains: another stack that fixes the same exact act, confines its workers, fences the destination, and preserves honest return semantics can defeat approval laundering without AINA's names. The names are optional; the proof obligations are not.
+
+**Evidence availability and performance boundary:** the confinement, act, destination, and successor records are `CONTROLLED` for qualified, method-scoped technical review, with adverse findings permitted. They are not unrestricted public downloads or independent validation. Pre-resume inspection, broker calls, transition serialization, recovery capture, and receipt verification must be measured for the exact worker count, projection size, database profile, and destination latency; this article does not claim a universal performance envelope.
+
+## The Confinement, Act-Pinning & Crash-Straddling Continuity Challenge
+
+The **Confinement, Act-Pinning & Crash-Straddling Continuity Challenge** uses one approved database mutation or worker result that could be replayed. It demonstrates a fixed-act refusal when the payload changes, a fenced row update with current authority and pre-state, and the receipt distinction between original-session completion and successor historical acknowledgement.
+
+The challenge excludes cross-destination atomicity, universal external exactly-once effects, fabricated original-session proof, and independent validation. Deployment and paid pilots are separately scoped; independent evaluation remains outside the commercial ladder through [Article 09](https://blayneaina.com/09-bring-one-real-boundary-work-with-blayne/).
+
+## The Fourteen Execution Claims
+
+| ID | Bounded claim | Evidence and ceiling |
+|---|---|---|
+| `07-C01` | AppContainer profiles are single-launch and anti-reuse | Implemented and author-verified; existing identities fail with `confinement_identity_reused` |
+| `07-C02` | Brokered hosts use deterministic `S-1-9` identities with `SQAD` and 128 digest bits | Implemented and author-verified; no SAM account or ambient group authority is inherited |
+| `07-C03` | LPAC is verified directly from raw token attributes before resume | Implemented and author-verified for package, kind, count, flags, and nonzero value |
+| `07-C04` | Suspended handles are compared by kernel object identity with sentinel exclusion | Implemented and author-verified; PSS inventory is not historical inheritance proof |
+| `07-C05` | Mandated actors cannot escape through native launch or existing-session attachment | Implemented and author-verified; revoked/expired grants create no fallback |
+| `07-C06` | Model access is controller-brokered over authenticated local channels | Implemented and author-verified for LPAC and brokered-host routes; no ambient worker network |
+| `07-C07` | Model requests are journaled before dispatch and uncertain outcomes remain unresolved | Implemented and author-verified; reconciliation never resends or fabricates a free retry |
+| `07-C08` | `RequestedAct` derives a single typed row and permitted changes from projected bytes | Implemented and author-verified; multi-row and out-of-scope changes are refused |
+| `07-C09` | Fixed acts are JCS-bound, create-only, and readback verified | Implemented and author-verified; persistence and binding are distinct from authority |
+| `07-C10` | Act files remain pinned while current authority and exact destination are revalidated | Implemented and author-verified through update and commit; historical checks consult no current tenancy |
+| `07-C11` | SQLite uses `BEGIN IMMEDIATE` plus exact row-version predicates | Implemented and author-verified; concurrent and uncooperative changes are refused, not overwritten |
+| `07-C12` | Pre-commit readback must equal approved fields and version +1 | Implemented and author-verified; mismatch prevents commit and remains unresolved |
+| `07-C13` | Capability plans hold unmet requirements and expose non-atomic partial completion | Implemented and author-verified; revisions name weaker semantics and invalidate old decisions |
+| `07-C14` | Successor grants deliver historical outcomes without fabricating original receipt or write authority | Implemented and author-verified through fresh receiving tenancy, purpose, wake, source, and Room-return proof |
+
+## The Article 07 Claim Card
+
+```text
+Mechanism:
+  AINA Execution Confinement, Act Fixation, Fenced Destination,
+  and Non-Fabricating Successor Continuity
+  (pre-resume token/handle inspection, spawn gate, model egress,
+   RequestedAct, SQLite IMMEDIATE, capability plans, ResultGrant)
+
+Failure it governs:
+  Unclassified handles and ambient capabilities at launch;
+  approved A becoming a different A' at execution;
+  stale task/source/lease authority and out-of-band destination writes;
+  blind model-request replay and cross-destination atomicity claims;
+  crash-straddled receipt loss and fabricated original-session completion.
+
+Positive path:
+  staged projection and confined launch
+  → controller-fixed RequestedAct with JCS digest and create-only persistence
+  → pinned act revalidation under current task/source/lease authority
+  → BEGIN IMMEDIATE + expected version + recovery capture
+  → conditional single-row update + exact pre-commit readback
+  → commit and independent observation
+  → strict original first receipt or explicit successor historical acknowledgement.
+
+Refusal / hold path:
+  confinement_identity_reused, native_spawn_refused
+  unclassified handle or sentinel match
+  requested_act_authority_changed, requested_act_mismatch
+  record_version_changed, changed_rows != 1
+  destination_route_incompatible, result_grant_tenancy_required
+  unresolved model request; severed_mid_response; effect_unconfirmed.
+
+Evidence status:
+  Implemented and Author-Verified on the declared Windows/SQLite reference paths.
+  Official platform specifications supply primitives, not independent validation.
+  No cross-destination atomicity, total-effect coverage, or original-receipt fabrication.
+
+Verifier and artifacts:
+  AppContainer/host SID and raw LPAC token attributes
+  PSS handle inventory + CompareObjectHandles + sentinel result
+  launch-observation receipt and native spawn refusal
+  model-egress ledger and unresolved reconciliation
+  RequestedAct record and pinned file handle
+  pre-write recovery capture and SQLite readback
+  destination-plan holds/revisions and ResultGrant
+  successor acknowledgement with false original-return flags.
+
+Scope and claim ceiling:
+  PSS proves current inventory, not historical inheritance.
+  JCS binds identity; it does not authorize the act.
+  Approved model routes do not prove semantic confidentiality.
+  SQLite IMMEDIATE is a write reservation, not universal external exactly-once.
+  Cross-destination atomicity is false; partial completion is explicit.
+  Successor acknowledgement is historical, never original first receipt or write authority.
+
+Next stage in the machine:
+  Article 07 confines the worker, fixes the act, fences execution, and preserves
+  honest return continuity. Article 08 proves sovereign stop and binary assurance:
+  break-glass epochs and the 45-case candidate-binary publication gate.
+
+Commercial doorway:
+  Confinement, Act-Pinning & Crash-Straddling Continuity Challenge — bring one
+  approved database mutation or worker result that could be replayed; receive
+  a fixed-act refusal replay, fenced row update, recovery evidence, and an
+  original-versus-successor receipt demonstration (Article 09 · me@blayneaina.com).
+```
+
+## Approval Ends at the Destination, Not at the Prompt
+
+The approved act cannot be allowed to drift between the prompt and the write.
+
+The controller therefore fixes it early, persists it immutably, and holds it open while the destination rereads current authority. SQLite takes its write reservation, the row version is checked again, recovery is captured, the update is conditioned, and only exact readback permits commit. If the worker dies afterward, the historical result remains readable—but the original receipt is not invented.
+
+That is the complete execution loop: confined launch, fixed act, fenced effect, honest return.
+
+> **The worker may propose. The controller fixes the act. The destination decides whether it still applies. A successor may acknowledge history; it may never manufacture the original return.**
+
+Article 08 addresses the sovereign question that remains: how to stop the entire domain immediately and prove, before publication, that the candidate binary enforces the complete machine.
+
+## Frequently Asked Questions
+
+### Why isn't numeric handle equality enough?
+
+Handle values are process-local indices, not kernel object identities. `CompareObjectHandles` tests the underlying object. The pre-resume audit also checks expected provenance and a deliberate sentinel because numeric equality cannot prove confinement.
+
+### Why must the act be fixed before the worker environment exists?
+
+Fixing it afterward lets the worker alter the target or parameters before the controller sees them. `RequestedAct` binds the exact row, fields, version, source, task, and tenancy first, then revalidates that same object through update and commit.
+
+### Why use `BEGIN IMMEDIATE` and a row-version predicate?
+
+`BEGIN IMMEDIATE` takes the write reservation before rereading and re-deciding. The version predicate independently rejects a row changed by an uncooperative writer. Readback then proves the exact approved result before commit.
+
+### What happens if a destination commits but the worker crashes before receipt?
+
+The historical outcome is preserved. A new receiving task may receive a result-only grant after current tenancy and all proof checks pass. The successor acknowledges history without replaying the effect or claiming the original session received it.
+
+### Does a successor grant complete the original return obligation?
+
+No. The receipt explicitly records `satisfies_original_return: false` and `resolves_original_obligation: false`. It is a separate historical acknowledgement, not original first-receipt completion or restored write authority.
+
+### Are multi-destination plans distributed transactions?
+
+No. Each destination supplies its own guarantees, and unmet requirements hold the step. Partial completion is tracked and compensated by separately governed restoration. `cross_destination_atomic` is false.
+
+## Continue the Series
+
+- **Series index:** [From Proposal to Consequence: The AINA Transition-Governance Series](https://blayneaina.com/)
+- **Previous:** [Article 06 — Rollback Is Not Erasure: Dual-Tier Vaults and Ungated Quarantine](https://blayneaina.com/06-rollback-is-not-erasure-dual-tier-vaults-and-ungated-quarantine/)
+- **Next:** [Article 08 — The Sovereign Kill Switch: Break-Glass Epochs and the Conformance Gate](https://blayneaina.com/08-sovereign-kill-switch-break-glass-epochs-and-conformance-gate/)
+- **Deployment and independent review:** [Article 09 — Bring One Real Boundary](https://blayneaina.com/09-bring-one-real-boundary-work-with-blayne/)
+
+---
+
+## Primary Platform References
+
+- [Microsoft `CompareObjectHandles` — compare underlying kernel object identity](https://learn.microsoft.com/en-us/windows/win32/api/handleapi/nf-handleapi-compareobjecthandles)
+- [Microsoft `CreateFileW` and File-Sharing Documentation](https://learn.microsoft.com/en-us/windows/win32/fileio/creating-and-opening-files)
+- [IETF `RFC 8785` — JSON Canonicalization Scheme, Informational RFC](https://www.rfc-editor.org/rfc/rfc8785.html)
+- [SQLite Transaction Control — `BEGIN IMMEDIATE`](https://www.sqlite.org/lang_transaction.html)
+
+---
+
+## Publication Metadata
+
+**Title tag:** Defeating Approval Laundering: Act Pinning and Successor Grants  
+**Meta description:** Pre-resume kernel verification, controller-fixed RequestedAct, fenced SQLite execution, multi-destination holds, and non-fabricating successor result grants.  
+**Series navigation:** [Series index](https://blayneaina.com/) · Article 07 of *From Proposal to Consequence: The AINA Transition-Governance Series*.  
+**Previous installment:** [Article 06 — Rollback Is Not Erasure: Dual-Tier Vaults and Ungated Quarantine](https://blayneaina.com/06-rollback-is-not-erasure-dual-tier-vaults-and-ungated-quarantine/).  
+**Next installment:** [Article 08 — The Sovereign Kill Switch: Break-Glass Epochs and the Conformance Gate](https://blayneaina.com/08-sovereign-kill-switch-break-glass-epochs-and-conformance-gate/).

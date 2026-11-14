@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>§06 One-Call Technical Brief: Rollback Is Not Erasure | Blayne Aina</title>
+  <meta name="description" content="3 lossless parts summarized from 01–09 source markdown · For full prose see /06.md">
+  <meta name="author" content="Blayne Aina">
+  <meta name="robots" content="index, follow, max-snippet:-1, max-image-preview:large, max-video-preview:-1">
+  <link rel="canonical" href="https://blayneaina.com/06/brief/">
+  <link rel="icon" href="/favicon.ico" sizes="any">
+  <link rel="icon" href="/favicon.svg" type="image/svg+xml">
+
+  <!-- OpenGraph / Social -->
+  <meta property="og:type" content="article">
+  <meta property="og:title" content="§06 One-Call Technical Brief: Rollback Is Not Erasure">
+  <meta property="og:description" content="3 lossless parts summarized from 01–09 source markdown · For full prose see /06.md">
+  <meta property="og:url" content="https://blayneaina.com/06/brief/">
+  <meta property="og:site_name" content="Blayne Aina — The Route to Trusting AI">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="§06 One-Call Technical Brief: Rollback Is Not Erasure">
+  <meta name="twitter:description" content="3 lossless parts summarized from 01–09 source markdown · For full prose see /06.md">
+  
+  <link rel="stylesheet" href="/style.css?v=20261109-s-tier">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@500;700&family=Instrument+Serif:ital@0;1&family=Inter:wght@400;500;600;700;800&family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,500;0,6..72,600;1,6..72,400&family=JetBrains+Mono:wght@400;500&family=Plus+Jakarta+Sans:wght@600;700;800&display=swap" rel="stylesheet">
+</head>
+<body>
+  <div class="reading-progress-bar" id="progressBar"></div>
+
+  <header class="site-header compact-ai-header"><div class="header-inner compact-ai-nav"><a href="/" class="brand"><strong>BLAYNE AINA</strong></a> | <a href="/ai-brief/">1-Page Master Brief (§01–§09)</a> | <a href="/articles/">All 9 Articles &amp; Briefs</a> | <a href="/research-assurance/">Assurance</a> | <a href="/refusal-proof/">Proof</a> | <a href="/llms.txt">llms.txt</a> | <a href="mailto:me@blayneaina.com">me@blayneaina.com</a></div></header>
+  <div class="layout-container presentation-layout">
+    <main class="content-area">
+      <article class="prose-wrapper presentation-wrapper">
+<header class="article-header compact-article-header"><h1 class="article-title">§06 One-Call Technical Brief: Rollback Is Not Erasure</h1><p class="article-subtitle">3 lossless parts summarized from 01–09 source markdown · For full prose see /06.md</p></header>
+
+        
+        
+
+        <div class="article-body">
+          <p><strong>Canonical URLs:</strong> <a href="https://blayneaina.com/06-rollback-is-not-erasure-dual-tier-vaults-and-ungated-quarantine/">Full §06</a> · <a href="https://blayneaina.com/06.md">Raw Markdown</a> · <a href="https://blayneaina.com/06/brief.txt">Plain-Text Brief</a> · <a href="/05/brief/">← §05 Brief</a> · <a href="/07/brief/">§07 Brief →</a> · <a href="/ai-brief/">All §01–§09 Master Brief</a> · <a href="/articles/">All Articles</a> · <a href="/06.md">Raw Markdown</a>
+<strong>Executive Synthesis:</strong> <strong>Problem:</strong> A single undo snapshot can destroy intermediate states and launder unauthorized writes into a clean baseline. — <strong>Proves:</strong> Primary certifies operational recovery while Amber preserves every intermediate and ungated state for forensics. — <strong>Evaluation Scope:</strong> Use the Forensic Baseline &amp; Quarantine Challenge on one file exposed to out-of-band edits.
+<strong>Lossless Parts (3 total, 100% unabridged):</strong> <a href="/06-rollback-is-not-erasure-dual-tier-vaults-and-ungated-quarantine/part-1/">Part 1/3</a> (<a href="/06/part-1.txt">.txt</a>) · <a href="/06-rollback-is-not-erasure-dual-tier-vaults-and-ungated-quarantine/part-2/">Part 2/3</a> (<a href="/06/part-2.txt">.txt</a>) · <a href="/06-rollback-is-not-erasure-dual-tier-vaults-and-ungated-quarantine/part-3/">Part 3/3</a> (<a href="/06/part-3.txt">.txt</a>)</p>
+<ul>
+<li><strong>Introduction &amp; Thesis [Part 1/3]:</strong> # Rollback Is Not Erasure: Dual-Tier Vaults and Ungated Quarantine <em>A backup can restore a clean state. It cannot explain what happened afterward. Recovery needs a certified baseline and a separate forensic history.</em> **By Blayne Aina · Principal Systems Architect and creator of… — <em>Key Rules/Claims:</em> a trusted operational baseline for recovery; | an evidence-preserving account of every intermediate and ungated state for forensics.</li>
+<li><strong>1. Why Single-Tier Undo Fails [Part 1/3]:</strong> <em>Subtopics:</em> Failure 1: The baseline is overwritten by the task itself; Failure 2: Ungated content becomes a trusted post-edit state — Single-slot backup systems fail in two distinct ways. The task has an undo button but no state 0 left. Worse, it cannot explain how state 3 was reached or which intermediate state was valid.</li>
+<li><strong>2. The Dual-Tier Separation [Part 1/3]:</strong> <em>Subtopics:</em> Exhibit 6.1 — Dual-tier operational separation — Primary and Amber are not two copies of one backup. They answer different questions and have different failure and custody properties. Primary is the bounded operational store for rapid rollback.</li>
+<li><strong>One Checkout, Six Mutations, Two Truths [Part 1/3]:</strong> Consider one file checked out for remediation: The result is deliberately two truths: the file can return to a trusted baseline, while the evidence retains every intermediate and ungated state. — <em>Key Rules/Claims:</em> <strong>Certified checkout.</strong> The lease and kernel handle are acquired. State 0 is written to Primary with its sidecar and capture-ledger binding, and archived to Amber with exact readback. If any step fails, both lease and handle are released.</li>
+<li><strong>3. Primary: A Certified Operational Baseline [Part 1/3]:</strong> <em>Subtopics:</em> Scope sharding and identity; Monotonic version filenames; Readback before trust; Durable version binding; Exhibit 6.4 — A valid Primary capture binding — A file on disk in the Primary directory is not a baseline yet. It becomes one only after its bytes, sidecar, scope identity, and durable capture binding all verify. Each canonical file scope maps to <code>.squad/vault/&lt;fnv1a_16hex&gt;/</code>. — <em>Key Rules/Claims:</em> every nonempty line must parse; | the destination must name the selected version exactly; | the record&#39;s canonical scope must resolve to the same file; | duplicate or conflicting bindings are refused; | digest, byte count, owner, and RFC 3339 timestamp must be well formed.</li>
+<li><strong>4. Amber: Content-Addressed Forensic Objects [Part 1/3]:</strong> <em>Subtopics:</em> Atomic creation, deduplication, and exact readback — Amber stores raw bytes under: The first two digest characters create 256 shard directories. There is no Zstandard or <code>.zst</code> container. Raw bytes eliminate codec selection from the recovery trust boundary and make the content address itself the object&#39;s identity. — <em>Key Rules/Claims:</em> <code>event: &quot;amber_archived&quot;</code>; | capture kind, canonical scope and absolute source identity; | owner and intent; | SHA-256 and raw byte count; | timestamp and deduplication status.</li>
+<li><strong>5. Fail-Closed Checkout Capture [Part 1/3]:</strong> <em>Subtopics:</em> Exhibit 6.2 — Fail-closed checkout capture state machine; Exhibit 6.5 — Checkout failure revokes tenancy — Checkout is a state machine, not a best-effort backup call. The lease and kernel handle are acquired first so the source cannot be casually changed during capture. Any failure in storage, sidecar verification, Amber persistence, ledger append, or binding replay releases both.</li>
+<li><strong>6. Per-Mutation Amber Accumulation [Part 1/3]:</strong> <em>Subtopics:</em> Exhibit 6.6 — Amber edit snapshot — <code>snapshot_edit_state</code> captures the current bytes before a governed mutation and archives them only to Amber with <code>kind: &quot;edit_snapshot&quot;</code>. Primary remains the state-0 undo baseline.</li>
+<li><strong>7. The Active Bypass Sentinel [Part 2/3]:</strong> <em>Subtopics:</em> Exhibit 6.7 — <code>bypass_detected</code> — A guarded file can still be changed by a process outside the tool path. The active bypass sentinel scans active File leases and cross-indexes three observations: The bypass condition is: Path spellings are normalized so a junction, case variant, or slash variant cannot make a… — <em>Key Rules/Claims:</em> the lease&#39;s <code>started_at</code> timestamp; | the latest gated write found in <code>snapshot.jsonl</code> and <code>file_edits.jsonl</code>; | the file&#39;s current filesystem modification time.</li>
+<li><strong>8. Release Verification and Ungated Quarantine [Part 2/3]:</strong> <em>Subtopics:</em> Exhibit 6.3 — Release verification and quarantine flow; Exhibit 6.8 — Release quarantine receipt — Release checks live on-disk bytes against the last authorized state. If a gated write occurred under the lease, the expected value is its <code>post_sha256</code>; otherwise the expected value is the checkout&#39;s pre-write FNV-1a hash and byte count.</li>
+<li><strong>9. Restoration Is Another Governed Mutation [Part 2/3]:</strong> <em>Subtopics:</em> Governed restore; Console-exclusive operator rescue — A restore does not travel backward through history and delete the unauthorized act. It creates a new, evidence-bound transition from current state to a verified prior state.</li>
+<li><strong>10. The Local-History and Non-Erasure Ceilings [Part 2/3]:</strong> <em>Subtopics:</em> Artifact integrity; Artifact survival; Downstream irreversibility — Recovery has three distinct assurance properties that must not be collapsed. SHA-256 and capture binding prove that stored bytes still match the evidence recorded for them. This detects substitution, corruption, and misleading provenance. — <em>Key Rules/Claims:</em> an external API or webhook already dispatched; | a database query or third-party sync already committed; | confidential content already read or disclosed by another process; | another agent&#39;s reasoning, notifications, or subsequent state transitions already caused by the modified state.</li>
+<li><strong>11. The 2026 Recovery Evidence Landscape [Part 2/3]:</strong> The strongest 2026 sources support independent interception, out-of-band supervision, and tamper-evident forensic records. They do not justify pretending that local rollback erases global consequences. — <em>Spec/Table:</em> <strong>Shu, <a href="https://arxiv.org/abs/2609.37475"><em>Boundary-State Control for Tool-Using Language-Model Agents</em></a>, September 2026 preprint</strong>; What it actually establishes: BSC-R binds a single-use commit authorization to the exact action and semantic authorization state, rejecting represented changed and replayed classes while still committing 25% of invalid effects in the broader external suite.; How the recovery…</li>
+<li><strong>The Forensic Baseline &amp; Quarantine Challenge [Part 2/3]:</strong> The <strong>Forensic Baseline &amp; Out-of-Band Mutation Quarantine Challenge</strong> exercises the complete sequence: certified checkout, several Amber-accumulated edits, an out-of-band mutation, release-time mismatch, and a governed restoration.</li>
+<li><strong>The Twelve Recovery Claims [Part 2/3]:</strong> <em>Spec/Table:</em> <strong><code>06-C01</code></strong>; Bounded claim: FNV-1a scope sharding and <code>meta.json</code> bind Primary directories to canonical file identity; Evidence and ceiling: Implemented and author-verified; mismatched saved scopes are refused | <strong><code>06-C02</code></strong>; Bounded claim: Monotonic version names and create-new synced writes prevent accidental overwrite; Evidence and ceiling: Implemented and author-verified; collisions fail instead of reusing an…</li>
+<li><strong>The Article 06 Claim Card [Part 3/3]:</strong> <em>Key Rules/Claims:</em> Mechanism: | AINA Dual-Tier Recovery and Forensic Quarantine | (Primary certified baselines, Amber content-addressed objects, | fail-closed checkout, version replay, per-edit snapshots, | bypass sentinel, release verification, and governed restore) | Failure it governs: | Single-slot undo destroying the original baseline; | uncertified files impersonating recovery images; | out-of-band writes laundered into legitimate post-edit state; | silent rollback destroying evidence and obscuring downstream consequences.</li>
+<li><strong>The Baseline Is Only Half the Recovery Story [Part 3/3]:</strong> A trusted recovery image matters. So does the record of why it was needed. The dual-tier architecture preserves both. Primary certifies the state to restore. Amber preserves every state the system passed through, including the state nobody authorized.</li>
+<li><strong>Frequently Asked Questions [Part 3/3]:</strong> <em>Subtopics:</em> Why is rollback not erasure?; What makes a Primary version a certified baseline?; Why keep two vaults instead of one backup?; Does <code>bypass_detected</code> prove every out-of-band write was seen?; What happens when release content does not match the last gated state?; Can recovery undo external API calls or disclosures? — Rollback changes current bytes to a prior state. It does not remove the fact that an action occurred, erase downstream reliance, or eliminate the need to investigate it. A governed recovery preserves both the restored baseline and the complete forensic history.</li>
+<li><strong>Continue the Series [Part 3/3]:</strong> <em>Key Rules/Claims:</em> <strong>Series index:</strong> <a href="https://blayneaina.com/">From Proposal to Consequence: The AINA Transition-Governance Series</a> | <strong>Previous:</strong> <a href="https://blayneaina.com/05-expiry-is-not-fencing-typed-leases-and-kernel-write-exclusion/">Article 05 — Expiry Is Not Fencing: Typed Leases and Kernel Write Exclusion</a> | <strong>Next:</strong> [Article…</li>
+<li><strong>Primary 2026 Sources [Part 3/3]:</strong> <em>Key Rules/Claims:</em> <a href="https://arxiv.org/abs/2609.37475">Shu — <em>Boundary-State Control for Tool-Using Language-Model Agents</em>, <code>arXiv:2609.37475</code></a> | <a href="https://arxiv.org/abs/2609.29808">Pino — <em>Hard Stop: Kernel-Level Preemption and Containment for Rogue Agentic Execution</em>, <code>arXiv:2609.29808</code></a> | [Qin et al.</li>
+<li><strong>Publication Metadata [Part 3/3]:</strong> <strong>Title tag:</strong> Rollback Is Not Erasure: Dual-Tier Vaults and Ungated Quarantine <strong>Meta description:</strong> Why single-tier undo fails autonomous agents: certified Primary baselines, content-addressed Amber forensics, fail-closed checkout, bypass detection, and ungated quarantine.</li>
+</ul>
+
+        </div>
+
+        
+        
+        
+        
+
+        
+
+        
+      </article>
+    </main>
+
+  </div>
+
+  <footer class="site-footer compact-ai-footer"><p><strong>blayneaina.com</strong> — <a href="https://blayneaina.com/ai-brief/">Master Brief (https://blayneaina.com/ai-brief/)</a> · <a href="https://blayneaina.com/ai-brief.txt">Plain-Text Brief (https://blayneaina.com/ai-brief.txt)</a> · <a href="https://blayneaina.com/articles/">All 9 Articles &amp; Briefs (https://blayneaina.com/articles/)</a> · <a href="https://blayneaina.com/llms.txt">llms.txt</a> · <a href="mailto:me@blayneaina.com">me@blayneaina.com</a></p></footer>
+
+
+
+
+
+  <script src="/script.js?v=20261109-s-tier"></script>
+</body>
+</html>

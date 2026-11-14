@@ -1,0 +1,89 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "Squad Server-Cut Evidence Receipt (squad.evidence.receipt/1)",
+  "type": "object",
+  "additionalProperties": false,
+  "maxProperties": 6,
+  "description": "Receipt issued by Room content-serving tools prior to citation generation.",
+  "required": [
+    "receipt",
+    "room",
+    "source_revision",
+    "view_digest",
+    "delivery"
+  ],
+  "properties": {
+    "receipt": {
+      "type": "string",
+      "minLength": 36,
+      "maxLength": 36,
+      "pattern": "^srv_[0-9a-f]{32}$",
+      "description": "Content-addressed serving receipt identifier."
+    },
+    "room": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 128
+    },
+    "source_revision": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 128
+    },
+    "view_digest": {
+      "type": "string",
+      "minLength": 64,
+      "maxLength": 64,
+      "pattern": "^[0-9a-f]{64}$"
+    },
+    "recipient": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 128
+    },
+    "delivery": {
+      "type": "object",
+      "additionalProperties": false,
+      "maxProperties": 5,
+      "required": [
+        "status",
+        "offset",
+        "delivered_chars",
+        "total_chars"
+      ],
+      "properties": {
+        "status": {
+          "type": "string",
+          "enum": [
+            "complete",
+            "truncated",
+            "chunked"
+          ]
+        },
+        "offset": {
+          "type": "integer",
+          "minimum": 0,
+          "maximum": 4194304
+        },
+        "delivered_chars": {
+          "type": "integer",
+          "minimum": 0,
+          "maximum": 4194304
+        },
+        "total_chars": {
+          "type": "integer",
+          "minimum": 0,
+          "maximum": 4194304
+        },
+        "next_offset": {
+          "type": [
+            "integer",
+            "null"
+          ],
+          "minimum": 0,
+          "maximum": 4194304
+        }
+      }
+    }
+  }
+}

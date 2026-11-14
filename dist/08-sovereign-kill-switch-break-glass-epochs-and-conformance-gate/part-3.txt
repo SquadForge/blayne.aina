@@ -1,0 +1,124 @@
+# §08 Part 3/4 — The Sovereign Kill Switch
+Canonical: https://blayneaina.com/08-sovereign-kill-switch-break-glass-epochs-and-conformance-gate/part-3/ | Raw Article: https://blayneaina.com/08.md | Next Part: https://blayneaina.com/08/part-4.txt
+
+## 5. The Candidate-Binary Publication Gate
+
+Containment architecture is only as credible as the binary that implements it. A green build proves compilation. It does not prove that the release artifact refuses stale generations, impersonation, cross-project reads, altered proposals, damaged recovery objects, or evidence tampering.
+
+Stage 2b of the package pipeline therefore runs the **newly compiled candidate's own** `conformance` verb. The old publishing driver does not lend it a previously compiled test battery: the harness and the boundary implementation ship in the same candidate image.
+
+### Exhibit 8.8 — Candidate qualification sequence
+
+```text
+Cargo builds isolated candidate images
+  → candidate surface checks bind harness SHA-256 and target SHA-256
+  → candidate and Room companion report the same current source digest
+  → spawn candidate conformance with CREATE_NO_WINDOW
+       stdin null; stdout/stderr piped and drained
+       owned ConformanceChild with cancellation on drop
+       30-minute outer timeout; 90-second MCP-session deadline
+       build-lease heartbeat during the run
+  → require successful exit, valid JSON report, and ok == true
+  → re-check current source and publisher/candidate compiled identity
+  → copy, verify installed surfaces, update checksums, compare post-copy hashes
+  → write package result and release the build lease
+
+any failure before promotion: no installed image changed by the candidate
+publication never automatically replays deferred Room wakes
+```
+
+The outer loop polls every 100 ms. The owned-child wrapper requests cancellation on timeout, heartbeat loss, or another early return. On Windows, cancellation targets the exact child PID and its descendants, not a process name; the direct child handle remains alive during cleanup. Pipe readers are drained so inherited pipe handles cannot turn a bounded test into an unbounded join. `CREATE_NO_WINDOW` suppresses a new console window; the conformance child is **not** represented as a dedicated Job Object.
+
+The two clocks have different scopes. The **30-minute outer timeout** bounds the candidate run. The **90-second deadline** belongs to an interactive MCP session used inside the battery and can be extended for multi-step work; it is not a separate 90-second ceiling imposed on each of the 45 cases.
+
+The default battery contains **25 governance/execution cases and 20 evidence cases**. Each case drives the binary through isolated throwaway state. For the governance battery, refusal is usually the pass condition: an agent willing to follow instructions is not evidence that the boundary enforces refusal. The evidence battery includes positive fidelity proofs as well as negative tamper and access cases.
+
+### The complete 45-case inventory
+
+| # | Emitted case ID | What must hold |
+|---:|---|---|
+| 1 | `impersonation_refused` | A bound session cannot act as another owner. |
+| 2 | `altered_proposal_conflict` | Reusing an operation ID with a different payload is refused. |
+| 3 | `stale_generation_refused` | An edit fencing an old ownership generation is rejected. |
+| 4 | `concurrent_edit_conflict` | A scope actively held by another agent cannot be acquired. |
+| 5 | `interrupted_call_blocks_target` | An unresolved prepared operation holds its target for reconciliation. |
+| 6 | `damaged_recovery_refused` | Mismatched or damaged recovery bytes never reach the target; an intact image restores and reads back. |
+| 7 | `acceptance_failed_keeps_task_open` | Completion is refused when the acceptance check fails against the actual artifact. |
+| 8 | `reader_roster_denied` | A recipient outside the owner's graph-reader roster receives no delivery and reads nothing. |
+| 9 | `cross_project_read_refused` | One project reads its own file but cannot read another open project's file or receive its content. |
+| 10 | `destination_call_outside_task_scope_refused` | A direct record change outside the claimed row task is refused and the row remains unchanged. |
+| 11 | `junction_and_spelling_redirect_refused` | Junction redirection outside the project and parent-traversal spellings are refused without changing the outside file. |
+| 12 | `native_write_without_lease_refused` | A native write without an active lease never reaches the file. |
+| 13 | `doc_source_drift_refused` | Registered documents serve only exact content; drift refuses reads and task bindings. |
+| 14 | `cooldown_deferred_work_retained` | Typed damper deferral retains the exact sealed second-send job; retries cannot poison retained work. |
+| 15 | `tier_ceiling_refused` | A `safe_read` session cannot invoke a mutating tool. |
+| 16 | `post_cancellation_refused` | After the stop is pulled, no new controlled action executes. |
+| 17 | `stopped_authority_cannot_revive` | A project stop spares other projects, refuses its project, and keeps pre-stop leases dead after clearance while fresh tenancy can write. |
+| 18 | `room_control_operator_required` | An ordinary Room participant cannot perform a Room control act. |
+| 19 | `room_recreate_roster_refused` | Room recreation cannot silently replace the roster; deliberate replacement needs operator standing and the roster survives both paths. |
+| 20 | `exec_start_takeover_refused` | Another agent cannot restart—and thereby take over—a paused execution. |
+| 21 | `planning_wake_target_bound` | No named target means no wake; naming another lane is refused as a wake request rather than treated as impersonation. |
+| 22 | `profile_credential_owner_surface` | Credential storage and fleet diagnostics require operator standing, profile views bind to the caller, and a worker can still query its own requirements. |
+| 23 | `session_lane_bound` | Driving another agent's IDE lane is refused while naming one's own lane remains permitted. |
+| 24 | `prompt_redaction_holds` | A planned Room wake prompt redacts every universal credential shape without dropping the prompt or leaking a secret body. |
+| 25 | `tool_result_redaction_holds` | Credential-shaped Room content is redacted across receipts, feeds, and echoed errors while the feed remains valid JSON and available. |
+| 26 | `evidence_jcs_rfc8785_vectors` | Canonical serializations match the RFC 8785 object and number vectors. |
+| 27 | `evidence_corpus_through_mcp` | Every corpus document produces its expected extraction, omissions, stories, nodes, values, formulas, visibility, or typed failure through the parser worker. |
+| 28 | `evidence_governing_pdf_six_pages` | The governing PDF yields six nonempty pages, complete-for-profile extraction, expected text, and complete bounded delivery. |
+| 29 | `evidence_repeated_text_resolves_each_node` | Repeated text is ambiguous until occurrence is named; each resulting handle resolves to its own node. |
+| 30 | `evidence_drift_refused` | Altered source bytes refuse both reading and handle resolution as `drifted`. |
+| 31 | `evidence_tampered_view_refused` | A tampered committed view is refused with `view_digest_mismatch`. |
+| 32 | `evidence_old_view_survives_extraction_change` | A new extraction identity creates a new view while the old handle still resolves its original view. |
+| 33 | `evidence_bad_selector_refused` | Bad selectors, paths, raw hashes, unknown handles, and reserved extensions receive typed refusals. |
+| 34 | `evidence_unauthorized_dereference_refused` | A caller outside the Room owner roster cannot dereference evidence. |
+| 35 | `evidence_truncation_in_delivery_status` | Bounded delivery explicitly reports chunked or truncated status with counts. |
+| 36 | `evidence_excerpt_stays_distinct` | An agent-supplied excerpt remains `agent_supplied` and cannot assume the requirement role. |
+| 37 | `evidence_echo_lineage_preserved` | Echo citations remain echoes grounded in their first-hand origin rather than becoming independent evidence. |
+| 38 | `evidence_distinct_origins_through_three_hops` | Three records through echoes count as one origin; a second first-hand reader makes two. |
+| 39 | `evidence_false_predicate_fails_receipt` | A false typed predicate fails evaluation while the finding remains recorded as failed matter. |
+| 40 | `evidence_absence_requires_complete_inventory` | Absence is refused until every unknown-coverage marker is acknowledged. |
+| 41 | `evidence_correspondence_keeps_old_handle` | Adopting correspondence issues a new handle without retargeting the old handle's view. |
+| 42 | `evidence_reassessment_flags` | Source and requirement revisions flag dependents until reassessment is answered. |
+| 43 | `evidence_staged_visibility_reveal` | A `collaborative_pass` finding remains withheld until reveal, and the reveal states its limit. |
+| 44 | `evidence_origin_gate` | Task completion is refused until a requirement rests on the required number of distinct origins. |
+| 45 | `evidence_capture_provenance_chain` | A capture records every redirect hop, status, location, and security headers, with each hop egress-authorized. |
+
+The corpus case expands into 37 synthetic document fixtures; the JCS case expands into the RFC's individual vectors. They still count as one case each in the 45-case publication battery.
+
+## 6. What the Gate Proves—and What It Cannot
+
+The release gate closes an important bootstrapping hole. The candidate carries its own inventory and enforcement code, the surface receipt binds the expected harness and target image hashes, and the source digest is checked before and after a potentially long run. Losing the package build lease stops the path to promotion. Post-copy checks then compare the installed artifacts and their checksums rather than assuming a copy succeeded faithfully.
+
+The report is simple: each case records its ID, expectation, observation, and Boolean pass; `ok` is true only when no case failed. A nonzero candidate exit, malformed report, failed case, timeout, or heartbeat failure refuses publication.
+
+### Exhibit 8.9 — Publication summary shape
+
+```json
+{
+  "ok": true,
+  "total": 45,
+  "failed": 0,
+  "note": "boundary battery against the shipped binary in isolated throwaway state; refusals are the pass condition"
+}
+```
+
+That shape is not a claim of universal assurance. The 45 cases are an **author-controlled, end-to-end release-qualification gate against the candidate binary**. They are not independent third-party certification, a formal proof of the whole system, exhaustive topology coverage, or evidence that no defect exists outside the exercised vectors.
+
+The same honesty applies to containment. A latch and epoch cannot un-send a webhook, reverse a committed third-party database transaction, or erase data already disclosed. Local control files also cannot survive a hostile administrator deleting the underlying volume. AINA governs declared boundaries and preserves uncertainty; it does not claim physical irreversibility or universal host control.
+
+| Primitive or test mechanism | What it establishes | What AINA adds—and refuses to infer |
+|---|---|---|
+| Rust `IsTerminal` / console handles | Whether standard handles belong to a terminal | Combines terminal detection with no MCP session, explicit operator identity, and OS confinement; terminal presence alone is not human identity. |
+| `CreateHardLinkW` / `std::fs::hard_link` | Atomic publication of a directory entry | Uses it for complete scoped latches after flush; machine latches use direct final-path creation. Filesystem publication does not prove worker quiescence. |
+| `TerminateJobObject` plus Job accounting | A termination request and separately queried Job state | Requires a fresh active-process count of zero, retains two-phase stop evidence, and exposes uncovered servers instead of assuming full coverage. |
+| Candidate-controlled conformance report | The candidate's observed results for its embedded inventory | Binds image/source identities, bounds the child, requires every case to pass, and still labels the result author-controlled release qualification. |
+
+**Evidence availability and performance boundary:** latch, WAL, epoch, Job-census, stop-outbox, recovery, candidate-surface, and package records are `CONTROLLED` for qualified, method-scoped technical review, with adverse findings permitted. They are not unrestricted public downloads or independent validation. The one-second observer is a polling cadence, not a universal worst-case stop-latency guarantee; the 30-minute and 90-second conformance clocks are test bounds, not production recovery-time or recovery-point objectives. Actual containment and publication latency must be measured for the host, worker count, filesystem, destination mix, and release topology.
+
+## The Break-Glass & Conformance Qualification Challenge
+
+The **Break-Glass & Conformance Qualification Challenge** uses one AI workflow that needs emergency containment or release qualification. It demonstrates a scoped stop with stale-authority refusal, explicit handling of unconfirmed cleanup, an unresolved-operation recovery plan, a stop-versus-recovery race, and a candidate-gate coverage review.
+
+The challenge excludes independent certification, universal external-effect reversal, universal host control, and an unmeasured production recovery objective. Deployment and paid pilots are separately scoped; independent evaluation remains outside the commercial ladder through [Article 09](https://blayneaina.com/09-bring-one-real-boundary-work-with-blayne/).
+
+

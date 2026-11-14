@@ -1,0 +1,138 @@
+# §03 Part 4/6 — Semantic Switch & EISA
+Canonical: https://blayneaina.com/03-eisa-four-gate-verdict-machine-and-entity-resolution/part-4/ | Raw Article: https://blayneaina.com/03.md | Next Part: https://blayneaina.com/03/part-5.txt
+
+## 7. Proof Lane B: Semantic Switch First, Then the Entity-Resolution Stack
+
+Entity resolution adds a different danger: the evidence can contain direct identifiers, and the final merge can be difficult or impossible to reverse through the destination's ordinary product operations. The architecture protects the data **before any provider-exposed computation**, then protects the resolved baseline afterward.
+
+```text
+Native contacts, companies, products, or other records
+→ Stage 0: Semantic Switch protected representation
+→ Stage 1: qBlock / Qdrant Edge candidate mesh over protected records
+→ Stage 2: EISA Fracture identity adjudication
+→ Stage 3: EISA Forge canonical state compilation
+→ local restoration of authorized native values through the private crosswalk
+→ Stage 4: Shield forward-only baseline defense
+→ Room-governed destination transition
+```
+
+### Stage 0 — Semantic Switch: protected computation before external AI
+
+Semantic Switch converts native values into structure-preserving fictional representations while retaining native rows, keys, and the private crosswalk locally. External AI providers and downstream reviewers receive the fictional records—not the declared raw identifiers. The downstream party returns partitions, unresolved membership, and optional field-source references; local restoration maps authorized references back to exact native values.
+
+This is the privacy-first ordering rule: **Semantic Switch runs before qBlock, Fracture, or any other computation that exposes records to an external model.** Candidate generation, adjudication, and canonical-value selection all operate on the protected representation.
+
+The accurate privacy description is **deterministic, structure-preserving pseudonymization**, not anonymity. The fictional surface preserves declared comparison structure while native data and restoration authority remain under client control.
+
+**Engineering trade-off note:** Semantic Switch is purpose-built for structured entity resolution, CRM deduplication (Keiki), and topological claim graphs. In those workloads, structural edges, blocking keys, and relational patterns carry the primary signal. Lexical identifiers such as names, emails, and account numbers are severed into local `SeveranceAntiKnowledgeObjects` before any external embedding provider or qBlock / Qdrant Edge computation, preserving useful comparison structure without shipping the native identifiers.
+
+| Check | Current contract and evidence |
+|---|---|
+| `SS01` | **Privacy-first stage responsibility.** Semantic Switch transforms native records before provider-exposed qBlock, Fracture, Forge, or Shield computation. Separate stages own identity judgment and destination mutation. |
+| `SS02` | **Whole blocks remain the unit of work.** Disjoint IDs, member existence, non-overlap, and in-block edge evidence are checked; no pair-request fragmentation or cross-block merge. |
+| `SS03` | **Input validation prevents silent loss.** Unknown fields, nested/numeric values in the declared string schema, duplicate keys/IDs, unknown members, and overlapping membership are refused; unblocked rows remain local and counted. |
+| `SS04` | **Relation-isomorphic fiction retains declared signals.** Scoped references, presence, exact and normalized equality, ordered components, and substitution, insertion, deletion, and transposition relations survive the transformation. |
+| `SS05` | **Per-block reproducible scope.** HMAC-SHA256 derivation binds schema, release, original block, canonical membership, and native content; no exported global dictionary, and no claim of cross-block unlinkability. |
+| `SS06` | **Complete partitions and explicit uncertainty.** Every emitted record appears exactly once across partitions and unresolved lists; omissions, duplicates, foreign records, and dual membership are refused. |
+| `SS07` | **Reference-based exact restoration.** A selection names an emitted record and issued field-value reference inside the same partition; local restoration retrieves the exact native value and source provenance rather than asking a model to reproduce it. |
+| `SS08` | **Release-inventory verification.** The expected `release_inventory` manifest is reconstructed from the authenticated crosswalk; admitted/held payload SHA-256 digests, counts, field-reference coverage, unexpected files/directories, and complete native accounting are checked. |
+| `SS09` | **Measured transport and relation fidelity.** Retained executions establish complete block, record, field-restoration, relabeling-invariance, and exact edit-relation accounting—not population matching accuracy. |
+| `SS10` | **Whole-block capacity.** Oversized blocks remain intact and held rather than being truncated or semantically fragmented; raising capacity requires a new preparation run. |
+| `SS11` | **Privacy and custody ceiling.** Native IDs, original rows, keys, crosswalks, and restored outputs stay local; keyed checks protect integrity, while host confidentiality and key custody remain deployment duties. |
+| `SS12` | **Reproducible packaging and handoff.** Pinned builds, launcher compatibility, manifest verification, new-output-location rules, and retained receipt and refusal artifacts support repeatable operation. |
+
+#### The retained transport-measurement record
+
+| Execution input | Native rows | Whole blocks | Fictionalized rows | Exact field restorations | Unblocked rows retained locally |
+|---|---:|---:|---:|---:|---:|
+| Inspected restaurant development data | 250 | 17 | 212 | 2,120 | 38 |
+| Synthetic stress data | 2,500 | 33 | 2,492 | 24,920 | 8 |
+| **Total** | **2,750** | **50** | **2,704** | **27,040** | **46** |
+
+All 2,750 inputs are accounted for. The retained Stage 1 executions made zero provider calls. A separate inspection checked 15,932 ordered component positions and the declared normalized-equality and component bijections.
+
+#### Relation-isomorphism and adversarial verification
+
+| Verification surface | Verified result |
+|---|---:|
+| Relabeling-invariance blocks | **20/20** |
+| Eligible native edit relations preserved exactly | **23/23** |
+| Records verified in each relation-isomorphism run | **53/53** |
+| Field values verified in each run | **529/529** |
+| Batch-restoration adversarial cases | **14/14** |
+| Transformation adversarial cases | **10/10** |
+| Provider calls during preparation | **0** |
+
+These are transport-fidelity and relation-preservation measurements. They do not establish matching accuracy, fresh-holdout performance, an AI advantage, anonymity, inference resistance, or independent validation.
+
+#### `SS08`: authenticate the release universe, not just a reply
+
+A valid response for one block proves nothing about another block hidden from the release. The release verifier therefore closes the inventory around the authenticated crosswalk:
+
+```text
+authenticated private crosswalk
+→ reconstruct expected release_inventory manifest
+→ compare admitted and held block references, payload SHA-256 digests, counts, and bytes
+→ verify field-reference coverage and complete native-record accounting
+→ refuse missing/unexpected payloads, files, and directories
+→ only then release the listed fictional artifacts
+→ require complete block results before local restoration
+```
+
+Altered manifest counts, hidden blocks, unexpected native-data canaries, and unexpected public directories are refusal conditions. This is local software verification with a locally held key—not hardware attestation or control over every later copy.
+
+### Stage 1 — qBlock: candidate nomination over protected records
+
+`qBlock`/Qdrant Edge consumes the Semantic Switch representation and partitions protected records into candidate blocks and edges. This narrows the comparison universe without sending the native rows through the provider-exposed candidate path. It does not prove that any two records match, and its recall ceiling remains explicit: a true pair absent from every nominated block cannot be adjudicated by a later stage.
+
+The blocks and edge evidence remain inside the nominated parent block. The Semantic Switch interface requires disjoint blocks; overlapping blocker output needs an explicit upstream ownership policy. Candidate nomination supplies a partition for adjudication—not an identity conclusion.
+
+### Stage 2 — EISA Fracture: identity adjudication with dissent preserved
+
+Fracture is where candidate relations become constitutional acts. Role-separated defense, prosecution, and tribunal participants can nominate support and contradiction, but their votes are not the proof. The Four-Gate recognizer recomputes every binding and partition law.
+
+BFT-style panels and persistent role separation improve review structure and attributable dissent. They do not create independent model accuracy, and they cannot override a failed comparator or a hidden counter binding.
+
+The output is an identity partition, a review request, anti-knowledge, or typed residue—not a mutated customer record.
+
+### Stage 3 — EISA Forge: canonical state is a separate decision
+
+Identity equivalence does not decide which values should survive. Forge consumes an admitted partition and compiles a canonical record field by field:
+
+- every surviving value names its source record and field pointer;
+- provenance and validity intervals remain inspectable;
+- declared field quorums and canonical claims decide support;
+- unsupported values do not win through confidence alone;
+- a conditional reversal plan records pre-state and post-state commitments before destination execution.
+
+This is the **Field Provenance Matrix** and reversible transition plan. Forge does not inherit ambient permission to run a CRM merge. Article 07's controller-fixed act and destination pre-state checks remain necessary.
+
+As Fracture partitions and Forge field selections return, Semantic Switch maps their authorized references through the private crosswalk to exact native values and source provenance. Restoration is local and reference-driven; no external model reconstructs or invents the original data. Shield then defends the resulting baseline, while any destination mutation remains separately governed.
+
+### Stage 4 — Shield: the baseline moves forward or does not move
+
+A sealed baseline is not allowed to be rewritten by every later record. Shield evaluates new input through pre-provider switching and leak scanning, the declared embedding quorum, exact-baseline-run retrieval, and deterministic anchor gating. It then assigns one of three forward-only dispositions:
+
+- **`DEFLECT`** — contradictory or unverified matter is held away from the sealed baseline.
+- **`GROWTH`** — compatible evidence extends the provenance graph through a sealed forward path.
+- **`ESCALATE`** — genuine conflict enters autonomous quarantine and review rather than overwriting established state.
+
+No route mutates the sealed L3 baseline in place. Shield is temporal baseline defense, not a claim of universal entity accuracy or control over undeclared ingress paths.
+
+## 8. From Duplicate Records to Evidence-Linked Relationship Graphs
+
+The commercial value is not “AI deduplication” as a slogan. It is a defensible identity substrate on which relationship paths can be inspected.
+
+```text
+Semantic Switch protected records
+→ qBlock candidate nominations
+→ evidence-bound identity partitions
+→ canonical records with field provenance
+→ evidence-linked relationships
+→ inspectable graph paths with freshness, relation type, and status
+→ bounded vertical pilot
+```
+
+A six-hop query can be a useful exploration horizon. It is not proof of influence, consent, or authority. No graph path, by itself, authorizes outreach, enrichment, disclosure, or CRM mutation. Each resulting transition must still earn standing under the receiving domain's current rules.
+
+

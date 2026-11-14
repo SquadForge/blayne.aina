@@ -1,0 +1,89 @@
+# §09 Part 6/8 — Bring One Real Boundary: Peer Review & R&D Evaluation
+Canonical: https://blayneaina.com/09-bring-one-real-boundary-work-with-blayne/part-6/ | Raw Article: https://blayneaina.com/09.md | Next Part: https://blayneaina.com/09/part-7.txt
+
+## 10. The Complete Machine, Now With an Address
+
+The eight architecture papers and this commercial doorway form one continuous route from probabilistic proposal to governed consequence.
+
+| Installment | Contribution to the deployment |
+|---|---|
+| [**01 — An AI Output Is Not an Act**](/01-an-ai-output-is-not-an-act/) | Standing must be established for one exact transition; model confidence is not authority. |
+| [**02 — Zero-Trust Ingestion & Server-Cut Evidence**](/02-zero-trust-document-ingestion-and-server-cut-evidence/) | Hostile sources become committed views with explicit omissions and citations the server slices and verifies. |
+| [**03 — Semantic Switch & EISA**](/03-eisa-four-gate-verdict-machine-and-entity-resolution/) | Semantic Switch protects native values before qBlock, Fracture, Forge, local restoration, Shield, and deterministic EISA recognition turn protected records into governed entity state. |
+| [**04 — The Room**](/04-the-room-why-git-and-chat-are-not-coordination-planes/) | Live actor, session, task, project, wake, and acceptance authority replace chat and Git as the coordination plane. |
+| [**05 — Expiry Is Not Fencing**](/05-expiry-is-not-fencing-typed-leases-and-kernel-write-exclusion/) | Typed leases, monotonic generations, and kernel write exclusion stop stale owners at the resource. |
+| [**06 — Rollback Is Not Erasure**](/06-rollback-is-not-erasure-dual-tier-vaults-and-ungated-quarantine/) | Primary and Amber preserve recovery baselines, per-edit states, and ungated divergence without laundering history. |
+| [**07 — Defeating Approval Laundering**](/07-defeating-approval-laundering-act-pinning-and-successor-grants/) | Controller-fixed acts, fenced SQLite execution, and successor grants preserve the exact effect and honest receipt lineage. |
+| [**08 — The Sovereign Kill Switch**](/08-sovereign-kill-switch-break-glass-epochs-and-conformance-gate/) | Asymmetric containment, scoped epochs, in-doubt recovery, and candidate-binary conformance govern stop and release. |
+| **Article 09 — Bring One Real Boundary** | A bounded acceptance contract, independent peer-review firewall, and explicit R&D / deployment doorway put the machine to work. |
+
+The point is not to make probability sovereign. It is to make every consequential transition inspectable before, during, and after execution—and to give the receiving organization a system it can operate.
+
+### Deployment & Evaluation Claim Card
+
+```text
+Mechanism:
+  Bounded technical challenge, predeclared acceptance contract,
+  client-controlled smallest-sufficient deployment, and separate engagement routes.
+
+Failure it governs:
+  AI adoption through vision decks and indefinite sandboxes;
+  demonstrations without positive, refusal, or unresolved predicates;
+  hidden custom scope, copied authority, unsupported graph claims,
+  paid-proof conflicts, and compliance-by-acquisition assumptions.
+
+Positive path:
+  qualified asset → written acceptance contract → existing implementation run
+  → predicate-level result and artifact return → stop, narrow, pilot, deploy,
+    distribute, fund, or independently evaluate.
+
+Refusal / hold path:
+  request declined, narrowed, redirected, or held for handling/authority;
+  predicate Failed / Unsupported / Not exercised / Inconclusive;
+  unresolved effect preserved; production expansion excluded until separately scoped.
+
+Evidence status:
+  Existing implementation evidence is author-controlled and author-verified.
+  Operator history supports customer-embedded delivery credibility, not independent
+  architecture validation. Regulatory mappings are engineering correspondence only.
+
+Verifier and artifacts:
+  intake and acceptance contract; replay ID; admitted input and handling manifest;
+  positive/refusal/unresolved results; view, case, act, and operation receipts;
+  deployment/requalification checklist; exclusions and operating owner.
+
+Scope and claim ceiling:
+  No invented customers, revenue, independent validation, universal deployment time,
+  maintenance-free operation, matching accuracy, privacy guarantee, graph influence,
+  production write-back, fixed price, fixed duration, or certification claim.
+  Payment and investment never purchase a conclusion.
+
+Next stage:
+  Independent technical peer review, non-dilutive R&D / grant collaboration,
+  university STTR partnership, or a separately scoped challenge / enterprise pilot.
+
+Evaluation & R&D doorway:
+  Written qualification to me@blayneaina.com using RESEARCH, GRANT, CHALLENGE,
+  PILOT, DISTRIBUTION, or INVESTMENT.
+```
+
+### Fourteen Claims for the Capstone
+
+| ID | Claim | Evidence and ceiling |
+|---|---|---|
+| `09-C01` | Three technical tracks provide bounded entry points | Each names an asset, existing implementation path, artifacts, and exclusions |
+| `09-C02` | Acceptance predicates are fixed before execution | Positive, refusal, unresolved, and claim-ceiling fields resist post-hoc goalpost movement |
+| `09-C03` | Initial challenges exclude hidden custom and production scope | Custom schemas, connectors, ingestion, rollout, graphs, and write-back require separate scope |
+| `09-C04` | Returned evidence is inspectable rather than testimonial | Agreed manifests, digests, receipts, and refusal records; no fake signature or guaranteed artifact |
+| `09-C05` | Deployment uses a client-controlled smallest-sufficient profile | Only admitted providers, workflows, schemas, and destinations enter the node |
+| `09-C06` | Portability does not transfer standing, current state, network independence, or effect coverage | Destination rebinding and installation acceptance remain mandatory |
+| `09-C07` | Maintenance and requalification are explicit operating duties | Connector drift, `rsa_` reassessment, schema changes, replay, and the 45-case gate |
+| `09-C08` | Semantic Switch and entity resolution provide a concrete commercial wedge | Privacy-first pipeline with transport, relation-fidelity, restoration, and provenance evidence, not universal accuracy or privacy |
+| `09-C09` | Relationship paths remain evidence-linked and non-authorizing | Six-hop is a query horizon, not influence, consent, outreach, or mutation authority |
+| `09-C10` | Operator history supports delivery credibility | 11+ years and documented delivery outcomes; not independent architecture validation |
+| `09-C11` | Regulatory mappings are engineering crosswalks | Primary-source scopes and residual organizational duties; no certification or endorsement |
+| `09-C12` | Commercial work is paid and privately scoped | Article/ebook free; no public fixed price/duration or paid-proof arrangement |
+| `09-C13` | Independent review remains outside the commercial ladder | Method-scoped access and freedom to publish adverse findings without payment or partnership |
+| `09-C14` | Independent peer review, R&D grant diligence, and bounded pilots have explicit intake routes | Structured written qualification; no invented customers, revenue, or endorsement |
+
+

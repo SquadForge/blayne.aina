@@ -1,0 +1,307 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>§07 Part 3/3: Defeating Approval Laundering (7. Official Platform and Standards Crosswalk) | Blayne Aina</title>
+  <meta name="description" content="Sections: 7. Official Platform and Standards Crosswalk, The Confinement, Act-Pinning &amp; Crash-Straddling Continuity Challenge, The Fourteen Execution Claims, The Article 07 Claim Card, Approval Ends at the Destination, Not at the Prompt, Frequently Asked Questions, Continue the Series, Primary Platform References, Publication Metadata">
+  <meta name="author" content="Blayne Aina">
+  <meta name="robots" content="index, follow, max-snippet:-1, max-image-preview:large, max-video-preview:-1">
+  <link rel="canonical" href="https://blayneaina.com/07-defeating-approval-laundering-act-pinning-and-successor-grants/part-3/">
+  <link rel="icon" href="/favicon.ico" sizes="any">
+  <link rel="icon" href="/favicon.svg" type="image/svg+xml">
+
+  <!-- OpenGraph / Social -->
+  <meta property="og:type" content="article">
+  <meta property="og:title" content="§07 Part 3/3: Defeating Approval Laundering (7. Official Platform and Standards Crosswalk)">
+  <meta property="og:description" content="Sections: 7. Official Platform and Standards Crosswalk, The Confinement, Act-Pinning &amp; Crash-Straddling Continuity Challenge, The Fourteen Execution Claims, The Article 07 Claim Card, Approval Ends at the Destination, Not at the Prompt, Frequently Asked Questions, Continue the Series, Primary Platform References, Publication Metadata">
+  <meta property="og:url" content="https://blayneaina.com/07-defeating-approval-laundering-act-pinning-and-successor-grants/part-3/">
+  <meta property="og:site_name" content="Blayne Aina — The Route to Trusting AI">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="§07 Part 3/3: Defeating Approval Laundering (7. Official Platform and Standards Crosswalk)">
+  <meta name="twitter:description" content="Sections: 7. Official Platform and Standards Crosswalk, The Confinement, Act-Pinning &amp; Crash-Straddling Continuity Challenge, The Fourteen Execution Claims, The Article 07 Claim Card, Approval Ends at the Destination, Not at the Prompt, Frequently Asked Questions, Continue the Series, Primary Platform References, Publication Metadata">
+  
+  <link rel="stylesheet" href="/style.css?v=20261109-s-tier">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@500;700&family=Instrument+Serif:ital@0;1&family=Inter:wght@400;500;600;700;800&family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,500;0,6..72,600;1,6..72,400&family=JetBrains+Mono:wght@400;500&family=Plus+Jakarta+Sans:wght@600;700;800&display=swap" rel="stylesheet">
+</head>
+<body>
+  <div class="reading-progress-bar" id="progressBar"></div>
+
+  <header class="site-header compact-ai-header"><div class="header-inner compact-ai-nav"><a href="/" class="brand"><strong>BLAYNE AINA</strong></a> | <a href="/ai-brief/">1-Page Master Brief (§01–§09)</a> | <a href="/articles/">All 9 Articles &amp; Briefs</a> | <a href="/research-assurance/">Assurance</a> | <a href="/refusal-proof/">Proof</a> | <a href="/llms.txt">llms.txt</a> | <a href="mailto:me@blayneaina.com">me@blayneaina.com</a></div></header>
+  <div class="layout-container presentation-layout">
+    <main class="content-area">
+      <article class="prose-wrapper presentation-wrapper">
+<header class="article-header compact-article-header"><h1 class="article-title">§07 Part 3/3: Defeating Approval Laundering (7. Official Platform and Standards Crosswalk)</h1><p class="article-subtitle">Sections: 7. Official Platform and Standards Crosswalk, The Confinement, Act-Pinning &amp; Crash-Straddling Continuity Challenge, The Fourteen Execution Claims, The Article 07 Claim Card, Approval Ends at the Destination, Not at the Prompt, Frequently Asked Questions, Continue the Series, Primary Platform References, Publication Metadata</p></header>
+
+        
+        
+
+        <div class="article-body">
+          
+      <p class="part-compact-nav"><strong>§07 PART 3/3</strong> (15,034 chars · Sections: 7. Official Platform and Standards Crosswalk; The Confinement, Act-Pinning &amp; Crash-Straddling Continuity Challenge; The Fourteen Execution Claims; The Article 07 Claim Card; Approval Ends at the Destination, Not at the Prompt; Frequently Asked Questions; Continue the Series; Primary Platform References; Publication Metadata) — <a href="/07-defeating-approval-laundering-act-pinning-and-successor-grants/part-2/">← Part 2</a> · <a href="/08-sovereign-kill-switch-break-glass-epochs-and-conformance-gate/part-1/">§08 Part 1 →</a> · <a href="/07/brief/">1-Call Brief</a> · <a href="/07-defeating-approval-laundering-act-pinning-and-successor-grants/">Full §07</a> · <a href="/07/part-3.txt">Raw .txt</a> · All: <a href="/07-defeating-approval-laundering-act-pinning-and-successor-grants/part-1/">P1</a> <a href="/07-defeating-approval-laundering-act-pinning-and-successor-grants/part-2/">P2</a> <a href="/07-defeating-approval-laundering-act-pinning-and-successor-grants/part-3/">P3</a></p>
+    
+<h2>7. Official Platform and Standards Crosswalk</h2>
+<p>The architecture uses existing platform primitives without pretending they are complete governance systems by themselves.</p>
+<table>
+<thead>
+<tr>
+<th>Platform or specification</th>
+<th>Native property</th>
+<th>How AINA composes it into execution standing</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>Microsoft AppContainer and LPAC security architecture</td>
+<td>Package identity, capability restriction, and the <code>WIN://NOALLAPPPKG</code> attribute can limit ambient package access.</td>
+<td>Fresh identity per launch, exact raw-token verification, exclusive grants, and anti-fallback native spawn refusal.</td>
+</tr>
+<tr>
+<td>Microsoft <a href="https://learn.microsoft.com/en-us/windows/win32/api/handleapi/nf-handleapi-compareobjecthandles"><code>CompareObjectHandles</code></a></td>
+<td>Determines whether two handles refer to the same underlying kernel object without imposing object-specific access requirements.</td>
+<td>Audits suspended-child handles by object identity, expected provenance, and deliberate sentinel exclusion instead of trusting numeric values.</td>
+</tr>
+<tr>
+<td>Microsoft Process Snapshotting</td>
+<td>Captures the current handle table and basic descriptors for a process.</td>
+<td>Produces pre-resume inventory while explicitly declining to claim historical inheritance.</td>
+</tr>
+<tr>
+<td>Microsoft <a href="https://learn.microsoft.com/en-us/windows/win32/fileio/creating-and-opening-files"><code>CreateFileW</code> sharing modes</a></td>
+<td>Sharing declarations control whether later opens are compatible.</td>
+<td>Keeps the immutable <code>RequestedAct</code> pinned with <code>FILE_SHARE_READ</code> through update and commit.</td>
+</tr>
+<tr>
+<td>IETF <a href="https://www.rfc-editor.org/rfc/rfc8785.html"><code>RFC 8785</code></a>, JSON Canonicalization Scheme, Informational RFC</td>
+<td>Defines deterministic JSON representation for repeatable cryptographic operations.</td>
+<td>Binds the fixed act, source, tenancy, and destination to one digest recomputed at persistence, validation, and historical verification.</td>
+</tr>
+<tr>
+<td>SQLite <a href="https://www.sqlite.org/lang_transaction.html"><code>BEGIN IMMEDIATE</code></a></td>
+<td>Starts a write transaction immediately; concurrent write transactions are limited by the engine.</td>
+<td>Takes the write reservation before rereading and re-deciding, then adds exact row-version and readback predicates.</td>
+</tr>
+<tr>
+<td>Crash-straddling and multi-destination failure physics</td>
+<td>A destination commit and its receipt are different events; heterogeneous destinations do not share a transaction coordinator.</td>
+<td>Uses historical result grants with explicit non-fabrication and capability plans with holds instead of imaginary distributed ACID.</td>
+</tr>
+</tbody></table>
+<p>The functional-equivalence concession remains: another stack that fixes the same exact act, confines its workers, fences the destination, and preserves honest return semantics can defeat approval laundering without AINA&#39;s names. The names are optional; the proof obligations are not.</p>
+<p><strong>Evidence availability and performance boundary:</strong> the confinement, act, destination, and successor records are <code>CONTROLLED</code> for qualified, method-scoped technical review, with adverse findings permitted. They are not unrestricted public downloads or independent validation. Pre-resume inspection, broker calls, transition serialization, recovery capture, and receipt verification must be measured for the exact worker count, projection size, database profile, and destination latency; this article does not claim a universal performance envelope.</p>
+<h2>The Confinement, Act-Pinning &amp; Crash-Straddling Continuity Challenge</h2>
+<p>The <strong>Confinement, Act-Pinning &amp; Crash-Straddling Continuity Challenge</strong> uses one approved database mutation or worker result that could be replayed. It demonstrates a fixed-act refusal when the payload changes, a fenced row update with current authority and pre-state, and the receipt distinction between original-session completion and successor historical acknowledgement.</p>
+<p>The challenge excludes cross-destination atomicity, universal external exactly-once effects, fabricated original-session proof, and independent validation. Deployment and paid pilots are separately scoped; independent evaluation remains outside the commercial ladder through <a href="https://blayneaina.com/09-bring-one-real-boundary-work-with-blayne/">Article 09</a>.</p>
+<h2>The Fourteen Execution Claims</h2>
+<table>
+<thead>
+<tr>
+<th>ID</th>
+<th>Bounded claim</th>
+<th>Evidence and ceiling</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><code>07-C01</code></td>
+<td>AppContainer profiles are single-launch and anti-reuse</td>
+<td>Implemented and author-verified; existing identities fail with <code>confinement_identity_reused</code></td>
+</tr>
+<tr>
+<td><code>07-C02</code></td>
+<td>Brokered hosts use deterministic <code>S-1-9</code> identities with <code>SQAD</code> and 128 digest bits</td>
+<td>Implemented and author-verified; no SAM account or ambient group authority is inherited</td>
+</tr>
+<tr>
+<td><code>07-C03</code></td>
+<td>LPAC is verified directly from raw token attributes before resume</td>
+<td>Implemented and author-verified for package, kind, count, flags, and nonzero value</td>
+</tr>
+<tr>
+<td><code>07-C04</code></td>
+<td>Suspended handles are compared by kernel object identity with sentinel exclusion</td>
+<td>Implemented and author-verified; PSS inventory is not historical inheritance proof</td>
+</tr>
+<tr>
+<td><code>07-C05</code></td>
+<td>Mandated actors cannot escape through native launch or existing-session attachment</td>
+<td>Implemented and author-verified; revoked/expired grants create no fallback</td>
+</tr>
+<tr>
+<td><code>07-C06</code></td>
+<td>Model access is controller-brokered over authenticated local channels</td>
+<td>Implemented and author-verified for LPAC and brokered-host routes; no ambient worker network</td>
+</tr>
+<tr>
+<td><code>07-C07</code></td>
+<td>Model requests are journaled before dispatch and uncertain outcomes remain unresolved</td>
+<td>Implemented and author-verified; reconciliation never resends or fabricates a free retry</td>
+</tr>
+<tr>
+<td><code>07-C08</code></td>
+<td><code>RequestedAct</code> derives a single typed row and permitted changes from projected bytes</td>
+<td>Implemented and author-verified; multi-row and out-of-scope changes are refused</td>
+</tr>
+<tr>
+<td><code>07-C09</code></td>
+<td>Fixed acts are JCS-bound, create-only, and readback verified</td>
+<td>Implemented and author-verified; persistence and binding are distinct from authority</td>
+</tr>
+<tr>
+<td><code>07-C10</code></td>
+<td>Act files remain pinned while current authority and exact destination are revalidated</td>
+<td>Implemented and author-verified through update and commit; historical checks consult no current tenancy</td>
+</tr>
+<tr>
+<td><code>07-C11</code></td>
+<td>SQLite uses <code>BEGIN IMMEDIATE</code> plus exact row-version predicates</td>
+<td>Implemented and author-verified; concurrent and uncooperative changes are refused, not overwritten</td>
+</tr>
+<tr>
+<td><code>07-C12</code></td>
+<td>Pre-commit readback must equal approved fields and version +1</td>
+<td>Implemented and author-verified; mismatch prevents commit and remains unresolved</td>
+</tr>
+<tr>
+<td><code>07-C13</code></td>
+<td>Capability plans hold unmet requirements and expose non-atomic partial completion</td>
+<td>Implemented and author-verified; revisions name weaker semantics and invalidate old decisions</td>
+</tr>
+<tr>
+<td><code>07-C14</code></td>
+<td>Successor grants deliver historical outcomes without fabricating original receipt or write authority</td>
+<td>Implemented and author-verified through fresh receiving tenancy, purpose, wake, source, and Room-return proof</td>
+</tr>
+</tbody></table>
+<h2>The Article 07 Claim Card</h2>
+<pre><code class="language-text">Mechanism:
+  AINA Execution Confinement, Act Fixation, Fenced Destination,
+  and Non-Fabricating Successor Continuity
+  (pre-resume token/handle inspection, spawn gate, model egress,
+   RequestedAct, SQLite IMMEDIATE, capability plans, ResultGrant)
+
+Failure it governs:
+  Unclassified handles and ambient capabilities at launch;
+  approved A becoming a different A&#39; at execution;
+  stale task/source/lease authority and out-of-band destination writes;
+  blind model-request replay and cross-destination atomicity claims;
+  crash-straddled receipt loss and fabricated original-session completion.
+
+Positive path:
+  staged projection and confined launch
+  → controller-fixed RequestedAct with JCS digest and create-only persistence
+  → pinned act revalidation under current task/source/lease authority
+  → BEGIN IMMEDIATE + expected version + recovery capture
+  → conditional single-row update + exact pre-commit readback
+  → commit and independent observation
+  → strict original first receipt or explicit successor historical acknowledgement.
+
+Refusal / hold path:
+  confinement_identity_reused, native_spawn_refused
+  unclassified handle or sentinel match
+  requested_act_authority_changed, requested_act_mismatch
+  record_version_changed, changed_rows != 1
+  destination_route_incompatible, result_grant_tenancy_required
+  unresolved model request; severed_mid_response; effect_unconfirmed.
+
+Evidence status:
+  Implemented and Author-Verified on the declared Windows/SQLite reference paths.
+  Official platform specifications supply primitives, not independent validation.
+  No cross-destination atomicity, total-effect coverage, or original-receipt fabrication.
+
+Verifier and artifacts:
+  AppContainer/host SID and raw LPAC token attributes
+  PSS handle inventory + CompareObjectHandles + sentinel result
+  launch-observation receipt and native spawn refusal
+  model-egress ledger and unresolved reconciliation
+  RequestedAct record and pinned file handle
+  pre-write recovery capture and SQLite readback
+  destination-plan holds/revisions and ResultGrant
+  successor acknowledgement with false original-return flags.
+
+Scope and claim ceiling:
+  PSS proves current inventory, not historical inheritance.
+  JCS binds identity; it does not authorize the act.
+  Approved model routes do not prove semantic confidentiality.
+  SQLite IMMEDIATE is a write reservation, not universal external exactly-once.
+  Cross-destination atomicity is false; partial completion is explicit.
+  Successor acknowledgement is historical, never original first receipt or write authority.
+
+Next stage in the machine:
+  Article 07 confines the worker, fixes the act, fences execution, and preserves
+  honest return continuity. Article 08 proves sovereign stop and binary assurance:
+  break-glass epochs and the 45-case candidate-binary publication gate.
+
+Commercial doorway:
+  Confinement, Act-Pinning &amp; Crash-Straddling Continuity Challenge — bring one
+  approved database mutation or worker result that could be replayed; receive
+  a fixed-act refusal replay, fenced row update, recovery evidence, and an
+  original-versus-successor receipt demonstration (Article 09 · me@blayneaina.com).
+</code></pre>
+<h2>Approval Ends at the Destination, Not at the Prompt</h2>
+<p>The approved act cannot be allowed to drift between the prompt and the write.</p>
+<p>The controller therefore fixes it early, persists it immutably, and holds it open while the destination rereads current authority. SQLite takes its write reservation, the row version is checked again, recovery is captured, the update is conditioned, and only exact readback permits commit. If the worker dies afterward, the historical result remains readable—but the original receipt is not invented.</p>
+<p>That is the complete execution loop: confined launch, fixed act, fenced effect, honest return.</p>
+<blockquote>
+<p><strong>The worker may propose. The controller fixes the act. The destination decides whether it still applies. A successor may acknowledge history; it may never manufacture the original return.</strong></p>
+</blockquote>
+<p>Article 08 addresses the sovereign question that remains: how to stop the entire domain immediately and prove, before publication, that the candidate binary enforces the complete machine.</p>
+<h2>Frequently Asked Questions</h2>
+<h3>Why isn&#39;t numeric handle equality enough?</h3>
+<p>Handle values are process-local indices, not kernel object identities. <code>CompareObjectHandles</code> tests the underlying object. The pre-resume audit also checks expected provenance and a deliberate sentinel because numeric equality cannot prove confinement.</p>
+<h3>Why must the act be fixed before the worker environment exists?</h3>
+<p>Fixing it afterward lets the worker alter the target or parameters before the controller sees them. <code>RequestedAct</code> binds the exact row, fields, version, source, task, and tenancy first, then revalidates that same object through update and commit.</p>
+<h3>Why use <code>BEGIN IMMEDIATE</code> and a row-version predicate?</h3>
+<p><code>BEGIN IMMEDIATE</code> takes the write reservation before rereading and re-deciding. The version predicate independently rejects a row changed by an uncooperative writer. Readback then proves the exact approved result before commit.</p>
+<h3>What happens if a destination commits but the worker crashes before receipt?</h3>
+<p>The historical outcome is preserved. A new receiving task may receive a result-only grant after current tenancy and all proof checks pass. The successor acknowledges history without replaying the effect or claiming the original session received it.</p>
+<h3>Does a successor grant complete the original return obligation?</h3>
+<p>No. The receipt explicitly records <code>satisfies_original_return: false</code> and <code>resolves_original_obligation: false</code>. It is a separate historical acknowledgement, not original first-receipt completion or restored write authority.</p>
+<h3>Are multi-destination plans distributed transactions?</h3>
+<p>No. Each destination supplies its own guarantees, and unmet requirements hold the step. Partial completion is tracked and compensated by separately governed restoration. <code>cross_destination_atomic</code> is false.</p>
+<h2>Continue the Series</h2>
+<ul>
+<li><strong>Series index:</strong> <a href="https://blayneaina.com/">From Proposal to Consequence: The AINA Transition-Governance Series</a></li>
+<li><strong>Previous:</strong> <a href="https://blayneaina.com/06-rollback-is-not-erasure-dual-tier-vaults-and-ungated-quarantine/">Article 06 — Rollback Is Not Erasure: Dual-Tier Vaults and Ungated Quarantine</a></li>
+<li><strong>Next:</strong> <a href="https://blayneaina.com/08-sovereign-kill-switch-break-glass-epochs-and-conformance-gate/">Article 08 — The Sovereign Kill Switch: Break-Glass Epochs and the Conformance Gate</a></li>
+<li><strong>Deployment and independent review:</strong> <a href="https://blayneaina.com/09-bring-one-real-boundary-work-with-blayne/">Article 09 — Bring One Real Boundary</a></li>
+</ul>
+<hr>
+<h2>Primary Platform References</h2>
+<ul>
+<li><a href="https://learn.microsoft.com/en-us/windows/win32/api/handleapi/nf-handleapi-compareobjecthandles">Microsoft <code>CompareObjectHandles</code> — compare underlying kernel object identity</a></li>
+<li><a href="https://learn.microsoft.com/en-us/windows/win32/fileio/creating-and-opening-files">Microsoft <code>CreateFileW</code> and File-Sharing Documentation</a></li>
+<li><a href="https://www.rfc-editor.org/rfc/rfc8785.html">IETF <code>RFC 8785</code> — JSON Canonicalization Scheme, Informational RFC</a></li>
+<li><a href="https://www.sqlite.org/lang_transaction.html">SQLite Transaction Control — <code>BEGIN IMMEDIATE</code></a></li>
+</ul>
+<hr>
+<h2>Publication Metadata</h2>
+<p><strong>Title tag:</strong> Defeating Approval Laundering: Act Pinning and Successor Grants<br><strong>Meta description:</strong> Pre-resume kernel verification, controller-fixed RequestedAct, fenced SQLite execution, multi-destination holds, and non-fabricating successor result grants.<br><strong>Series navigation:</strong> <a href="https://blayneaina.com/">Series index</a> · Article 07 of <em>From Proposal to Consequence: The AINA Transition-Governance Series</em>.<br><strong>Previous installment:</strong> <a href="https://blayneaina.com/06-rollback-is-not-erasure-dual-tier-vaults-and-ungated-quarantine/">Article 06 — Rollback Is Not Erasure: Dual-Tier Vaults and Ungated Quarantine</a>.<br><strong>Next installment:</strong> <a href="https://blayneaina.com/08-sovereign-kill-switch-break-glass-epochs-and-conformance-gate/">Article 08 — The Sovereign Kill Switch: Break-Glass Epochs and the Conformance Gate</a>.</p>
+
+
+      <p class="part-compact-nav"><strong>END OF §07 PART 3/3</strong> — Next Article: <a href="/08-sovereign-kill-switch-break-glass-epochs-and-conformance-gate/part-1/"><code>https://blayneaina.com/08-sovereign-kill-switch-break-glass-epochs-and-conformance-gate/part-1/</code></a> · <a href="/07/brief/">§07 1-Call Brief</a> · <a href="/07.md">Raw .md</a></p>
+    
+        </div>
+
+        
+        
+        
+        
+
+        
+
+        
+      </article>
+    </main>
+
+  </div>
+
+  <footer class="site-footer compact-ai-footer"><p><strong>blayneaina.com</strong> — <a href="https://blayneaina.com/ai-brief/">Master Brief (https://blayneaina.com/ai-brief/)</a> · <a href="https://blayneaina.com/ai-brief.txt">Plain-Text Brief (https://blayneaina.com/ai-brief.txt)</a> · <a href="https://blayneaina.com/articles/">All 9 Articles &amp; Briefs (https://blayneaina.com/articles/)</a> · <a href="https://blayneaina.com/llms.txt">llms.txt</a> · <a href="mailto:me@blayneaina.com">me@blayneaina.com</a></p></footer>
+
+
+
+
+
+  <script src="/script.js?v=20261109-s-tier"></script>
+</body>
+</html>
